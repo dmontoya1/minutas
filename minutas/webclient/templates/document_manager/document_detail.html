@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="https://getbootstrap.com/assets/img/favicons/favicon-32x32.png">
+
+    <title>Floating labels example for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+    crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="https://getbootstrap.com/docs/4.1/examples/floating-labels/floating-labels.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <form class="form-signin" method="POST" action="{% url 'process' %}">
+      {% csrf_token %}
+      <input type="hidden" name="document" value="{{object.id}}" />
+      <div class="text-center mb-4">
+        <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">{{object.name}}</h1>
+        <p>Los siguientes campos corresponden a la información necesaria para generar un {{object.name}}</p>
+      </div>
+
+      {% for field in object.get_fields %}
+        <div class="form-label-group">
+          <input name="{{field.raw_name}}" type="text" id="input_{{field.name}}_{{forloop.counter}}" class="form-control" placeholder="{{field.name}}" required>
+          <label for="input_{{field.name}}_{{forloop.counter}}">{{field.name}}</label>
+        </div>
+      {% endfor %}
+
+      {% for section in object.sections %}
+        <div class="checkbox mb-3">
+          <label>
+            <input type="checkbox" value="remember-me"> {{section}}
+          </label>
+        </div>
+      {% endfor %}
+
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Generar</button>
+      <p class="mt-5 mb-3 text-muted text-center"><a href="/">Volver</a></p>
+    </form>
+  </body>
+</html>
