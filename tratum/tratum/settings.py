@@ -28,8 +28,7 @@ INSTALLED_APPS = [
     'mptt',
     'utils',
     'document_manager',
-    'webclient',
-    
+    'webclient'    
 ]
 
 MIDDLEWARE = [

@@ -23,6 +23,7 @@ class Category(MPTTModel, SoftDeletionModelMixin):
     """
 
     name = models.CharField(
+        'Nombre',
         max_length=50,
         unique=True
     )
@@ -31,9 +32,16 @@ class Category(MPTTModel, SoftDeletionModelMixin):
         on_delete=models.CASCADE, 
         null=True,
         blank=True,
-        related_name='children'
+        related_name='children',
+        verbose_name='Categoría padre'
     )
-    visible = models.BooleanField(default=True)
+    visible = models.BooleanField(
+        '¿Disponible en la plataforma?',
+        default=True
+    )
+
+    class Meta:
+        verbose_name = 'Categoría'
 
     class MPTTMeta:
         order_insertion_by = ['name']
@@ -51,6 +59,7 @@ class Document(models.Model):
     """
 
     name = models.CharField(
+        'Nombre',
         max_length=255,
         unique=True
     )
@@ -58,18 +67,17 @@ class Document(models.Model):
         Category,
         null=True,
         blank=True,
-        on_delete=models.SET_NULL
+        on_delete=models.SET_NULL,
+        verbose_name='Categoría'
     )
     slug = models.SlugField(
         null=True,
         blank=True
     )
-    content = RichTextField()
+    content = RichTextField('Contenido')
 
-    def _get_unique_slug(self):
-        slug = slugify(self.name)
-        unique_slug = '{}-{}'.format(slug, self.pk)
-        return unique_slug
+    class Meta:
+        verbose_name = 'Documento'
 
     def __str__(self):
         self.get_fields()
@@ -79,6 +87,11 @@ class Document(models.Model):
         if not self.slug:
             self.slug = self._get_unique_slug()
         super().save(*args, **kwargs)
+
+    def _get_unique_slug(self):
+        slug = slugify(self.name)
+        unique_slug = '{}-{}'.format(slug, self.pk)
+        return unique_slug    
     
     def get_absolute_url(self):
         return reverse('document', kwargs={'slug': self.slug})

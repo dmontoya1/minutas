@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from webclient.views import HomePageView, DocumentDetailView
 from document_manager.views import ProcessDocumentView
 
