@@ -6,18 +6,13 @@ class SoftDeletionQuerySet(models.QuerySet):
     """Queryset personalizado para agregar funcionalidades de borrado lógico a los modelos.
     """
 
-    def delete(self):
-        """Método para ejecutar un borrado lógico en el modelo"""
+    def soft_delete(self):
+        """Método para ejecutar un borrado físico en el modelo"""
 
         return super(SoftDeletionQuerySet, self).update(deleted_at=timezone.now())
 
-    def hard_delete(self):
-        """Método para ejecutar un borrado físico en el modelo"""
-
-        return super(SoftDeletionQuerySet, self).delete()
-
     def alive(self):
-        """Método para filtrar los objetos que lógicamente estén en la table"""
+        """Método para filtrar los objetos disponibles"""
 
         return self.filter(deleted_at=None)
 
@@ -40,5 +35,5 @@ class SoftDeletionManager(models.Manager):
             return SoftDeletionQuerySet(self.model).filter(deleted_at=None)
         return SoftDeletionQuerySet(self.model)
 
-    def hard_delete(self):
-        return self.get_queryset().hard_delete()
+    def soft_delete(self):
+        return self.get_queryset().soft_delete()

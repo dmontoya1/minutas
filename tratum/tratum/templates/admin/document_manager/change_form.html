@@ -1,0 +1,33 @@
+{% extends 'admin/change_form.html' %}
+{% load i18n admin_urls %}
+{% load utils_extras %}
+
+{% block submit_buttons_bottom %}
+    {{ block.super }} 
+    <style>
+        input.softdeletelink {
+            background-color: rgb(218, 104, 5);
+            color: #fff;
+        }
+        .submit-row p.deletelink-box{
+            float: right;
+        }
+        .submit-row a.deletelink{
+            display: inline-block;
+        }
+        .submit-row a.deletelink:not(.custom){
+            display: none;
+        }
+    </style>
+    {% if change %}
+        <div class="submit-row">
+            <p class="deletelink-box">
+                {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
+                <a href="{% add_preserved_filters delete_url %}" class="deletelink custom">Eliminar definitivamente</a>
+                {% if original|is_softdeletion_instance %}
+                    <input type="submit" class="softdeletelink" value="Inhabilitar" name="_soft-delete" />
+                {% endif %}
+            </p>        
+        </div>     
+    {% endif %}
+{% endblock %}

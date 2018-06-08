@@ -21,9 +21,6 @@ class SoftDeletionModelMixin(models.Model):
     class Meta:
         abstract = True
 
-    def delete(self):
+    def soft_delete(self):
         self.deleted_at = timezone.now()
         self.save()
-
-    def hard_delete(self):
-        super(SoftDeletionModelMixin, self).delete()

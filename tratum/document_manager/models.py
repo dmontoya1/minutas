@@ -35,10 +35,9 @@ class Category(MPTTModel, SoftDeletionModelMixin):
         related_name='children',
         verbose_name='Categoría padre'
     )
-    visible = models.BooleanField(
-        '¿Disponible en la plataforma?',
-        default=True
-    )
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name = 'Categoría'
@@ -47,7 +46,7 @@ class Category(MPTTModel, SoftDeletionModelMixin):
         order_insertion_by = ['name']
 
 
-class Document(models.Model):
+class Document(SoftDeletionModelMixin):
     """Guarda las documentos.
 
     Campos del modelo:
