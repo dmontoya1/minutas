@@ -10,9 +10,10 @@ from .utils import render_to_pdf
 class ProcessDocumentView(View):
 
     def post(self, request, *args, **kwargs):
-        for f in request.POST.items():
-            print(str(f).encode())
         document = Document.objects.get(id=request.POST['document'])
         template = Template(document.content)
         template = template.render(Context(request.POST))
-        return HttpResponse(template)
+        format = request.POST['submit']
+        response = HttpResponse(content_type='application/' + format)
+        response['Content-Disposition'] = 'attachment; filename="PDF.{format}"'.format(format=format)
+        return response

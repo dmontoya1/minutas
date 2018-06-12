@@ -18,8 +18,6 @@ class Category(MPTTModel, SoftDeletionModelMixin):
         parent: Para la estructura por árboles de la librería MPTT, indica el nodo 
         padre de la categoría si ésta lo requiere, de lo contrario (si el campo es nulo),
         indicará que la categoría es una categoría principal.
-        visible: Indica si la categoría y sus documentos y subcategorías relacionadas se verán o no
-        en la tienda de documentos
     """
 
     name = models.CharField(

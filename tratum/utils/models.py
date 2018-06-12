@@ -16,11 +16,14 @@ class SoftDeletionModelMixin(models.Model):
 
     deleted_at = models.DateTimeField(blank=True, null=True)
     objects = SoftDeletionManager()
-    all_objects = SoftDeletionManager(alive_only=False)
 
     class Meta:
         abstract = True
 
     def soft_delete(self):
         self.deleted_at = timezone.now()
+        self.save()
+
+    def revive(self):
+        self.deleted_at = None
         self.save()

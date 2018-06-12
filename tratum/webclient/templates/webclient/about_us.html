@@ -1,4 +1,3 @@
-{% load humanize %}
 <!doctype html>
 <html lang="es">
 
@@ -9,7 +8,7 @@
   <meta name="author" content="">
   <link rel="icon" href="https://getbootstrap.com/assets/img/favicons/favicon-32x32.png">
 
-  <title>Tratum</title>
+  <title>{{title}} - Tratum</title>
 
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
@@ -25,17 +24,23 @@
     <div class="collapse bg-dark" id="navbarHeader">
       <div class="container">
         <div class="row">
-          <div class="col-sm-4 py-4">
-            <h4 class="text-white">General</h4>
+          <div class="col-sm-8 col-md-7 py-4">
+            <h4 class="text-white">About</h4>
+            <p class="text-muted">Add some information about the album below, the author, or any other background context. Make it a few sentences
+              long so folks can pick up some informative tidbits. Then, link them off to some social networking sites or
+              contact information.</p>
+          </div>
+          <div class="col-sm-4 offset-md-1 py-4">
+            <h4 class="text-white">Contact</h4>
             <ul class="list-unstyled">
               <li>
-                <a href="/policies/" class="text-white">Políticas</a>
+                <a href="#" class="text-white">Follow on Twitter</a>
               </li>
               <li>
-                <a href="/faq/" class="text-white">FAQ</a>
+                <a href="#" class="text-white">Like on Facebook</a>
               </li>
               <li>
-                <a href="/about-us/" class="text-white">Quienes sómos</a>
+                <a href="#" class="text-white">Email me</a>
               </li>
             </ul>
           </div>
@@ -44,7 +49,7 @@
     </div>
     <div class="navbar navbar-dark bg-dark box-shadow">
       <div class="container d-flex justify-content-between">
-        <a href="#" class="navbar-brand d-flex align-items-center">
+        <a href="/" class="navbar-brand d-flex align-items-center">
           <strong>Tratum</strong>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader"
@@ -59,62 +64,21 @@
 
     <section class="jumbotron text-center">
       <div class="container">
-        <h1 class="jumbotron-heading">Tratum</h1>
-        <p class="lead text-muted">¿Eres un emprendedor? ¿Requieres redactar un documento legal y no tienes experiencia? Tratum es la solución para
-          tus necesidades</p>
+        <h1 class="jumbotron-heading">{{title}}</h1>
       </div>
     </section>
 
     <div class="album py-5 bg-light">
       <div class="container">
-        <h2 class="text-center">Nuestros paquetes</h2>
-        {% for b in bundles %}
           <div class="row">
-            <div class="col-md-4">
-              <div class="card mb-4 box-shadow">
-                <div class="card-body">
-                  <p class="card-text">{{b.name}}</p>
-                  <ul>
-                    {% for d in b.documents.all %}
-                      <li>
-                        <a href="{{d.get_absolute_url}}">{{d.name}}</a>
-                      </li>
-                    {% endfor%}
-                  </ul>
-                  <button class="btn btn-primary">${{b.price|intcomma}}</button>
-                </div>
+              <div class="col-md-12 mb-3 p-3 border">
+                <h2 class="text-center">{{title}}</h2>
+                <p class="text-center">{{content}}</p>
+                {% if image %}
+                    <img src="{{image.url}}" />
+                {% endif %}
               </div>
-            </div>
           </div>
-        {% endfor %}
-      </div>
-    </div>
-
-    <div class="album py-5 bg-light">
-      <div class="container">
-        {% for c in categories %}
-          <div class="row">
-              <div class="col-md-12">
-                  <h2 class="text-center">{{c.name}}</h2>
-              </div>
-              {% for d in c.document_set.alive %}
-                <div class="col-md-4">
-                  <div class="card mb-4 box-shadow">
-                    <img class="card-img-top" src="https://media.istockphoto.com/vectors/documents-and-hand-with-pen-signs-documents-treaty-signing-concept-vector-id500641404" alt="Card image cap">
-                    <div class="card-body">
-                      <p class="card-text">{{d.name}}</p>
-                      <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
-                          <a  class="btn btn-sm btn-outline-secondary" href="{{d.get_absolute_url}}">Comenzar</a>
-                        </div>
-                        <small class="text-muted">Aprox. 9 mins</small>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              {% endfor %}
-          </div>
-        {% endfor %}
       </div>
     </div>
 

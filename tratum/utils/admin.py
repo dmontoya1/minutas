@@ -11,9 +11,8 @@ class SoftDeletionModelAdminMixin(admin.ModelAdmin):
     Atributos:
         exclude: Remueve el campo 'deleted_at' de la lista de objetos en el admin.
         actions: Se deja vacío para remover el borrado predeterminado de Django
-        extra_list_display: Usado en el método get_list_display() para mostrar siempre
-        el atributo 'is_alive' en la lista de objetos del admin y agregar los campos 
-        específicos de cada ModelAdmin 
+        extra_list_display: Usado en el método get_list_display() para agregar los 
+        campos específicos de cada ModelAdmin 
 
     """
 
@@ -31,6 +30,10 @@ class SoftDeletionModelAdminMixin(admin.ModelAdmin):
 
         if "_soft-delete" in request.POST:
             obj.soft_delete() 
+            custom_redirect = True
+
+        if "_revive" in request.POST:
+            obj.revive() 
             custom_redirect = True
 
         if custom_redirect:
@@ -60,6 +63,10 @@ class SoftDeletionModelAdminMixin(admin.ModelAdmin):
         """
 
         return self.extra_list_display + ('is_alive', )  
+    
+    def get_queryset(self, request):
+        qs = super(SoftDeletionModelAdminMixin, self).get_queryset(request)
+        return qs
 
             
     

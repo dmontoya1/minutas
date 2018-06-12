@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <link rel="icon" href="https://getbootstrap.com/assets/img/favicons/favicon-32x32.png">
 
-    <title>Floating labels example for Bootstrap</title>
+    <title>Tratum</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
@@ -33,16 +33,24 @@
           <label for="input_{{field.name}}_{{forloop.counter}}">{{field.name}}</label>
         </div>
       {% endfor %}
+      
+      <div class="text-center mb-4">
+        <p>El {{object.name}} tiene las siguientes secciones o cláusulas, selecciona las que deseas y las que no</p>
+      </div>
 
-      {% for section in object.sections %}
-        <div class="checkbox mb-3">
-          <label>
-            <input type="checkbox" value="remember-me"> {{section}}
-          </label>
-        </div>
-      {% endfor %}
-
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Generar</button>
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me"> {section_1.name}
+        </label>
+      </div>
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me"> {section_2.name}
+        </label>
+      </div>
+     
+      <input type="submit" class="btn btn-lg btn-primary btn-block" name="submit" value="pdf" />
+      <input class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="docx" />
       <p class="mt-5 mb-3 text-muted text-center"><a href="/">Volver</a></p>
     </form>
   </body>
