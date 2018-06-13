@@ -28,9 +28,16 @@
       </div>
 
       {% for field in object.get_fields %}
-        <div class="form-label-group">
-          <input name="{{field.raw_name}}" type="text" id="input_{{field.name}}_{{forloop.counter}}" class="form-control" placeholder="{{field.name}}" required>
-          <label for="input_{{field.name}}_{{forloop.counter}}">{{field.name}}</label>
+        <div class="form-label-group mb-6">
+          <input name="{{field.key}}" type="text" id="{{field.key}}" class="form-control" placeholder="{{field.name}}" required>
+          <label for="{{field.key}}">{{field.name}}</label>
+          {% if field.help_text %}
+            <small>{{field.help_text}}</small>
+          {% endif %}
+
+          {% if field.youtube_help_video_link %}
+            <iframe class="mb-6" width="100%" height="200" src="{{field.youtube_help_video_link}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          {% endif %}
         </div>
       {% endfor %}
       
@@ -38,16 +45,13 @@
         <p>El {{object.name}} tiene las siguientes secciones o cláusulas, selecciona las que deseas y las que no</p>
       </div>
 
-      <div class="checkbox mb-3">
-        <label>
-          <input type="checkbox" value="remember-me"> {section_1.name}
-        </label>
-      </div>
-      <div class="checkbox mb-3">
-        <label>
-          <input type="checkbox" value="remember-me"> {section_2.name}
-        </label>
-      </div>
+      {% for s in object.get_sections%}
+        <div class="checkbox mb-3">
+          <label>
+            <input type="checkbox" value="remember-me"> {{s.name}}
+          </label>
+        </div>
+      {% endfor %}
      
       <input type="submit" class="btn btn-lg btn-primary btn-block" name="submit" value="pdf" />
       <input class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="docx" />

@@ -13,7 +13,5 @@ class ProcessDocumentView(View):
         document = Document.objects.get(id=request.POST['document'])
         template = Template(document.content)
         template = template.render(Context(request.POST))
-        format = request.POST['submit']
-        response = HttpResponse(content_type='application/' + format)
-        response['Content-Disposition'] = 'attachment; filename="PDF.{format}"'.format(format=format)
+        response = HttpResponse(template)
         return response

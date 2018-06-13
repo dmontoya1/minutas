@@ -1,4 +1,5 @@
 import re
+import uuid
 
 from django.db import models
 from django.utils.text import slugify
@@ -77,7 +78,7 @@ class Document(SoftDeletionModelMixin):
         verbose_name = 'Documento'
 
     def __str__(self):
-        self.get_fields()
+        self.get_sections()
         return self.name    
 
     def save(self, *args, **kwargs):
@@ -93,20 +94,78 @@ class Document(SoftDeletionModelMixin):
     def get_absolute_url(self):
         return reverse('document', kwargs={'slug': self.slug})
 
-    def get_fields(self):
+    def get_components(self, type_):
         c = str(self.content)        
-        fields = []
-        raw_fields = re.findall(r'{{(.*?)}}', c)
+        components = []
+        if type_ == 'fields':
+            ex = r'{{(.*?)}}'
+            query = lambda f: self.documentfield_set.get(key=f)
+        elif type_ == 'sections':
+            ex = r'##(.*?)##'
+            query = lambda f: self.documentsection_set.get(pk=f)
+        raw_fields = re.findall(ex, c)
         for f in raw_fields:
-            try:
-                name, type = f.split('*')
-            except ValueError:
-                name = f
-                type = False
-            field = {}
-            field['raw_name'] = name
-            field['name'] = name.capitalize().replace('_', ' ')
-            field['type'] = type 
-            fields.append(field) 
-        print(fields)
-        return fields
+            document_field = query(f)
+            components.append(document_field) 
+        print(components)
+        return components
+
+    def get_fields(self):
+        return self.get_components('fields')
+    
+    def get_sections(self):
+        return self.get_components('sections')
+
+
+class DocumentField(models.Model):
+    """Guarda los campos de los documentos
+
+    Campos del modelo:
+        name: Nombre del campo
+        help_text: Texto de ayuda para el usuario final
+        youtube_help_video_link: URL del video de Youtube para el video de ayuda 
+        del usuario final
+        document: Lláve foránea al documento
+
+    """
+
+    name = models.CharField(max_length=255)
+    help_text = models.TextField(
+        blank=True,
+        null=True
+    )
+    youtube_help_video_link = models.URLField(
+        blank=True,
+        null=True
+    )
+    document = models.ForeignKey(
+        Document,
+        on_delete=models.CASCADE,
+    )
+    key = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    
+    def __str__(self):
+        return self.name    
+
+
+class DocumentSection(models.Model):
+    """Guarda las secciones opcionales/claúsulas de un documento
+
+    Campos del modelo:
+        name: Nombre del campo
+        content: Contenido enriquecido 
+        document: Lláve foránea al documento
+
+    """
+
+    name = models.CharField(max_length=255)
+    content = RichTextField('Contenido')
+    document = models.ForeignKey(
+        Document,
+        on_delete=models.CASCADE,
+    )
+    
+    def __str__(self):
+        return self.name    
+
+    

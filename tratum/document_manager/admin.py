@@ -1,7 +1,12 @@
 from django.contrib import admin
 from mptt.admin import MPTTModelAdmin
 from utils.admin import SoftDeletionModelAdminMixin
-from .models import Document, Category
+from .models import (
+    Document,
+    Category,
+    DocumentField,
+    DocumentSection
+)
 
 
 @admin.register(Document)
@@ -22,3 +27,5 @@ class CategoryAdmin(SoftDeletionModelAdminMixin, MPTTModelAdmin):
         'parent'
     )
 
+admin.site.register(DocumentField)
+admin.site.register(DocumentSection)
