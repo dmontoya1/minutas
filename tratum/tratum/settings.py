@@ -11,13 +11,15 @@ ALLOWED_HOSTS = [
     'localhost',
     'localhost.org',
     '138.197.86.31',
-    '127.0.0.1'    
+    '127.0.0.1',
+    '192.168.0.16'  
 ]
 
 INTERNAL_IPS = [
     'localhost',
     'localhost.org',
-    '127.0.0.1'  
+    '127.0.0.1',
+    '192.168.0.16'
 ]
 
 
