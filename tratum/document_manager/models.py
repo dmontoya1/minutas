@@ -102,7 +102,7 @@ class Document(SoftDeletionModelMixin):
             query = lambda f: self.documentfield_set.get(key=f)
         elif type_ == 'sections':
             ex = r'##(.*?)##'
-            query = lambda f: self.documentsection_set.get(pk=f)
+            query = lambda f: self.documentsection_set.get(key=f)
         raw_fields = re.findall(ex, c)
         for f in raw_fields:
             document_field = query(f)
@@ -142,10 +142,17 @@ class DocumentField(models.Model):
         Document,
         on_delete=models.CASCADE,
     )
-    key = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    key = models.UUIDField(
+        default=uuid.uuid4,
+        editable=False,
+        unique=True
+    )
     
     def __str__(self):
         return self.name    
+    
+    def clean_uuid(self):
+        return str(self.key).replace('-', '')
 
 
 class DocumentSection(models.Model):
@@ -160,12 +167,20 @@ class DocumentSection(models.Model):
 
     name = models.CharField(max_length=255)
     content = RichTextField('Contenido')
+    key = models.UUIDField(
+        default=uuid.uuid4,
+        editable=False,
+        unique=True
+    )
     document = models.ForeignKey(
         Document,
         on_delete=models.CASCADE,
     )
     
     def __str__(self):
-        return self.name    
+        return self.name   
+    
+    def clean_uuid(self):
+        return str(self.key).replace('-', '')
 
     

@@ -29,8 +29,8 @@
 
       {% for field in object.get_fields %}
         <div class="form-label-group mb-6">
-          <input name="{{field.key}}" type="text" id="{{field.key}}" class="form-control" placeholder="{{field.name}}" required>
-          <label for="{{field.key}}">{{field.name}}</label>
+          <input name="{{field.clean_uuid}}" type="text" id="{{field.clean_uuid}}" class="form-control" placeholder="{{field.name}}" required>
+          <label for="{{field.clean_uuid}}">{{field.name}}</label>
           {% if field.help_text %}
             <small>{{field.help_text}}</small>
           {% endif %}
@@ -45,10 +45,10 @@
         <p>El {{object.name}} tiene las siguientes secciones o cláusulas, selecciona las que deseas y las que no</p>
       </div>
 
-      {% for s in object.get_sections%}
+      {% for s in object.get_sections %}
         <div class="checkbox mb-3">
           <label>
-            <input type="checkbox" value="remember-me"> {{s.name}}
+            <input type="checkbox" name="{{s.clean_uuid}}" value="{{s.content}}"> {{s.name}}
           </label>
         </div>
       {% endfor %}

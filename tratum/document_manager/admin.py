@@ -20,6 +20,7 @@ class DocumentAdmin(SoftDeletionModelAdminMixin):
     )
     readonly_fields = ('slug',)
 
+
 @admin.register(Category)
 class CategoryAdmin(SoftDeletionModelAdminMixin, MPTTModelAdmin):
     extra_list_display = (
@@ -27,5 +28,20 @@ class CategoryAdmin(SoftDeletionModelAdminMixin, MPTTModelAdmin):
         'parent'
     )
 
-admin.site.register(DocumentField)
-admin.site.register(DocumentSection)
+
+@admin.register(DocumentField)
+class DocumentFieldAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',
+        'document',
+        'key'
+    )
+
+
+@admin.register(DocumentSection)
+class DocumentSectionAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',
+        'document',
+        'key'
+    )
