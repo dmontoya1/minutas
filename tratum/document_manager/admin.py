@@ -34,7 +34,7 @@ class DocumentFieldAdmin(admin.ModelAdmin):
     list_display = (
         'name',
         'document',
-        'key'
+        'clean_uuid'
     )
 
 
@@ -43,5 +43,5 @@ class DocumentSectionAdmin(admin.ModelAdmin):
     list_display = (
         'name',
         'document',
-        'key'
+        'clean_uuid'
     )

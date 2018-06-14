@@ -82,33 +82,46 @@ class Document(SoftDeletionModelMixin):
         return self.name    
 
     def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = self._get_unique_slug()
+        self.slug = self._get_unique_slug()
         super().save(*args, **kwargs)
 
     def _get_unique_slug(self):
         slug = slugify(self.name)
-        unique_slug = '{}-{}'.format(slug, self.pk)
+        unique_slug = '{}-{}'.format(slug, self.id)
         return unique_slug    
     
     def get_absolute_url(self):
         return reverse('document', kwargs={'slug': self.slug})
 
+    def query_component(self, key):
+        try:
+            component = self.documentfield_set.get(key=key)
+        except:
+            try:
+                component = self.documentsection_set.get(key=key)
+            except:
+                component = None
+        return component
+
     def get_components(self, type_):
         c = str(self.content)        
-        components = []
-        if type_ == 'fields':
-            ex = r'{{(.*?)}}'
-            query = lambda f: self.documentfield_set.get(key=f)
-        elif type_ == 'sections':
-            ex = r'##(.*?)##'
-            query = lambda f: self.documentsection_set.get(key=f)
+        fields = []
+        sections = []
+        ex = r'{{(.*?)}}'
+        query = lambda f: self.query_component(key=f)
         raw_fields = re.findall(ex, c)
         for f in raw_fields:
-            document_field = query(f)
-            components.append(document_field) 
-        print(components)
-        return components
+            component = query(f)
+            if component is not None:
+                if isinstance(component, DocumentField):
+                    fields.append(component)
+                elif isinstance(component, DocumentSection):
+                    sections.append(component)
+        if type_ == 'fields':
+            result = fields
+        elif type_ == 'sections':
+            result = sections
+        return result
 
     def get_fields(self):
         return self.get_components('fields')
