@@ -103,15 +103,15 @@ class Document(SoftDeletionModelMixin):
                 component = None
         return component
 
-    def get_components(self, type_):
+    def get_components(self, type_: str):
         c = str(self.content)        
         fields = []
         sections = []
+        result = []
         ex = r'{{(.*?)}}'
-        query = lambda f: self.query_component(key=f)
         raw_fields = re.findall(ex, c)
         for f in raw_fields:
-            component = query(f)
+            component = self.query_component(key=f)
             if component is not None:
                 if isinstance(component, DocumentField):
                     fields.append(component)
@@ -121,7 +121,7 @@ class Document(SoftDeletionModelMixin):
             result = fields
         elif type_ == 'sections':
             result = sections
-        return result
+        return list(set(result))
 
     def get_fields(self):
         return self.get_components('fields')

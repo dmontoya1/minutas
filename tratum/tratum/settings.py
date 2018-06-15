@@ -122,6 +122,9 @@ USE_TZ = True
 # Static and files 
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "tratum/static"),
+]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'tratum/media')
 
@@ -130,29 +133,50 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'tratum/media')
 CKEDITOR_CONFIGS = {
     'default': {
         'skin': 'moono',
-        'toolbar_Basic': [
-            ['Source', '-', 'Bold', 'Italic']
-        ],
         'toolbar_CustomToolbarConfig': [
-            {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
-            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
-            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
-            '/',
-            {'name': 'basicstyles',
-             'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
-            {'name': 'paragraph',
-             'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-',
-                       'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl',
-                       'Language']},
-            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
-            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
-            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
-            {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
-            {'name': 'about', 'items': ['About']},
-            {'name': 'yourcustomtools', 'items': [
-                'Preview',
-                'Maximize',
-            ]},
+            {
+                'name': 'document',
+                'items': [
+                    'Save'
+                ]
+            },
+            {
+                'name': 'clipboard',
+                'items': [
+                    'Cut',
+                    'Copy',
+                    'Paste',
+                    '-',
+                    'Undo',
+                    'Redo'
+                ]
+            },
+            {
+                'name': 'basicstyles',
+                'items': [
+                    'Bold',
+                    'Italic',
+                    'Underline'
+                ]
+            },
+            {
+                'name': 'paragraph',
+                'items': [
+                    'JustifyLeft',
+                    'JustifyCenter',
+                    'JustifyRight',
+                    'JustifyBlock'
+                ]
+            },
+            {
+                'items': [
+                    'Maximize',
+                ]
+            },
+            {
+                'name': 'documentfield',
+                'items': ['documentfield']
+            }
         ],
         'toolbar': 'CustomToolbarConfig', 
         'tabSpaces': 4,
@@ -167,7 +191,8 @@ CKEDITOR_CONFIGS = {
             'clipboard',
             'dialog',
             'dialogui',
-            'elementspath'
+            'elementspath',
+            'documentfield'
         ]),
     }
 }

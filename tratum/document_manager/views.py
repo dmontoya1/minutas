@@ -9,10 +9,25 @@ from django.template.loader import render_to_string
 from django.views import View
 
 from docx import Document as DocX
+from rest_framework import generics
 from xhtml2pdf import pisa as pisa
 
-from .models import Document
+from .models import (
+    Document,
+    DocumentField
+)
+from .serializers import DocumentFieldSerializer
 
+
+
+class DocumentFieldList(generics.ListAPIView):
+    serializer_class = DocumentFieldSerializer
+
+    def get_queryset(self):
+        q = DocumentField.objects.all()
+        if self.request.GET.get('document_id', None):
+            q = q.filter(document__id=self.request.GET['document_id'])
+        return q
 
 class ProcessDocumentView(View):
 

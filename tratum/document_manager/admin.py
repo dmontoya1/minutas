@@ -20,6 +20,13 @@ class DocumentAdmin(SoftDeletionModelAdminMixin):
     )
     readonly_fields = ('slug',)
 
+    class Media:
+        js = (
+            '//cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js',
+            '//unpkg.com/axios/dist/axios.min.js',
+            '/static/js/admin/maskComponent.js'
+        )
+
 
 @admin.register(Category)
 class CategoryAdmin(SoftDeletionModelAdminMixin, MPTTModelAdmin):

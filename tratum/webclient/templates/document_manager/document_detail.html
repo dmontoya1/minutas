@@ -48,7 +48,7 @@
       {% for s in object.get_sections %}
         <div class="checkbox mb-3">
           <label>
-            <input type="checkbox" name="{{s.clean_uuid}}" value="{{s.content}}"> {{s.name}}
+            <input type="checkbox" name="{{s.clean_uuid}}" value="{{s.content|safe}}"> {{s.name}}
           </label>
         </div>
       {% endfor %}

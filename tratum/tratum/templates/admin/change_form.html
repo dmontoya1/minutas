@@ -24,6 +24,7 @@
         }
     </style>
     {% if change %}
+        <div class="hidden object-info" data-id="{{original.pk}}"></div>
         <div class="submit-row">
             <p class="deletelink-box">
                 {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}

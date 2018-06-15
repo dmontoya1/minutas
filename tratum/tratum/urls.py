@@ -20,8 +20,9 @@ urlpatterns = [
     path('about-us/', AboutUsView.as_view(), name='about-us'),
     path('document/<slug:slug>/', DocumentDetailView.as_view(), name='document'),
     path('process/', ProcessDocumentView.as_view(), name='process'),
-    path('business_info/', include('business_info.urls'), name='business_info'),
+    path('business-info/', include('business_info.urls'), name='business_info'),
     path('store/', include('store.urls'), name='store'),
+    path('document-manager/', include('document_manager.urls'), name='document_manager')
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
