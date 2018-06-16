@@ -4,9 +4,10 @@ from django.template.loader import get_template
 
 from xhtml2pdf import pisa
 
+
 def render_to_pdf(path: str, context_dict: dict):
     template = get_template(path)
-    html = template.render(params)
+    html = template.render(context_dict)
     response = BytesIO()
     pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), response)
     if not pdf.err:

@@ -14,10 +14,13 @@ from xhtml2pdf import pisa as pisa
 
 from .models import (
     Document,
-    DocumentField
+    DocumentField,
+    DocumentSection
 )
-from .serializers import DocumentFieldSerializer
-
+from .serializers import (
+    DocumentFieldSerializer,
+    DocumentSectionSerializer
+)
 
 
 class DocumentFieldList(generics.ListAPIView):
@@ -29,12 +32,35 @@ class DocumentFieldList(generics.ListAPIView):
             q = q.filter(document__id=self.request.GET['document_id'])
         return q
 
+
+class DocumentSectionList(generics.ListAPIView):
+    serializer_class = DocumentSectionSerializer
+
+    def get_queryset(self):
+        q = DocumentSection.objects.all()
+        if self.request.GET.get('document_id', None):
+            q = q.filter(document__id=self.request.GET['document_id'])
+        return q
+        
+
+class DocumentSectionDetail(generics.RetrieveAPIView):
+    serializer_class = DocumentSectionSerializer
+    lookup_field = 'slug'
+
+    def get_object(self):
+        ins = DocumentSection()
+        slug = ins.formated_to_raw_slug(self.kwargs['slug'])
+        return DocumentSection.objects.get(slug=slug)
+    
+
 class ProcessDocumentView(View):
 
     def post(self, request, *args, **kwargs):
         document = Document.objects.get(id=request.POST['document'])
         template = Template(document.content)
         generated_document = template.render(Context(request.POST))
+
+        print(request.POST) 
 
         with open('{MEDIA}/documents/{name}.html'.format(
             MEDIA=settings.MEDIA_ROOT,

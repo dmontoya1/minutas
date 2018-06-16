@@ -176,6 +176,10 @@ CKEDITOR_CONFIGS = {
             {
                 'name': 'documentfield',
                 'items': ['documentfield']
+            },
+            {
+                'name': 'documentsection',
+                'items': ['documentsection']
             }
         ],
         'toolbar': 'CustomToolbarConfig', 
@@ -192,7 +196,8 @@ CKEDITOR_CONFIGS = {
             'dialog',
             'dialogui',
             'elementspath',
-            'documentfield'
+            'documentfield',
+            'documentsection'
         ]),
     }
 }

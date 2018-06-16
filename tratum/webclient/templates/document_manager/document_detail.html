@@ -29,8 +29,8 @@
 
       {% for field in object.get_fields %}
         <div class="form-label-group mb-6">
-          <input name="{{field.clean_uuid}}" type="text" id="{{field.clean_uuid}}" class="form-control" placeholder="{{field.name}}" required>
-          <label for="{{field.clean_uuid}}">{{field.name}}</label>
+          <input name="{{field.formated_slug}}" type="text" id="{{field.formated_slug}}" class="form-control" placeholder="{{field.name}}" required>
+          <label for="{{field.formated_slug}}">{{field.name}}</label>
           {% if field.help_text %}
             <small>{{field.help_text}}</small>
           {% endif %}
@@ -48,13 +48,12 @@
       {% for s in object.get_sections %}
         <div class="checkbox mb-3">
           <label>
-            <input type="checkbox" name="{{s.clean_uuid}}" value="{{s.content|safe}}"> {{s.name}}
+            <input type="checkbox" name="{{s.formated_slug}}" value="{{s.content}}"> {{s.name}}
           </label>
         </div>
       {% endfor %}
      
-      <input type="submit" class="btn btn-lg btn-primary btn-block" name="pdf" value="Descargar PDF" />
-      <input class="btn btn-lg btn-primary btn-block" type="submit" name="doc" value="Descargar DOCX" />
+      <input type="submit" class="btn btn-lg btn-primary btn-block" name="pdf" value="Descargar" />
       <p class="mt-5 mb-3 text-muted text-center"><a href="/">Volver</a></p>
     </form>
   </body>

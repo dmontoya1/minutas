@@ -41,8 +41,9 @@ class DocumentFieldAdmin(admin.ModelAdmin):
     list_display = (
         'name',
         'document',
-        'clean_uuid'
+        'slug'
     )
+    readonly_fields = ('slug',)
 
 
 @admin.register(DocumentSection)
@@ -50,5 +51,6 @@ class DocumentSectionAdmin(admin.ModelAdmin):
     list_display = (
         'name',
         'document',
-        'clean_uuid'
+        'slug'
     )
+    readonly_fields = ('slug',)

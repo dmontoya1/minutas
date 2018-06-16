@@ -9,7 +9,5 @@ CKEDITOR.plugins.add('documentfield', {
         });
 
         CKEDITOR.dialog.add('fieldDialog', this.path + 'dialogs/documentField.js');
-
-        console.log($('.cke_editable'))
     }
 });
