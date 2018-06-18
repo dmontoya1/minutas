@@ -114,7 +114,28 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
         return self.get_components('fields')
     
     def get_sections(self):
-        return self.get_components('sections')
+        return self.get_components('sections') 
+
+
+class DocumentSection(SlugIdentifierMixin):
+    """Guarda las secciones opcionales/claúsulas de un documento
+
+    Campos del modelo:
+        name: Nombre del campo
+        content: Contenido enriquecido 
+        document: Lláve foránea al documento
+
+    """
+
+    name = models.CharField(max_length=255)
+    content = RichTextField('Contenido')
+    document = models.ForeignKey(
+        Document,
+        on_delete=models.CASCADE,
+    )
+    
+    def __str__(self):
+        return self.name 
 
 
 class DocumentField(SlugIdentifierMixin):
@@ -138,27 +159,6 @@ class DocumentField(SlugIdentifierMixin):
         blank=True,
         null=True
     )
-    document = models.ForeignKey(
-        Document,
-        on_delete=models.CASCADE,
-    )
-    
-    def __str__(self):
-        return self.name    
-
-
-class DocumentSection(SlugIdentifierMixin):
-    """Guarda las secciones opcionales/claúsulas de un documento
-
-    Campos del modelo:
-        name: Nombre del campo
-        content: Contenido enriquecido 
-        document: Lláve foránea al documento
-
-    """
-
-    name = models.CharField(max_length=255)
-    content = RichTextField('Contenido')
     document = models.ForeignKey(
         Document,
         on_delete=models.CASCADE,

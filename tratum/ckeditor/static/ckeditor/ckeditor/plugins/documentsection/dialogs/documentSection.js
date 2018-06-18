@@ -1,6 +1,6 @@
 CKEDITOR.dialog.add( 'sectionDialog', function(editor){
     return {
-        title: 'Agregar sección/claúsula dinámico',
+        title: 'Agregar sección/claúsula dinámica',
         minWidth: 400,
         minHeight: 200,
         contents: [
