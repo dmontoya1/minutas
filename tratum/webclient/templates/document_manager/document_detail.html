@@ -18,7 +18,7 @@
   </head>
 
   <body>
-    <form class="form-signin" method="POST" action="{% url 'process' %}">
+    <form class="form-signin" method="POST" action="{% url 'process' %}" style="max-width: 680px;">
       {% csrf_token %}
       <input type="hidden" name="document" value="{{object.id}}" />
       <div class="text-center mb-4">
@@ -28,7 +28,7 @@
       </div>
 
       {% for field in object.get_fields %}
-        <div class="form-label-group mb-6">
+        <div class="form-label-group mb-5">
           <input name="{{field.formated_slug}}" type="text" id="{{field.formated_slug}}" class="form-control" placeholder="{{field.name}}" required>
           <label for="{{field.formated_slug}}">{{field.name}}</label>
           {% if field.help_text %}
@@ -41,20 +41,50 @@
         </div>
       {% endfor %}
       
-      <div class="text-center mb-4">
+      <div class="text-center mb-5">
         <p>El {{object.name}} tiene las siguientes secciones o cláusulas, selecciona las que deseas y las que no</p>
       </div>
 
       {% for s in object.get_sections %}
         <div class="checkbox mb-3">
           <label>
-            <input type="checkbox" name="{{s.formated_slug}}" value="{{s.content}}"> {{s.name}}
+            <input type="checkbox" name="{{s.formated_slug}}" class="section-check" value="{{s.content}}" data-id="{{s.id}}"> {{s.name}}
           </label>
         </div>
+        {% for field in s.documentfield_set.all %}
+          <div class="form-label-group mb-5 section-field" data-section="{{s.id}}">
+            <input name="{{field.formated_slug}}" type="text" id="{{field.formated_slug}}" class="form-control" placeholder="{{field.name}}">
+            <label for="{{field.formated_slug}}">{{field.name}}</label>
+            {% if field.help_text %}
+              <small>{{field.help_text}}</small>
+            {% endif %}
+
+            {% if field.youtube_help_video_link %}
+              <iframe class="mb-6" width="100%" height="200" src="{{field.youtube_help_video_link}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            {% endif %}
+          </div>
+        {% endfor %}
       {% endfor %}
      
       <input type="submit" class="btn btn-lg btn-primary btn-block" name="pdf" value="Descargar" />
       <p class="mt-5 mb-3 text-muted text-center"><a href="/">Volver</a></p>
     </form>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"></script>
+    <script>
+      $(document).ready(function(){
+        $('.section-field').hide();
+        $('.section-check').on('change', function(){
+          id = $(this).data('id')
+          if($(this).prop('checked')){
+            $(`.section-field[data-section="${id}"]`).show()
+          } else {
+            $(`.section-field[data-section="${id}"]`).hide()
+          }
+        })
+      })
+    </script>
   </body>
 </html>

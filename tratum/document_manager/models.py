@@ -1,5 +1,6 @@
 import re
 
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
 
@@ -66,7 +67,11 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
         on_delete=models.SET_NULL,
         verbose_name='Categoría'
     )
-    content = RichTextField('Contenido')
+    content = RichTextField(
+        'Contenido',
+        null=True, 
+        blank=True
+    )
  
     class Meta:
         verbose_name = 'Documento'
@@ -103,12 +108,12 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
         for f in raw_fields:
             component = self.query_component(f)
             if component is not None:
-                if isinstance(component, DocumentField):
+                if isinstance(component, DocumentField) and component not in fields:
                     fields.append(component)
-                elif isinstance(component, DocumentSection):
+                elif isinstance(component, DocumentSection) and component not in sections:
                     sections.append(component)
         
-        return list(set(result))
+        return result
 
     def get_fields(self):
         return self.get_components('fields')
@@ -128,12 +133,19 @@ class DocumentSection(SlugIdentifierMixin):
     """
 
     name = models.CharField(max_length=255)
-    content = RichTextField('Contenido')
+    content = RichTextField(
+        'Contenido',
+        null=True,
+        blank=True
+    )
     document = models.ForeignKey(
         Document,
         on_delete=models.CASCADE,
     )
     
+    class Meta:
+        unique_together = ('name', 'document')
+
     def __str__(self):
         return self.name 
 
@@ -162,7 +174,26 @@ class DocumentField(SlugIdentifierMixin):
     document = models.ForeignKey(
         Document,
         on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+    section = models.ForeignKey(
+        DocumentSection,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
     )
     
+    class Meta:
+        unique_together = ('name', 'document')
+        
     def __str__(self):
         return self.name   
+
+    def clean(self):
+        if self.document and self.section:
+            raise ValidationError('Tu campo no puede pertenecer a un documento y a una sección simultáneamente')
+        if not self.document and not self.section:
+            raise ValidationError('Selecciona un documento o una sección para éste campo')
+
+    

@@ -82,12 +82,17 @@ CKEDITOR.dialog.add( 'fieldDialog', function(editor){
 });
 
 function populateDocumentFields(){
-    object_id = document.querySelector('.object-info');
+    object_info = document.querySelector('.object-info');
     filter = '';
-    if(object_id){
-        filter = 'document_id=' + object_id.dataset.id;
-    }
-    axios.get(`/document-manager/document-fields/?${filter}`)
+    if(object_info){
+        filter = 'document_id=' + object_info.dataset.id;
+        if(object_info.dataset.model == 'documentsection'){
+            url = `/document-manager/document-sections/${object_info.dataset.slug}/section-fields/`
+        } else if(object_info.dataset.model == 'document'){
+            url = `/document-manager/document-fields/?${filter}`
+        }
+    }    
+    axios.get(url)
         .then(function(response) {
             select = document.querySelector('select.document-select');
             select.options.length = 0;

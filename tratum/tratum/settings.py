@@ -12,7 +12,8 @@ ALLOWED_HOSTS = [
     'localhost.org',
     '138.197.86.31',
     '127.0.0.1',
-    '192.168.0.16'  
+    '192.168.0.16',
+    '192.168.0.14'
 ]
 
 INTERNAL_IPS = [
@@ -180,6 +181,10 @@ CKEDITOR_CONFIGS = {
             {
                 'name': 'documentsection',
                 'items': ['documentsection']
+            },
+            {
+                'name': 'forms',
+                'items': ['Button']
             }
         ],
         'toolbar': 'CustomToolbarConfig', 

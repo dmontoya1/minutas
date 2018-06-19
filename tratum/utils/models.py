@@ -58,14 +58,18 @@ class SlugIdentifierMixin(models.Model):
         abstract = True
 
     def save(self, *args, **kwargs):
-        print('saving')
         self.slug = self._get_unique_slug()
         super().save(*args, **kwargs)
     
     def _get_unique_slug(self):
-        slug = slugify(self.name)
-        unique_slug = '{}-{}'.format(slug, self.id)
-        return unique_slug   
+        slug = self.name
+        if hasattr(self, 'document'):
+            if self.document:
+                slug = slugify('{}-{}'.format(self.name, self.document.slug))
+        if hasattr(self, 'section'):
+            if self.section:
+                slug = slugify('{}-{}'.format(self.name, self.section.slug))
+        return slugify(slug)   
     
     def formated_slug(self):
         return str(self.slug).replace('-', '_')

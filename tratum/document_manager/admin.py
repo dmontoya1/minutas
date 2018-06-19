@@ -54,3 +54,8 @@ class DocumentSectionAdmin(admin.ModelAdmin):
         'slug'
     )
     readonly_fields = ('slug',)
+
+    class Media:
+        js = (
+            '//unpkg.com/axios/dist/axios.min.js',
+        )

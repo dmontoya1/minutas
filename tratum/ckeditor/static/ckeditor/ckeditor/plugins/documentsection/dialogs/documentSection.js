@@ -66,7 +66,7 @@ CKEDITOR.dialog.add( 'sectionDialog', function(editor){
 
             addNewButton.addEventListener("click", function(e){
                 e.preventDefault();
-                addWindow = window.open("/admin/document_manager/documentsection/add/?_to_field=id&_popup=1", 'Agregar sección','height=750, width=950');
+                addWindow = window.open("/admin/document_manager/documentsection/add/", 'Agregar sección');
                 if(window.focus){
                     addWindow.focus();
                 }

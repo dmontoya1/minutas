@@ -41,6 +41,11 @@ class DocumentSectionList(generics.ListAPIView):
         if self.request.GET.get('document_id', None):
             q = q.filter(document__id=self.request.GET['document_id'])
         return q
+
+class DocumentSectionFieldsList(DocumentFieldList):
+
+    def get_queryset(self): 
+        return DocumentField.objects.filter(section__slug=self.kwargs['slug'])
         
 
 class DocumentSectionDetail(generics.RetrieveAPIView):
@@ -57,19 +62,22 @@ class ProcessDocumentView(View):
 
     def post(self, request, *args, **kwargs):
         document = Document.objects.get(id=request.POST['document'])
-        template = Template(document.content)
-        generated_document = template.render(Context(request.POST))
 
-        print(request.POST) 
+        content = document.content
+        
+        template = Template(content)
+        generated_document = template.render(Context(request.POST)).encode('ascii', 'xmlcharrefreplace')
+
+        print(generated_document)
 
         with open('{MEDIA}/documents/{name}.html'.format(
             MEDIA=settings.MEDIA_ROOT,
             name=uuid.uuid4()),'a+') as file:
-            file.write(generated_document)
+            file.write(str(generated_document))
 
         if request.POST.get('pdf', None):
             response = BytesIO()
-            pdf = pisa.pisaDocument(BytesIO(generated_document.encode("UTF-8")), response)
+            pdf = pisa.pisaDocument(BytesIO(generated_document), response)
 
             if not pdf.err:
                 response = HttpResponse(response.getvalue(), content_type='application/pdf')
