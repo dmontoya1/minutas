@@ -90,7 +90,7 @@ class FAQItem(models.Model):
 
 
 class SiteConfig(models.Model):
-    """Guarda la información del sitio estático (Landing, quienes sómos ...)
+    """Guarda la información del sitio estático (Landing page y quienes sómos)
 
     Campos del modelo:
         about_page_title: Nombre de la página de Quienes sómos

@@ -1,0 +1,147 @@
+{% load humanize %}
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="https://getbootstrap.com/assets/img/favicons/favicon-32x32.png">
+
+  <title>Tratum</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+    crossorigin="anonymous">
+
+  <!-- Custom styles for this template -->
+  <link href="https://getbootstrap.com/docs/4.1/examples/album/album.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <header>
+    <div class="collapse bg-dark" id="navbarHeader">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-4 py-4">
+            <h4 class="text-white">General</h4>
+            <ul class="list-unstyled">
+              <li>
+                <a href="/policies/" class="text-white">Políticas</a>
+              </li>
+              <li>
+                <a href="/faq/" class="text-white">FAQ</a>
+              </li>
+              <li>
+                <a href="/about-us/" class="text-white">Quienes sómos</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="navbar navbar-dark bg-dark box-shadow">
+      <div class="container d-flex justify-content-between">
+        <a href="#" class="navbar-brand d-flex align-items-center">
+          <strong>Tratum</strong>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main role="main">
+
+    <section class="jumbotron text-center">
+      <div class="container">
+        <h1 class="jumbotron-heading">Tratum</h1>
+        <p class="lead text-muted">¿Eres un emprendedor? ¿Requieres redactar un documento legal y no tienes experiencia? Tratum es la solución para
+          tus necesidades</p>
+      </div>
+    </section>
+
+    <div class="album py-5 bg-light">
+      <div class="container">
+        <h2 class="text-center">Nuestros paquetes</h2>
+        {% for b in bundles %}
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                  <p class="card-text">{{b.name}}</p>
+                  <ul>
+                    {% for d in b.documents.all %}
+                      <li>
+                        <a href="{{d.get_absolute_url}}">{{d.name}}</a>
+                      </li>
+                    {% endfor%}
+                  </ul>
+                  <button class="btn btn-primary">${{b.price|intcomma}}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="album py-5 bg-light">
+      <div class="container">
+        {% for c in categories %}
+          <div class="row">
+              <div class="col-md-12">
+                  <h2 class="text-center">{{c.name}}</h2>
+              </div>
+              {% for d in c.document_set.alive %}
+                <div class="col-md-4">
+                  <div class="card mb-4 box-shadow">
+                    <img class="card-img-top" src="https://media.istockphoto.com/vectors/documents-and-hand-with-pen-signs-documents-treaty-signing-concept-vector-id500641404" alt="Card image cap">
+                    <div class="card-body">
+                      <p class="card-text">{{d.name}}</p>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                          <a  class="btn btn-sm btn-outline-secondary" href="{{d.get_absolute_url}}">Comenzar</a>
+                        </div>
+                        <small class="text-muted">Aprox. 9 mins</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="text-muted">
+    <div class="container">
+      <p class="float-right">
+        <a href="#">Back to top</a>
+      </p>
+      <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
+      <p>New to Bootstrap?
+        <a href="../../">Visit the homepage</a> or read our
+        <a href="../../getting-started/">getting started guide</a>.</p>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+
+  <script>window.jQuery || document.write('<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"><\/script>')</script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+    crossorigin="anonymous"></script>
+
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

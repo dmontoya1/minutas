@@ -1,0 +1,26 @@
+.swiper-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+    .swiper-container .swiper-slide img {
+        width: 100%;
+    }
+    .swiper-container .swiper-slide .description {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);        
+    }
+        .swiper-container .swiper-slide .description p {
+            font-size: 1.5em;
+            font-weight: 800;    
+        }
+
+section {
+    margin-top: 65px;
+    padding-bottom: 5px;
+}
