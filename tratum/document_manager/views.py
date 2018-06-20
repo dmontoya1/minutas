@@ -62,7 +62,9 @@ class ProcessDocumentView(View):
 
     def post(self, request, *args, **kwargs):
         document = Document.objects.get(id=request.POST['document'])
-        template = Template(document.content)
+        content = document.content + '<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> \
+        <script type="text/javascript">$(document).ready(function(){$("p").css("color", "red")})</script>'
+        template = Template(content)
         generated_document = template.render(Context(request.POST)).encode('ascii', 'xmlcharrefreplace')
 
         
@@ -73,7 +75,7 @@ class ProcessDocumentView(View):
             file.write(str(generated_document))
 
         return HttpResponse(generated_document)
-        
+
         if request.POST.get('pdf', None):
             response = BytesIO()
             pdf = pisa.pisaDocument(BytesIO(generated_document), response)
