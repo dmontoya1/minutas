@@ -62,19 +62,18 @@ class ProcessDocumentView(View):
 
     def post(self, request, *args, **kwargs):
         document = Document.objects.get(id=request.POST['document'])
-
-        content = document.content
-        
-        template = Template(content)
+        template = Template(document.content)
         generated_document = template.render(Context(request.POST)).encode('ascii', 'xmlcharrefreplace')
 
-        print(generated_document)
+        
 
         with open('{MEDIA}/documents/{name}.html'.format(
             MEDIA=settings.MEDIA_ROOT,
             name=uuid.uuid4()),'a+') as file:
             file.write(str(generated_document))
 
+        return HttpResponse(generated_document)
+        
         if request.POST.get('pdf', None):
             response = BytesIO()
             pdf = pisa.pisaDocument(BytesIO(generated_document), response)
