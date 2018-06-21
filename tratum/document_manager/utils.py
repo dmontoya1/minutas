@@ -1,16 +1,8 @@
-from io import BytesIO
-from django.http import HttpResponse
-from django.template.loader import get_template
 
-from xhtml2pdf import pisa
-
-
-def render_to_pdf(path: str, context_dict: dict):
-    template = get_template(path)
-    html = template.render(context_dict)
-    response = BytesIO()
-    pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), response)
-    if not pdf.err:
-        return HttpResponse(response.getvalue(), content_type='application/pdf')
-    else:
-        return HttpResponse("Error Rendering PDF", status=400)
+def add_document_scripts(content: str):
+    jquery_tag = '<script \
+    src="https://code.jquery.com/jquery-3.3.1.slim.min.js" \
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" \
+    crossorigin="anonymous" type="text/javascript"></script>'
+    formatter_tag = '<script type="text/javascript" src="/static/js/documentFormatter.js">'
+    return content + (jquery_tag, formatter_tag)

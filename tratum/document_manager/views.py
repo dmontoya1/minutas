@@ -5,7 +5,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template import Template, Context
-from django.template.loader import render_to_string
+from django.template.loader import render_to_string, get_template
 from django.views import View
 
 from docx import Document as DocX
@@ -21,6 +21,7 @@ from .serializers import (
     DocumentFieldSerializer,
     DocumentSectionSerializer
 )
+from .utils import add_document_scripts
 
 
 class DocumentFieldList(generics.ListAPIView):
@@ -62,12 +63,14 @@ class ProcessDocumentView(View):
 
     def post(self, request, *args, **kwargs):
         document = Document.objects.get(id=request.POST['document'])
-        content = document.content + '<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> \
-        <script type="text/javascript">$(document).ready(function(){$("p").css("color", "red")})</script>'
-        template = Template(content)
-        generated_document = template.render(Context(request.POST)).encode('ascii', 'xmlcharrefreplace')
-
-        
+        template = get_template(document.template_path)
+        context = request.POST.copy()
+        context['scripts'] = '<script \
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js" \
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" \
+            crossorigin="anonymous" type="text/javascript"></script> \
+            <script type="text/javascript" src="/static/js/documentFormatter.js">'
+        generated_document = template.render(context).encode('ascii', 'xmlcharrefreplace')
 
         with open('{MEDIA}/documents/{name}.html'.format(
             MEDIA=settings.MEDIA_ROOT,

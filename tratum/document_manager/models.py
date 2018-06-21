@@ -1,5 +1,8 @@
 import re
+import os 
+import uuid
 
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
@@ -67,6 +70,10 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
         on_delete=models.SET_NULL,
         verbose_name='Categoría'
     )
+    template_path = models.TextField(
+        null=True,
+        blank=True
+    )
     content = RichTextField(
         'Contenido',
         null=True, 
@@ -79,6 +86,14 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
     def __str__(self):
         return self.name     
     
+    def save(self):
+        path = os.path.join(settings.BASE_DIR, "document_manager/templates/document_manager/dynamic_documents_templates")
+        html_template = open('{}/{}.html'.format(path, uuid.uuid4()), 'w+')
+        html_template.write(self.content)
+        html_template.close()
+        self.template_path = html_template.name
+        SlugIdentifierMixin.save(self)
+
     def get_absolute_url(self):
         return reverse('document', kwargs={'slug': self.slug})
 

@@ -1,0 +1,51 @@
+<p>{% extends dynamic_documents_templates/base.html&nbsp;%}</p>
+
+<p>{% block content %}</p>
+
+<p style="margin-left:0cm; margin-right:0cm; text-align:center"><strong>ESTATUTOS B&Aacute;SICOS PARA SOCIEDAD POR ACCIONES SIMPLIFICADA</strong></p>
+
+<p style="margin-left:0cm; margin-right:0cm; text-align:center">{{nombre_de_empresa}}</p>
+
+<p style="margin-left:0cm; margin-right:0cm; text-align:center">&nbsp;</p>
+
+<p style="margin-left:0cm; margin-right:0cm; text-align:justify">Por medio del presente documento privado, se reunen&nbsp;{{nombre_completo_de_accionista_principal}}&nbsp;identificado con {{tipo_de_identificacion_de_accionista_principal}}&nbsp;#{{numero_de_identificacion_de_accionista_principal}}&nbsp;de la ciudad de {{ciudad_de_expedicion_de_documento_de_accionista_principal}}&nbsp;y&nbsp;{{nombre_completo_de_accionista_secundario}}&nbsp;identificado con&nbsp;{{tipo_de_identificacion_de_accionista_secundario}}&nbsp;#{{numero_de_identificacion_de_accionista_secundario}}&nbsp;de la ciudad de&nbsp;{{ciudad_de_expedicion_de_documento_de_accionista_secundario}}.</p>
+
+<p style="text-align:justify">&nbsp;</p>
+
+<p style="text-align:center"><strong><input name="dynamic_counter" type="button" value="dynamic_counter" />Nombre, nacionalidad y domicilio.</strong></p>
+
+<p style="margin-left:0cm; margin-right:0cm; text-align:justify">La sociedad se denomina&nbsp;{{nombre_de_sociedad}} SAS.&nbsp;Es una sociedad comercial por acciones simplificada, de nacionalidad colombiana. El domicilio principal de la sociedad es la ciudad de {{ciudad_de_domicilio_de_la_sociedad}}.&nbsp;La sociedad podr&aacute; crear sucursales, agencias y establecimientos por decisi&oacute;n de su Asamblea General de Accionistas.</p>
+
+<p style="margin-left:0cm; margin-right:0cm; text-align:justify">&nbsp;</p>
+
+<p style="margin-left:0cm; margin-right:0cm; text-align:justify">{% if confidencialidad_estatutos_basicos_para_sas %}</p>
+
+<p style="margin-left:0cm; margin-right:0cm; text-align:center"><strong><input name="dynamic_counter" type="button" value="dynamic_counter" />Confidencialidad&nbsp;</strong></p>
+
+<p style="margin-left:0cm; margin-right:0cm; text-align:start">Esta secci&oacute;n de confidencialidad, con c&oacute;digo&nbsp;{{identificador_de_confidencialidad_confidencialidad_estatutos_basicos_para_sas}}, es una secci&oacute;n opcional.</p>
+
+<p style="margin-left:0cm; margin-right:0cm; text-align:justify">{% endif %}</p>
+
+<p style="margin-left:0cm; margin-right:0cm; text-align:justify">{% if seccion_de_prueba_estatutos_basicos_para_sas %}</p>
+
+<p>&Eacute;sta secci&oacute;n es opcional, y pide una variable propia de la secci&oacute;n la cual es&nbsp;{{apodo_del_contratista_seccion_de_prueba_estatutos_basicos_para_sas}} y puede incluirse una variable global del documento, como por ejemplo, el nombre de empresa ({{nombre_de_empresa}})</p>
+
+<p style="margin-left:0cm; margin-right:0cm; text-align:justify">{% endif %}</p>
+
+<p style="margin-left:0cm; margin-right:0cm; text-align:justify">&nbsp;</p>
+
+<p style="margin-left:0cm; margin-right:0cm; text-align:center"><strong><input name="dynamic_counter" type="button" value="dynamic_counter" />Derechos</strong></p>
+
+<p style="margin-left:0cm; margin-right:0cm; text-align:justify">Cada acci&oacute;n nominativa de&nbsp;{{nombre_de_sociedad}} confiere los siguientes derechos a su propietario:</p>
+
+<p style="margin-left:0cm; margin-right:0cm; text-align:justify">a) El de deliberar y votar en la Asamblea de Accionistas de la Sociedad;</p>
+
+<p style="margin-left:0cm; margin-right:0cm; text-align:justify">b) El de percibir una parte proporcional a su participaci&oacute;n en el capital de la sociedad de los beneficios sociales establecidos por los balances de fin de ejercicio;</p>
+
+<p style="margin-left:0cm; margin-right:0cm; text-align:justify">c) El de negociar las acciones con sujeci&oacute;n a la ley y a los estatutos;</p>
+
+<p style="margin-left:0cm; margin-right:0cm; text-align:justify">d) El de inspeccionar libremente los libros y papeles sociales, dentro de los cinco {{dias_habiles_para_inspeccion_de_libros}}<strong>&nbsp;</strong>d&iacute;as h&aacute;biles anteriores a la fecha en que deban aprobarse los balances de fin de ejercicio, en los eventos previstos en el art&iacute;culo 20 de la ley 1258 de 2008.</p>
+
+<p style="margin-left:0cm; margin-right:0cm; text-align:justify">&nbsp;</p>
+
+<p style="margin-left:0cm; margin-right:0cm; text-align:justify">{% endblock %}</p>

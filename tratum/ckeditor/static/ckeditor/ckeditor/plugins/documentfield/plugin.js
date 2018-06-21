@@ -11,11 +11,5 @@ CKEDITOR.plugins.add('documentfield', {
         CKEDITOR.dialog.add('fieldDialog', this.path + 'dialogs/documentField.js');
     }
 });
-var head = CKEDITOR.instances.id_content.document.getHead();
-var myscript = CKEDITOR.document.createElement( 'script', {
-    attributes : {
-        type : 'text/javascript',
-        'data-cke-saved-src' : '/static/js/documentFormatter.js'
-    }
-});
-head.append( myscript );
+
+CKEDITOR.scriptLoader.load( '/static/js/documentFormatter.js' );

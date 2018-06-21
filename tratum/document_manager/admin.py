@@ -18,7 +18,7 @@ class DocumentAdmin(SoftDeletionModelAdminMixin):
     list_select_related = (
         'category',
     )
-    readonly_fields = ('slug',)
+    readonly_fields = ('slug', 'template_path')
 
     class Media:
         js = (
