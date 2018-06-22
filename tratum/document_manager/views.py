@@ -2,7 +2,7 @@ import uuid
 from io import BytesIO
 
 from django.conf import settings
-from django.http import HttpResponse
+from django.http import HttpResponse, FileResponse
 from django.shortcuts import render
 from django.template import Template, Context
 from django.template.loader import render_to_string, get_template
@@ -10,6 +10,7 @@ from django.views import View
 
 from docx import Document as DocX
 from rest_framework import generics
+from selenium import webdriver
 from xhtml2pdf import pisa as pisa
 
 from .models import (
@@ -63,28 +64,21 @@ class ProcessDocumentView(View):
 
     def post(self, request, *args, **kwargs):
         document = Document.objects.get(id=request.POST['document'])
-        template = get_template(document.template_path)
-        context = request.POST.copy()
-        context['scripts'] = '<script \
+        content = document.content + '<script \
             src="https://code.jquery.com/jquery-3.3.1.slim.min.js" \
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" \
             crossorigin="anonymous" type="text/javascript"></script> \
-            <script type="text/javascript" src="/static/js/documentFormatter.js">'
-        generated_document = template.render(context).encode('ascii', 'xmlcharrefreplace')
+            <script type="text/javascript" src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script> \
+            <script type="text/javascript" src="/static/js/documentFormatter.js"></script>'
+        template = Template(content)
+        template = template.render(Context(request.POST)).encode('ascii', 'xmlcharrefreplace')
 
-        with open('{MEDIA}/documents/{name}.html'.format(
-            MEDIA=settings.MEDIA_ROOT,
-            name=uuid.uuid4()),'a+') as file:
-            file.write(str(generated_document))
-
-        return HttpResponse(generated_document)
-
+        return HttpResponse(template)
         if request.POST.get('pdf', None):
-            response = BytesIO()
-            pdf = pisa.pisaDocument(BytesIO(generated_document), response)
+            pdf = pisa.pisaDocument(innerHTML)
 
             if not pdf.err:
-                response = HttpResponse(response.getvalue(), content_type='application/pdf')
+                response = HttpResponse(pdf, content_type='application/pdf')
                 content_disposition = 'attachment; filename="{}.pdf"'.format(document.name)
                 response['Content-Disposition'] = content_disposition
                 return response

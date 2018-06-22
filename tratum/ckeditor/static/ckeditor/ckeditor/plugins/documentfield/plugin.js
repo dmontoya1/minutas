@@ -11,5 +11,3 @@ CKEDITOR.plugins.add('documentfield', {
         CKEDITOR.dialog.add('fieldDialog', this.path + 'dialogs/documentField.js');
     }
 });
-
-CKEDITOR.scriptLoader.load( '/static/js/documentFormatter.js' );

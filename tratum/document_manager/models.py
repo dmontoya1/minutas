@@ -74,6 +74,9 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
         null=True,
         blank=True
     )
+    formated = models.BooleanField(
+        default=False
+    )
     content = RichTextField(
         'Contenido',
         null=True, 
@@ -211,4 +214,3 @@ class DocumentField(SlugIdentifierMixin):
         if not self.document and not self.section:
             raise ValidationError('Selecciona un documento o una sección para éste campo')
 
-    
