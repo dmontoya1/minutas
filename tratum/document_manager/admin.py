@@ -41,7 +41,14 @@ class DocumentFieldAdmin(admin.ModelAdmin):
     list_display = (
         'name',
         'document',
+        'section',
+        'field_type',
         'slug'
+    )
+    list_filter = (
+        'document',
+        'section',
+        'field_type'
     )
     readonly_fields = ('slug',)
 

@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 import re
 import os 
 import uuid
@@ -178,28 +181,57 @@ class DocumentField(SlugIdentifierMixin):
         del usuario final
         document: Lláve foránea al documento
         
-    """
+    """ 
 
-    name = models.CharField(max_length=255)
+    NUMBER = 'NU'
+    TEXT = 'TX'
+    DATE = 'DT'
+    SELECT = 'SE'
+    LIST = 'LI'
+    GROUP = 'GP'
+
+    FIELD_TYPE = (
+        (NUMBER, 'Numérico'),
+        (TEXT, 'Texto abierto'),
+        (DATE, 'Fecha'),
+        (SELECT, 'Opciones de única respuesta'),
+        (LIST, 'Listado'),
+        (GROUP, 'Agrupación de campos')
+    )
+
+    name = models.CharField(
+        'Nombre',
+        max_length=255
+    )
     help_text = models.TextField(
+        'Texto de ayuda',
         blank=True,
         null=True
     )
     youtube_help_video_link = models.URLField(
+        'Link de Youtube del video de ayuda',
         blank=True,
         null=True
     )
+    field_type = models.CharField(
+        'Tipo de campo',
+        max_length=2,
+        default=TEXT,
+        choices=FIELD_TYPE
+    ) 
     document = models.ForeignKey(
         Document,
         on_delete=models.CASCADE,
         null=True,
-        blank=True
+        blank=True,
+        verbose_name='Documento'
     )
     section = models.ForeignKey(
         DocumentSection,
         on_delete=models.CASCADE,
         null=True,
-        blank=True
+        blank=True,
+        verbose_name='Sección'
     )
     
     class Meta:
