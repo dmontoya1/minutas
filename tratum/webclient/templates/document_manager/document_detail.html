@@ -35,7 +35,7 @@
             
           {% else %}
             {% if field.field_type == field.SELECT %}
-              <select>
+              <select name="{{field.formated_slug}}">
                 {% for f in field.documentfieldoption_set.all %}
                   <option value="{{f.name}}">{{f.name}}</option>
                 {% endfor %}
