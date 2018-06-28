@@ -247,7 +247,7 @@ class DocumentField(SlugIdentifierMixin):
             raise ValidationError('Selecciona un documento o una sección para éste campo')
     
     def is_text_input(self):
-        return self.field_type in (self.TEXT, self.DATE, self.NUMBER, self.LIST)
+        return self.field_type in (self.TEXT, self.DATE, self.NUMBER)
     
     def get_html_input_type(self):
         if self.field_type == self.TEXT or self.field_type == self.LIST:

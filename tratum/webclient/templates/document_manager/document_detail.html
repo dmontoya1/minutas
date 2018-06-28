@@ -33,22 +33,44 @@
             <input name="{{field.formated_slug}}" type="{{field.get_html_input_type}}" id="{{field.formated_slug}}" class="form-control" placeholder="{{field.name}}" required>
             <label for="{{field.formated_slug}}">{{field.name}}</label>
             
-          {% else %}
-            {% if field.field_type == field.SELECT %}
+          {% elif field.field_type == field.SELECT %}
               <select name="{{field.formated_slug}}">
                 {% for f in field.documentfieldoption_set.all %}
                   <option value="{{f.name}}">{{f.name}}</option>
                 {% endfor %}
               </select>
-            {% else %}
-              <h1>Agrupación de campos: {{field.name}}</h1>
-              {% for af in field.field_group.all %}
-                <div class="form-label-group mb-12">
-                  <input name="{{af.formated_slug}}" type="{{af.get_html_input_type}}" id="{{af.formated_slug}}" class="form-control" placeholder="{{af.name}}" required>
-                  <label for="{{af.formated_slug}}">{{af.name}}</label>
-                </div>
-              {% endfor %}
-            {% endif %}
+          {% elif field.field_type == field.GROUP  %}
+            <h1>Agrupación de campos: {{field.name}}</h1>
+            {% for af in field.field_group.all %}
+              <div class="form-label-group mb-12">
+                <input name="{{af.formated_slug}}" type="{{af.get_html_input_type}}" id="{{af.formated_slug}}" class="form-control" placeholder="{{af.name}}" required>
+                <label for="{{af.formated_slug}}">{{af.name}}</label>
+              </div>
+            {% endfor %}
+          {% endif %}
+
+          {% if field.field_type == field.LIST %}
+            {% for lf in field.field_group.all %}
+              {% if lf.is_text_input %}
+                <input name="{{lf.formated_slug}}" type="{{lf.get_html_input_type}}" id="{{lf.formated_slug}}" class="form-control" placeholder="{{lf.name}}" required>
+                <label for="{{lf.formated_slug}}">{{lf.name}}</label>
+                
+              {% elif lf.field_type == lf.SELECT %}
+                  <select name="{{lf.formated_slug}}">
+                    {% for f in lf.documentfieldoption_set.all %}
+                      <option value="{{f.name}}">{{f.name}}</option>
+                    {% endfor %}
+                  </select>
+              {% elif lf.field_type == lf.GROUP  %}
+                <h1>Agrupación de campos: {{lf.name}}</h1>
+                {% for af in lf.field_group.all %}
+                  <div class="form-label-group mb-12">
+                    <input name="{{af.formated_slug}}" type="{{af.get_html_input_type}}" id="{{af.formated_slug}}" class="form-control" placeholder="{{af.name}}" required>
+                    <label for="{{af.formated_slug}}">{{af.name}}</label>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endfor %}            
           {% endif %}
 
           {% if field.help_text %}
