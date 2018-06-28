@@ -32,6 +32,7 @@
           {% if field.is_text_input %}
             <input name="{{field.formated_slug}}" type="{{field.get_html_input_type}}" id="{{field.formated_slug}}" class="form-control" placeholder="{{field.name}}" required>
             <label for="{{field.formated_slug}}">{{field.name}}</label>
+            
           {% else %}
             <select>
               {% for f in field.documentfieldoption_set.all %}
@@ -47,7 +48,12 @@
           {% if field.youtube_help_video_link %}
             <iframe class="mb-6" width="100%" height="200" src="{{field.youtube_help_video_link}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           {% endif %}
+
+          {% if field.field_type == field.LIST %}
+            <a href="#" class="adder">Añadir {{field}}</a>
+          {% endif %}
         </div>
+        
       {% endfor %}
       
       <div class="text-center mb-5">
@@ -93,6 +99,10 @@
             $(`.section-field[data-section="${id}"]`).hide()
           }
         })
+        $('.adder').on('click', function(e){
+          e.preventDefault();
+          $($(this).parent().clone()).insertAfter($(this).parent())
+        });
       })
     </script>
   </body>
