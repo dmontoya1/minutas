@@ -227,6 +227,11 @@ class DocumentField(SlugIdentifierMixin):
         blank=True,
         verbose_name='Sección'
     )
+    field_group = models.ManyToManyField(
+        'self',
+        blank=True,
+        verbose_name='Campos del grupo'
+    )
     
     class Meta:
         verbose_name = 'Campo'
