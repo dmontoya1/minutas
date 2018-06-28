@@ -34,14 +34,14 @@
             <label for="{{field.formated_slug}}">{{field.name}}</label>
             
           {% else %}
-            {% if not field.field_type == field.GROUP %}
+            {% if field.field_type == field.SELECT %}
               <select>
                 {% for f in field.documentfieldoption_set.all %}
                   <option value="{{f.name}}">{{f.name}}</option>
                 {% endfor %}
               </select>
             {% else %}
-              <h1>Agruptación de campos: {{field.name}}</h1>
+              <h1>Agrupación de campos: {{field.name}}</h1>
               {% for af in field.field_group.all %}
                 <div class="form-label-group mb-12">
                   <input name="{{af.formated_slug}}" type="{{af.get_html_input_type}}" id="{{af.formated_slug}}" class="form-control" placeholder="{{af.name}}" required>
