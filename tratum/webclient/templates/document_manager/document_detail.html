@@ -29,8 +29,17 @@
 
       {% for field in object.get_fields %}
         <div class="form-label-group mb-5">
-          <input name="{{field.formated_slug}}" type="text" id="{{field.formated_slug}}" class="form-control" placeholder="{{field.name}}" required>
-          <label for="{{field.formated_slug}}">{{field.name}}</label>
+          {% if field.is_text_input %}
+            <input name="{{field.formated_slug}}" type="{{field.get_html_input_type}}" id="{{field.formated_slug}}" class="form-control" placeholder="{{field.name}}" required>
+            <label for="{{field.formated_slug}}">{{field.name}}</label>
+          {% else %}
+            <select>
+              {% for f in field.documentfieldoption_set.all %}
+                <option value="{{f.name}}">{{f.name}}</option>
+              {% endfor %}
+            </select>
+          {% endif%}
+
           {% if field.help_text %}
             <small>{{field.help_text}}</small>
           {% endif %}

@@ -5,7 +5,8 @@ from .models import (
     Document,
     Category,
     DocumentField,
-    DocumentSection
+    DocumentSection,
+    DocumentFieldOption
 )
 
 
@@ -66,3 +67,10 @@ class DocumentSectionAdmin(admin.ModelAdmin):
         js = (
             '//unpkg.com/axios/dist/axios.min.js',
         )
+
+@admin.register(DocumentFieldOption)
+class DocumentFieldOptionAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',
+        'field'
+    )

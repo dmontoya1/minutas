@@ -9,7 +9,7 @@ class DocumentFieldSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DocumentField
-        fields = ('name', 'formated_slug')
+        fields = ('name', 'field_type', 'formated_slug')
 
 
 class DocumentSectionSerializer(serializers.ModelSerializer):

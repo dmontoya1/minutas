@@ -91,14 +91,6 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
 
     def __str__(self):
         return self.name     
-    
-    def save(self):
-        path = os.path.join(settings.BASE_DIR, "document_manager/templates/document_manager/dynamic_documents_templates")
-        html_template = open('{}/{}.html'.format(path, uuid.uuid4()), 'w+')
-        html_template.write(self.content)
-        html_template.close()
-        self.template_path = html_template.name
-        SlugIdentifierMixin.save(self)
 
     def get_absolute_url(self):
         return reverse('document', kwargs={'slug': self.slug})
@@ -165,6 +157,8 @@ class DocumentSection(SlugIdentifierMixin):
     )
     
     class Meta:
+        verbose_name = 'Sección'
+        verbose_name_plural = 'Secciones'
         unique_together = ('name', 'document')
 
     def __str__(self):
@@ -235,6 +229,7 @@ class DocumentField(SlugIdentifierMixin):
     )
     
     class Meta:
+        verbose_name = 'Campo'
         unique_together = ('name', 'document')
         
     def __str__(self):
@@ -245,4 +240,39 @@ class DocumentField(SlugIdentifierMixin):
             raise ValidationError('Tu campo no puede pertenecer a un documento y a una sección simultáneamente')
         if not self.document and not self.section:
             raise ValidationError('Selecciona un documento o una sección para éste campo')
+    
+    def is_text_input(self):
+        return self.field_type in (self.TEXT, self.DATE, self.NUMBER)
+    
+    def get_html_input_type(self):
+        if self.field_type == self.TEXT:
+            return 'text'
+        elif self.field_type == self.DATE:
+            return 'date'
+        elif self.field_type == self.NUMBER:
+            return 'number'
+
+class DocumentFieldOption(models.Model):
+    name = models.CharField(
+        'Nombre',
+        max_length=50,
+        null=True,
+        blank=True
+    )
+    field = models.ForeignKey(
+        DocumentField,
+        on_delete=models.CASCADE,
+        verbose_name='Campo'
+    )
+
+    class Meta:
+        verbose_name = 'Opción'
+        verbose_name_plural = 'Opciones'
+
+    def __str__(self):
+        return self.name 
+    
+    def clean(self):
+        if self.field.is_text_input():
+            raise ValidationError('El campo debe ser tipo "Opciones de única respuesta" para agregarle opciones')
 
