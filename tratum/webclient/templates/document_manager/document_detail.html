@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -6,18 +7,15 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="https://getbootstrap.com/assets/img/favicons/favicon-32x32.png">
-
     <title>Tratum</title>
-
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
     crossorigin="anonymous">
-
-    <!-- Custom styles for this template -->
-    <link href="https://getbootstrap.com/docs/4.1/examples/floating-labels/floating-labels.css" rel="stylesheet">
+    <link href="{% static 'css/form.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400" rel="stylesheet">
   </head>
 
   <body>
+    <!--
     <form class="form-signin" method="POST" action="{% url 'process' %}" style="max-width: 680px;">
       {% csrf_token %}
       <input type="hidden" name="document" value="{{object.id}}" />
@@ -28,63 +26,12 @@
       </div>
 
       {% for field in object.get_fields %}
-        <div class="form-label-group mb-5">
-          {% if field.is_text_input %}
-            <input name="{{field.formated_slug}}" type="{{field.get_html_input_type}}" id="{{field.formated_slug}}" class="form-control" placeholder="{{field.name}}" required>
-            <label for="{{field.formated_slug}}">{{field.name}}</label>
-            
-          {% elif field.field_type == field.SELECT %}
-              <select name="{{field.formated_slug}}">
-                {% for f in field.documentfieldoption_set.all %}
-                  <option value="{{f.name}}">{{f.name}}</option>
-                {% endfor %}
-              </select>
-          {% elif field.field_type == field.GROUP  %}
-            <h1>Agrupación de campos: {{field.name}}</h1>
-            {% for af in field.field_group.all %}
-              <div class="form-label-group mb-12">
-                <input name="{{af.formated_slug}}" type="{{af.get_html_input_type}}" id="{{af.formated_slug}}" class="form-control" placeholder="{{af.name}}" required>
-                <label for="{{af.formated_slug}}">{{af.name}}</label>
-              </div>
-            {% endfor %}
-          {% endif %}
-
-          {% if field.field_type == field.LIST %}
-            {% for lf in field.field_group.all %}
-              {% if lf.is_text_input %}
-                <input name="{{lf.formated_slug}}" type="{{lf.get_html_input_type}}" id="{{lf.formated_slug}}" class="form-control" placeholder="{{lf.name}}" required>
-                <label for="{{lf.formated_slug}}">{{lf.name}}</label>
-                
-              {% elif lf.field_type == lf.SELECT %}
-                  <select name="{{lf.formated_slug}}">
-                    {% for f in lf.documentfieldoption_set.all %}
-                      <option value="{{f.name}}">{{f.name}}</option>
-                    {% endfor %}
-                  </select>
-              {% elif lf.field_type == lf.GROUP  %}
-                <h1>Agrupación de campos: {{lf.name}}</h1>
-                {% for af in lf.field_group.all %}
-                  <div class="form-label-group mb-12">
-                    <input name="{{af.formated_slug}}" type="{{af.get_html_input_type}}" id="{{af.formated_slug}}" class="form-control" placeholder="{{af.name}}" required>
-                    <label for="{{af.formated_slug}}">{{af.name}}</label>
-                  </div>
-                {% endfor %}
-              {% endif %}
-            {% endfor %}            
-          {% endif %}
-
-          {% if field.help_text %}
-            <small>{{field.help_text}}</small>
-          {% endif %}
-
-          {% if field.youtube_help_video_link %}
-            <iframe class="mb-6" width="100%" height="200" src="{{field.youtube_help_video_link}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-          {% endif %}
-
-          {% if field.field_type == field.LIST %}
-            <a href="#" class="adder">Añadir {{field}}</a>
-          {% endif %}
-        </div>
+        {% include 'document_manager/fields.html' %}     
+        {% if field.field_type == field.LIST %}
+          {% for field in field.field_group.all %}
+            {% include 'document_manager/fields.html' %}
+          {% endfor %}      
+        {% endif %}
         
       {% endfor %}
       
@@ -105,7 +52,6 @@
             {% if field.help_text %}
               <small>{{field.help_text}}</small>
             {% endif %}
-
             {% if field.youtube_help_video_link %}
               <iframe class="mb-6" width="100%" height="200" src="{{field.youtube_help_video_link}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             {% endif %}
@@ -137,5 +83,52 @@
         });
       })
     </script>
+    -->
+    <div class="row">
+      <div class="col-md-10 form-col">
+          
+          <div class="upform">
+              <a href="/">Regresar</a>
+            <form method="POST" action="{% url 'process' %}">    
+              <input type="hidden" name="document" value="{{object.id}}" />
+              {% csrf_token %}
+              <div class="upform-header"></div>    
+              <div class="upform-main"> 
+                {% for field in object.get_fields %}
+                  {% include 'document_manager/fields.html' %}     
+                  {% if field.field_type == field.LIST %}
+                    {% for field in field.field_group.all %}
+                      {% include 'document_manager/fields.html' %}
+                    {% endfor %}      
+                  {% endif %}            
+                {% endfor %}
+              </div>
+              <div class="upform-footer">
+                <button type="submit" class="btn btn-primary btn-lg">Finalizar</button>
+              </div>    
+            </form>
+          </div>
+      </div>
+      <div class="col-md-2">
+        <div class="info-col">
+          <div class="container-fluid">
+            <h1 class="mt-5">{{document.name}}</h1>
+            <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <iframe class="mb-5" width="100%" height="150" src="https://www.youtube.com/embed/3va2-oIhVNQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+
+    <script
+      src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    </script>
+    <script
+      src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js">
+    </script>      
+    <script src="{% static 'js/form.js' %}"></script>
+
   </body>
 </html>
