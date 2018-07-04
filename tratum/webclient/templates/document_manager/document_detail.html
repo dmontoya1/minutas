@@ -85,7 +85,7 @@
     </script>
     -->
     <div class="row">
-      <div class="col-md-10 form-col">
+      <div class="col-md-9 form-col">
           
           <div class="upform">
               <a href="/">Regresar</a>
@@ -102,6 +102,15 @@
                     {% endfor %}      
                   {% endif %}            
                 {% endfor %}
+                <div class="sections mt-5">
+                  <h3 class="mb-3">Secciones opcionales disponibles: </h3>
+                  {% for s in object.get_sections %}
+                    <input type="checkbox" class="section-item"> {{s.name}}</input>
+                  {% empty %}
+                    <p>Este documento no contiene secciones opcionales</p>
+                  {% endfor %}
+                </div>
+                
               </div>
               <div class="upform-footer">
                 <button type="submit" class="btn btn-primary btn-lg">Finalizar</button>
@@ -109,11 +118,11 @@
             </form>
           </div>
       </div>
-      <div class="col-md-2">
-        <div class="info-col">
+      <div class="col-md-3 p-0">
+        <div class="info-col p-0">
           <div class="container-fluid">
             <h1 class="mt-5">{{document.name}}</h1>
-            <p class="text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p class="text-justify mb-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
             <iframe class="mb-5" width="100%" height="150" src="https://www.youtube.com/embed/3va2-oIhVNQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           </div>
         </div>

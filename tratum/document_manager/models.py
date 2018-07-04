@@ -232,6 +232,14 @@ class DocumentField(SlugIdentifierMixin):
         blank=True,
         verbose_name='Campos del grupo'
     )
+    field_group_verbose_name = models.CharField(
+        'Nombre singular de la agrupación',
+        help_text='Corresponde a la palabra en singular que indica la referencia de la agrupación\
+            Ej: Socio, Empresa, Actividad',
+        null=True,
+        blank=True,
+        max_length=255
+    )
     
     class Meta:
         verbose_name = 'Campo'
