@@ -3,7 +3,8 @@ from .models import (
     Policy,
     FAQCategory,
     FAQItem,
-    SiteConfig
+    SiteConfig,
+    SliderItem
 )
 
 
@@ -36,4 +37,8 @@ class SiteConfigAdmin(admin.ModelAdmin):
         else:
             return True
 
+
+@admin.register(SliderItem)
+class SliderItemAdmin(admin.ModelAdmin):
+    pass
 

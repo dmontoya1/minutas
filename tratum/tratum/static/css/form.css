@@ -1,13 +1,8 @@
-@font-face {
-    font-family: FontAwesome;
-    src: url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.ttf);
-}
-
 /* PAGE & INPUT STYLING */
 body {
     background: rgb(255, 255, 255);
     color: #002C55;
-    overflow: hidden;
+    overflow-x: hidden;
     font-family: 'Titillium Web', sans-serif;
 }
 
@@ -32,7 +27,7 @@ body {
 }
 
   .upform .upform-main .input-block {
-    padding: 30px 0 0;
+    padding: 40px 0 0;
     opacity: 0.25;
     cursor: default;
   }
@@ -46,14 +41,6 @@ body {
     .upform .upform-main .input-block .input-control {
         margin: 20px 0;
         position: relative;
-    }
-    .upform .upform-main .input-block .input-control::after {
-        font-family: 'FontAwesome';
-        content: "\f059";
-        position: absolute;
-        top: -55px;
-        right: 0px;
-        font-size: 1.5em;
     }
     .upform .upform-main .input-block .input-control input[type=text] {
         outline-width: 0;
@@ -107,3 +94,8 @@ margin-top: 60px;
         font-weight: 300;
         opacity: 0.25;
     }
+
+.fas {
+    font-size: 1.3em;
+    line-height: 35px !important;
+}

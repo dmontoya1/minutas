@@ -8,13 +8,15 @@ from webclient.views import (
     DocumentDetailView,
     PoliciesView,
     FAQView,
-    AboutUsView
+    AboutUsView,
+    SignupView
 )
 from document_manager.views import ProcessDocumentView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomePageView.as_view(), name='home'),
+    path('signup/', SignupView.as_view(), name='signup'),
     path('policies/', PoliciesView.as_view(), name='policies'),
     path('faq/', FAQView.as_view(), name='faq'),
     path('about-us/', AboutUsView.as_view(), name='about-us'),

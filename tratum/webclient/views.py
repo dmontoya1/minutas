@@ -1,3 +1,8 @@
+from django.contrib import messages 
+from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password 
+from django.db import IntegrityError 
+from django.shortcuts import redirect 
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
@@ -63,5 +68,40 @@ class AboutUsView(TemplateView):
 class DocumentDetailView(DetailView):
 
     model = Document
+
+
+class SignupView(TemplateView):
+
+    template_name = "webclient/register.html"
+
+    def post(self, request, *args, **kwargs):
+        redirect_url = 'signup'
+        try:
+            email = request.POST['email']
+            password = request.POST['password']
+            password = make_password(password)
+            user = User(
+                username = email,
+                password = password
+            )
+            user.save()
+        except KeyError:
+            msg = 'Some required fields are empty'
+            tag = messages.WARNING
+        except IntegrityError:
+            msg = 'The user already exists'
+            tag = messages.WARNING
+        except Exception as e:
+            msg = 'Error: ' + str(e)
+            tag = messages.WARNING
+        else:
+            msg = '¡Success!'
+            tag = messages.SUCCESS
+            redirect_url = 'login'
+
+        messages.add_message(request, tag, msg)
+        
+        return redirect(redirect_url)
+
 
 

@@ -110,9 +110,28 @@ class SiteConfig(models.Model):
         null=True,
         blank=True
     )
-    about_page_image = models.ImageField(
-        'Imagen (Quienes sómos)',
-        upload_to='site/aboutus/',
+    landing_contact = models.TextField(
+        'Correo de contacto (landing)',
+        null=True,
+        blank=True
+    )
+    landing_phone = models.TextField(
+		'Teléfono de contacto (landing)',
+        null=True,
+        blank=True
+    )
+    facebook_url = models.URLField(
+		'URL Facebook (landing)',
+        null=True,
+        blank=True
+    )
+    twitter_url = models.URLField(
+		'URL Twitter (landing)',
+        null=True,
+        blank=True
+    )
+    instagram_url = models.URLField(
+		'URL Instagram (landing)',
         null=True,
         blank=True
     )
@@ -133,3 +152,21 @@ class SiteConfig(models.Model):
                 self.id != model.objects.get().id):
             raise ValidationError(
                 "Sólo se puede crear una instancia de %s." % model.__name__)
+
+
+class SliderItem(models.Model):
+    image = models.ImageField('Imagen', upload_to='slides')
+    text = models.CharField('Texto', max_length=255, null=True, blank=True)
+    youtube_video_link = models.URLField(
+        'Link de Youtube',
+        blank=True,
+        null=True
+    )
+
+    class Meta:
+        verbose_name = 'Slide del home'
+        verbose_name_plural = 'Slides del home'
+
+    def __str__(self):
+        return 'Slide '
+
