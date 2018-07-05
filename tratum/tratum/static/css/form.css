@@ -6,6 +6,10 @@ body {
     font-family: 'Titillium Web', sans-serif;
 }
 
+iframe {
+    box-shadow: .8px .8px .8px #777;
+}
+
 .upform input:focus, select:focus, textarea:focus, button:focus {
     outline: none;
 }
@@ -25,7 +29,11 @@ body {
     margin: 200px auto 500px auto;
     padding: 0 150px;
 }
-
+@media screen and (max-width: 1024px){
+    .upform {
+        padding: 0 30px;
+    }
+}
   .upform .upform-main .input-block {
     padding: 40px 0 0;
     opacity: 0.25;
@@ -70,17 +78,20 @@ margin-top: 60px;
     position: fixed;
 }
 
-.info-col p {
-    line-height: 1.3em;
-    font-weight: 300;
+.info-col  {
+    padding: 10px 45px 20px 10px;
 }
+    .info-col p {
+        line-height: 1.3em;
+        font-weight: 300;
+    }
 
 .form-col {
     min-height: 100vh;
     overflow-y: scroll;
 }
 
-.col-md-3 {
+.col-md-4 {
     background-color: #f2f2f2;
 }
 

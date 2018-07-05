@@ -71,3 +71,9 @@ $.fn.upform = function() {
 };
 
 $(".upform").upform();
+
+$('.modal-trigger').on('click', function() {
+    $('#videoModal').modal();
+});
+
+$('[data-toggle="tooltip"]').tooltip();

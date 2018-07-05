@@ -88,7 +88,7 @@
     </script>
     -->
     <div class="row">
-      <div class="col-md-9 form-col">
+      <div class="col-md-8 form-col">
           
           <div class="upform">
               <a href="/">Regresar</a>
@@ -105,10 +105,12 @@
                     {% endfor %}      
                   {% endif %}            
                 {% endfor %}
-                <div class="sections mt-5">
+                <div class="sections col mt-5">
                   <h3 class="mb-3">Secciones opcionales disponibles: </h3>
                   {% for s in object.get_sections %}
-                    <input type="checkbox" class="section-item"> {{s.name}}</input>
+                    <div class="col">
+                      <input type="checkbox" class="section-item mb-3"> {{s.name}}</input>
+                    </div>
                   {% empty %}
                     <p>Este documento no contiene secciones opcionales</p>
                   {% endfor %}
@@ -121,31 +123,39 @@
             </form>
           </div>
       </div>
-      <div class="col-md-3 p-0">
-        <div class="info-col p-0">
-          <div class="container-fluid">
+      <div class="col-md-4 p-0">
+        <div class="info-col text-center">
             <h1 class="mt-5">{{document.name}}</h1>
             <p class="text-justify mb-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-            <iframe class="mb-5" width="100%" height="150" src="https://www.youtube.com/embed/3va2-oIhVNQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-          </div>
+            <iframe class="mb-5 " width="480px" height="260" src="https://www.youtube.com/embed/3va2-oIhVNQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
       </div>
     </div>
     
     
+    <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Video explicativo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <script
-      src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
-    </script>
-    <script
-      src="https://unpkg.com/popper.js/dist/umd/popper.min.js">
-    </script>
-    <script
-      src="https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js">
-    </script>
-    <script
-      src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js">
-    </script>      
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>      
     <script src="{% static 'js/form.js' %}"></script>
 
   </body>

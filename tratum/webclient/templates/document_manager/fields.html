@@ -4,7 +4,7 @@
         <div class="label col clearfix">
             <span class="float-left">{{forloop.counter}}. {{field.name}} </span>
             {% if field.help_text %}
-                <i class="fas fa-question-circle float-right" data-toggle="tooltip" data-toogle-text="{{field.help_text}}"></i>
+                <i class="fas fa-question-circle float-right" data-toggle="tooltip" data-placement="left" title="{{field.help_text}}"></i>
             {% endif %}
         </div>        
         <div class="input-control col">
@@ -12,8 +12,8 @@
         </div>             
         {% if field.youtube_help_video_link %}
             <div class="col">
-                <a href="#" data-url="{{field.youtube_help_video_link}}">Ver video</a>
-            </div>   
+                <a href="#" data-toggle="modal" data-target="#videoModal" data-url="{{field.youtube_help_video_link}}">Ver video</a>
+            </div>
         {% endif %}    
     </div>        
 {% elif field.field_type == field.SELECT %}
@@ -64,6 +64,8 @@
         {% endfor %}
     </div>
 {% endif %}
+
+
 
 
    
