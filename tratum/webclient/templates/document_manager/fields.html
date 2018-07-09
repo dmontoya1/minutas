@@ -18,8 +18,13 @@
     </div>        
 {% elif field.field_type == field.SELECT %}
     <div class="input-block">
-        <div class="label">{{forloop.counter}}. {{field.name}} </div>
-        <div class="input-control">
+        <div class="label col clearfix">
+            <span class="float-left">{{forloop.counter}}. {{field.name}} </span>
+            {% if field.help_text %}
+                <i class="fas fa-question-circle float-right" data-toggle="tooltip" data-placement="left" title="{{field.help_text}}"></i>
+            {% endif %}
+        </div>   
+        <div class="input-control col">
             <select>
                 <option selected disabled>Selecciona un elemento de la lista</option>
                 {% for f in field.documentfieldoption_set.all %}
@@ -30,7 +35,12 @@
     </div>
 {% elif field.field_type == field.GROUP  %}
     <div class="input-block">
-        <div class="label">{{forloop.counter}}. {{field.name}}</div>
+        <div class="label col clearfix">
+            <span class="float-left">{{forloop.counter}}. {{field.name}} </span>
+            {% if field.help_text %}
+                <i class="fas fa-question-circle float-right" data-toggle="tooltip" data-placement="left" title="{{field.help_text}}"></i>
+            {% endif %}
+        </div>   
     </div>     
     <div class="group-fields">
         <p class="mt-3">{{field.field_group_verbose_name}} #1</p>

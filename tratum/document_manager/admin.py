@@ -14,7 +14,9 @@ from .models import (
 class DocumentAdmin(SoftDeletionModelAdminMixin):
     extra_list_display = (
         'name',
-        'category'
+        'category',
+        'price',
+        'order'
     ) 
     list_select_related = (
         'category',

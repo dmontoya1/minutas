@@ -31,18 +31,25 @@ iframe {
 }
 @media screen and (max-width: 1024px){
     .upform {
-        padding: 0 30px;
+        padding: 0 10px;
+        margin: 20px auto 200px auto;
+        overflow-x: hidden;
     }
 }
-  .upform .upform-main .input-block {
-    padding: 40px 0 0;
-    opacity: 0.25;
-    cursor: default;
-  }
+    .upform .upform-main .input-block {
+        padding: 40px 0 0;
+        opacity: 0.25;
+        cursor: default;
+    }
+    @media screen and (max-width: 1024px){
+        .upform .upform-main .input-block {
+            opacity: 1;
+        }
+    }
     .upform .upform-main .input-block .label {
         display: block;
         font-size: 1em;
-        line-height: 30px;
+        line-height: 1.5em;
         color: rgb(8, 54, 97);
         font-weight: 800;
     }
@@ -64,7 +71,7 @@ iframe {
     }
   
 .upform .upform-footer {
-margin-top: 60px;
+    margin-top: 60px;
 }
   .upform .upform-footer .btn {
     font-size: 24px;

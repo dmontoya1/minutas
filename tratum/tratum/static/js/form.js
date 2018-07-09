@@ -27,15 +27,17 @@ $.fn.upform = function() {
         moveNext(this);
     });
 
-    $(window).on("scroll", function() {
-        $(container).find(".input-block").each(function() {
-            var etop = $(this).offset().top;
-            var diff = etop - $(window).scrollTop();
-
-            if (diff > 100 && diff < 300) {
-                reinitState(this);
-            }
-        });
+    $(window).on("scroll", function(){
+        if($(window).width() > 1025){
+            $(container).find(".input-block").each(function() {
+                var etop = $(this).offset().top;
+                var diff = etop - $(window).scrollTop();
+    
+                if (diff > 100 && diff < 300) {
+                    reinitState(this);
+                }
+            });   
+        }            
     });
 
     function reinitState(e) {

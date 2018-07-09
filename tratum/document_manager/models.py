@@ -49,11 +49,15 @@ class Category(MPTTModel, SoftDeletionModelMixin):
 
     class MPTTMeta:
         order_insertion_by = ['name']
+    
+    def clean(self):
+        if self.parent.get_ancestors().count() == 3:
+            raise ValidationError('Las categorías sólo pueden tener hasta 4 niveles de profundidad')
 
 
 class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
     """Guarda las documentos.
-
+    
     Campos del modelo:
         name: Nombre del documento
         category: Categoría a la que pertenece el documento
@@ -77,8 +81,16 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
         null=True,
         blank=True
     )
-    formated = models.BooleanField(
-        default=False
+    price = models.PositiveIntegerField(
+        'Precio',
+        null=True,
+        blank=True
+    )
+    order = models.PositiveSmallIntegerField(
+        'Orden',
+        null=True,
+        blank=True,
+        unique=True
     )
     content = RichTextField(
         'Contenido',
