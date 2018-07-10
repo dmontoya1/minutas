@@ -114,6 +114,36 @@ iframe {
     }
 
 .fas {
-    font-size: 1.3em;
+    font-size: 1.125em;
     line-height: 35px !important;
+}
+
+.group-item {
+    box-shadow: .5px .5px 5px rgb(184, 184, 184);
+    padding: 5px 20px;
+    position: relative;
+    border-radius: 10px;
+}
+    .group-item div.counter {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        font-weight: 300;
+        font-size: .895em;
+        opacity: 0.5;
+    }
+
+.deleter {
+    color: rgb(210, 60, 60) !important;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
+.main {
+    -webkit-filter: blur(3px);
+    -moz-filter: blur(3px);
+    -o-filter: blur(3px);
+    -ms-filter: blur(3px);
+    filter: blur(3px);
 }

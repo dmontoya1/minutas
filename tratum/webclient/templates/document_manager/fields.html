@@ -42,36 +42,44 @@
             {% endif %}
         </div>   
     </div>     
-    <div class="group-fields">
-        <p class="mt-3">{{field.field_group_verbose_name}} #1</p>
-        {% for gf in field.field_group.all %} 
-            {% if gf.is_text_input %}
-                <div class="input-block">
-                    <div class="label">{{forloop.counter}}. {{gf.name}}</div>
-                    <div class="input-control">
-                        <input required name="{{gf.formated_slug}}" type="{{gf.get_html_input_type}}" id="{{gf.formated_slug}}" class="required" autocomplete="off">
+    <div class="group-fields mt-3">        
+        <div class="group-item mt-2" data-group="{{field.pk}}">
+            <div class="counter">
+                {{field.field_group_verbose_name}} #<span>1</span>
+            </div>
+            {% for gf in field.field_group.all %}  
+                {% if gf.is_text_input %}
+                    <div class="input-block">
+                        <div class="label">{{forloop.counter}}. {{gf.name}}</div>
+                        <div class="input-control">
+                            <input required name="{{gf.formated_slug}}" type="{{gf.get_html_input_type}}" id="{{gf.formated_slug}}" class="required" autocomplete="off">
+                        </div>
+                    </div>        
+                {% elif gf.field_type == gf.SELECT %}
+                    <div class="input-block">
+                        <div class="label">{{forloop.counter}}. {{gf.name}} </div>
+                        <div class="input-control">
+                            <select>
+                                <option selected disabled>Selecciona un elemento de la lista</option>
+                                {% for f in gf.documentfieldoption_set.all %}
+                                    <option value="{{f.name}}">{{f.name}}</option>
+                                {% endfor %}                
+                            </select>
+                        </div>
                     </div>
-                </div>        
-            {% elif gf.field_type == gf.SELECT %}
-                <div class="input-block">
-                    <div class="label">{{forloop.counter}}. {{gf.name}} </div>
-                    <div class="input-control">
-                        <select>
-                            <option selected disabled>Selecciona un elemento de la lista</option>
-                            {% for f in gf.documentfieldoption_set.all %}
-                                <option value="{{f.name}}">{{f.name}}</option>
-                            {% endfor %}                
-                        </select>
-                    </div>
-                </div>
-            {% endif %}
-            {% if gf.help_text %}
-                <small>{{gf.help_text}}</small>
-            {% endif %}
-            {% if gf.youtube_help_video_link %}
-                <iframe class="mb-6" width="100%" height="200" src="{{gf.youtube_help_video_link}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            {% endif %}    
-        {% endfor %}
+                {% endif %}
+                {% if gf.help_text %}
+                    <small>{{gf.help_text}}</small>
+                {% endif %}
+                {% if gf.youtube_help_video_link %}
+                    <iframe class="mb-6" width="100%" height="200" src="{{gf.youtube_help_video_link}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                {% endif %}                    
+            {% endfor %}                   
+        </div>
+        <a class="mt-2 float-right group-adder" href="#" id="" data-group="{{field.pk}}">
+            <i class="fas fa-plus-circle"></i>
+            Añadir {{field.field_group_verbose_name}}
+        </a>
     </div>
 {% endif %}
 

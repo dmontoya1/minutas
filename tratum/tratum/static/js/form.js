@@ -21,6 +21,11 @@ $.fn.upform = function() {
                 moveNext(this);
             } 
         }
+        if (e.which == 40) {
+            moveNext(this);
+        } else if (e.which == 38) {
+            movePrev(this);
+        } 
     });
 
     $(container).find('.input-block select').change(function(e) {
@@ -42,7 +47,6 @@ $.fn.upform = function() {
 
     function reinitState(e) {
         $(container).find(".input-block").removeClass("active");
-
         $(container).find(".input-block input").each(function() {
             $(this).blur();
         });
@@ -63,7 +67,6 @@ $.fn.upform = function() {
     }
 
     function moveNext(e) {
-        console.log($(e).parent().parent().next())
         $(e).parent().parent().next().click();
     }
 
@@ -78,4 +81,37 @@ $('.modal-trigger').on('click', function() {
     $('#videoModal').modal();
 });
 
-$('[data-toggle="tooltip"]').tooltip();
+$('[data-toggle="tooltip"]').tooltip(); 
+
+$('.group-adder').on('click', function(e){
+    e.preventDefault();
+    el = $('.group-fields').find(`[data-group='${$(this).data('group')}']`).first();
+    clone = el.clone();
+    clone.find('input').val('');
+    counter = $('.group-fields').find(`[data-group='${$(this).data('group')}']`).length; 
+    clone.find('div.counter span').html(counter);
+    clone.append(
+        '<a class="deleter" href="#">' +
+            'Eliminar' +
+        '</a>'
+    )
+    clone.insertBefore($(this));
+    $(window).scrollTo($(clone), 200, {
+        offset: { left: 100, top: -200 },
+        queue: false
+    });
+    $('a.deleter').on('click', function(e){
+        e.preventDefault();
+        prev = $(this).parent().prev();        
+        $(this).parent().remove();
+        rescroll(prev);
+    })
+})
+
+$('#document-form').on('submit', function(e){
+    e.preventDefault();
+    fields = []
+    form = $(this).serializeArray();
+    console.log(form);
+    $('#loadingModal').modal();
+})
