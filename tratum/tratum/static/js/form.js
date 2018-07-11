@@ -112,6 +112,5 @@ $('#document-form').on('submit', function(e){
     e.preventDefault();
     fields = []
     form = $(this).serializeArray();
-    console.log(form);
     $('#loadingModal').modal();
 })

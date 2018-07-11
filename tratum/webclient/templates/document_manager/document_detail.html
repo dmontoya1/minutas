@@ -37,7 +37,6 @@
         {% endif %}
         
       {% endfor %}
-      
       <div class="text-center mb-5">
         <p>El {{object.name}} tiene las siguientes secciones o cláusulas, selecciona las que deseas y las que no</p>
       </div>
@@ -91,7 +90,7 @@
       <div class="col-md-8 form-col">
           
           <div class="upform">
-              <a href="/" class="col">Regresar</a>
+            <a href="/" class="col">Regresar</a>
             <form method="POST" action="{% url 'process' %}" id="document-form">    
               <input type="hidden" name="document" value="{{object.id}}" />
               {% csrf_token %}
