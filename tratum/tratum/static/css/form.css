@@ -1,157 +1,148 @@
-/* PAGE & INPUT STYLING */
 body {
-    background: rgb(255, 255, 255);
-    color: #002C55;
-    overflow-x: hidden;
-    font-family: 'Titillium Web', sans-serif;
+	background: rgb(255, 255, 255);
+	color: #002C55;
+	font-family: 'Titillium Web', sans-serif;
+	overflow-x: hidden;
 }
 
 iframe {
-    box-shadow: .8px .8px .8px #777;
-}
-
-.upform input:focus, select:focus, textarea:focus, button:focus {
-    outline: none;
-}
-
-.upform input, select, textarea {
-    color: #002C55;
-}
-
-.upform {
-    -webkit-touch-callout: none; 
-    -webkit-user-select: none; 
-    -khtml-user-select: none; 
-    -moz-user-select: none; 
-    -ms-user-select: none; 
-    user-select: none; 
-    max-width: 900px;
-    margin: 200px auto 500px auto;
-    padding: 0 150px;
-}
-@media screen and (max-width: 1024px){
-    .upform {
-        padding: 0 10px;
-        margin: 20px auto 200px auto;
-        overflow-x: hidden;
-    }
-}
-    .upform .upform-main .input-block {
-        padding: 40px 0 0;
-        opacity: 0.25;
-        cursor: default;
-    }
-    @media screen and (max-width: 1024px){
-        .upform .upform-main .input-block {
-            opacity: 1;
-        }
-    }
-    .upform .upform-main .input-block .label {
-        display: block;
-        font-size: 1em;
-        line-height: 1.5em;
-        color: rgb(8, 54, 97);
-        font-weight: 800;
-    }
-    .upform .upform-main .input-block .input-control {
-        margin: 20px 0;
-        position: relative;
-    }
-    .upform .upform-main .input-block .input-control input[type=text] {
-        outline-width: 0;
-        width: 100%;
-        font-size: 1.2em;
-        border: 3px dashed rgb(150, 150, 150);
-        padding: 10px;
-        border-radius: 10px;
-    }
-  
-    .upform .upform-main .input-block.active {
-        opacity: 1;
-    }
-  
-.upform .upform-footer {
-    margin-top: 60px;
-}
-  .upform .upform-footer .btn {
-    font-size: 24px;
-    font-weight: bold;
-    padding: 5px 20px;
-  }
-
-.info-col {
-    height: 100vh;
-    background-color: #f2f2f2;
-    position: fixed;
-}
-
-.info-col  {
-    padding: 10px 45px 20px 10px;
-}
-    .info-col p {
-        line-height: 1.3em;
-        font-weight: 300;
-    }
-
-.form-col {
-    min-height: 100vh;
-    overflow-y: scroll;
+	box-shadow: .8px .8px .8px #777;
 }
 
 .col-md-4 {
-    background-color: #f2f2f2;
+	background-color: #f2f2f2;
+}
+
+.deleter {
+	bottom: 10px;
+	color: rgb(210, 60, 60) !important;
+	position: absolute;
+	right: 10px;
+}
+
+.fas {
+	font-size: 1.125em;
+	line-height: 35px !important;
+}
+
+.form-col {
+	min-height: 100vh;
+	overflow-y: scroll;
 }
 
 .group-fields {
-    padding-left: 30px;
+	padding-left: 30px;
 }
-    .group-fields > .input-block{
-        padding-top: 5px !important;
-    }
     .group-fields p {
         font-weight: 300;
         opacity: 0.25;
     }
-
-.fas {
-    font-size: 1.125em;
-    line-height: 35px !important;
-}
+    .group-fields > .input-block {
+        padding-top: 5px !important;
+    }
 
 .group-item {
-    box-shadow: .5px .5px 5px rgb(184, 184, 184);
-    padding: 5px 20px;
-    position: relative;
-    border-radius: 10px;
+	border-radius: 10px;
+	box-shadow: .5px .5px 5px rgb(184, 184, 184);
+	padding: 5px 20px;
+	position: relative;
 }
     .group-item div.counter {
+        font-size: .895em;
+        font-weight: 300;
+        opacity: 0.5;
         position: absolute;
         right: 10px;
         top: 10px;
-        font-weight: 300;
-        font-size: .895em;
-        opacity: 0.5;
     }
 
-.deleter {
-    color: rgb(210, 60, 60) !important;
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
+.info-col {
+	background-color: #f2f2f2;
+	height: 100vh;
+    position: fixed;
+    padding: 10px 45px 20px 10px;
 }
+    .info-col p {
+        font-weight: 300;
+        line-height: 1.3em;
+    }
 
+.loading {
+	font-size: 1.5em;
+}
 .main {
-    transition: all 2s ease;
+	transition: all 2s ease;
 }
 
 .main.blured {
-    -webkit-filter: blur(3px);
-    -moz-filter: blur(3px);
-    -o-filter: blur(3px);
-    -ms-filter: blur(3px);
-    filter: blur(3px);
+	filter: blur(3px);
+	-moz-filter: blur(3px);
+	-ms-filter: blur(3px);
+	-o-filter: blur(3px);
+	-webkit-filter: blur(3px);
 }
 
-.loading {
-    font-size: 1.5em;
+.upform {
+	-moz-user-select: none;
+	margin: 200px auto 500px auto;
+	max-width: 900px;
+	-ms-user-select: none;
+	padding: 0 150px;
+	user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
 }
+    .upform input, select, textarea {
+        color: #002C55;
+    }
+    .upform input:focus, select:focus, textarea:focus, button:focus {
+        outline: none;
+    }
+    .upform .upform-footer {
+        margin-top: 60px;
+    }
+        .upform .upform-footer .btn {
+            font-size: 24px;
+            font-weight: bold;
+            padding: 5px 20px;
+        }
+    .upform .upform-main .input-block {
+        cursor: default;
+        opacity: 0.25;
+        padding: 40px 0 0;
+    }
+        .upform .upform-main .input-block .input-control {
+            margin: 20px 0;
+            position: relative;
+        }
+            .upform .upform-main .input-block .input-control input[type=text] {
+                border: 3px dashed rgb(150, 150, 150);
+                border-radius: 10px;
+                font-size: 1.2em;
+                outline-width: 0;
+                padding: 10px;
+                width: 100%;
+            }
+        .upform .upform-main .input-block .label {
+            color: rgb(8, 54, 97);
+            display: block;
+            font-size: 1em;
+            font-weight: 800;
+            line-height: 1.5em;
+        }
+        .upform .upform-main .input-block.active {
+            opacity: 1;
+        }
+
+    @media screen and (max-width: 1024px) {
+        .upform {
+            margin: 20px auto 200px auto;
+            overflow-x: hidden;
+            padding: 0 10px;
+        }
+    }
+    @media screen and (max-width: 1024px) {
+        .upform .upform-main .input-block {
+            opacity: 1;
+        }
+    }
