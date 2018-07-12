@@ -75,7 +75,7 @@ $.fn.upform = function() {
     }
 };
 
-$(".upform").upform();
+form = $(".upform").upform();
 
 $('.modal-trigger').on('click', function() {
     $('#videoModal').modal();
@@ -96,21 +96,32 @@ $('.group-adder').on('click', function(e){
         '</a>'
     )
     clone.insertBefore($(this));
-    $(window).scrollTo($(clone), 200, {
-        offset: { left: 100, top: -200 },
-        queue: false
-    });
+    
+    rescroll(clone);
+
     $('a.deleter').on('click', function(e){
         e.preventDefault();
         prev = $(this).parent().prev();        
         $(this).parent().remove();
         rescroll(prev);
     })
+
+    function rescroll(e){
+        $(window).scrollTo($(e), 200, {
+            offset: {
+                left: 100,
+                top: -200
+            },
+            queue: false
+        });
+    }
 })
 
 $('#document-form').on('submit', function(e){
     e.preventDefault();
-    fields = []
-    form = $(this).serializeArray();
+    submitFields = []
+    formFields = $(this).serializeArray();
+    submitFields.push(formFields);
+    $('.main').addClass('blured');
     $('#loadingModal').modal();
 })

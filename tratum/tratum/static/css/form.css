@@ -141,9 +141,17 @@ iframe {
 }
 
 .main {
+    transition: all 2s ease;
+}
+
+.main.blured {
     -webkit-filter: blur(3px);
     -moz-filter: blur(3px);
     -o-filter: blur(3px);
     -ms-filter: blur(3px);
     filter: blur(3px);
+}
+
+.loading {
+    font-size: 1.5em;
 }
