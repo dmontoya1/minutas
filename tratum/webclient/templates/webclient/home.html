@@ -10,13 +10,6 @@
           <div class="swiper-slide">
             <div class="description">
               <p>Genera documentos legales para tu empresa desde la nube</p>
-              <iframe
-                width="100%"
-                height="215"
-                src="https://www.youtube.com/embed/6HtlmNzqQdo"
-                frameborder="0"
-                allow="autoplay; encrypted-media"
-                allowfullscreen></iframe>
             </div>
             <img src="http://ikamega.pe.hu/wp-content/uploads/2016/01/cropped-16-211.jpg">
           </div>
@@ -94,18 +87,18 @@
 {% endblock %}
 
 {% block extra_js %}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/js/swiper.min.js"></script>
-  <script>
-  var mySwiper = new Swiper ('.swiper-container', {
-    direction: 'horizontal',
-    loop: true,
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-    pagination: {
-      el: '.swiper-pagination',
-    }
-  })
-  </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/js/swiper.min.js"></script>
+    <script>
+    var mySwiper = new Swiper ('.swiper-container', {
+        direction: 'horizontal',
+        loop: true,
+        navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+        },
+        pagination: {
+        el: '.swiper-pagination',
+        }
+    })
+    </script>
 {% endblock %}

@@ -1,0 +1,84 @@
+
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web:300,400,600,700');
+
+body {
+	background: rgb(255, 255, 255);
+	color: #002C55;
+	font-family: 'Titillium Web', sans-serif !important;
+	overflow-x: hidden;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-bottom: .75rem;
+    font-family: 'Titillium Web', sans-serif !important;
+    font-weight: 400;
+    color: #212529;
+}
+
+
+.modal-dialog form input[type="submit"] {
+    background: #002c55;
+    border-color: transparent;
+    border-radius: 100px;
+    color: #ffffff;
+    margin-top: 20px;
+    width: 100%;
+    height: 35px;
+}
+
+.modal-dialog .modal-title {
+    font-size: 1.7em;
+    font-weight: 600;
+}
+
+.modal-dialog .btn-fb {
+    background: transparent;
+    border: 1px solid #3b66c4;
+    border-radius: 100px;
+    color: #3b66c4;
+    margin-top: 20px;
+    width: 100%;
+    height: 35px;
+    padding: 7px 15px 10px 15px;
+    font-size: 0.8em;
+    text-align: center;
+    font-weight: 700;
+}
+
+.modal-dialog .btn-gl {
+    background: transparent;
+    border: 1px solid #cf4332;
+    border-radius: 100px;
+    color: #cf4332;
+    margin-top: 20px;
+    width: 100%;
+    height: 35px;
+    padding: 7px 15px 10px 15px;
+    font-size: 0.8em;
+    text-align: center;
+    font-weight: 700;
+}
+
+.modal-dialog form .form-control {
+    border: transparent;
+    box-shadow: none !important;
+    border-radius: 0;
+    padding: 0;
+    background: #eee;
+    height: 7%;
+}
+
+.modal-dialog form .control-label {
+    color: #999;
+    font-weight: 600;
+}
+
+.has-error .error {
+    background: #fad2d2;
+}
+
+.form-error {
+    font-size: 0.9em;
+    color: #f59da2 !important;
+    float: left;
+}
