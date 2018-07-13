@@ -42,7 +42,7 @@
             {% endif %}
         </div>   
     </div>     
-    <div class="group-fields mt-3">        
+    <div class="group-fields mt-3" data-id="{{field.pk}}" data-regex="{{field.group_expression}}">        
         <div class="group-item mt-2" data-group="{{field.pk}}">
             <div class="counter">
                 {{field.field_group_verbose_name}} #<span>1</span>

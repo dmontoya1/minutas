@@ -252,6 +252,12 @@ class DocumentField(SlugIdentifierMixin):
         blank=True,
         max_length=255
     )
+    group_expression = models.TextField(
+        'Expresión regular de la agrupación',
+        help_text='Indica la expresión final de cada campo del grupo mediante el lenguaje de formateo',
+        null=True,
+        blank=True
+    )
     
     class Meta:
         verbose_name = 'Campo'

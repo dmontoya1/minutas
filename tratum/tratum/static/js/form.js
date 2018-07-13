@@ -122,6 +122,15 @@ $('#document-form').on('submit', function(e){
     submitFields = []
     formFields = $(this).serializeArray();
     submitFields.push(formFields);
-    $('.main').addClass('blured');
     $('#loadingModal').modal();
+    $('.group-fields').each(function(i, fd){
+        console.log($(fd));
+        expression = $(this).data('expression');
+        ex_fields = expression.match('{{(.*?)}}')
+        $(this).find('.group-item').each(function(i, it){
+            console.log($(it));           
+            submitFields.push(ex_fields.replace($(this).value()).match(ex_fields))
+        });
+    });
+    $(this).submit(data=submitFields);
 })

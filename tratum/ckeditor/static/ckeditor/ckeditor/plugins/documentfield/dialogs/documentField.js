@@ -56,7 +56,7 @@ CKEDITOR.dialog.add( 'fieldDialog', function(editor){
             updateDocumentsLink = document.createElement('a');
             updateDocumentsLinkText = document.createTextNode("Recargar");
             updateDocumentsLink.appendChild(updateDocumentsLinkText);
-            updateDocumentsLink.title = 'Recargar'
+            updateDocumentsLink.title = 'Recargar';
             updateDocumentsLink.className += "link"; 
 
             document.querySelector('.cke_dialog_ui_labeled_label').append(updateDocumentsLink);

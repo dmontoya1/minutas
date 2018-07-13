@@ -99,9 +99,11 @@
                 {% for field in object.get_fields %}
                   {% include 'document_manager/fields.html' %}     
                   {% if field.field_type == field.LIST %}
-                    {% for field in field.field_group.all %}
-                      {% include 'document_manager/fields.html' %}
-                    {% endfor %}      
+                    <div class="list-fields">
+                      {% for field in field.field_group.all %}
+                        {% include 'document_manager/fields.html' %}
+                      {% endfor %}      
+                    </div>
                   {% endif %}            
                 {% endfor %}
                 <div class="sections col mt-5">
