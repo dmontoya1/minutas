@@ -132,3 +132,8 @@ class SignupView(View):
 			msg = 'Tu correo ya está registrado. Por favor inicia sesión'
 			response = {'error': msg}
 			return JsonResponse(response, status=400)
+
+
+class StoreView(TemplateView):
+
+    template_name = "webclient/store.html"
