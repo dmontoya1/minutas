@@ -225,8 +225,8 @@ CKEDITOR_CONFIGS = {
 MPTT_ADMIN_LEVEL_INDENT = 30
 
 AUTHENTICATION_BACKENDS = (
-   "django.contrib.auth.backends.ModelBackend",
-   "allauth.account.auth_backends.AuthenticationBackend"
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
 )
 
 # Auth settings
