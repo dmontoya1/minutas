@@ -19,7 +19,7 @@
 
   <body>
     <!--
-    <form class="form-signin" method="POST" action="{% url 'process' %}" style="max-width: 680px;">
+    <form class="form-signin" method="POST" action="{% url 'document_manager:process' %}" style="max-width: 680px;">
       {% csrf_token %}
       <input type="hidden" name="document" value="{{object.id}}" />
       <div class="text-center mb-4">

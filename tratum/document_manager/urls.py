@@ -7,6 +7,7 @@ from .views import (
     ProcessDocumentView
 )
 
+app_name = 'document_manager'
 urlpatterns = [
     path('document-fields/', DocumentFieldList.as_view(), name='document-fields'),
     path('document-sections/', DocumentSectionList.as_view(), name='document-sections'),

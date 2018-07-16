@@ -229,6 +229,14 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",
 )
 
+#email configuration
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_USER = 'Tratum <no-reply@tratum.com>'
+EMAIL_HOST_USER = 'apptitud'
+EMAIL_HOST_PASSWORD = 'jkdsjk4534.sd!"'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
 # Auth settings
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'none'

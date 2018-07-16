@@ -51,8 +51,11 @@ class Category(MPTTModel, SoftDeletionModelMixin):
         order_insertion_by = ['name']
     
     def clean(self):
-        if self.parent.get_ancestors().count() == 3:
-            raise ValidationError('Las categorías sólo pueden tener hasta 4 niveles de profundidad')
+        try:
+            if self.parent.get_ancestors().count() == 3:
+                raise ValidationError('Las categorías sólo pueden tener hasta 4 niveles de profundidad')
+        except:
+            pass
 
 
 class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
@@ -105,7 +108,7 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
         return self.name     
 
     def get_absolute_url(self):
-        return reverse('document', kwargs={'slug': self.slug})
+        return reverse('webclient:document', kwargs={'slug': self.slug})
 
     def query_component(self, slug: str):
         slug = self.formated_to_raw_slug(slug)

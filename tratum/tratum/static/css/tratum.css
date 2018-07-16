@@ -23,7 +23,8 @@ body {
     color: #ffffff;
     margin-top: 20px;
     width: 100%;
-    height: 35px;
+    height: 55px;
+    padding: 10px 0;
 }
 
 .modal-dialog .modal-title {

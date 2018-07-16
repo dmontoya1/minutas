@@ -213,6 +213,54 @@
             </div>
         </div>
 
+        <!-- Modal Forget Pass -->
+        <div class="modal fade" id="modal-forget" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-label">Recuperar contraseña</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col">
+                                    <form method="POST" id="forget" class="form-horizontal">
+                                        {% csrf_token %}
+                                        
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <label class="control-label">Correo Electrónico*</label>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <input type="text" class="form-control" name="email"
+                                                data-validation="email" data-validation-error-msg="Debes ingresar un email válido"/>
+                                            </div>
+                                        </div>
+    
+                                        <p class="text-right">
+                                            <a href="#modal-login" class="forgot-pass" data-toggle="modal" data-dismiss="modal">Iniciar Sesión</a>
+                                        </p>
+
+                                        <p class="text-center" style="font-size: 0.8em;color: #999">
+                                            Ingresa tu correo electrónico y se te enviara un link para la recuperación de tu contraseña,
+                                        </p>
+                        
+                                        <div class="text-center">
+                                            <input type="submit" id="reg_submit_forget" value="Enviar"/>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 
         <footer class="bg-dark">
             <div class="container">
@@ -326,6 +374,25 @@
                         $('#reg_submit_signup').attr('disabled', false)
                     });
 
+            })
+
+            $("#forget").on('submit', function(ev){
+                ev.preventDefault()
+                $('#reg_submit_forget').attr('disabled', true)
+                data = $(this).serialize(),
+                axios.post("/accounts/password/reset/", data)
+                    .then(function(response){
+                        console.log(response.data)
+                        toastr.success(response.data['detail'])
+                        setTimeout(function(){
+                            $('#modal-forget').modal('toggle')
+                            location.reload()
+                        }, 1500);
+                    })
+                    .catch(function(error){
+                        toastr.error("El correo electrónico no se encuentra registrado")
+                        $('#reg_submit_signup').attr('disabled', false)
+                    });
             })
         </script>
         {% block extra_js %}
