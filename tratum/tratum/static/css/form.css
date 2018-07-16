@@ -134,15 +134,15 @@ iframe {
             opacity: 1;
         }
 
-    @media screen and (max-width: 1024px) {
-        .upform {
-            margin: 20px auto 200px auto;
-            overflow-x: hidden;
-            padding: 0 10px;
-        }
+@media screen and (max-width: 1024px) {
+    .upform {
+        margin: 20px auto 200px auto;
+        overflow-x: hidden;
+        padding: 0 10px;
     }
-    @media screen and (max-width: 1024px) {
-        .upform .upform-main .input-block {
-            opacity: 1;
-        }
+}
+@media screen and (max-width: 1024px) {
+    .upform .upform-main .input-block {
+        opacity: 1;
     }
+}
