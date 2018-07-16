@@ -10,7 +10,7 @@ $(function(){
     $('#generatePDF').on('click', function(){
         var doc = new jsPDF();
         doc.fromHTML($('body').get(0), 10, 10, {
-            'width': 180
+            'width': 120
         });
         doc.save()
     })

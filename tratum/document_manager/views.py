@@ -69,7 +69,7 @@ class ProcessDocumentView(View):
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" \
             crossorigin="anonymous" type="text/javascript"></script> \
             <script type="text/javascript" src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script> \
-            <script type="text/javascript" src="/static/js/documentFormatter.js"></script>'
+            <script type="text/javascript" src="/static/js/pdfRender.js"></script>'
         template = Template(content)
         template = template.render(Context(request.POST)).encode('ascii', 'xmlcharrefreplace')
 
