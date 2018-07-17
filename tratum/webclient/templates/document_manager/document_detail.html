@@ -27,20 +27,17 @@
         <h1 class="h3 mb-3 font-weight-normal">{{object.name}}</h1>
         <p>Los siguientes campos corresponden a la información necesaria para generar un {{object.name}}</p>
       </div>
-
       {% for field in object.get_fields %}
         {% include 'document_manager/fields.html' %}     
         {% if field.field_type == field.LIST %}
           {% for field in field.field_group.all %}
             {% include 'document_manager/fields.html' %}
           {% endfor %}      
-        {% endif %}
-        
+        {% endif %}        
       {% endfor %}
       <div class="text-center mb-5">
         <p>El {{object.name}} tiene las siguientes secciones o cláusulas, selecciona las que deseas y las que no</p>
       </div>
-
       {% for s in object.get_sections %}
         <div class="checkbox mb-3">
           <label>
@@ -59,8 +56,7 @@
             {% endif %}
           </div>
         {% endfor %}
-      {% endfor %}
-     
+      {% endfor %}     
       <input type="submit" class="btn btn-lg btn-primary btn-block" name="pdf" value="Descargar" />
       <p class="mt-5 mb-3 text-muted text-center"><a href="/">Volver</a></p>
     </form>
@@ -88,7 +84,6 @@
     -->
     <div class="row main">
       <div class="col-md-8 form-col">
-          
           <div class="upform">
             <a href="/" class="col">Regresar</a>
             <form method="POST" action="{% url 'process' %}" id="document-form">    
@@ -115,8 +110,7 @@
                   {% empty %}
                     <p>Este documento no contiene secciones opcionales</p>
                   {% endfor %}
-                </div>
-                
+                </div>                
               </div>
               <div class="upform-footer">
                 <button type="submit" class="btn btn-primary btn-lg">Finalizar</button>
@@ -126,22 +120,21 @@
       </div>
       <div class="col-md-4 p-0">
         <div class="info-col text-center">
-            <h1 class="mt-5">{{document.name}}</h1>
-            <p class="text-justify mb-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-            <iframe class="mb-5 " width="480px" height="260" src="https://www.youtube.com/embed/3va2-oIhVNQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            <h4>Notas importantes: </h4>
-            <ul class="text-left mt-3">
-              <li>Todas las preguntas son obligatorias</li>
-              <li>Puedes utilizar las teclas <strong>TAB</strong>, <strong>ENTER</strong>,  <i class="fas fa-arrow-circle-up"></i>  y  <i class="fas fa-arrow-circle-down"></i>  para navegar entre preguntas</li>
-              <li>Cada vez que pases de pregunta, se guardará tu progreso automáticamente</li>
-              <li>Una vez completes el formulario, podrás ver una previsualización del documento antes de finalizarlo</li>
-            </ul>
+          <h1 class="mt-5">{{document.name}}</h1>
+          <p class="text-justify mb-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+          <iframe class="mb-5 " width="480px" height="260" src="https://www.youtube.com/embed/3va2-oIhVNQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          <h4>Notas importantes: </h4>
+          <ul class="text-left mt-3">
+            <li>Todas las preguntas son obligatorias</li>
+            <li>Puedes utilizar las teclas <strong>TAB</strong>, <strong>ENTER</strong>,  <i class="fas fa-arrow-circle-up"></i>  y  <i class="fas fa-arrow-circle-down"></i>  para navegar entre preguntas</li>
+            <li>Cada vez que pases de pregunta, se guardará tu progreso automáticamente</li>
+            <li>Una vez completes el formulario, podrás ver una previsualización del documento antes de finalizarlo</li>
+          </ul>
         </div>
       </div>
     </div>
-    
-    
+        
     <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModal" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

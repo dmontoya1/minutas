@@ -51,8 +51,9 @@ class Category(MPTTModel, SoftDeletionModelMixin):
         order_insertion_by = ['name']
     
     def clean(self):
-        if self.parent.get_ancestors().count() == 3:
-            raise ValidationError('Las categorías sólo pueden tener hasta 4 niveles de profundidad')
+        if self.parent:
+            if self.parent.get_ancestors().count() == 3:
+                raise ValidationError('Las categorías sólo pueden tener hasta 4 niveles de profundidad')
 
 
 class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
