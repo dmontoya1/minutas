@@ -1,0 +1,355 @@
+{% extends 'webclient/base.html' %}
+
+{% block content %}
+
+<div class="container-fluid documents-container">
+    <div class="row title">
+        <div class="col-12 document-header">
+            <h1 class="text-center">Documentos</h1>
+            <p class="text-center">Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+                sed diam nonummy nibh euismod tincidunt ut laoreet</p>
+        </div>
+        <div class="col-12">
+            <nav aria-label="breadcrumb" class="docs-breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Library</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-12" id="search">
+            <div class="container">
+                <div class="row search">
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <form action="">
+                            <div class="form-group">
+                                <label for="searcher"><i class="fa fa-file-sound-o" aria-hidden="true"></i></label>
+                                <input type="text" class="form-control" name="" id="searcher" aria-describedby="helpId" placeholder="Buscar">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <form action="">
+                            <div class="form-group">
+                                <label for="subcategory1"><i class="fa fa-file-sound-o" aria-hidden="true"></i></label>
+                                <select class="custom-select" id="inputGroupSelect01">
+                                    <option selected disabled>Subcategoría</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <form action="">
+                            <div class="form-group">
+                                <label for="subcategory"><i class="fa fa-file-sound-o" aria-hidden="true"></i></label>
+                                <select class="custom-select" id="inputGroupSelect01">
+                                    <option selected disabled>Subcategoría</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row docs">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-md-8 col-lg-3 filters mx-md-auto">
+                    <div class="container-fluid">
+                        <div class="row sub-categories">
+                            <div class="col-12">
+                                <span>Subcategorías</span>
+                            </div>
+                        </div>
+                        <div class="row sub-categories-content mb-5">
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        Default checkbox
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        Default checkbox
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        Default checkbox
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        Default checkbox
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        Default checkbox
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        Default checkbox
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row filter">
+                            <div class="col-12">
+                                <span>Filtros</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        Gratis
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        De Pago
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-9 documents">
+                    <div class="container-fluid">
+                        <div class="row justify-content-around">
+                            <!-- <div class="container-fluid"> -->
+                                <div class="col-md-5 doc-content">
+                                    <div class="container-fluid">
+                                        <div class="row row-category">
+                                            <div class="col">
+                                                <p class="category">Categoria</p>
+                                            </div> 
+                                        </div>
+                                        <div class="row justify-content-between">
+                                            <div class="col-10">
+                                                <span class="doc-title">Título documento</span>
+                                                <p class="doc-description">Lorem ipsum dolor sit amet, consectetuer adi</p>
+                                            </div>
+                                            <div class="col-1">
+                                                <i class="fas fa-info-circle float-right"></i>
+                                            </div>
+                                        </div>
+                                        <div class="row doc-price-content">
+                                            <div class="col-6">
+                                                <a href="#" class="btn btn-buy float-left">Comprar</a>
+                                            </div>
+                                            <div class="col-6">
+                                                <span class="float-right price">$ 50.000</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 doc-content">
+                                    <div class="container-fluid">
+                                        <div class="row row-category">
+                                            <div class="col">
+                                                <p class="category">Categoria</p>
+                                            </div> 
+                                        </div>
+                                        <div class="row justify-content-between">
+                                            <div class="col-10">
+                                                <span class="doc-title">Título documento</span>
+                                                <p class="doc-description">Lorem ipsum dolor sit amet, consectetuer adi</p>
+                                            </div>
+                                            <div class="col-1">
+                                                <i class="fas fa-info-circle float-right"></i>
+                                            </div>
+                                        </div>
+                                        <div class="row doc-price-content">
+                                            <div class="col-6">
+                                                <a href="#" class="btn btn-buy float-left">Comprar</a>
+                                            </div>
+                                            <div class="col-6">
+                                                <span class="float-right price">$ 50.000</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 doc-content">
+                                    <div class="container-fluid">
+                                        <div class="row row-category">
+                                            <div class="col">
+                                                <p class="category">Categoria</p>
+                                            </div> 
+                                        </div>
+                                        <div class="row justify-content-between">
+                                            <div class="col-10">
+                                                <span class="doc-title">Título documento</span>
+                                                <p class="doc-description">Lorem ipsum dolor sit amet, consectetuer adi</p>
+                                            </div>
+                                            <div class="col-1">
+                                                <i class="fas fa-info-circle float-right"></i>
+                                            </div>
+                                        </div>
+                                        <div class="row doc-price-content">
+                                            <div class="col-6">
+                                                <a href="#" class="btn btn-buy float-left">Comprar</a>
+                                            </div>
+                                            <div class="col-6">
+                                                <span class="float-right price">$ 50.000</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 doc-content">
+                                    <div class="container-fluid">
+                                        <div class="row row-category">
+                                            <div class="col">
+                                                <p class="category">Categoria</p>
+                                            </div> 
+                                        </div>
+                                        <div class="row justify-content-between">
+                                            <div class="col-10">
+                                                <span class="doc-title">Título documento</span>
+                                                <p class="doc-description">Lorem ipsum dolor sit amet, consectetuer adi</p>
+                                            </div>
+                                            <div class="col-1">
+                                                <i class="fas fa-info-circle float-right"></i>
+                                            </div>
+                                        </div>
+                                        <div class="row doc-price-content">
+                                            <div class="col-6">
+                                                <a href="#" class="btn btn-buy float-left">Comprar</a>
+                                            </div>
+                                            <div class="col-6">
+                                                <span class="float-right price">$ 50.000</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 doc-content">
+                                    <div class="container-fluid">
+                                        <div class="row row-category">
+                                            <div class="col">
+                                                <p class="category">Categoria</p>
+                                            </div> 
+                                        </div>
+                                        <div class="row justify-content-between">
+                                            <div class="col-10">
+                                                <span class="doc-title">Título documento</span>
+                                                <p class="doc-description">Lorem ipsum dolor sit amet, consectetuer adi</p>
+                                            </div>
+                                            <div class="col-1">
+                                                <i class="fas fa-info-circle float-right"></i>
+                                            </div>
+                                        </div>
+                                        <div class="row doc-price-content">
+                                            <div class="col-6">
+                                                <a href="#" class="btn btn-buy float-left">Comprar</a>
+                                            </div>
+                                            <div class="col-6">
+                                                <span class="float-right price-free">GRATIS</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 doc-content">
+                                    <div class="container-fluid">
+                                        <div class="row row-category">
+                                            <div class="col">
+                                                <p class="category">Categoria</p>
+                                            </div> 
+                                        </div>
+                                        <div class="row justify-content-between">
+                                            <div class="col-10">
+                                                <span class="doc-title">Título documento</span>
+                                                <p class="doc-description">Lorem ipsum dolor sit amet, consectetuer adi</p>
+                                            </div>
+                                            <div class="col-1">
+                                                <i class="fas fa-info-circle float-right"></i>
+                                            </div>
+                                        </div>
+                                        <div class="row doc-price-content">
+                                            <div class="col-6">
+                                                <a href="#" class="btn btn-buy float-left">Comprar</a>
+                                            </div>
+                                            <div class="col-6">
+                                                <span class="float-right price-free">GRATIS</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <!-- </div> -->
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Antetior</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                    <a class="page-link" href="#">Siguiente</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script>
+
+    $(function(){
+  
+        createSticky($("#search"));
+
+    });
+
+    function createSticky(sticky) {
+        
+        if (typeof sticky !== "undefined") {
+
+            var	pos = sticky.offset().top,
+                    win = $(window);
+                
+            win.on("scroll", function() {
+                win.scrollTop() >= pos ? sticky.addClass("fixed") : sticky.removeClass("fixed");      
+            });			
+        }
+    }
+
+    // var stickyOffset = $('#search').offset().top;
+    // $(window).scroll(function(){
+    // var sticky = $('#search'),
+    //     scroll = $(window).scrollTop();
+
+    // if (scroll >= stickyOffset) sticky.addClass('fixed');
+    // else sticky.removeClass('fixed');
+    // });
+</script>
+
+{% endblock %}

@@ -134,6 +134,6 @@ class SignupView(View):
 			return JsonResponse(response, status=400)
 
 
-class StoreView(TemplateView):
+class DocumentsView(TemplateView):
 
-    template_name = "webclient/store.html"
+    template_name = "webclient/documents.html"

@@ -1,0 +1,86 @@
+{% extends "webclient/base.html" %}
+{% load static %} {% load i18n %}
+{% load humanize %}
+
+{% block content %}
+<main class="row">
+    <div class="container">
+        <div class="content_payU">
+            <h3>Resumen de tu compra</h3>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Detalle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Nombre Plan</th>
+                        <td>{{name}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Precio</th>
+                        <td>{{currency}} ${{amount|floatformat|intcomma}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Cobro</th>
+                        <td>
+                            {% if recurrency == 'month' %}Mensual{%else%}Anual{%endif%}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">"Número de Citas al mes"</th>
+                        <td>{{appointments}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">"Número máximo de Staff"</th>
+                        <td>{{staff}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">"Informes habilitados"</th>
+                        <td>
+                            {%if report%}
+                                <i class="material-icons" style="color:green">done</i>
+                            {%else%}
+                                <i class="material-icons" style="color:red">clear</i>
+                            {%endif%}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">"Descarga base de datos de clientes"</th>
+                        <td>
+                            {%if customers_bd%}
+                                <i class="material-icons" style="color:green">done</i>
+                            {%else%}
+                                <i class="material-icons" style="color:red">clear</i>
+                            {%endif%}
+                        </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <form method="POST" action="{{url}}">
+                {% csrf_token %}
+                <input name="merchantId" type="hidden" value="{{merchantId}}" >
+                <input name="accountId" type="hidden" value="{{accountId}}">
+                <input name="description" type="hidden" value="{{description}}">
+                <input name="referenceCode" type="hidden" value="{{referenceCode}}">
+                <input name="amount" type="hidden" value="{{amount}}">
+                <input name="tax" type="hidden" value="{{tax}}">
+                <input name="taxReturnBase" type="hidden" value="{{taxReturnBase}}">
+                <input name="currency" type="hidden" value="{{currency}}">
+                <input name="signature" type="hidden" value="{{signature}}">
+                <input name="test" type="hidden" value="{{test}}">
+                <input name="buyerEmail" type="hidden" value="{{buyerEmail}}">
+                <input name="responseUrl" type="hidden"  value="{{responseUrl}}" >
+                <input name="confirmationUrl" type="hidden" value="{{confirmationUrl}}">
+              
+            <button class="text-right btn btn-add" type="submit"><i class="material-icons">monetization_on</i>Pagar</button>
+            <a class="btn btn-add" href="{% url 'webclient:documents' %}">Cancelar</a>
+            </form>
+            
+        </div>
+    </div>
+</main>
+
+{% endblock %}
