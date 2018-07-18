@@ -19,7 +19,7 @@
 
   <body>
     <!--
-    <form class="form-signin" method="POST" action="{% url 'process' %}" style="max-width: 680px;">
+    <form class="form-signin" method="POST" action="{% url 'document_manager:process' %}" style="max-width: 680px;">
       {% csrf_token %}
       <input type="hidden" name="document" value="{{object.id}}" />
       <div class="text-center mb-4">
@@ -86,7 +86,7 @@
       <div class="col-md-8 form-col">
           <div class="upform">
             <a href="/" class="col">Regresar</a>
-            <form method="POST" action="{% url 'process' %}" id="document-form">    
+            <form method="POST" action="{% url 'document_manager:process' %}" id="document-form">    
               <input type="hidden" name="document" value="{{object.id}}" />
               {% csrf_token %}
               <div class="upform-header"></div>    

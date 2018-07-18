@@ -37,6 +37,7 @@ class CategoryAdmin(SoftDeletionModelAdminMixin, MPTTModelAdmin):
         'name',
         'parent'
     )
+    readonly_fields = ('slug', )
 
 
 @admin.register(DocumentField)

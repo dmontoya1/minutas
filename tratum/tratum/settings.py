@@ -23,10 +23,20 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',   
     'django.contrib.humanize',
-    'rest_framework', 
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
+    'rest_auth.registration',
+    'api',
     'debug_toolbar',
     'ckeditor',
     'mptt',
@@ -34,6 +44,7 @@ INSTALLED_APPS = [
     'document_manager',
     'business_info',
     'store',
+    'users',
     'webclient'
 ]
 
@@ -69,6 +80,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'tratum.wsgi.application'
+
+SITE_ID = 1
 
 
 # Database
@@ -199,7 +212,85 @@ CKEDITOR_CONFIGS = {
     }
 }
 
-
 #MPTT Settings
 
 MPTT_ADMIN_LEVEL_INDENT = 30
+
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+#email configuration
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_USER = 'Tratum <no-reply@tratum.com>'
+EMAIL_HOST_USER = 'apptitud'
+EMAIL_HOST_PASSWORD = 'jkdsjk4534.sd!"'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+# Auth settings
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/'
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/'
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
+ACCOUNT_ADAPTER = 'users.adapters.AccountAdapter'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+SOCIALACCOUNT_QUERY_EMAIL = True
+LOGOUT_ON_PASSWORD_CHANGE = True
+OLD_PASSWORD_FIELD_ENABLED = True
+
+
+#Social account settings
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'METHOD': 'oauth2',
+        'SCOPE': ['email', 'public_profile'],
+        'AUTH_PARAMS': {'auth_type': 'https'},
+        'INIT_PARAMS': {'cookie': True},
+        'FIELDS': [
+            'id',
+            'email',
+            'first_name',
+            'last_name',
+        ],
+        'EXCHANGE_TOKEN': True,
+        'LOCALE_FUNC': lambda request: 'es_CO',
+        'VERIFIED_EMAIL': False,
+        'VERSION': 'v2.12'
+    },
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+#facebook
+SOCIAL_AUTH_FACEBOOK_KEY = '1124600941010990'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET ='5072f4a65001e6ac0a272cc17d8fd4eb' #app key
+SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
+SOCIALACCOUNT_ADAPTER = 'users.adapters.SocialAccountAdapter'
+
+# DRF Config
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'api.permissions.HasAPIAccess',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}

@@ -1,0 +1,227 @@
+
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web:300,400,600,700');
+
+body {
+	background: rgb(255, 255, 255);
+	color: #002C55;
+	font-family: 'Titillium Web', sans-serif !important;
+	overflow-x: hidden;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-bottom: .75rem;
+    font-family: 'Titillium Web', sans-serif !important;
+    font-weight: 400;
+    color: #212529;
+}
+
+
+.modal-dialog form input[type="submit"] {
+    background: #002c55;
+    border-color: transparent;
+    border-radius: 100px;
+    color: #ffffff;
+    margin-top: 20px;
+    /* width: 100%; */
+    height: 55px;
+    padding: 10px 0;
+}
+
+.modal-dialog .modal-title {
+    font-size: 1.7em;
+    font-weight: 600;
+}
+
+.modal-dialog .btn-fb {
+    background: transparent;
+    border: 1px solid #3b66c4;
+    border-radius: 100px;
+    color: #3b66c4;
+    margin-top: 20px;
+    width: 100%;
+    height: 35px;
+    padding: 7px 15px 10px 15px;
+    font-size: 0.8em;
+    text-align: center;
+    font-weight: 700;
+}
+
+.modal-dialog .btn-gl {
+    background: transparent;
+    border: 1px solid #cf4332;
+    border-radius: 100px;
+    color: #cf4332;
+    margin-top: 20px;
+    width: 100%;
+    height: 35px;
+    padding: 7px 15px 10px 15px;
+    font-size: 0.8em;
+    text-align: center;
+    font-weight: 700;
+}
+
+.modal-dialog form .form-control {
+    border: transparent;
+    box-shadow: none !important;
+    border-radius: 0;
+    padding: 0;
+    background: #eee;
+    height: 7%;
+}
+
+.modal-dialog form .control-label {
+    color: #999;
+    font-weight: 600;
+}
+
+.has-error .error {
+    background: #fad2d2;
+}
+
+.form-error {
+    font-size: 0.9em;
+    color: #f59da2 !important;
+    float: left;
+}
+
+
+/* DOCUMENTS TEMPLATE */
+
+.documents-container .title {
+    background-color: #999;
+    margin-bottom: 50px;
+}
+
+.document-header{
+    margin: 25px 0px;
+    padding: 20px 0px;
+}
+
+.document-header .text-center {
+    color: #fff !important;
+}
+
+.docs-breadcrumb {
+    margin-left: -15px;
+    margin-right: -15px
+}
+
+.docs-breadcrumb .breadcrumb {
+    border-radius: 0px;
+}
+
+.search form {
+    width: 100%;
+}
+
+.docs .filters {
+    border: 1px solid #aaa;
+    border-radius: 10px;
+    max-height: 500px;
+    padding-bottom: 30px;
+}
+
+@media screen and (max-width: 576px) {
+    .docs .filters {
+        margin: 0 15px;
+    }
+}
+
+.docs .filters .sub-categories {
+    padding: 20px 0;
+    background-color: #ccc;
+    margin: 0 -30px;
+    margin-bottom: 30px;
+    border-radius: 10px 10px 0px 0px; 
+}
+
+.docs .filters .filter {
+    margin: 0 -30px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #aaa;
+}
+
+.docs .filters span {
+    font-size: 1.5em;
+    color: #000;
+}
+
+
+.docs .documents {
+    border: 0px solid #aaa;
+}
+
+
+.doc-content {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 30px 0px;
+}
+
+@media screen and (min-width: 768px) {
+    .doc-content {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin: 30px 0px;
+        flex: 0 0 47.666667%;
+        max-width: 47.666667%;
+    }
+}
+
+.doc-content .row-category {
+    padding-top: 10px;
+    margin-bottom: -20px;
+}
+.doc-content .row-category .category {
+    color: #6ec9c3;
+    font-size: 0.7em;
+}
+
+.doc-content .doc-title {
+    font-size: 1.5em;
+    font-weight: 500;
+    color: #000;
+}
+
+.doc-content .doc-description {
+    font-size: 0.7em;
+    color: #999;
+}
+
+.doc-content .doc-price-content {
+    background-color: #ddd;
+    margin: 0 -30px;
+    padding: 20px 0px;
+    border-radius: 0px 0px 5px 5px;
+}
+
+.doc-content .doc-price-content .price {
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.doc-content .doc-price-content .price-free {
+    font-size: 1em;
+    background-color: #6ec9c3;
+    color: #fff;
+    padding: 10px 25px 10px 39px;
+    margin-right: -15px;
+    border-radius: 0px 0px 0px 10px;
+}
+
+.doc-content .doc-price-content .btn-buy {
+    color: #fff;
+    border-color: #002c55;
+    background-color: #002c55;
+    box-shadow: none;
+    border-radius: 10px;
+}
+
+.fixed {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #999;
+    z-index: 100000;
+    padding-top: 10px; 
+}

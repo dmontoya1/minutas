@@ -1,0 +1,401 @@
+{% load humanize %}
+{% load static %}
+{% load socialaccount %}
+{% providers_media_js %}
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="Tratum, documentos legales online">
+        <meta name="author" content="Tratum S.A.S">
+        <link rel="icon" href="https://getbootstrap.com/assets/img/favicons/favicon-32x32.png">
+        <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400,600,700" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" 
+              integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" 
+              crossorigin="anonymous">
+        <link 
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+            integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+            crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" >
+        <link rel="stylesheet" href="{% static 'css/shards.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/site.css' %}">
+        <link rel="stylesheet" href="{% static 'css/tratum.css' %}">
+        <title>Tratum</title>
+        {% block extra_css %}
+        {% endblock %}
+    </head>
+    <body>
+        <header> 
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container">
+                    <a class="navbar-brand" href="/">Tratum</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>            
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav">
+                            <a class="nav-item nav-link" href="/">Inicio</a>
+                            <a class="nav-item nav-link" href="/about-us/">Quienes sómos</a>
+                            {% if request.user.is_anonymous %}
+                                <a class="nav-item nav-link" href="#" data-toggle="modal" data-target="#modal-login">Iniciar Sesión</a>
+                                <a class="nav-item nav-link" href="#" data-toggle="modal" data-target="#modal-signup">Registro</a>
+                            {% else %}
+                                <a href="/logout/" id="Logout" class="nav-item nav-link">Cerrar sesión</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>       
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+
+
+        <!-- Modal login -->
+        <div class="modal fade" id="modal-login" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-label">Iniciar Sesión</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row" style="margin-bottom: 30px;">
+                                <div class="col-md-6 clear-fix">
+                                    <a href="{% provider_login_url 'facebook' method='oauth2' next='/' %}" class="btn-fb float-left">
+                                        <i class="fab fa-facebook-square"></i>
+                                        Continuar con Facebook
+                                    </a>
+                                </div>
+                                <div class="col-md-6 clear-fix">
+                                    <a href="{% provider_login_url 'google' method='oauth2' next='/' %}" class="btn-gl float-right">
+                                        <i class="fab fa-google"></i>
+                                        Continuar con Google
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col">
+                                    <form method="POST" id="login" class="form-horizontal" >
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <label class="control-label">Correo electrónico*</label>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <input class="form-control" name="email" data-validation="email"
+                                                data-validation-error-msg="Debes ingresar un email válido" />
+                                            </div>
+                                        </div>
+                        
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <label class="control-label">Contraseña*</label>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <input type="password" class="form-control" name="password" required/>
+                                            </div>
+                                        </div>
+        
+                                        <p class="text-right">
+                                            <a href="#modal-forget" class="forgot-pass" data-toggle="modal" data-dismiss="modal">¿Olvidaste tu contraseña?'</a>
+                                        </p>
+        
+                                        <div class="text-center">
+                                            <input type="submit" id="reg_submit" value="Iniciar Sesión"/>
+                                        </div>
+                                                
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Signup -->
+        <div class="modal fade" id="modal-signup" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-label">Registro</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row" style="margin-bottom: 30px;">
+                                <div class="col-md-6 clear-fix">
+                                    <a href="{% provider_login_url 'facebook' method='oauth2' next='/' %}" class="btn-fb float-left">
+                                        <i class="fab fa-facebook-square"></i>
+                                        Continuar con Facebook
+                                    </a>
+                                </div>
+                                <div class="col-md-6 clear-fix">
+                                    <a href="{% provider_login_url 'google' method='oauth2' next='/' %}" class="btn-gl float-right">
+                                        <i class="fab fa-google"></i>
+                                        Continuar con Google
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col">
+                                    <form method="POST" id="signup" class="form-horizontal">
+                                        {% csrf_token %}
+        
+                                        <input type="hidden" name="username">
+                        
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <label class="control-label">Correo Electrónico</label>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <input type="text" required class="form-control" name="email" 
+                                                data-validation="email" data-validation-error-msg="Debes ingresar un email válido"/>
+                                            </div>
+                                        </div>
+                                        <br>
+                        
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <label class="control-label">Contraseña</label>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <input required type="password" class="form-control" 
+                                                name="password1" data-validation="length strength" 
+                                                data-validation-length="min8"
+                                                data-validation-strength="2"
+                                                data-validation-error-msg="Tu contraseña debe tener mínimo 8 caracteres, un número y una letra"/>
+                                            </div>
+                                        </div>
+                                        <br>
+                        
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <label class="control-label"> Repetir Contraseña</label>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <input required type="password" class="form-control"  
+                                                name="password2" data-validation="confirmation" data-validation-confirm="password1"
+                                                data-validation-error-msg="Las contraseñas no coinciden"/>
+                                            </div>
+                                        </div>
+        
+                                        <div class="terms-conditions">
+                                            <input type="checkbox" id="terms" style="display:inline">
+                                            <label for="terms" style="color: #929292;display:inline;font-weight: 100;">
+                                            Para continuar debes aceptar los 
+                                            <a href="{% url 'web_client:terms" class="signup_terms">Términos y condiciones </a> y las 
+                                            <a href="{% url 'web_client:privacy-policy" class="signup_terms">Políticas de tratamiento de datos </a>de <strong>TRATUM S.A.S</strong>
+                                        </div>
+        
+                                        <input type="hidden" name="username" />
+                        
+                                        <div class="text-center">
+                                            <input type="submit" id="reg_submit_signup" value="Registrarse"/>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Forget Pass -->
+        <div class="modal fade" id="modal-forget" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-label">Recuperar contraseña</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col">
+                                    <form method="POST" id="forget" class="form-horizontal">
+                                        {% csrf_token %}
+                                        
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <label class="control-label">Correo Electrónico*</label>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <input type="text" class="form-control" name="email"
+                                                data-validation="email" data-validation-error-msg="Debes ingresar un email válido"/>
+                                            </div>
+                                        </div>
+    
+                                        <p class="text-right">
+                                            <a href="#modal-login" class="forgot-pass" data-toggle="modal" data-dismiss="modal">Iniciar Sesión</a>
+                                        </p>
+
+                                        <p class="text-center" style="font-size: 0.8em;color: #999">
+                                            Ingresa tu correo electrónico y se te enviara un link para la recuperación de tu contraseña,
+                                        </p>
+                        
+                                        <div class="text-center">
+                                            <input type="submit" id="reg_submit_forget" value="Enviar"/>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <footer class="bg-dark">
+            <div class="container">
+                <div class="row ">
+                    <div class="col-sm-12 text-center mt-5 mb-5">
+                        <a href="/policies/" class="text-white">
+                            Políticas |
+                        </a>
+                        <a href="/faq/" class="text-white">
+                            Preguntas frecuentes |
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer>        
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+            integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+            crossorigin="anonymous"></script>
+        <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+            integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+            crossorigin="anonymous"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+        <script src="{% static 'js/shards.min.js' %}"></script>
+        <script>
+            $.validate({
+            modules : 'html5',
+            modules : 'security date',
+            onModulesLoaded : function() {
+                var optionalConfig = {
+                    fontSize: '0.9em',
+                    padding: '4px',
+                    float: 'right',
+                    bad : 'Muy débil',
+                    weak : 'Débil',
+                    good : 'Segura',
+                    strong : 'Muy Segura'
+                };
+            
+                $('input[name="password1"]').displayPasswordStrength(optionalConfig);
+                }
+            });
+        </script>
+        
+        <script type="text/javascript">
+            $(document).ready(function() {
+            });
+
+            axios.defaults.headers.common['X-CSRFToken'] = '{{csrf_token}}'
+            axios.defaults.headers.common['Api-Key'] = '876640988db6c4e761ca4254d69f01f454ae0954'
+            
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": true,
+                "onclick": null,
+                "showDuration": "1000",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            // <!-- Script para enviar axios de Login -->
+            $("#login").on('submit', function(ev){
+                ev.preventDefault()
+                data = new FormData($(this)[0])
+                axios.post("{% url 'webclient:login' %}", data)
+                    .then(function(response){
+                        if (response.data.length > 0){
+                            url = response.data['url']
+                            window.location.href = url
+                        }
+                    })
+                    .catch(function(error){
+                        console.log(error.response.data.error)
+                        toastr.error(error.response.data.error)
+                    });
+            })
+
+            $("#signup").on('submit', function(ev){
+                ev.preventDefault()
+                if (!$("#terms").is(':checked') ) {
+                    
+                    toastr.error("Debes aceptar los Términos y Condiciones y las Políticas de tratamiento de datos para terminar el proceso de registro")
+                    $('#reg_submit_signup').attr('disabled', false);
+                    return false;
+                }
+                $('#reg_submit_signup').attr('disabled', true)
+                data = new FormData($(this)[0])
+                axios.post("{% url 'webclient:signup' %}", data)
+                    .then(function(response){
+                        console.log(response.data)
+                        if (response.data.length > 0){
+                            window.location.replace(response.data)
+                        }
+                    })
+                    .catch(function(error){
+                        toastr.error(error.response.data.error)
+                        $('#reg_submit_signup').attr('disabled', false)
+                    });
+
+            })
+
+            $("#forget").on('submit', function(ev){
+                ev.preventDefault()
+                $('#reg_submit_forget').attr('disabled', true)
+                data = $(this).serialize(),
+                axios.post("/accounts/password/reset/", data)
+                    .then(function(response){
+                        console.log(response.data)
+                        toastr.success(response.data['detail'])
+                        setTimeout(function(){
+                            $('#modal-forget').modal('toggle')
+                            location.reload()
+                        }, 1500);
+                    })
+                    .catch(function(error){
+                        toastr.error("El correo electrónico no se encuentra registrado")
+                        $('#reg_submit_signup').attr('disabled', false)
+                    });
+            })
+        </script>
+        {% block extra_js %}
+        {% endblock %}
+    </body>
+</html>
