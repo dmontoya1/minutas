@@ -1,3 +1,5 @@
+axios.defaults.headers.common['Api-Key'] = '042c97b1f486c5bde044ba5f10dfd11ad26cb81b'
+
 CKEDITOR.dialog.add( 'sectionDialog', function(editor){
     return {
         title: 'Agregar sección/claúsula dinámica',
@@ -90,7 +92,7 @@ function populateDocumentSections(){
     if(object_id){
         filter = 'document_id=' + object_id.dataset.id;
     }
-    axios.get(`/document-manager/document-sections/?${filter}`)
+    axios.get(`/api/document-manager/document-sections/?${filter}`)
         .then(function(response) {
             select = document.querySelector('select.document-section');
             select.options.length = 0;

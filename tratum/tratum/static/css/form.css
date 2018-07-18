@@ -1,3 +1,8 @@
+a {
+    color: #01ACE6;
+    font-weight: 600;
+}
+
 body {
 	background: rgb(255, 255, 255);
 	color: #002C55;
@@ -60,7 +65,6 @@ iframe {
 	background-color: #f2f2f2;
 	height: 100vh;
     position: fixed;
-    padding: 10px 45px 20px 10px;
 }
     .info-col p {
         font-weight: 300;
@@ -105,6 +109,9 @@ iframe {
             font-size: 24px;
             font-weight: bold;
             padding: 5px 20px;
+            width: 100%;
+            background-color: #002C55;
+            border: none;
         }
     .upform .upform-main .input-block {
         cursor: default;
@@ -145,4 +152,10 @@ iframe {
     .upform .upform-main .input-block {
         opacity: 1;
     }
+}
+
+.tooltip-inner {
+    color: #161616;
+    background-color: #fff;
+    border: 3px solid #c2c2c2;
 }

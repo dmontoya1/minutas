@@ -1,3 +1,5 @@
+axios.defaults.headers.common['Api-Key'] = '042c97b1f486c5bde044ba5f10dfd11ad26cb81b'
+
 CKEDITOR.dialog.add( 'fieldDialog', function(editor){
     return {
         title: 'Agregar campo dinámico',
@@ -89,7 +91,7 @@ function populateDocumentFields(){
         if(object_info.dataset.model == 'documentsection'){
             url = `/document-manager/document-sections/${object_info.dataset.slug}/section-fields/`
         } else if(object_info.dataset.model == 'document'){
-            url = `/document-manager/document-fields/?${filter}`
+            url = `/api/documents/document-fields/?${filter}`
         }
     }    
     axios.get(url)
