@@ -16,7 +16,7 @@ from ckeditor.fields import RichTextField
 from utils.models import SoftDeletionModelMixin, SlugIdentifierMixin
 
 
-class Category(MPTTModel, SoftDeletionModelMixin):
+class Category(MPTTModel, SoftDeletionModelMixin, SlugIdentifierMixin):
     """Guarda las categorías de documentos.
 
     Campos del modelo:
@@ -51,11 +51,12 @@ class Category(MPTTModel, SoftDeletionModelMixin):
         order_insertion_by = ['name']
     
     def clean(self):
-        try:
+        if self.parent:
             if self.parent.get_ancestors().count() == 3:
                 raise ValidationError('Las categorías sólo pueden tener hasta 4 niveles de profundidad')
-        except:
-            pass
+    
+    def get_absolute_url(self):
+        return reverse('webclient:category-documents', kwargs={'slug': self.slug})
 
 
 class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
@@ -73,12 +74,17 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
         max_length=255,
         unique=True
     )
+    description = models.TextField(
+        'Descripción',
+        blank=True,
+        null=True
+    )
     category = models.ForeignKey(
         Category,
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        verbose_name='Categoría'
+        verbose_name='Categoría',      
     )
     template_path = models.TextField(
         null=True,
@@ -103,6 +109,7 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
  
     class Meta:
         verbose_name = 'Documento'
+        unique_together = ('category', 'order')
 
     def __str__(self):
         return self.name     

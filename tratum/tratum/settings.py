@@ -6,15 +6,7 @@ SECRET_KEY = 'zbua(=8tqz9(l_wkqapp!j4@c2&qnkgtk+=4-30f+td(_gr_2w'
 
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'localhost',
-    'localhost.org',
-    '138.197.86.31',
-    '127.0.0.1',
-    '192.168.0.16',
-    '192.168.0.12',
-    '8a9b6aff.ngrok.io'
-]
+ALLOWED_HOSTS = ['*']
 
 INTERNAL_IPS = [
     'localhost',

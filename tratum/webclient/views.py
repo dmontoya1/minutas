@@ -134,6 +134,16 @@ class SignupView(View):
 			return JsonResponse(response, status=400)
 
 
-class DocumentsView(TemplateView):
+class CategoryDocumentsView(TemplateView):
 
     template_name = "webclient/documents.html"
+
+    def get_context_data(self, **kwargs):
+        print ("Context Data")
+        print ("Slug:" +str(self.kwargs['slug']) )
+        context = super().get_context_data(**kwargs)
+        category = Category.objects.get(slug=self.kwargs['slug'])
+        categories = category.get_descendants(include_self=True)
+        context['category'] = category
+        context['documents'] = Document.objects.filter(category__in=categories).order_by('order')
+        return context

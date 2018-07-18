@@ -1,6 +1,7 @@
 import uuid
 from io import BytesIO
 
+from django.db.models import Q
 from django.conf import settings
 from django.http import HttpResponse, FileResponse
 from django.shortcuts import render
@@ -16,11 +17,15 @@ from xhtml2pdf import pisa as pisa
 from .models import (
     Document,
     DocumentField,
-    DocumentSection
+    DocumentSection,
+    Document,
+    Category
 )
 from .serializers import (
     DocumentFieldSerializer,
-    DocumentSectionSerializer
+    DocumentSectionSerializer,
+    DocumentSerializer,
+    CategorySerializer
 )
 from .utils import add_document_scripts
 
@@ -43,6 +48,7 @@ class DocumentSectionList(generics.ListAPIView):
         if self.request.GET.get('document_id', None):
             q = q.filter(document__id=self.request.GET['document_id'])
         return q
+
 
 class DocumentSectionFieldsList(DocumentFieldList):
 
@@ -93,3 +99,36 @@ class ProcessDocumentView(View):
             content_disposition = 'attachment; filename="{}.docx"'.format(document.name)
             response['Content-Disposition'] = content_disposition
             return response
+
+
+class DocumentList(generics.ListAPIView):
+    """Api para obtener la lista de documentos de una categoría
+    """
+
+    serializer_class = DocumentSerializer
+
+    def get_queryset(self):
+        category = Category.objects.get(slug=self.kwargs['slug'])
+        categories = category.get_descendants(include_self=True)
+        return Document.objects.filter(category__in=categories).order_by('order')
+
+
+class CategoryRootList(generics.ListAPIView):
+    """Api para listar las categorías padre
+    """
+
+    serializer_class = CategorySerializer
+
+    def get_queryset(self):
+        return Category.objects.filter(parent=None)
+
+
+class CategoryChildrenList(generics.ListAPIView):
+    """Api para listar las categorías hijas de un padre
+    """
+
+    serializer_class = CategorySerializer
+
+    def get_queryset(self):
+        category = Category.objects.get(slug=self.kwargs['slug'])
+        return Category.objects.filter(parent=category)
