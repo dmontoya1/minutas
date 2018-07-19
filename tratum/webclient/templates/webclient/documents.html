@@ -81,13 +81,13 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="free">
+                                    <input class="form-check-input free-pay" type="checkbox" value="free">
                                     <label class="form-check-label" for="free">
                                         Gratis
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="pay">
+                                    <input class="form-check-input free-pay" type="checkbox" value="pay">
                                     <label class="form-check-label" for="pay">
                                         De Pago
                                     </label>
@@ -190,7 +190,6 @@
 {% endblock %}
 
 {% block extra_js %}
-<!-- <link href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css" rel="stylesheet"/> -->
 <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 <script>
 
@@ -447,6 +446,16 @@
     $('#level1-categories').on('change', function(e){
         e.preventDefault()
         window.location.replace($(this).val())
+    })
+
+    $('.free-pay').on('click', function(e){
+        e.preventDefault()
+        e.stopPropagation();
+        url = '{{category.url}}?' + $(this).val() + '=true'
+        window.location.replace(url)
+        setTimeout(function() {
+            this.checked = !this.checked;
+        }.bind(this), 100);
     })
 
     

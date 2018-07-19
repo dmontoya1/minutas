@@ -21,5 +21,4 @@ urlpatterns = [
 
     #Documents
     url(r'^category/(?P<path>.*)', mptt_urls.view(model='document_manager.models.Category', view='document_manager.views.category', slug_field='slug'), name='category_documents'),
-    # path('category/<slug:slug>/documents/', views.CategoryDocumentsView.as_view(), name='category-documents')
 ]
