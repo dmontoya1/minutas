@@ -3,6 +3,7 @@ from io import BytesIO
 
 from django.db.models import Q
 from django.conf import settings
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import HttpResponse, FileResponse
 from django.shortcuts import render
 from django.template import Template, Context
@@ -135,31 +136,32 @@ class CategoryChildrenList(generics.ListAPIView):
 
 
 def category(request, path, instance):
-    # This is an example view.
-    # As you can see, this view receives additional arg - instance.
-
     
     if request.GET.get('free') is not None or request.GET.get('pay') is not None:
         if request.GET.get('free'):
             if instance:
                 categories = instance.get_descendants(include_self=True)
-                documents = Document.objects.filter(Q(price=0) | Q(price=None), category__in=categories,).order_by('order')
+                document_list = Document.objects.filter(Q(price=0) | Q(price=None), category__in=categories,).order_by('order')
             else:
-                documents = Document.objects.filter(Q(price=0) | Q(price=None)).order_by('order')
+                document_list = Document.objects.filter(Q(price=0) | Q(price=None)).order_by('order')
         else:
             if instance:
                 categories = instance.get_descendants(include_self=True)
-                documents = Document.objects.filter(category__in=categories, price__gt=0).order_by('order')
+                document_list = Document.objects.filter(category__in=categories, price__gt=0).order_by('order')
             else:
-                documents = Document.objects.filter(price__gt=0).order_by('order')
+                document_list = Document.objects.filter(price__gt=0).order_by('order')
 
     else:
         if instance:
             categories = instance.get_descendants(include_self=True)
-            documents = Document.objects.filter(category__in=categories).order_by('order')
+            document_list = Document.objects.filter(category__in=categories).order_by('order')
         else:
-            documents = Document.objects.all().order_by('order')
+            document_list = Document.objects.all().order_by('order')
 
+
+    paginator = Paginator(document_list, 8)
+    page = request.GET.get('page')
+    documents = paginator.get_page(page)
 
     return render(
         request,

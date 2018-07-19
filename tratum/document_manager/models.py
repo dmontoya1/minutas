@@ -79,7 +79,9 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
     description = models.TextField(
         'Descripción',
         blank=True,
-        null=True
+        null=True,
+        max_length=120,
+        help_text="Cantidad máxima de caracteres: 120"
     )
     category = models.ForeignKey(
         Category,
