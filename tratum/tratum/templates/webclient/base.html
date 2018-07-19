@@ -28,28 +28,6 @@
         {% endblock %}
     </head>
     <body>
-        <header> 
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <div class="container">
-                    <a class="navbar-brand" href="/">Tratum</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>            
-                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                        <div class="navbar-nav">
-                            <a class="nav-item nav-link" href="/">Inicio</a>
-                            <a class="nav-item nav-link" href="/about-us/">Quienes sómos</a>
-                            {% if request.user.is_anonymous %}
-                                <a class="nav-item nav-link" href="#" data-toggle="modal" data-target="#modal-login">Iniciar Sesión</a>
-                                <a class="nav-item nav-link" href="#" data-toggle="modal" data-target="#modal-signup">Registro</a>
-                            {% else %}
-                                <a href="/logout/" id="Logout" class="nav-item nav-link">Cerrar sesión</a>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </header>       
         <main>
             {% block content %}
             {% endblock %}
@@ -315,7 +293,7 @@
             });
 
             axios.defaults.headers.common['X-CSRFToken'] = '{{csrf_token}}'
-            axios.defaults.headers.common['Api-Key'] = '876640988db6c4e761ca4254d69f01f454ae0954'
+            axios.defaults.headers.common['Api-Key'] = 'd492009ed1b5395f64230e13fb71ce33cc855156'
             
             toastr.options = {
                 "closeButton": false,
