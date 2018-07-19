@@ -12,11 +12,11 @@
         <div class="col-12">
             <nav aria-label="breadcrumb" class="docs-breadcrumb">
                 <ol class="breadcrumb">
-                    <a href="{% url 'webclient:category_documents' path='' %}">Todos los Documentos </a>
+                    <a href="{% url 'webclient:category_documents' path='' %}">Todos los Documentos</a>
                     {% for ancestor in category.get_ancestors %}
-                        > <a href="{{ ancestor.get_absolute_url }}">{{ ancestor.name }}</a>
+                        / <a href="{{ ancestor.get_absolute_url }}">{{ ancestor.name }}</a>
                     {% endfor %}
-                    > <strong>{{ category.name }}</strong>
+                    / <span>{{ category.name }}</span>
                 </ol>
             </nav>
         </div>

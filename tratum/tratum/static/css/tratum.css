@@ -221,6 +221,19 @@ body {
     padding-left: 15px;
 }
 
+.breadcrumb a {
+    color: #002C55;
+    padding: 0 5px;
+    font-size: 1em;
+}
+
+.breadcrumb span {
+    color: #002C55;
+    padding: 0 5px;
+    font-size: 1em;
+    font-weight: 600;
+}
+
 .fixed {
     position: fixed;
     top: 0;
