@@ -46,6 +46,7 @@ class Category(MPTTModel, SoftDeletionModelMixin, SlugIdentifierMixin):
 
     class Meta:
         verbose_name = 'Categoría'
+        unique_together = ('slug', 'parent')
 
     class MPTTMeta:
         order_insertion_by = ['name']
@@ -56,7 +57,8 @@ class Category(MPTTModel, SoftDeletionModelMixin, SlugIdentifierMixin):
                 raise ValidationError('Las categorías sólo pueden tener hasta 4 niveles de profundidad')
     
     def get_absolute_url(self):
-        return reverse('webclient:category-documents', kwargs={'slug': self.slug})
+        # return reverse('webclient:category-documents', kwargs={'slug': self.slug})
+        return reverse('webclient:category_documents', kwargs={'path': self.get_path()})
 
 
 class Document(SoftDeletionModelMixin, SlugIdentifierMixin):

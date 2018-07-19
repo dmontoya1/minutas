@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
     'rest_auth.registration',
+    'mptt_urls',
     'api',
     'debug_toolbar',
     'ckeditor',

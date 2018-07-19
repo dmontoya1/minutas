@@ -217,6 +217,10 @@ body {
     border-radius: 10px;
 }
 
+.level3-categories{
+    padding-left: 15px;
+}
+
 .fixed {
     position: fixed;
     top: 0;

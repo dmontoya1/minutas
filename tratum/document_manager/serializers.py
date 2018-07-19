@@ -27,7 +27,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ('name', 'slug', 'url')
+        fields = ('id','name', 'slug', 'url')
 
 
 class DocumentSerializer(serializers.ModelSerializer):
@@ -36,4 +36,4 @@ class DocumentSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Document
-        fields = ('name', 'description', 'category', 'price', )
+        fields = ('id', 'name', 'description', 'category', 'price', )

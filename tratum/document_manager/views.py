@@ -132,3 +132,24 @@ class CategoryChildrenList(generics.ListAPIView):
     def get_queryset(self):
         category = Category.objects.get(slug=self.kwargs['slug'])
         return Category.objects.filter(parent=category)
+
+
+def category(request, path, instance):
+    # This is an example view.
+    # As you can see, this view receives additional arg - instance.
+
+    if instance:
+        categories = instance.get_descendants(include_self=True)
+        documents = Document.objects.filter(category__in=categories).order_by('order')
+    else:
+        documents = Document.objects.all().order_by('order')
+
+    return render(
+        request,
+        'webclient/documents.html',
+        {
+            'category': instance,
+            'children': instance.get_children() if instance else Category.objects.root_nodes(),
+            'documents': documents
+        }
+    )
