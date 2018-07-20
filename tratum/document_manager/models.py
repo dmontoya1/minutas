@@ -46,6 +46,7 @@ class Category(MPTTModel, SoftDeletionModelMixin, SlugIdentifierMixin):
 
     class Meta:
         verbose_name = 'Categoría'
+        unique_together = ('slug', 'parent')
 
     class MPTTMeta:
         order_insertion_by = ['name']
@@ -56,7 +57,8 @@ class Category(MPTTModel, SoftDeletionModelMixin, SlugIdentifierMixin):
                 raise ValidationError('Las categorías sólo pueden tener hasta 4 niveles de profundidad')
     
     def get_absolute_url(self):
-        return reverse('webclient:category-documents', kwargs={'slug': self.slug})
+        # return reverse('webclient:category-documents', kwargs={'slug': self.slug})
+        return reverse('webclient:category_documents', kwargs={'path': self.get_path()})
 
 
 class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
@@ -74,10 +76,17 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
         max_length=255,
         unique=True
     )
-    description = models.TextField(
-        'Descripción',
+    short_description = models.CharField(
+        'Descripción corta',
         blank=True,
-        null=True
+        null=True,
+        max_length=120,
+        help_text="Cantidad máxima de caracteres: 120"
+    )
+    long_description = models.TextField(
+        'Descripción larga',
+        blank=True,
+        null=True,
     )
     category = models.ForeignKey(
         Category,
@@ -105,6 +114,11 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
         'Contenido',
         null=True, 
         blank=True
+    )
+    video_url = models.URLField(
+        'URL del video explicativo',
+        blank=True,
+        null=True
     )
  
     class Meta:
