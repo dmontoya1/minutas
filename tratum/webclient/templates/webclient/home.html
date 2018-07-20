@@ -1,104 +1,132 @@
 {% extends 'webclient/base.html' %}
+{% load static %}
 
 {% block extra_css %}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/css/swiper.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 {% endblock %}
 
 {% block content %}
-  <div class="swiper-container">      
-      <div class="swiper-wrapper">
+  <div id="loadingAnimation">
+    <img src="{% static 'img/loadingSite.gif' %}" />
+    <p>Cargando...</p>
+  </div>
+  <div class="swiper-container">   
+      <div class="swiper-wrapper">          
           <div class="swiper-slide">
-            <div class="description">
-              <p>Genera documentos legales para tu empresa desde la nube</p>
+            <div class="swiper-mask-left"></div>  
+            <div class="swiper-mask-right"></div> 
+            <div class="description text-center">
+              <h1>Lorem ipsum</h1>
+              <p>Dolor sit amet, quan minimun credula postero</p>
+              <i class="fas fa-play-circle"></i>
             </div>
-            <img src="http://ikamega.pe.hu/wp-content/uploads/2016/01/cropped-16-211.jpg">
+            <img src="https://gelaw.co.za/wp-content/uploads/law-wallpapers-hd-1080p-1920x1080-desktop-02.jpg">
           </div>
           <div class="swiper-slide">
-            <img src="http://www.wpnettools.com/wp-content/uploads/2017/08/flat-design-office-desk-o-1.jpg">
-          </div>
-          <div class="swiper-slide">
-            <img src="https://singlecut.com/wp-content/uploads/2016/08/Machine_v3.jpg">
-          </div>
-          <div class="swiper-slide">
-            <img src="https://www.globeffect.com/wp-content/uploads/2016/08/institutionnel_flat_02-1.jpg">
+            <div class="swiper-mask-left"></div>  
+            <div class="swiper-mask-right"></div> 
+            <div class="description text-center">
+              <h1>Lorem ipsum</h1>
+              <p>Dolor sit amet, quan minimun credula postero</p>
+            </div>
+            <img src="https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/4QWhOJ2Flik7xcgii/videoblocks-people-pedestrians-walk-big-city-junction-slow-motion-low-angle-shot-full-hd-slow-motion-stock-footage_h2vhkmtoe_thumbnail-full01.png">
           </div>
       </div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
       <div class="swiper-pagination"></div>    
     </div>           
   </div>
   
-  <div class="container">
-    <section class="packages">
-      <div class="row">
-        <div class="col-sm-12 mb-4">
-          <h2 class="text-center">Paquetes de documentos</h2>          
-        </div>
-      </div>
-      <div class="row">
-        {% for b in bundles %}
-          <div class="col-sm-12 col-md-4">          
-              <div class="card mt-2">
-                  <img class="card-img" src="https://techstory.in/wp-content/uploads/2016/07/entrepreneur-longevity.jpg" alt="Card image">
-                  <div class="card-img-overlay">
-                    <h4 class="card-title">{{b.name}}</h4>
-                    <ul>
-                      {% for d in b.documents.all %}
-                        <li>
-                          <a class="text-white" href="{{d.get_absolute_url}}">{{d.name}}</a>
-                        </li>
-                      {% endfor%}
-                    </ul>
-                  </div>
-              </div>          
-          </div>
-        {% endfor %}
-      </div>
-    </section>
+  <div class="row mt-5 categories">
+    <div class="col-md-6 category-parallax" data-stellar-background-ratio="0.1" style="background-image: url('/static/img/parallax-test.jpg');">
+    </div>
+    <div class="col-md-6 category-description" data-aos="slide-left">      
+      <div class="container">
+          <h2>Derecho laboral</h2>
+          <p>Dolor sit amet, quan minimun credula postero Dolor sit amet, quan minimun credula postero Dolor sit amet, quan minimun credula postero Dolor sit amet,
+              Dolor sit amet, quan minimun credula postero Dolor sit amet, quan minimun credula postero Dolor sit amet, quan minimun credula postero Dolor sit amet, quan minimun credula postero</p>
+          <a>Ver más</a>
+      </div>      
+    </div>
+  </div>
 
-    <section class="documents">
-      <div class="row">
-        <div class="col-sm-12">
-          <h2 class="text-center">Últimos documentos</h2>          
-        </div>
+  <div class="row categories">
+    <div class="col-md-6 category-description left" data-aos="slide-right">      
+        <div class="container">
+            <h2>Derecho laboral</h2>
+            <p>Dolor sit amet, quan minimun credula postero Dolor sit amet, quan minimun credula postero Dolor sit amet, quan minimun credula postero Dolor sit amet,
+                Dolor sit amet, quan minimun credula postero Dolor sit amet, quan minimun credula postero Dolor sit amet, quan minimun credula postero Dolor sit amet, quan minimun credula postero</p>
+            <a>Ver más</a>
+        </div>      
       </div>
-      <div class="row">
-        {% for c in categories %}
-          {% if c.document_set.alive %}
-            <div class="col-sm-12 mt-5">
-              <h3>{{c.name}}: </h4>          
-            </div>
-            {% for d in c.document_set.alive %}
-              <div class="col-sm-12 col-md-4">
-                <div class="card mt-2">
-                    <img class="card-img" src="https://s3.amazonaws.com/pas-wordpress-media/content/uploads/2014/06/shutterstock_185422997-653x339.jpg" alt="Card image">
-                    <div class="card-img-overlay">
-                      <h4 class="card-title"><a class="text-white" href="{{d.get_absolute_url}}">{{d.name}}</a></h4>                    
-                    </div>
-                </div>
-              </div>
-            {% endfor %}
-          {% endif %}
-        {% endfor %}
-      </div>
-    </section>
+    <div class="col-md-6 category-parallax" data-stellar-background-ratio="0.1" style="background-image: url('/static/img/parallax-test-2.jpg');">
+    </div>      
+  </div>
+
+  <div class="row categories">
+    <div class="col-md-6 category-parallax" data-stellar-background-ratio="0.1" style="background-image: url('/static/img/parallax-test-3.jpg');">
+    </div>
+    <div class="col-md-6 category-description" data-aos="slide-left">      
+      <div class="container">
+          <h2>Derecho laboral</h2>
+          <p>Dolor sit amet, quan minimun credula postero Dolor sit amet, quan minimun credula postero Dolor sit amet, quan minimun credula postero Dolor sit amet,
+              Dolor sit amet, quan minimun credula postero Dolor sit amet, quan minimun credula postero Dolor sit amet, quan minimun credula postero Dolor sit amet, quan minimun credula postero</p>
+          <a>Ver más</a>
+      </div>      
+    </div>
+  </div>
+
+  <div class="row contract-info">
+    <div class="col-md-6">
+      <img src="{% static 'img/Web2-40.png' %}" width="800px" />
+    </div>    
+    <div class="col-md-6" data-aos="slide-up">      
+      <div class="container h-100 d-flex flex-column justify-content-center my-0" style="padding-left: 80px;">
+        <h2>¿Por qué crear un contrato?</h2>
+        <p>Dolor sit amet, quan minimun credula postero Dolor sit amet, quan minimun credula postero Dolor sit amet, quan minimun credula postero Dolor sit amet,
+            Dolor sit amet, quan minimun credula postero Dolor sit amet, quan minimun credula postero Dolor sit amet, quan minimun credula postero Dolor sit amet, quan minimun credula postero</p>
+        <a>Ver más</a>
+      </div>      
+    </div>
   </div>
 {% endblock %}
 
 {% block extra_js %}
+    <script>      
+      window.onload = function(){ document.getElementById("loadingAnimation").style.display = "none" }   
+    </script>
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar.js/0.6.2/jquery.stellar.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/js/swiper.min.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
-    var mySwiper = new Swiper ('.swiper-container', {
-        direction: 'horizontal',
-        loop: true,
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
-        pagination: {
-          el: '.swiper-pagination',
-        }
-    })
+      var mySwiper = new Swiper ('.swiper-container', {
+          direction: 'horizontal',
+          loop: true,
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+          pagination: {
+            el: '.swiper-pagination',
+          }
+      })
+
+      $(window).stellar();
+
+      AOS.init({
+        duration: 600,
+        easing: 'ease-in-out' 
+      });
+
+      $('.swiper-mask-left').on('click', function(){
+        mySwiper.slidePrev();
+      })
+
+      $('.swiper-mask-right').on('click', function(){
+        mySwiper.slideNext();
+      })
+
     </script>
 {% endblock %}

@@ -1,7 +1,12 @@
 
+
+import mptt_urls
+
+from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from . import views
+
 
 app_name = 'webclient'
 urlpatterns = [
@@ -15,5 +20,5 @@ urlpatterns = [
     path('document/<slug:slug>/', views.DocumentDetailView.as_view(), name='document'),
 
     #Documents
-    path('category/<slug:slug>/documents/', views.CategoryDocumentsView.as_view(), name='category-documents')
+    url(r'^category/(?P<path>.*)', mptt_urls.view(model='document_manager.models.Category', view='document_manager.views.category', slug_field='slug'), name='category_documents'),
 ]
