@@ -110,10 +110,16 @@
                                         <div class="row justify-content-between">
                                             <div class="col-10 doc-info">
                                                 <span class="doc-title">{{doc.name}}</span>
-                                                <p class="doc-description">{{doc.description|default:"Sin Descripción"}}</p>
+                                                <p class="doc-description">{{doc.short_description|default:"Sin Descripción"}}</p>
                                             </div>
                                             <div class="col-1">
-                                                <i class="fas fa-info-circle float-right"></i>
+                                                <a data-video="{{doc.video_url}}"
+                                                   data-name="{{doc.name}}"
+                                                   data-shortdescription="{{doc.short_description}}"
+                                                   data-longdescription="{{doc.long_description}}"
+                                                   id="btn-modal-info">
+                                                    <i class="fas fa-info-circle float-right"></i>
+                                                </a>
                                             </div>
                                         </div>
                                         <div class="row doc-price-content">
@@ -137,6 +143,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             {% endfor %}
                         </div>
                     </div>
@@ -164,6 +171,45 @@
             </nav>
         </div>
 
+    </div>
+
+    <div class="modal fade" id="modal-info" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">{{doc.name}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                {% if doc.long_description %}
+                                    <p class="text-justify">
+                                        {{doc.long_description}}
+                                    </p> 
+                                {% else %}
+                                    <p class="text-justify">
+                                        {{doc.short_description|default:"Sin Descripción"}}
+                                    </p>
+                                {% endif %}
+                            </div>
+                            {% if doc.video_url %}
+                                <div class="col-12">
+                                    <iframe width="400" height="300" frameborder="0" allowfullscreen=""></iframe>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

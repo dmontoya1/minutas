@@ -76,12 +76,17 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
         max_length=255,
         unique=True
     )
-    description = models.TextField(
-        'Descripción',
+    short_description = models.CharField(
+        'Descripción corta',
         blank=True,
         null=True,
         max_length=120,
         help_text="Cantidad máxima de caracteres: 120"
+    )
+    long_description = models.TextField(
+        'Descripción larga',
+        blank=True,
+        null=True,
     )
     category = models.ForeignKey(
         Category,
@@ -109,6 +114,11 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
         'Contenido',
         null=True, 
         blank=True
+    )
+    video_url = models.URLField(
+        'URL del video explicativo',
+        blank=True,
+        null=True
     )
  
     class Meta:
