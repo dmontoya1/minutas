@@ -182,6 +182,13 @@ class DocumentSection(SlugIdentifierMixin):
     """
 
     name = models.CharField(max_length=255)
+    display_name = models.CharField(
+        'Texto a mostrar',
+        max_length=255,
+        null=True,
+        blank=True,
+        help_text='Corresponde a la pregunta textual que verán los usuarios'
+    )
     content = RichTextField(
         'Contenido',
         null=True,

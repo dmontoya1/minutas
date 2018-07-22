@@ -105,7 +105,7 @@
                   <h3 class="mb-3">Secciones opcionales disponibles: </h3>
                   {% for s in object.get_sections %}
                     <div class="col">
-                      <input type="checkbox" class="section-item mb-3"> {{s.name}}</input>
+                      <input type="checkbox" class="section-item mb-3"> {{s.display_name}}</input>
                     </div>
                   {% empty %}
                     <p>Este documento no contiene secciones opcionales</p>

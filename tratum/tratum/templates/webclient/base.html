@@ -59,9 +59,9 @@
                 </div>
                 <nav class="navbar fixed-top bg-transparent ">
                     <button class="navbar-toggler" type="button" >
-                        <i class="fas fa-bars"></i>
+                        <i class="fas fa-bars rotate"></i>
                     </button>
-                    <div class="float-right main-options">
+                    <div class="float-right main-options d-none d-lg-block">
                         <a>Categorías <i class="fas fa-caret-down"></i></a>
                         <span class="divider">|</span>
                         <a>Registrarse</a>
@@ -353,6 +353,7 @@
         <script type="text/javascript">
             $(document).ready(function() {
                 $('.navbar-toggler').on('click', function(){
+                    $('.rotate').toggleClass("down");
                     $('.contextualMenu').slideToggle();
                 })
             });
