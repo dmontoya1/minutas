@@ -29,8 +29,8 @@
     </head>
     <body>     
         <header>
-            <div id="contextualMenu">
-                <div class="options-wrapper">
+            <div class="pos-f-t">
+                <div class="collapse" id="navbarToggleExternalContent">
                     <div class="p-4">
                         <h4 class="text-white">
                             <a>Inicio</a>
@@ -420,7 +420,7 @@
                         toastr.error("El correo electrónico no se encuentra registrado")
                         $('#reg_submit_signup').attr('disabled', false)
                     });
-            });
+            })
         </script>
         {% block extra_js %}
         {% endblock %}
