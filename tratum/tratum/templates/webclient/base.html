@@ -59,12 +59,12 @@
                 </div>
                 <nav class="navbar fixed-top bg-transparent ">
                     <button class="navbar-toggler" type="button" >
-                        <i class="fas fa-bars"></i>
+                        <i class="fas fa-bars rotate"></i>
                     </button>
-                    <div class="float-right main-options">
+                    <div class="float-right main-options d-none d-lg-block">
                         <a>Categorías <i class="fas fa-caret-down"></i></a>
                         <span class="divider">|</span>
-                        <a>Registrarse</a>
+                        <a data-toggle="modal" data-target="#modal-signup">Registrarse</a>
                         <a data-toggle="modal" data-target="#modal-login">Iniciar sesión</a>
                     </div>
                 </nav>  
@@ -86,7 +86,7 @@
                             <div id="triangle"></div>
                             <div class="row justify-content-around">
                                 <div class="col-10">
-                                    <h4 class="modal-title" id="modal-label">Iniciar Sesión</h4>
+                                    <h4 class="modal-title" id="modal-label">Iniciar sesión</h4>
                                 </div>
                                 <div class="col-1">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -136,7 +136,7 @@
                                         </p>
         
                                         <div class="text-center">
-                                            <input type="submit" id="reg_submit" value="Iniciar Sesión"/>
+                                            <input type="submit" id="reg_submit" value="Iniciar sesión"/>
                                         </div>
                                                 
                                     </form>
@@ -277,11 +277,11 @@
                                         </div>
     
                                         <p class="text-right">
-                                            <a href="#modal-login" class="forgot-pass" data-toggle="modal" data-dismiss="modal">Iniciar Sesión</a>
+                                            <a href="#modal-login" class="forgot-pass" data-toggle="modal" data-dismiss="modal">Iniciar sesión</a>
                                         </p>
 
                                         <p class="text-center" style="font-size: 0.8em;color: #999">
-                                            Ingresa tu correo electrónico y se te enviara un link para la recuperación de tu contraseña,
+                                            Ingresa tu correo electrónico y se te enviará un link para la recuperación de tu contraseña,
                                         </p>
                         
                                         <div class="text-center">
@@ -325,15 +325,15 @@
             src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
             integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
             crossorigin="anonymous"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
 
-        <script src="{% static 'js/shards.min.js' %}"></script>
+        <!-- <script src="{% static 'js/shards.min.js' %}"></script> -->
         <script>
             $.validate({
-            modules : 'html5',
-            modules : 'security date',
+            modules : 'html5 security',
             onModulesLoaded : function() {
                 var optionalConfig = {
                     fontSize: '0.9em',
@@ -353,6 +353,7 @@
         <script type="text/javascript">
             $(document).ready(function() {
                 $('.navbar-toggler').on('click', function(){
+                    $('.rotate').toggleClass("down");
                     $('.contextualMenu').slideToggle();
                 })
             });

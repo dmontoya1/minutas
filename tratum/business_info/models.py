@@ -156,7 +156,18 @@ class SiteConfig(models.Model):
 
 class SliderItem(models.Model):
     image = models.ImageField('Imagen', upload_to='slides')
-    text = models.CharField('Texto', max_length=255, null=True, blank=True)
+    text = models.CharField(
+        'Texto',
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    description = models.CharField(
+        'Descripción',
+        max_length=255,
+        null=True,
+        blank=True
+    )
     youtube_video_link = models.URLField(
         'Link de Youtube',
         blank=True,

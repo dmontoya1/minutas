@@ -16,7 +16,8 @@ from django.views.generic.detail import DetailView
 from business_info.models import (
     Policy,
     FAQCategory,
-    SiteConfig
+    SiteConfig,
+    SliderItem
 )
 from document_manager.models import (
     Document,
@@ -35,8 +36,9 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['bundles'] = DocumentBundle.objects.alive()
-        context['categories'] = Category.objects.filter(deleted_at=None)
+        context['context_bundles'] = DocumentBundle.objects.alive()
+        context['context_categories'] = Category.objects.filter(deleted_at=None)
+        context['context_slides'] = SliderItem.objects.all()
         return context
 
 

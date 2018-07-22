@@ -1,4 +1,6 @@
 from django.contrib import admin
+
+from .forms import SliderItemForm
 from .models import (
     Policy,
     FAQCategory,
@@ -40,5 +42,5 @@ class SiteConfigAdmin(admin.ModelAdmin):
 
 @admin.register(SliderItem)
 class SliderItemAdmin(admin.ModelAdmin):
-    pass
+    form = SliderItemForm
 
