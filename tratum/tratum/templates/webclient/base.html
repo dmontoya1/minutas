@@ -30,7 +30,7 @@
     <body>     
         <header>
             <div class="pos-f-t">
-                <div class="collapse" id="navbarToggleExternalContent">
+                <div class="contextualMenu">
                     <div class="p-4">
                         <h4 class="text-white">
                             <a>Inicio</a>
@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <nav class="navbar fixed-top bg-transparent ">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler" type="button" >
                         <i class="fas fa-bars"></i>
                     </button>
                     <div class="float-right main-options">
@@ -352,6 +352,9 @@
         
         <script type="text/javascript">
             $(document).ready(function() {
+                $('.navbar-toggler').on('click', function(){
+                    $('.contextualMenu').slideToggle();
+                })
             });
 
             axios.defaults.headers.common['X-CSRFToken'] = '{{csrf_token}}'
