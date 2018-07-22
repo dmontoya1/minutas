@@ -2,7 +2,7 @@
 {% if field.is_text_input %}
     <div class="input-block">
         <div class="label col clearfix">
-            <span class="float-left">{{forloop.counter}}. {{field.name}} </span>
+            <span class="float-left">{{forloop.counter}}. {{field.display_name}} </span>
             {% if field.help_text %}
                 <i class="fas fa-question-circle float-right" data-toggle="tooltip" data-placement="left" title="{{field.help_text}}"></i>
             {% endif %}
@@ -19,7 +19,7 @@
 {% elif field.field_type == field.SELECT %}
     <div class="input-block">
         <div class="label col clearfix">
-            <span class="float-left">{{forloop.counter}}. {{field.name}} </span>
+            <span class="float-left">{{forloop.counter}}. {{field.display_name}} </span>
             {% if field.help_text %}
                 <i class="fas fa-question-circle float-right" data-toggle="tooltip" data-placement="left" title="{{field.help_text}}"></i>
             {% endif %}
@@ -36,7 +36,7 @@
 {% elif field.field_type == field.GROUP  %}
     <div class="input-block">
         <div class="label col clearfix">
-            <span class="float-left">{{forloop.counter}}. {{field.name}} </span>
+            <span class="float-left">{{forloop.counter}}. {{field.display_name}} </span>
             {% if field.help_text %}
                 <i class="fas fa-question-circle float-right" data-toggle="tooltip" data-placement="left" title="{{field.help_text}}"></i>
             {% endif %}
@@ -50,14 +50,14 @@
             {% for gf in field.field_group.all %}  
                 {% if gf.is_text_input %}
                     <div class="input-block">
-                        <div class="label">{{forloop.counter}}. {{gf.name}}</div>
+                        <div class="label">{{forloop.counter}}. {{gf.display_name}}</div>
                         <div class="input-control">
                             <input required name="{{gf.formated_slug}}" type="{{gf.get_html_input_type}}" id="{{gf.formated_slug}}" class="required" autocomplete="off">
                         </div>
                     </div>        
                 {% elif gf.field_type == gf.SELECT %}
                     <div class="input-block">
-                        <div class="label">{{forloop.counter}}. {{gf.name}} </div>
+                        <div class="label">{{forloop.counter}}. {{gf.display_name}} </div>
                         <div class="input-control">
                             <select>
                                 <option selected disabled>Selecciona un elemento de la lista</option>
