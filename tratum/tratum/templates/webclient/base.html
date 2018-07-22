@@ -28,6 +28,50 @@
         {% endblock %}
     </head>
     <body>     
+        <header>
+            <div class="pos-f-t">
+                <div class="collapse" id="navbarToggleExternalContent">
+                    <div class="p-4">
+                        <h4 class="text-white">
+                            <a>Inicio</a>
+                        </h4>
+                        <h4 class="text-white">
+                            <a>Categorias</a>
+                        </h4>
+                        <h4 class="text-white">
+                            <a>Mis documentos</a>
+                        </h4>
+                        <h4 class="text-white">
+                            <a>Historial</a>
+                        </h4>
+                        <h4 class="text-white">
+                            <a>Perfil</a>
+                        </h4>
+                        <div class="mt-5">
+                            <h5 class="text-white">
+                                <a>Iniciar sesión</a>
+                            </h5></br>
+                            <h5 class="text-white">
+                                <a>Registrarse</a>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <nav class="navbar fixed-top bg-transparent ">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="float-right main-options">
+                        <a>Categorías <i class="fas fa-caret-down"></i></a>
+                        <span class="divider">|</span>
+                        <a>Registrarse</a>
+                        <a>Iniciar sesión</a>
+                    </div>
+                </nav>
+                
+            </div>
+        </header>
+
         <main>
             {% block content %}
             {% endblock %}
@@ -245,10 +289,16 @@
                 <div class="row ">
                     <div class="col-sm-12 text-center mt-5 mb-5">
                         <a href="/policies/" class="text-white">
-                            Políticas |
+                            Quienes somos |
                         </a>
                         <a href="/faq/" class="text-white">
-                            Preguntas frecuentes |
+                            Dinos que documentos necesitas |
+                        </a>
+                        <a href="/faq/" class="text-white">
+                            Políticas de uso |
+                        </a>
+                        <a href="/faq/" class="text-white">
+                            Terminos y condiciones 
                         </a>
                     </div>
                 </div>
