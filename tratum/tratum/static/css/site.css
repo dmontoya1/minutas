@@ -135,24 +135,26 @@ section {
     }
 }
 
-.collapse.show {
+.contextualMenu {
     height: 100vh;
     background-color: #5eccc4;
     padding-top: 4em;
+    display: none;
+    width: 100vw;
 }
-    .collapse.show h4 {
+    .contextualMenu h4 {
         font-weight: 600;
     }
-    .collapse.show h5 {
+    .contextualMenu h5 {
         padding: .1em 1em;
         border-radius: 20px;
         display: inline-block;
         font-size: .85em;
     }
-    .collapse.show h5:first-child {
+    .contextualMenu h5:first-child {
         background-color: #002c55;
     }
-    .collapse.show h5:last-child {
+    .contextualMenu h5:last-child {
         border: 1px solid #fff;
     }
 
