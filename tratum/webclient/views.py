@@ -94,6 +94,11 @@ class LoginView(View):
         if user is not None:
             url = reverse('webclient:home')
             login(request, user)
+            messages.add_message(
+				request,
+					messages.ERROR, 
+					"Bienvenido de vuelta a Tratum"
+			)
         else:
             response = {'error': 'Correo y/o contraseña incorrectas.'}
             return JsonResponse(response, status=400)
@@ -102,40 +107,45 @@ class LoginView(View):
 
 
 class SignupView(View):
-	"""Clase para Registrar un usuario
-	"""
+    """Clase para Registrar un usuario
+    """
 
-	def post(self, request, *args, **kwargs):
-		try:
-			user = get_user_model()
-			user = user()
-			user.email = request.POST['email']
-			user.username = request.POST['email']
-			user.set_password(request.POST['password1'])
-			user.backend = 'django.contrib.auth.backends.ModelBackend'
-			user.save()
+    def post(self, request, *args, **kwargs):
+        try:
+            user = get_user_model()
+            user = user()
+            user.email = request.POST['email']
+            user.username = request.POST['email']
+            user.set_password(request.POST['password1'])
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
+            user.save()
 
-			Token.objects.create(user=user)
+            Token.objects.create(user=user)
 
-			x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-			if x_forwarded_for:
-				ip = x_forwarded_for.split(',')[0]
-			else:
-				ip = request.META.get('REMOTE_ADDR')
+            x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+            if x_forwarded_for:
+                ip = x_forwarded_for.split(',')[0]
+            else:
+                ip = request.META.get('REMOTE_ADDR')
 				
-			log = LogTerms(
-				ip=ip,
-				user=user
-			)
-			log.save()
+            log = LogTerms(
+                ip=ip,
+                user=user
+            )
+            log.save()
 			
-			login(request, user)
-			url = reverse('webclient:home')
-			return JsonResponse(url, safe=False)
-		except IntegrityError:
-			msg = 'Tu correo ya está registrado. Por favor inicia sesión'
-			response = {'error': msg}
-			return JsonResponse(response, status=400)
+            login(request, user)
+            messages.add_message(
+                request,
+                    messages.ERROR, 
+                    "Te has registrado correctamente. Revisa tu correo para activar tu cuenta"
+            )
+            url = reverse('webclient:home')
+            return JsonResponse(url, safe=False)
+        except IntegrityError:
+            msg = 'Tu correo ya está registrado. Por favor inicia sesión'
+            response = {'error': msg}
+            return JsonResponse(response, status=400)
 
 
 class CategoryDocumentsView(TemplateView):
