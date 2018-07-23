@@ -1,3 +1,7 @@
+a {
+    cursor: pointer !important;
+}
+
 body {
     overflow-x: hidden !important;
 }
@@ -135,6 +139,7 @@ section {
 .categories .category-parallax {    
     height: 50vh;
 }
+
 @media screen and (max-width: 414px) {
     .categories .category-parallax {    
         height: 180px;
@@ -147,17 +152,22 @@ section {
     padding-top: 4em;
     display: none;
     width: 100vw;
-    z-index: 999999;
+    z-index: 9999;
     position: absolute;
 }
+    .contextualMenu > div {
+        padding-left: 30px !important;
+    }
     .contextualMenu h4 {
         font-weight: 600;
+        font-size: 2.5em;
+        margin-bottom: .5em;
     }
     .contextualMenu h5 {
         padding: .1em 1em;
         border-radius: 20px;
         display: inline-block;
-        font-size: .85em;
+        font-size: 1em;
     }
     .contextualMenu h5:first-child {
         background-color: #002c55;
@@ -189,9 +199,8 @@ section {
     }
 
 .contract-info {
-    margin-top: 30px;
     background-color: #f4f3f3;
-    padding: 45px auto;
+    padding: 50px auto;
 }
 
 .contract-info h2 {
@@ -211,6 +220,10 @@ section {
         margin-left: 15px;
     }
 
+.navbar {
+    z-index: 99999;
+}
+
 .navbar.scrolled {
     background-color: #FFF !important;
     border-bottom: 2px solid rgb(214, 211, 211);
@@ -224,7 +237,7 @@ section {
 
 .navbar-toggler {
     color: #fff;
-    z-index: 99999999;
+    z-index: 99999;
     background:transparent;
     font-size: 1.5em;
     outline: 0;

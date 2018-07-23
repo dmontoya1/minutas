@@ -15,6 +15,9 @@ body {
     color: #212529;
 }
 
+.modal {
+    z-index: 999999999;
+}
 
 .modal-dialog form input[type="submit"] {
     background: #002c55;
