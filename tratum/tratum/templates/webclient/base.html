@@ -356,6 +356,15 @@
                     $('.rotate').toggleClass("down");
                     $('.contextualMenu').slideToggle();
                 })
+                $(window).scroll(function(){
+                    var scroll = $(window).scrollTop();
+                    if (scroll > 100) {
+                        $(".navbar").addClass('scrolled');
+                    }
+                    else{
+                        $(".navbar").removeClass('scrolled');
+                    }
+                })
             });
 
             axios.defaults.headers.common['X-CSRFToken'] = '{{csrf_token}}'

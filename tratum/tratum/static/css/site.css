@@ -147,6 +147,8 @@ section {
     padding-top: 4em;
     display: none;
     width: 100vw;
+    z-index: 999999;
+    position: absolute;
 }
     .contextualMenu h4 {
         font-weight: 600;
@@ -209,8 +211,20 @@ section {
         margin-left: 15px;
     }
 
+.navbar.scrolled {
+    background-color: #FFF !important;
+    border-bottom: 2px solid rgb(214, 211, 211);
+}
+
+.navbar.scrolled .navbar-toggler,
+.navbar.scrolled .main-options {
+    color: #161616;
+    transition: all 0.5s ease-in-out;
+}
+
 .navbar-toggler {
     color: #fff;
+    z-index: 99999999;
     background:transparent;
     font-size: 1.5em;
     outline: 0;
