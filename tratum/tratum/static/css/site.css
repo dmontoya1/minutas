@@ -48,8 +48,8 @@ section {
     .swiper-container .swiper-slide .description {
         position: absolute;
         left: 50%;
-        top: 50%;
-        transform: translate(-50%,-50%);     
+        top: 45%;
+        transform: translate(-50%,-45%);     
         color: #fff;   
         z-index: 99999;
     }
@@ -210,16 +210,26 @@ section {
 }
 
 .corporate-signature {
-    height: 85px;
+    height: 170px;
 }
     .corporate-signature span {
-        margin-top: 30px;
+        margin-top: 45px;
         display: inline-block;
         font-size: 1.2em;
         font-weight: 300;
+        color: #727272;
+    }
+    @media screen and (max-width: 414px) {
+        .corporate-signature span {   
+            margin-top: 10px;
+        }
     }
     .corporate-signature span img {
         margin-left: 15px;
+        width: 320px;
+        padding: 10px 50px 8px 50px;
+        box-shadow: 0px 0px 5px #9d9d9d;
+        border-radius: 15px;
     }
 
 .dropleft,

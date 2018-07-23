@@ -20,8 +20,10 @@
               <div class="description text-center">
                 <h1>{{s.text|default_if_none:""}}</h1>
                 <p>{{s.description|default_if_none:""}}</p>
-                {% if s.youtube_help_video_link %}
-                  <i class="fas fa-play-circle"></i>
+                {% if s.youtube_video_link %}
+                  <a>
+                    <i class="fas fa-play-circle"></i>
+                  </a>
                 {% endif %}
               </div>
               <img src="{{s.image.url}}">
@@ -88,7 +90,7 @@
 
   <div class="row corporate-signature">
     <div class="col text-center">
-      <span>Con el respaldo jurídico de <img src="logo.jpg"/></span>
+      <span>Con el respaldo jurídico de <a><img src="{% static 'img/gonzales-aldana-logos-08.png' %}" width="120px"/></span></a>
     </div>
   </div>
 
