@@ -15,7 +15,7 @@ INTERNAL_IPS = [
     '192.168.0.16'
 ]
 
-API_KEY = '876640988db6c4e761ca4254d69f01f454ae0954'
+API_KEY = 'd492009ed1b5395f64230e13fb71ce33cc855156'
 
 
 # Application definition
