@@ -202,23 +202,21 @@
                                                 <label class="control-label">Contraseña</label>
                                             </div>
                                             <div class="col-xs-12">
-                                                <input required type="password" class="form-control" 
-                                                name="password1" data-validation="length strength" 
-                                                data-validation-length="min8"
-                                                data-validation-strength="2"
-                                                data-validation-error-msg="Tu contraseña debe tener mínimo 8 caracteres, un número y una letra"/>
+                                                <input required type="password" class="form-control" name="password1" id="password1"/>
+                                                <span id="result"></span>
                                             </div>
+                                            
                                         </div>
                                         <br>
                         
-                                        <div class="form-group">
+                                        <div class="form-group mb-3">
                                             <div class="col-xs-12">
                                                 <label class="control-label"> Repetir Contraseña</label>
                                             </div>
                                             <div class="col-xs-12">
                                                 <input required type="password" class="form-control"  
-                                                name="password2" data-validation="confirmation" data-validation-confirm="password1"
-                                                data-validation-error-msg="Las contraseñas no coinciden"/>
+                                                name="password2" id="password2"/>
+                                                <span id="valid"></span>
                                             </div>
                                         </div>
         
@@ -233,7 +231,7 @@
                                         <input type="hidden" name="username" />
                         
                                         <div class="text-center">
-                                            <input type="submit" id="reg_submit_signup" value="Registrarse"/>
+                                            <input type="submit" disabled id="reg_submit_signup" value="Registrarse"/>
                                         </div>
                                     </form>
                                 </div>
@@ -328,29 +326,66 @@
 
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
 
-        <!-- <script src="{% static 'js/shards.min.js' %}"></script> -->
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+        <script src="{% static 'js/jquery-validator.js' %}"></script>
+        <script src="{% static 'js/shards.min.js' %}"></script>
         <script>
             $.validate({
-            modules : 'html5 security',
-            onModulesLoaded : function() {
-                var optionalConfig = {
-                    fontSize: '0.9em',
-                    padding: '4px',
-                    float: 'right',
-                    bad : 'Muy débil',
-                    weak : 'Débil',
-                    good : 'Segura',
-                    strong : 'Muy Segura'
-                };
-            
-                $('input[name="password1"]').displayPasswordStrength(optionalConfig);
-                }
+                modules : 'html5',
             });
         </script>
         
         <script type="text/javascript">
+            function checkStrength(password) {
+                var strength = 0
+                if (password.length < 6) {
+                    $('#result').removeClass()
+                    $('#result').addClass('short')
+                    $('#reg_submit_signup').attr('disabled', true)
+                    return 'Muy corta'
+                }
+                if (password.length > 7) strength += 1
+                // If password contains both lower and uppercase characters, increase strength value.
+                if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1
+                // If it has numbers and characters, increase strength value.
+                if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) strength += 1
+                // If it has one special character, increase strength value.
+                if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
+                // If it has two special characters, increase strength value.
+                if (password.match(/(.*[!,%,&,@,#,$,^,*,?,_,~].*[!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
+                // Calculated strength value, we can return messages
+                // If value is less than 2
+                if (strength < 2) {
+                    $('#result').removeClass()
+                    $('#result').addClass('weak')
+                    $('#reg_submit_signup').attr('disabled', true)
+                    return 'Débil'
+                } else if (strength == 2) {
+                    $('#result').removeClass()
+                    $('#result').addClass('good')
+                    return 'Buena'
+                } else {
+                    $('#result').removeClass()
+                    $('#result').addClass('strong')
+                    return 'Fuerte'
+                    }
+            }
+            
+            function checkValid(password1, password2){
+                if (password1 != password2){
+                    $('#valid').removeClass()
+                    $('#valid').addClass('nopass')
+                    $('#reg_submit_signup').attr('disabled', true)
+                    return 'Las contraseñas no coinciden'
+                }
+                else{
+                    $('#valid').removeClass()
+                    $('#reg_submit_signup').attr('disabled', false)
+                    return ''
+                }
+            }
+            
             $(document).ready(function() {
                 $('.navbar-toggler').on('click', function(){
                     $('.rotate').toggleClass("down");
@@ -365,7 +400,17 @@
                         $(".navbar").removeClass('scrolled');
                     }
                 })
+                $('#password1').keyup(function() {
+                    $('#result').html(checkStrength($('#password1').val()))
+                })
+                $('#password2').keyup(function() {
+                    $('#valid').html(checkValid($('#password1').val(), $('#password2').val()))
+                })
+                
             });
+
+
+
 
             axios.defaults.headers.common['X-CSRFToken'] = '{{csrf_token}}'
             axios.defaults.headers.common['Api-Key'] = 'd492009ed1b5395f64230e13fb71ce33cc855156'
@@ -446,7 +491,7 @@
                         toastr.error("El correo electrónico no se encuentra registrado")
                         $('#reg_submit_signup').attr('disabled', false)
                     });
-            })
+        })
         </script>
         {% block extra_js %}
         {% endblock %}
