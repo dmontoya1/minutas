@@ -15,6 +15,8 @@ INTERNAL_IPS = [
     '192.168.0.16'
 ]
 
+API_KEY = '876640988db6c4e761ca4254d69f01f454ae0954'
+
 
 # Application definition
 
@@ -76,6 +78,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'webclient.context_processors.categories.context_categories',
+                'webclient.context_processors.api-key.api_key_processor',
             ],
         },
     },
