@@ -4,6 +4,7 @@ a {
     text-decoration: inherit;
 }
 
+html,
 body {
     overflow-x: hidden !important;
 }
@@ -206,7 +207,12 @@ section {
 }
 
 .contract-info h2 {
-    width: 6em;
+    width: 5em;
+}
+@media screen and (max-width: 414px) {
+    .contract-info h2 {   
+        font-size: 2.3em;
+    }
 }
 
 .corporate-signature {
@@ -230,6 +236,14 @@ section {
         padding: 10px 50px 8px 50px;
         box-shadow: 0px 0px 5px #9d9d9d;
         border-radius: 15px;
+    }
+    @media screen and (max-width: 414px) {
+        .corporate-signature span img {   
+            margin-left: 0px;
+            width: 100%;
+            width: 90%;
+            margin-top: 10px;
+        }
     }
 
 .dropleft,
