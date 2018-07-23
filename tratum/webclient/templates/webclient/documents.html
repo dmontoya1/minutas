@@ -143,6 +143,14 @@
                                         </div>
                                     </div>
                                 </div>
+                            
+                            {% empty %}
+                            <div class="col-12 doc-not-found text-center my-5">
+                                <img src="/static/img/not-found.png" width="200" height="200" class="img-fluid" >
+                                <p>Tu búsqueda no obtuvo resultados.<br>
+                                  Por favor intenta nuevamente</p>
+                            </div>
+                                
 
                             {% endfor %}
                         </div>
@@ -254,7 +262,7 @@
 
 
     function get_child_3_categories(category_slug, category_id, child3){
-        axios.get(`/api/document_manager/categories/${category_slug}/children/`)
+        axios.get(`/api/document-manager/categories/${category_slug}/children/`)
             .then(function(response){
                 if (response.data.length > 0){
                     $(response.data).each(function(i,v){
@@ -312,7 +320,7 @@
     }
 
     function get_child_2_categories(category_slug, child2, child3){
-        axios.get(`/api/document_manager/categories/${category_slug}/children/`)
+        axios.get(`/api/document-manager/categories/${category_slug}/children/`)
             .then(function(response){
                 if (response.data.length > 0){
                     $('#level2-categories').empty()
@@ -376,7 +384,7 @@
 
     function get_child_1_categories(category_slug, child1, child2, child3){
         
-        axios.get(`/api/document_manager/categories/${category_slug}/children/`)
+        axios.get(`/api/document-manager/categories/${category_slug}/children/`)
             .then(function(response){
                 if (response.data.length > 0){
                     $('#level1-categories').empty()
