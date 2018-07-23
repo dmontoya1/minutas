@@ -1,11 +1,16 @@
 {% extends 'webclient/base.html' %}
 {% load humanize %}
+{% load static %}
 
 {% block nav_class %}
     class="navbar scrolled"
 {% endblock %}
 
 {% block content %}
+    <div id="loadingAnimation">
+        <img src="{% static 'img/loadingSite.gif' %}" />
+        <p>Cargando...</p>
+    </div>
 
     <div class="container-fluid documents-container">
         <div class="row title">
@@ -228,6 +233,9 @@
 {% endblock %}
 
 {% block extra_js %}
+    <script>
+        window.onload = function(){ document.getElementById("loadingAnimation").style.display = "none" }   
+    </script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
     <script>
 
