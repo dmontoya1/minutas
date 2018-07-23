@@ -149,7 +149,7 @@ section {
 .contextualMenu {
     height: 100vh;
     background-color: #5eccc4;
-    padding-top: 4em;
+    padding-top: 5em;
     display: none;
     width: 100vw;
     z-index: 9999;
@@ -220,28 +220,17 @@ section {
         margin-left: 15px;
     }
 
-.navbar {
-    z-index: 99999;
+.dropleft,
+.auth-buttons {
+    display: inline-block;
 }
 
-.navbar.scrolled {
-    background-color: #FFF !important;
-    border-bottom: 2px solid rgb(214, 211, 211);
+.dropleft.subdrop a {
+    padding-left: 1em;
 }
-
-.navbar.scrolled .navbar-toggler,
-.navbar.scrolled .main-options {
-    color: #161616;
-    transition: all 0.5s ease-in-out;
-}
-
-.navbar-toggler {
-    color: #fff;
-    z-index: 99999;
-    background:transparent;
-    font-size: 1.5em;
-    outline: 0;
-}
+    .dropleft.subdrop .dropdown-menu.show {
+        left: -160px !important;
+    }
 
 .main-options {
     color: #FFF;
@@ -261,6 +250,34 @@ section {
         height: 1.2em;
         margin-right: 2em;
     }
+
+.navbar {
+    z-index: 99999;
+}
+    .navbar.scrolled {
+        background-color: #FFF !important;
+        border-bottom: 2px solid rgb(214, 211, 211);
+        height: 80px;
+    }
+
+    .navbar.scrolled .navbar-toggler,
+    .navbar.scrolled .main-options {
+        color: #161616;
+        transition: all 0.5s ease-in-out;
+    }
+
+.navbar img.logo {
+    width: 60px;
+    margin-left: 15px;
+}
+
+.navbar-toggler {
+    color: #fff;
+    z-index: 99999;
+    background:transparent;
+    font-size: 1.5em;
+    outline: 0;
+}
 
 .rotate {
     -moz-transition: all 0.5s ease-in-out;
