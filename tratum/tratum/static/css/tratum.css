@@ -91,7 +91,9 @@ body {
 /* DOCUMENTS TEMPLATE */
 
 .documents-container .title {
-    background-color: #999;
+    background-image: url("../img/img-docs.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
     margin-bottom: 50px;
 }
 
@@ -164,6 +166,7 @@ body {
     border: 1px solid #ccc;
     border-radius: 5px;
     margin: 30px 0px;
+    box-shadow: 1px 3px #cac8c8;
 }
 
 @media screen and (min-width: 768px) {
@@ -371,4 +374,14 @@ body {
     font-weight:400;
     color: #FF0000;
     font-size:1em;
+}
+
+.doc-not-found {
+
+}
+
+.doc-not-found p {
+    margin-top: 30px;
+    font-size: 1.5em;
+    color: #7f7f7f;
 }
