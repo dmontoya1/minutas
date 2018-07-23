@@ -478,7 +478,7 @@
                 "onclick": null,
                 "showDuration": "1000",
                 "hideDuration": "1000",
-                "timeOut": "5000",
+                "timeOut": "500000",
                 "extendedTimeOut": "1000",
                 "showEasing": "swing",
                 "hideEasing": "linear",
@@ -533,14 +533,13 @@
                 data = $(this).serialize(),
                 axios.post("/accounts/password/reset/", data)
                     .then(function(response){
-                        console.log(response.data)
-                        toastr.success(response.data['detail'])
+                        toastr.success("Se ha enviado un correo con el link de restablecimiento de tu contraseña.")
                         setTimeout(function(){
-                            $('#modal-forget').modal('toggle')
                             location.reload()
                         }, 1500);
                     })
                     .catch(function(error){
+                        console.log(error)
                         toastr.error("El correo electrónico no se encuentra registrado")
                         $('#reg_submit_signup').attr('disabled', false)
                     });
