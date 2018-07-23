@@ -251,6 +251,10 @@ section {
     display: inline-block;
 }
 
+.dropdown-menu {
+    min-width: 15rem;
+}
+
 .dropleft.subdrop a {
     padding-left: 1em;
 }
