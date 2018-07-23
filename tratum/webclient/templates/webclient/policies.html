@@ -1,21 +1,16 @@
 {% extends 'webclient/base.html' %}
 {% load static %}
 
+{% block nav_class %}
+    class="navbar scrolled"
+{% endblock %}
+
 {% block title %}
         <title>Tratum, {{name}}</title>
 {% endblock %}
 
-{% block index_extra-styles %}
-    background: none;
-    min-height: initial;
-    padding-bottom: 40px;
+{% block nav-script%}
 {% endblock %}
-
-{% block index_actions %}
-    
-{% endblock %}
-
-{% block index_thumb %}{% endblock %}
 
 {% block content %}
 
