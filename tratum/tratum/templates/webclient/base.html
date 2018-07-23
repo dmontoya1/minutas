@@ -49,10 +49,10 @@
                         </h4>
                         <div class="mt-5">
                             <h5 class="text-white">
-                                <a>Iniciar sesión</a>
+                                <a data-toggle="modal" data-target="#modal-login">Iniciar sesión</a>
                             </h5></br>
                             <h5 class="text-white">
-                                <a>Registrarse</a>
+                                <a data-toggle="modal" data-target="#modal-signup">Registrarse</a>
                             </h5>
                         </div>
                     </div>
@@ -355,6 +355,15 @@
                 $('.navbar-toggler').on('click', function(){
                     $('.rotate').toggleClass("down");
                     $('.contextualMenu').slideToggle();
+                })
+                $(window).scroll(function(){
+                    var scroll = $(window).scrollTop();
+                    if (scroll > 100) {
+                        $(".navbar").addClass('scrolled');
+                    }
+                    else{
+                        $(".navbar").removeClass('scrolled');
+                    }
                 })
             });
 

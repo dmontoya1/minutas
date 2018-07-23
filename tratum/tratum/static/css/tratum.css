@@ -15,6 +15,9 @@ body {
     color: #212529;
 }
 
+.modal {
+    z-index: 999999999;
+}
 
 .modal-dialog form input[type="submit"] {
     background: #002c55;
@@ -272,4 +275,19 @@ body {
     bottom: 0;
     margin-bottom: -75px;
     margin-left: -50px;
+}
+
+.profile-content {
+    border: 1px solid #becad6;
+    border-radius: 10px;
+}
+
+.img-profile {
+    border-radius: 50%;
+    max-width: 90%;
+}
+
+.company-info {
+    font-size: 1.2em;
+    font-weight: 600;
 }

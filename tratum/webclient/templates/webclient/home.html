@@ -18,9 +18,11 @@
               <div class="swiper-mask-left"></div>  
               <div class="swiper-mask-right"></div> 
               <div class="description text-center">
-                <h1>{{s.text}}</h1>
-                <p>{{s.description}}</p>
-                <i class="fas fa-play-circle"></i>
+                <h1>{{s.text|default_if_none:""}}</h1>
+                <p>{{s.description|default_if_none:""}}</p>
+                {% if s.youtube_help_video_link %}
+                  <i class="fas fa-play-circle"></i>
+                {% endif %}
               </div>
               <img src="{{s.image.url}}">
             </div>
@@ -115,8 +117,13 @@
     <script>      
       window.onload = function(){ document.getElementById("loadingAnimation").style.display = "none" }   
     </script>
+    
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script
+    src="https://code.jquery.com/color/jquery.color-2.1.2.min.js"
+    integrity="sha256-H28SdxWrZ387Ldn0qogCzFiUDDxfPiNIyJX7BECQkDE="
+    crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar.js/0.6.2/jquery.stellar.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/js/swiper.min.js"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
@@ -147,5 +154,7 @@
       $('.swiper-mask-right').on('click', function(){
         mySwiper.slideNext();
       })
+
+      
     </script>
 {% endblock %}

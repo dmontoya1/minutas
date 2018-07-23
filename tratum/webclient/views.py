@@ -147,3 +147,8 @@ class CategoryDocumentsView(TemplateView):
         context['category'] = category
         context['documents'] = Document.objects.filter(category__in=categories).order_by('order')
         return context
+
+
+class ProfileView(TemplateView):
+
+    template_name = "webclient/profile.html"
