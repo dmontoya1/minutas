@@ -280,6 +280,12 @@ body {
     margin-left: -50px;
 }
 
+@media screen and (max-width: 575px) {
+    #triangle {
+        margin-left: -48px;
+    }
+}
+
 .profile-content {
     border: 1px solid #becad6;
     border-radius: 10px;
