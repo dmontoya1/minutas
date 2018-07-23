@@ -63,7 +63,7 @@
                         </div>
                     </div>
                 </div>
-                <nav class="navbar fixed-top bg-transparent ">
+                <nav {% block nav_class %}class="navbar fixed-top bg-transparent" {% endblock %}>
                     <button class="navbar-toggler" type="button" >
                         <i class="fas fa-bars rotate"></i>
                     </button>
@@ -402,21 +402,23 @@
                     $('.rotate').toggleClass("down");
                     $('.contextualMenu').slideToggle();
                 })
-                $(window).scroll(function(){
-                    var scroll = $(window).scrollTop();
-                    if (scroll > 100) {
-                        $(".navbar").addClass('scrolled');
-                    }
-                    else{
-                        $(".navbar").removeClass('scrolled');
-                    }
-                })
-                $('#password1').keyup(function() {
-                    $('#result').html(checkStrength($('#password1').val()))
-                })
-                $('#password2').keyup(function() {
-                    $('#valid').html(checkValid($('#password1').val(), $('#password2').val()))
-                })
+                {% block nav-script%}
+                    $(window).scroll(function(){
+                        var scroll = $(window).scrollTop();
+                        if (scroll > 100) {
+                            $(".navbar").addClass('scrolled');
+                        }
+                        else{
+                            $(".navbar").removeClass('scrolled');
+                        }
+                    })
+                    $('#password1').keyup(function() {
+                        $('#result').html(checkStrength($('#password1').val()))
+                    })
+                    $('#password2').keyup(function() {
+                        $('#valid').html(checkValid($('#password1').val(), $('#password2').val()))
+                    })
+                {% endblock %}
                 
             });
 

@@ -91,7 +91,9 @@ body {
 /* DOCUMENTS TEMPLATE */
 
 .documents-container .title {
-    background-color: #999;
+    background-image: url("../img/img-docs.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
     margin-bottom: 50px;
 }
 

@@ -1,529 +1,534 @@
 {% extends 'webclient/base.html' %}
 {% load humanize %}
+
+{% block nav_class %}
+    class="navbar scrolled"
+{% endblock %}
+
 {% block content %}
 
-<div class="container-fluid documents-container">
-    <div class="row title">
-        <div class="col-12 document-header">
-            <h1 class="text-center">Documentos</h1>
-            <p class="text-center">Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                sed diam nonummy nibh euismod tincidunt ut laoreet </p>
-        </div>
-        <div class="col-12">
-            <nav aria-label="breadcrumb" class="docs-breadcrumb">
-                <ol class="breadcrumb">
-                    <a href="{% url 'webclient:category_documents' path='' %}">Todos los Documentos</a>
-                    {% for ancestor in category.get_ancestors %}
-                        / <a href="{{ ancestor.get_absolute_url }}">{{ ancestor.name }}</a>
-                    {% endfor %}
-                    / <span>{{ category.name }}</span>
-                </ol>
-            </nav>
-        </div>
-        <div class="col-12" id="search">
-            <div class="container">
-                <div class="row search">
-                    <div class="col-sm-12 col-md-6 col-lg-4">
-                        <form action="">
-                            <div class="form-group">
-                                <label for="searcher"><i class="fa fa-file-sound-o" aria-hidden="true"></i></label>
-                                <input type="text" class="form-control" name="" id="searcher" aria-describedby="helpId" placeholder="Buscar">
-                            </div>
-                        </form>
+    <div class="container-fluid documents-container">
+        <div class="row title">
+            <div class="col-12 document-header">
+                <h1 class="text-center">Documentos</h1>
+                <p class="text-center">Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+                    sed diam nonummy nibh euismod tincidunt ut laoreet </p>
+            </div>
+            <div class="col-12">
+                <nav aria-label="breadcrumb" class="docs-breadcrumb">
+                    <ol class="breadcrumb">
+                        <a href="{% url 'webclient:category_documents' path='' %}">Todos los Documentos</a>
+                        {% for ancestor in category.get_ancestors %}
+                            / <a href="{{ ancestor.get_absolute_url }}">{{ ancestor.name }}</a>
+                        {% endfor %}
+                        / <span>{{ category.name }}</span>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-12" id="search">
+                <div class="container">
+                    <div class="row search">
+                        <div class="col-sm-12 col-md-6 col-lg-4">
+                            <form action="">
+                                <div class="form-group">
+                                    <label for="searcher"><i class="fa fa-file-sound-o" aria-hidden="true"></i></label>
+                                    <input type="text" class="form-control" name="" id="searcher" aria-describedby="helpId" placeholder="Buscar">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-4">
+                            <form action="">
+                                <div class="form-group">
+                                    <label for="subcategory1"><i class="fa fa-file-sound-o" aria-hidden="true"></i></label>
+                                    <select class="custom-select" id="root-categories">
+                                        <option selected disabled>Categorías</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-4">
+                            <form action="">
+                                <div class="form-group">
+                                    <label for="subcategory"><i class="fa fa-file-sound-o" aria-hidden="true"></i></label>
+                                    <select class="custom-select" id="level1-categories">
+                                        <option selected disabled>Seleccione primero una categoría</option>
+                                        
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        
                     </div>
-                    <div class="col-sm-12 col-md-6 col-lg-4">
-                        <form action="">
-                            <div class="form-group">
-                                <label for="subcategory1"><i class="fa fa-file-sound-o" aria-hidden="true"></i></label>
-                                <select class="custom-select" id="root-categories">
-                                    <option selected disabled>Categorías</option>
-                                </select>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-lg-4">
-                        <form action="">
-                            <div class="form-group">
-                                <label for="subcategory"><i class="fa fa-file-sound-o" aria-hidden="true"></i></label>
-                                <select class="custom-select" id="level1-categories">
-                                    <option selected disabled>Seleccione primero una categoría</option>
-                                    
-                                </select>
-                            </div>
-                        </form>
-                    </div>
-                    
                 </div>
             </div>
         </div>
-    </div>
-    
-    <div class="row docs">
-        <div class="container">
-            <div class="row justify-content-between">
-                <div class="col-md-8 col-lg-3 filters mx-md-auto">
-                    <div class="container-fluid">
-                        <div class="row sub-categories">
-                            <div class="col-12">
-                                <span>Subcategorías</span>
-                            </div>
-                        </div>
-                        <div class="row sub-categories-content mb-5">
-                            <div class="col-12" id="level2-categories">
-                                <p>Selecciona primero una categoría</p>
-                            </div>
-                        </div>
-                        <div class="row filter">
-                            <div class="col-12">
-                                <span>Filtros</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-check">
-                                    <input class="form-check-input free-pay" type="checkbox" value="free">
-                                    <label class="form-check-label" for="free">
-                                        Gratis
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input free-pay" type="checkbox" value="pay">
-                                    <label class="form-check-label" for="pay">
-                                        De Pago
-                                    </label>
+        
+        <div class="row docs">
+            <div class="container">
+                <div class="row justify-content-between">
+                    <div class="col-md-8 col-lg-3 filters mx-md-auto">
+                        <div class="container-fluid">
+                            <div class="row sub-categories">
+                                <div class="col-12">
+                                    <span>Subcategorías</span>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12 col-lg-9 documents">
-                    <div class="container-fluid">
-                        <div class="row justify-content-around document-list">
-                            {% for doc in documents %}
-                                <div class="col-md-5 doc-content">
-                                    <div class="container-fluid">
-                                        <div class="row row-category">
-                                            <div class="col">
-                                                <p class="category">{{doc.category.name}}</p>
-                                            </div> 
-                                        </div>
-                                        <div class="row justify-content-between">
-                                            <div class="col-10 doc-info">
-                                                <span class="doc-title">{{doc.name}}</span>
-                                                <p class="doc-description">{{doc.short_description|default:"Sin Descripción"}}</p>
-                                            </div>
-                                            <div class="col-1">
-                                                <a data-video="{{doc.video_url}}"
-                                                   data-name="{{doc.name}}"
-                                                   data-shortdescription="{{doc.short_description}}"
-                                                   data-longdescription="{{doc.long_description}}"
-                                                   id="btn-modal-info">
-                                                    <i class="fas fa-info-circle float-right"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="row doc-price-content">
-                                            
-                                            {%if doc.price is None or doc.price == 0%}
-                                                <div class="col-6">
-                                                    <a href="#" class="btn btn-buy float-left">Comprar</a>
-                                                </div>
-                                                <div class="col-6">
-                                                    <span class="float-right price-free">GRATIS</span>
-                                                </div>
-
-                                            {%else%}
-                                                <div class="col-6">
-                                                    <a href="#" class="btn btn-buy float-left">Comprar</a>
-                                                </div>
-                                                <div class="col-6">
-                                                    <span class="float-right price">$ {{doc.price|intcomma}}</span>
-                                                </div>
-                                            {%endif%}
-                                        </div>
+                            <div class="row sub-categories-content mb-5">
+                                <div class="col-12" id="level2-categories">
+                                    <p>Selecciona primero una categoría</p>
+                                </div>
+                            </div>
+                            <div class="row filter">
+                                <div class="col-12">
+                                    <span>Filtros</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input free-pay" type="checkbox" value="free">
+                                        <label class="form-check-label" for="free">
+                                            Gratis
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input free-pay" type="checkbox" value="pay">
+                                        <label class="form-check-label" for="pay">
+                                            De Pago
+                                        </label>
                                     </div>
                                 </div>
-                            
-                            {% empty %}
-                            <div class="col-12 doc-not-found text-center my-5">
-                                <img src="/static/img/not-found.png" width="200" height="200" class="img-fluid" >
-                                <p>Tu búsqueda no obtuvo resultados.<br>
-                                  Por favor intenta nuevamente</p>
                             </div>
-                                
-
-                            {% endfor %}
                         </div>
                     </div>
-                </div>
-                
-            </div>
-            <nav aria-label="Page navigation example">
-                <div class="pagination justify-content-center">
-                    <span class="step-links">
-                        {% if documents.has_previous %}
-                            <a href="?page=1">&laquo; primera</a>
-                            <a href="?page={{ documents.previous_page_number }}">anterior</a>
-                        {% endif %}
-                
-                        <span class="current">
-                            Página {{ documents.number }} de {{ documents.paginator.num_pages }}.
-                        </span>
-                
-                        {% if documents.has_next %}
-                            <a href="?page={{ documents.next_page_number }}">siguiente</a>
-                            <a href="?page={{ documents.paginator.num_pages }}">última &raquo;</a>
-                        {% endif %}
-                    </span>
-                </div>
-            </nav>
-        </div>
+                    <div class="col-md-12 col-lg-9 documents">
+                        <div class="container-fluid">
+                            <div class="row justify-content-around document-list">
+                                {% for doc in documents %}
+                                    <div class="col-md-5 doc-content">
+                                        <div class="container-fluid">
+                                            <div class="row row-category">
+                                                <div class="col">
+                                                    <p class="category">{{doc.category.name}}</p>
+                                                </div> 
+                                            </div>
+                                            <div class="row justify-content-between">
+                                                <div class="col-10 doc-info">
+                                                    <span class="doc-title">{{doc.name}}</span>
+                                                    <p class="doc-description">{{doc.short_description|default:"Sin Descripción"}}</p>
+                                                </div>
+                                                <div class="col-1">
+                                                    <a data-video="{{doc.video_url}}"
+                                                    data-name="{{doc.name}}"
+                                                    data-shortdescription="{{doc.short_description}}"
+                                                    data-longdescription="{{doc.long_description}}"
+                                                    id="btn-modal-info">
+                                                        <i class="fas fa-info-circle float-right"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="row doc-price-content">
+                                                <div class="col-6">
+                                                    <a href="{% url 'webclient:document' slug=doc.slug %}" class="btn btn-buy float-left">Comprar</a>
+                                                </div>
+                                                {%if doc.price is None or doc.price == 0%}
+                                                    <div class="col-6">
+                                                        <span class="float-right price-free">GRATIS</span>
+                                                    </div>
 
-    </div>
-
-    <div class="modal fade" id="modal-info" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">{{doc.name}}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12">
-                                {% if doc.long_description %}
-                                    <p class="text-justify">
-                                        {{doc.long_description}}
-                                    </p> 
-                                {% else %}
-                                    <p class="text-justify">
-                                        {{doc.short_description|default:"Sin Descripción"}}
-                                    </p>
-                                {% endif %}
-                            </div>
-                            {% if doc.video_url %}
-                                <div class="col-12">
-                                    <iframe width="400" height="300" frameborder="0" allowfullscreen=""></iframe>
+                                                {%else%}
+                                                    <div class="col-6">
+                                                        <span class="float-right price">$ {{doc.price|intcomma}}</span>
+                                                    </div>
+                                                {%endif%}
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                {% empty %}
+                                <div class="col-12 doc-not-found text-center my-5">
+                                    <img src="/static/img/not-found.png" width="200" height="200" class="img-fluid" >
+                                    <p>Tu búsqueda no obtuvo resultados.<br>
+                                    Por favor intenta nuevamente</p>
                                 </div>
-                            {% endif %}
+                                    
+
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                     
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <nav aria-label="Page navigation example">
+                    <div class="pagination justify-content-center">
+                        <span class="step-links">
+                            {% if documents.has_previous %}
+                                <a href="?page=1">&laquo; primera</a>
+                                <a href="?page={{ documents.previous_page_number }}">anterior</a>
+                            {% endif %}
+                    
+                            <span class="current">
+                                Página {{ documents.number }} de {{ documents.paginator.num_pages }}.
+                            </span>
+                    
+                            {% if documents.has_next %}
+                                <a href="?page={{ documents.next_page_number }}">siguiente</a>
+                                <a href="?page={{ documents.paginator.num_pages }}">última &raquo;</a>
+                            {% endif %}
+                        </span>
+                    </div>
+                </nav>
+            </div>
+
+        </div>
+
+        <div class="modal fade" id="modal-info" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">{{doc.name}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    {% if doc.long_description %}
+                                        <p class="text-justify">
+                                            {{doc.long_description}}
+                                        </p> 
+                                    {% else %}
+                                        <p class="text-justify">
+                                            {{doc.short_description|default:"Sin Descripción"}}
+                                        </p>
+                                    {% endif %}
+                                </div>
+                                {% if doc.video_url %}
+                                    <div class="col-12">
+                                        <iframe width="400" height="300" frameborder="0" allowfullscreen=""></iframe>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 {% endblock %}
 
+{% block nav-script%}
+{% endblock %}
+
 {% block extra_js %}
-<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-<script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <script>
 
 
-    $(function(){
-        createSticky($("#search"));
-    });
+        $(function(){
+            createSticky($("#search"));
+        });
 
-    function createSticky(sticky) {
-        if (typeof sticky !== "undefined") {
-            var	pos = sticky.offset().top,
-                win = $(window);
-            win.on("scroll", function() {
-                win.scrollTop() >= pos ? sticky.addClass("fixed") : sticky.removeClass("fixed");      
-            });			
+        function createSticky(sticky) {
+            if (typeof sticky !== "undefined") {
+                var	pos = sticky.offset().top,
+                    win = $(window);
+                win.on("scroll", function() {
+                    win.scrollTop() >= pos ? sticky.addClass("fixed") : sticky.removeClass("fixed");      
+                });			
+            }
         }
-    }
-  
-    toastr.options = {
-        "closeButton": false,
-        "debug": false,
-        "newestOnTop": false,
-        "progressBar": true,
-        "positionClass": "toast-top-right",
-        "preventDuplicates": true,
-        "onclick": null,
-        "showDuration": "1000",
-        "hideDuration": "1000",
-        "timeOut": "5000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-    }
+    
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": true,
+            "onclick": null,
+            "showDuration": "1000",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
 
 
-    function get_child_3_categories(category_slug, category_id, child3){
-        axios.get(`/api/document-manager/categories/${category_slug}/children/`)
-            .then(function(response){
-                if (response.data.length > 0){
-                    $(response.data).each(function(i,v){
-                        if (v.slug === child3){
-                            $(`#${category_id}`).append(
-                                `
-                                <label class="form-check-label" style="width:100%;" for="${v.id}">
-                                    <input class="form-check-input" checked="true" type="checkbox" value="${v.url}" data-slug="${v.slug}" >
-                                    ${v.name}
-                                </label>
-                                `
-                            )
-                        }
-                        else {
-                            $(`#${category_id}`).append(
-                                `
-                                <label class="form-check-label" style="width:100%;" for="${v.id}">
-                                    <input class="form-check-input" type="checkbox" value="${v.url}" data-slug="${v.slug}" >
-                                    ${v.name}
-                                </label>
-                                `
-                            )
-                        }
-                        
-                    })
-                    if (child3 === null || child3 === undefined){
-                    }
-                    else {
-                        $('#level3-categories').prepend(
-                        )
-                    }
-
-                    $(function () {
-                        $(".accordion").accordion({
-                                collapsible: true,
-                                active: false,
-                                heightStyle: "content"
-                            });
-                        $(".accordion").find('input[type="checkbox"]').on('click', function(e) {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            window.location.replace($(this).val())
-                            setTimeout(function() {
-                            this.checked = !this.checked;
-                            }.bind(this), 100);
-                        });
-                    });
-                    
-                }
-            })
-            .catch(function(error){
-                toastr.error(error)
-            });
-
-    }
-
-    function get_child_2_categories(category_slug, child2, child3){
-        axios.get(`/api/document-manager/categories/${category_slug}/children/`)
-            .then(function(response){
-                if (response.data.length > 0){
-                    $('#level2-categories').empty()
-                    $(response.data).each(function(i,v){
-                        if (v.slug === child2){
-                            $('#level2-categories').append(
-                                `
-                                    <div class="form-check accordion">
-                                        <label class="form-check-label" for="${v.name}">
-                                            <input class="form-check-input" checked="true" type="checkbox" value="${v.url}" data-slug="${v.slug}" id="${v.name}" >
-                                            ${v.name}
-                                        </label>
-                                        <div class="col-12 level3-categories" id="${v.id}">
-                                        </div>
-                                    </div>
-                                `
-                            )
-                        }
-                        else {
-                            $('#level2-categories').append(
-                                `
-                                    <div class="form-check accordion">
-                                        <label class="form-check-label" for="${v.name}">
-                                            <input class="form-check-input" type="checkbox" value="${v.url}" data-slug="${v.slug}" id="${v.name}">
-                                            ${v.name}
-                                        </label>
-                                        <div class="col-12 level3-categories" id="${v.id}">
-                                        </div>
-                                    </div>
-                                `
-                            )
-                        }
-                        get_child_3_categories(v.slug, v.id, child3)
-                    })
-                    if (child2 === null || child2 === undefined){
-                        $('#level2-categories').prepend(
-                            `<option selected value="" >Seleccione una subcategoría</option>`
-                        )
-                    }
-                    else {
-                        $('#level2-categories').prepend(
-                            `<option value="">Seleccione una subcategoría</option>`
-                        )
-                    }
-
-                    $(function () {
-                        $(".accordion").accordion({
-                                collapsible: true,
-                                active: false,
-                                heightStyle: "content"
-                            });
-                    });
-                    
-                }
-            })
-            .catch(function(error){
-                toastr.error(error)
-            });
-
-    }
-
-    function get_child_1_categories(category_slug, child1, child2, child3){
-        
-        axios.get(`/api/document-manager/categories/${category_slug}/children/`)
-            .then(function(response){
-                if (response.data.length > 0){
-                    $('#level1-categories').empty()
-                    $(response.data).each(function(i,v){
-                        if (v.slug === child1){
-                            $('#level1-categories').append(
-                                `
-                                    <option selected value="${v.url}" data-slug=${v.slug}>${v.name}</option>
-                                `
-                            )
-                        }
-                        else {
-                            $('#level1-categories').append(
-                                `
-                                    <option value="${v.url}" data-slug=${v.slug}>${v.name}</option>
-                                `
-                            )
-
-                        }
-                        
-                    })
-                    if (child1 === null || child1 === undefined){
-                        $('#level1-categories').prepend(
-                            `<option selected value="" >Seleccione una subcategoría</option>`
-                        )
-                    }
-                    else {
-                        $('#level1-categories').prepend(
-                            `<option value="">Seleccione una subcategoría</option>`
-                        )
-                        get_child_2_categories($('#level1-categories option:selected').data('slug'), child2, child3)
-                    }
-                    
-                }
-            })
-            .catch(function(error){
-                toastr.error(error)
-            });
-    }
-
-    function get_root_categories(category, slug, child1, child2, child3){
-        axios.get("{% url 'api:document_manager:categories-root-list' %}")
-            .then(function(response){
-                $('#root-categories').empty()
-                if (response.data.length > 0){
-                    $(response.data).each(function(i,v){
-                        if(v.slug === slug){
-                            $('#root-categories').append(
-                                `
-                                    <option selected value="${v.url}" data-slug="${v.slug}">${v.name}</option>
-                                `
-                            )
-                        }
-                        else{
-                            $('#root-categories').append(
-                                `
-                                    <option value="${v.url}" data-slug="${v.slug}">${v.name}</option>
-                                `
-                            )
-                        }
-                    })
-                    if (category === null || category === 'None'){
-                        $('#root-categories').prepend(
-                            `<option selected value="" >Seleccione una categoría</option>`
-                        )
-                    }else{
-                        $('#root-categories').prepend(
-                            `<option value="" >Seleccione una categoría</option>`
+        function get_child_3_categories(category_slug, category_id, child3){
+            axios.get(`/api/document-manager/categories/${category_slug}/children/`)
+                .then(function(response){
+                    if (response.data.length > 0){
+                        $(response.data).each(function(i,v){
+                            if (v.slug === child3){
+                                $(`#${category_id}`).append(
+                                    `
+                                    <label class="form-check-label" style="width:100%;" for="${v.id}">
+                                        <input class="form-check-input" checked="true" type="checkbox" value="${v.url}" data-slug="${v.slug}" >
+                                        ${v.name}
+                                    </label>
+                                    `
+                                )
+                            }
+                            else {
+                                $(`#${category_id}`).append(
+                                    `
+                                    <label class="form-check-label" style="width:100%;" for="${v.id}">
+                                        <input class="form-check-input" type="checkbox" value="${v.url}" data-slug="${v.slug}" >
+                                        ${v.name}
+                                    </label>
+                                    `
+                                )
+                            }
                             
-                        )
-                        get_child_1_categories($('#root-categories option:selected').data('slug'), child1, child2, child3)
+                        })
+                        if (child3 === null || child3 === undefined){
+                        }
+                        else {
+                            $('#level3-categories').prepend(
+                            )
+                        }
+
+                        $(function () {
+                            $(".accordion").accordion({
+                                    collapsible: true,
+                                    active: false,
+                                    heightStyle: "content"
+                                });
+                            $(".accordion").find('input[type="checkbox"]').on('click', function(e) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                window.location.replace($(this).val())
+                                setTimeout(function() {
+                                this.checked = !this.checked;
+                                }.bind(this), 100);
+                            });
+                        });
+                        
                     }
-                    
+                })
+                .catch(function(error){
+                    toastr.error(error)
+                });
 
-                }
-                else {
-                    $('#root-categories').append(
-                        `<option value="" >No hay categorías</option>`
-                    ) 
-                }
-            })
-            .catch(function(error){
-                toastr.error(error)
-            });
-    }
-
-
-    $('#root-categories').on('change', function(e){
-        e.preventDefault()
-        window.location.replace($(this).val())
-    })
-
-    $('#level1-categories').on('change', function(e){
-        e.preventDefault()
-        window.location.replace($(this).val())
-    })
-
-    $('.free-pay').on('click', function(e){
-        e.preventDefault()
-        e.stopPropagation();
-        url = '{{category.url}}?' + $(this).val() + '=true'
-        window.location.replace(url)
-        setTimeout(function() {
-            this.checked = !this.checked;
-        }.bind(this), 100);
-    })
-
-    $(document).ready(function(){
-        category_ancestors = '{{category.get_ancestors.count}}'
-        switch (category_ancestors) {
-            case '1':
-                get_root_categories(
-                    '{{category.parent}}',
-                    '{{category.parent.slug}}',
-                    '{{category.slug}}')
-                break;
-            case '2':
-                get_root_categories(
-                    '{{category.parent.parent}}',
-                    '{{category.parent.parent.slug}}',
-                    '{{category.parent.slug}}',
-                    '{{category.slug}}'
-                )
-                break;
-            case '3':
-                get_root_categories(
-                    '{{category.parent.parent.parent}}',
-                    '{{category.parent.parent.parent.slug}}',
-                    '{{category.parent.parent.slug}}',
-                    '{{category.parent.slug}}',
-                    '{{category.slug}}'
-                )
-                break;
-            default:
-                get_root_categories('{{category}}', '{{category.slug}}')
         }
 
-    })
+        function get_child_2_categories(category_slug, child2, child3){
+            axios.get(`/api/document-manager/categories/${category_slug}/children/`)
+                .then(function(response){
+                    if (response.data.length > 0){
+                        $('#level2-categories').empty()
+                        $(response.data).each(function(i,v){
+                            if (v.slug === child2){
+                                $('#level2-categories').append(
+                                    `
+                                        <div class="form-check accordion">
+                                            <label class="form-check-label" for="${v.name}">
+                                                <input class="form-check-input" checked="true" type="checkbox" value="${v.url}" data-slug="${v.slug}" id="${v.name}" >
+                                                ${v.name}
+                                            </label>
+                                            <div class="col-12 level3-categories" id="${v.id}">
+                                            </div>
+                                        </div>
+                                    `
+                                )
+                            }
+                            else {
+                                $('#level2-categories').append(
+                                    `
+                                        <div class="form-check accordion">
+                                            <label class="form-check-label" for="${v.name}">
+                                                <input class="form-check-input" type="checkbox" value="${v.url}" data-slug="${v.slug}" id="${v.name}">
+                                                ${v.name}
+                                            </label>
+                                            <div class="col-12 level3-categories" id="${v.id}">
+                                            </div>
+                                        </div>
+                                    `
+                                )
+                            }
+                            get_child_3_categories(v.slug, v.id, child3)
+                        })
+                        if (child2 === null || child2 === undefined){
+                            $('#level2-categories').prepend(
+                                `<option selected value="" >Seleccione una subcategoría</option>`
+                            )
+                        }
+                        else {
+                            $('#level2-categories').prepend(
+                                `<option value="">Seleccione una subcategoría</option>`
+                            )
+                        }
 
-</script>
+                        $(function () {
+                            $(".accordion").accordion({
+                                    collapsible: true,
+                                    active: false,
+                                    heightStyle: "content"
+                                });
+                        });
+                        
+                    }
+                })
+                .catch(function(error){
+                    toastr.error(error)
+                });
+
+        }
+
+        function get_child_1_categories(category_slug, child1, child2, child3){
+            
+            axios.get(`/api/document-manager/categories/${category_slug}/children/`)
+                .then(function(response){
+                    if (response.data.length > 0){
+                        $('#level1-categories').empty()
+                        $(response.data).each(function(i,v){
+                            if (v.slug === child1){
+                                $('#level1-categories').append(
+                                    `
+                                        <option selected value="${v.url}" data-slug=${v.slug}>${v.name}</option>
+                                    `
+                                )
+                            }
+                            else {
+                                $('#level1-categories').append(
+                                    `
+                                        <option value="${v.url}" data-slug=${v.slug}>${v.name}</option>
+                                    `
+                                )
+
+                            }
+                            
+                        })
+                        if (child1 === null || child1 === undefined){
+                            $('#level1-categories').prepend(
+                                `<option selected value="" >Seleccione una subcategoría</option>`
+                            )
+                        }
+                        else {
+                            $('#level1-categories').prepend(
+                                `<option value="">Seleccione una subcategoría</option>`
+                            )
+                            get_child_2_categories($('#level1-categories option:selected').data('slug'), child2, child3)
+                        }
+                        
+                    }
+                })
+                .catch(function(error){
+                    toastr.error(error)
+                });
+        }
+
+        function get_root_categories(category, slug, child1, child2, child3){
+            axios.get("{% url 'api:document_manager:categories-root-list' %}")
+                .then(function(response){
+                    $('#root-categories').empty()
+                    if (response.data.length > 0){
+                        $(response.data).each(function(i,v){
+                            if(v.slug === slug){
+                                $('#root-categories').append(
+                                    `
+                                        <option selected value="${v.url}" data-slug="${v.slug}">${v.name}</option>
+                                    `
+                                )
+                            }
+                            else{
+                                $('#root-categories').append(
+                                    `
+                                        <option value="${v.url}" data-slug="${v.slug}">${v.name}</option>
+                                    `
+                                )
+                            }
+                        })
+                        if (category === null || category === 'None'){
+                            $('#root-categories').prepend(
+                                `<option selected value="" >Seleccione una categoría</option>`
+                            )
+                        }else{
+                            $('#root-categories').prepend(
+                                `<option value="" >Seleccione una categoría</option>`
+                                
+                            )
+                            get_child_1_categories($('#root-categories option:selected').data('slug'), child1, child2, child3)
+                        }
+                        
+
+                    }
+                    else {
+                        $('#root-categories').append(
+                            `<option value="" >No hay categorías</option>`
+                        ) 
+                    }
+                })
+                .catch(function(error){
+                    toastr.error(error)
+                });
+        }
+
+
+        $('#root-categories').on('change', function(e){
+            e.preventDefault()
+            window.location.replace($(this).val())
+        })
+
+        $('#level1-categories').on('change', function(e){
+            e.preventDefault()
+            window.location.replace($(this).val())
+        })
+
+        $('.free-pay').on('click', function(e){
+            e.preventDefault()
+            e.stopPropagation();
+            url = '{{category.url}}?' + $(this).val() + '=true'
+            window.location.replace(url)
+            setTimeout(function() {
+                this.checked = !this.checked;
+            }.bind(this), 100);
+        })
+
+        $(document).ready(function(){
+
+            category_ancestors = '{{category.get_ancestors.count}}'
+            switch (category_ancestors) {
+                case '1':
+                    get_root_categories(
+                        '{{category.parent}}',
+                        '{{category.parent.slug}}',
+                        '{{category.slug}}')
+                    break;
+                case '2':
+                    get_root_categories(
+                        '{{category.parent.parent}}',
+                        '{{category.parent.parent.slug}}',
+                        '{{category.parent.slug}}',
+                        '{{category.slug}}'
+                    )
+                    break;
+                case '3':
+                    get_root_categories(
+                        '{{category.parent.parent.parent}}',
+                        '{{category.parent.parent.parent.slug}}',
+                        '{{category.parent.parent.slug}}',
+                        '{{category.parent.slug}}',
+                        '{{category.slug}}'
+                    )
+                    break;
+                default:
+                    get_root_categories('{{category}}', '{{category.slug}}')
+            }
+
+        })
+
+    </script>
 
 {% endblock %}
