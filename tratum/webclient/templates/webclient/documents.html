@@ -127,7 +127,7 @@
                                                     data-name="{{doc.name}}"
                                                     data-shortdescription="{{doc.short_description}}"
                                                     data-longdescription="{{doc.long_description}}"
-                                                    id="btn-modal-info">
+                                                    class="btn-modal-info">
                                                         <i class="fas fa-info-circle float-right"></i>
                                                     </a>
                                                 </div>
@@ -191,30 +191,21 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalCenterTitle">{{doc.name}}</h5>
+                        <h5 class="modal-title" id="doc__modal_name">{{doc.name}}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <div class="container">
-                            <div class="row">
+                            <div class="row ">
                                 <div class="col-12">
-                                    {% if doc.long_description %}
-                                        <p class="text-justify">
-                                            {{doc.long_description}}
-                                        </p> 
-                                    {% else %}
-                                        <p class="text-justify">
-                                            {{doc.short_description|default:"Sin Descripción"}}
-                                        </p>
-                                    {% endif %}
+                                    <p class="text-justify" id="doc__modal_description">
+                                        
+                                    </p> 
                                 </div>
-                                {% if doc.video_url %}
-                                    <div class="col-12">
-                                        <iframe width="400" height="300" frameborder="0" allowfullscreen=""></iframe>
-                                    </div>
-                                {% endif %}
+                                <div class="col-12 video-container">
+                                </div>
                             </div>
                         </div>
                         
@@ -238,7 +229,6 @@
     </script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
     <script>
-
 
         $(function(){
             createSticky($("#search"));
@@ -535,6 +525,53 @@
                     get_root_categories('{{category}}', '{{category.slug}}')
             }
 
+        })
+
+        function getVideoId(url) {
+            var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            var match = url.match(regExp);
+
+            if (match && match[2].length == 11) {
+                return match[2];
+            } else {
+                return 'error';
+            }
+        }
+
+        $('.btn-modal-info').on('click', function(e){
+            $('#doc__modal_name').text($(this).data('name'))
+            if ($(this).data('longdescription') === '' || $(this).data('longdescription') === "None")
+            {
+                if ($(this).data('shortdescription') === 'None'){
+                    $('#doc__modal_description').text("Sin descripción")
+                }
+                else {
+                    $('#doc__modal_description').text($(this).data('shortdescription'))
+                }
+            }
+            else {
+                $('#doc__modal_description').text($(this).data('longdescription'))
+            }
+
+            if ($(this).data('video') != 'None')
+            {
+                id = getVideoId($(this).data('video'));
+                url = `https://www.youtube.com/embed/${id}`
+                $('.video-container').empty()
+                $('.video-container').append(
+                    `
+                    <iframe id="doc__modal_video" width="400" height="300" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>
+                    `
+                )
+                $('#doc__modal_video').attr('src', url);
+            }
+
+
+            $('#modal-info').modal()
+        })
+
+        $('#modal-info').on('hidden.bs.modal', function (e) {
+            $('.video-container').empty()
         })
 
     </script>
