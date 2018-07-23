@@ -91,7 +91,7 @@ function populateDocumentFields(){
         if(object_info.dataset.model == 'documentsection'){
             url = `/document-manager/document-sections/${object_info.dataset.slug}/section-fields/`
         } else if(object_info.dataset.model == 'document'){
-            url = `/api/documents/document-fields/?${filter}`
+            url = `/api/document-manager/document-fields/?${filter}`
         }
     }    
     axios.get(url)
