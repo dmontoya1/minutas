@@ -273,3 +273,18 @@ body {
     margin-bottom: -75px;
     margin-left: -50px;
 }
+
+.profile-content {
+    border: 1px solid #becad6;
+    border-radius: 10px;
+}
+
+.img-profile {
+    border-radius: 50%;
+    max-width: 90%;
+}
+
+.company-info {
+    font-size: 1.2em;
+    font-weight: 600;
+}

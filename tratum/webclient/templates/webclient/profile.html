@@ -1,0 +1,92 @@
+{% extends 'webclient/base.html' %}
+{% load humanize %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+
+<div class="container profile mt-5">
+    <div class="row content-row">
+        <div class="col-12 mb-4 text-center">
+            <h1>Perfil</h1>               
+        </div>
+    </div>
+    <div class="row mb-5">
+        <div class="container-fluid profile-content">
+            <div class="row p-2 mt-2 mb-5">
+                <div class="col-12 col-lg-3 image-content">
+                    <div class="row justify-content-center">
+                        <div class="col-12 mx-auto mb-3">
+                            {% if request.user.logo %}
+                                <img class="img-profile mb-3 mx-auto d-block" src="{{request.user.logo}}" alt="Card image cap">
+                            {% else %}
+                                <img class="img-profile mb-3 mx-auto d-block" src="{% static '/img/avatar.png' %}" alt="Card image cap">
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-9 mb-4">
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Nombre</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Correo Electrónico</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Contraseña</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                            </div>
+                        </div>
+                                
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="dropdown-divider"></div>
+            <div class="row p-2 mt-2 mb-2">
+                <div class="col-12 mb-4">
+                    <div class="row mb-3 ml-2">
+                        <span class="company-info">Datos Empresa</span>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-md-4 mb-3">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Nombre</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Correo Electrónico</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Contraseña</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Contraseña</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                            </div>
+                        </div>
+                                
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}
