@@ -1,5 +1,7 @@
 a {
     cursor: pointer !important;
+    color: inherit;
+    text-decoration: inherit;
 }
 
 body {

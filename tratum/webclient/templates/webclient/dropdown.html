@@ -10,9 +10,11 @@
                 href="{{c.get_absolute_url}}"
             {% endif %}>{{c.name}}</a>
             {% if c.get_children %}
-                {% for c in c.get_children %}
-                    {% include 'webclient/dropdown.html' %}
-                {% endfor %}
+                <div class="dropdown-menu">
+                    {% for c in c.get_children %}
+                        {% include 'webclient/dropdown.html' %}
+                    {% endfor %}
+                </div>
             {% endif %}
     </div>  
 </a>
