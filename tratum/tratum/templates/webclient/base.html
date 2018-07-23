@@ -48,12 +48,18 @@
                             <a>Perfil</a>
                         </h4>
                         <div class="mt-5">
+                            {% if request.user.is_anonymous %}
+                                <h5 class="text-white">
+                                    <a data-toggle="modal" data-target="#modal-login">Iniciar sesión</a>
+                                </h5></br>
+                                <h5 class="text-white">
+                                    <a data-toggle="modal" data-target="#modal-signup">Registrarse</a>
+                                </h5>
+                            {% else %}
                             <h5 class="text-white">
-                                <a data-toggle="modal" data-target="#modal-login">Iniciar sesión</a>
+                                <a href="/logout/" id="Logout">Cerrar sesión</a>
                             </h5></br>
-                            <h5 class="text-white">
-                                <a data-toggle="modal" data-target="#modal-signup">Registrarse</a>
-                            </h5>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -64,8 +70,12 @@
                     <div class="float-right main-options d-none d-lg-block">
                         <a>Categorías <i class="fas fa-caret-down"></i></a>
                         <span class="divider">|</span>
-                        <a data-toggle="modal" data-target="#modal-signup">Registrarse</a>
-                        <a data-toggle="modal" data-target="#modal-login">Iniciar sesión</a>
+                        {% if request.user.is_anonymous %}
+                            <a data-toggle="modal" data-target="#modal-signup">Registrarse</a>
+                            <a data-toggle="modal" data-target="#modal-login">Iniciar sesión</a>
+                        {% else %}
+                            <a href="/logout/" id="Logout">Cerrar sesión</a>
+                        {% endif %}
                     </div>
                 </nav>  
             </div>
@@ -343,6 +353,7 @@
                     $('#result').removeClass()
                     $('#result').addClass('short')
                     $('#reg_submit_signup').attr('disabled', true)
+
                     return 'Muy corta'
                 }
                 if (password.length > 7) strength += 1
