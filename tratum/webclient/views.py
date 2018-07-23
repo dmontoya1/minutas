@@ -37,7 +37,6 @@ class HomePageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['context_bundles'] = DocumentBundle.objects.alive()
-        context['context_categories'] = Category.objects.filter(deleted_at=None)
         context['context_slides'] = SliderItem.objects.all()
         return context
 
@@ -48,7 +47,10 @@ class PoliciesView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['policies'] = Policy.objects.all()
+        police = get_object_or_404(Policy, policy_type='PP')
+        context = super(PoliciesView, self).get_context_data(**kwargs)
+        context['name'] = 'Política de privacidad y tratamiento de datos'
+        context['content'] = police.content
         return context
 
 

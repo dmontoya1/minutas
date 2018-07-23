@@ -23,6 +23,7 @@
         <link rel="stylesheet" href="{% static 'css/shards.min.css' %}">
         <link rel="stylesheet" href="{% static 'css/site.css' %}">
         <link rel="stylesheet" href="{% static 'css/tratum.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-4-navbar.css' %}">
         <title>Tratum</title>
         {% block extra_css %}
         {% endblock %}
@@ -33,39 +34,55 @@
                 <div class="contextualMenu">
                     <div class="p-4">
                         <h4 class="text-white">
-                            <a>Inicio</a>
+                            <a href="/">Inicio</a>
                         </h4>
                         <h4 class="text-white">
-                            <a>Categorias</a>
+                            <a href="/">Categorias</a>
                         </h4>
                         <h4 class="text-white">
-                            <a>Mis documentos</a>
+                            <a href="/">Mis documentos</a>
                         </h4>
                         <h4 class="text-white">
-                            <a>Historial</a>
-                        </h4>
-                        <h4 class="text-white">
-                            <a>Perfil</a>
+                            <a href="/">Perfil</a>
                         </h4>
                         <div class="mt-5">
-                            <h5 class="text-white">
-                                <a data-toggle="modal" data-target="#modal-login">Iniciar sesión</a>
-                            </h5></br>
-                            <h5 class="text-white">
-                                <a data-toggle="modal" data-target="#modal-signup">Registrarse</a>
-                            </h5>
+                            {% if request.user.is_anonymous %}
+                                <h5 class="text-white">
+                                    <a data-toggle="modal" data-target="#modal-login">Iniciar sesión</a>
+                                </h5></br>
+                                <h5 class="text-white">
+                                    <a data-toggle="modal" data-target="#modal-signup">Registrarse</a>
+                                </h5>
+                            {% else %}
+                                <h5 class="text-white">
+                                    <a href="/logout/" id="Logout">Cerrar sesión</a>
+                                </h5></br>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-                <nav class="navbar fixed-top bg-transparent ">
+                <nav {% block nav_class %}class="navbar fixed-top bg-transparent" {% endblock %}>
                     <button class="navbar-toggler" type="button" >
                         <i class="fas fa-bars rotate"></i>
-                    </button>
+                        <a href="/"><img class="logo" src="{% static 'img/logo-placeholder@2x.png' %}"></a>
+                    </button>                    
                     <div class="float-right main-options d-none d-lg-block">
-                        <a>Categorías <i class="fas fa-caret-down"></i></a>
-                        <span class="divider">|</span>
-                        <a data-toggle="modal" data-target="#modal-signup">Registrarse</a>
-                        <a data-toggle="modal" data-target="#modal-login">Iniciar sesión</a>
+                        <div class="dropleft">
+                            <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categorías</a>
+                            <div class="dropdown-menu">
+                                {% for c in context_categories %}
+                                    {% include 'webclient/dropdown.html' %}
+                                {% endfor %}
+                            </div>
+                        </div>  
+                        <div class="auth-buttons">
+                            {% if request.user.is_anonymous %}
+                                <a data-toggle="modal" data-target="#modal-signup">Registrarse</a>
+                                <a data-toggle="modal" data-target="#modal-login">Iniciar sesión</a>
+                            {% else %}
+                                <a href="/logout/" id="Logout">Cerrar sesión</a>
+                            {% endif %}
+                        </div>
                     </div>
                 </nav>  
             </div>
@@ -202,38 +219,36 @@
                                                 <label class="control-label">Contraseña</label>
                                             </div>
                                             <div class="col-xs-12">
-                                                <input required type="password" class="form-control" 
-                                                name="password1" data-validation="length strength" 
-                                                data-validation-length="min8"
-                                                data-validation-strength="2"
-                                                data-validation-error-msg="Tu contraseña debe tener mínimo 8 caracteres, un número y una letra"/>
+                                                <input required type="password" class="form-control" name="password1" id="password1"/>
+                                                <span id="result"></span>
                                             </div>
+                                            
                                         </div>
                                         <br>
                         
-                                        <div class="form-group">
+                                        <div class="form-group mb-3">
                                             <div class="col-xs-12">
                                                 <label class="control-label"> Repetir Contraseña</label>
                                             </div>
                                             <div class="col-xs-12">
                                                 <input required type="password" class="form-control"  
-                                                name="password2" data-validation="confirmation" data-validation-confirm="password1"
-                                                data-validation-error-msg="Las contraseñas no coinciden"/>
+                                                name="password2" id="password2"/>
+                                                <span id="valid"></span>
                                             </div>
                                         </div>
         
                                         <div class="terms-conditions">
                                             <input type="checkbox" id="terms" style="display:inline">
                                             <label for="terms" style="color: #929292;display:inline;font-weight: 100;">
-                                            Para continuar debes aceptar los 
-                                            <a href="{% url 'web_client:terms" class="signup_terms">Términos y condiciones </a> y las 
-                                            <a href="{% url 'web_client:privacy-policy" class="signup_terms">Políticas de tratamiento de datos </a>de <strong>TRATUM S.A.S</strong>
+                                            Para continuar debes aceptar lass 
+                                            <!-- <a href="{% url 'webclient:policies' %}" target="_blank" class="signup_terms">Términos y condiciones </a> y las  -->
+                                            <a href="{% url 'webclient:policies' %}" target="_blank" class="signup_terms">Políticas de tratamiento de datos </a>de <strong>TRATUM S.A.S</strong>
                                         </div>
         
                                         <input type="hidden" name="username" />
                         
                                         <div class="text-center">
-                                            <input type="submit" id="reg_submit_signup" value="Registrarse"/>
+                                            <input type="submit" disabled id="reg_submit_signup" value="Registrarse"/>
                                         </div>
                                     </form>
                                 </div>
@@ -328,47 +343,98 @@
 
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
 
-        <!-- <script src="{% static 'js/shards.min.js' %}"></script> -->
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+        <script src="{% static 'js/jquery-validator.js' %}"></script>
+        <script src="{% static 'js/shards.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap-4-navbar.js' %}"></script>
         <script>
             $.validate({
-            modules : 'html5 security',
-            onModulesLoaded : function() {
-                var optionalConfig = {
-                    fontSize: '0.9em',
-                    padding: '4px',
-                    float: 'right',
-                    bad : 'Muy débil',
-                    weak : 'Débil',
-                    good : 'Segura',
-                    strong : 'Muy Segura'
-                };
-            
-                $('input[name="password1"]').displayPasswordStrength(optionalConfig);
-                }
+                modules : 'html5',
             });
         </script>
         
         <script type="text/javascript">
+            function checkStrength(password) {
+                var strength = 0
+                if (password.length < 6) {
+                    $('#result').removeClass()
+                    $('#result').addClass('short')
+                    $('#reg_submit_signup').attr('disabled', true)
+
+                    return 'Muy corta'
+                }
+                if (password.length > 7) strength += 1
+                // If password contains both lower and uppercase characters, increase strength value.
+                if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1
+                // If it has numbers and characters, increase strength value.
+                if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) strength += 1
+                // If it has one special character, increase strength value.
+                if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
+                // If it has two special characters, increase strength value.
+                if (password.match(/(.*[!,%,&,@,#,$,^,*,?,_,~].*[!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
+                // Calculated strength value, we can return messages
+                // If value is less than 2
+                if (strength < 2) {
+                    $('#result').removeClass()
+                    $('#result').addClass('weak')
+                    $('#reg_submit_signup').attr('disabled', true)
+                    return 'Débil'
+                } else if (strength == 2) {
+                    $('#result').removeClass()
+                    $('#result').addClass('good')
+                    return 'Buena'
+                } else {
+                    $('#result').removeClass()
+                    $('#result').addClass('strong')
+                    return 'Fuerte'
+                    }
+            }
+            
+            function checkValid(password1, password2){
+                if (password1 != password2){
+                    $('#valid').removeClass()
+                    $('#valid').addClass('nopass')
+                    $('#reg_submit_signup').attr('disabled', true)
+                    return 'Las contraseñas no coinciden'
+                }
+                else{
+                    $('#valid').removeClass()
+                    $('#reg_submit_signup').attr('disabled', false)
+                    return ''
+                }
+            }
+            
             $(document).ready(function() {
                 $('.navbar-toggler').on('click', function(){
                     $('.rotate').toggleClass("down");
                     $('.contextualMenu').slideToggle();
                 })
-                $(window).scroll(function(){
-                    var scroll = $(window).scrollTop();
-                    if (scroll > 100) {
-                        $(".navbar").addClass('scrolled');
-                    }
-                    else{
-                        $(".navbar").removeClass('scrolled');
-                    }
-                })
+                {% block nav-script%}
+                    $(window).scroll(function(){
+                        var scroll = $(window).scrollTop();
+                        if (scroll > 100) {
+                            $(".navbar").addClass('scrolled');
+                        }
+                        else{
+                            $(".navbar").removeClass('scrolled');
+                        }
+                    })
+                    $('#password1').keyup(function() {
+                        $('#result').html(checkStrength($('#password1').val()))
+                    })
+                    $('#password2').keyup(function() {
+                        $('#valid').html(checkValid($('#password1').val(), $('#password2').val()))
+                    })
+                {% endblock %}
+                
             });
 
+
+
+
             axios.defaults.headers.common['X-CSRFToken'] = '{{csrf_token}}'
-            axios.defaults.headers.common['Api-Key'] = 'd492009ed1b5395f64230e13fb71ce33cc855156'
+            axios.defaults.headers.common['Api-Key'] = '042c97b1f486c5bde044ba5f10dfd11ad26cb81b'
             
             toastr.options = {
                 "closeButton": false,
@@ -446,7 +512,7 @@
                         toastr.error("El correo electrónico no se encuentra registrado")
                         $('#reg_submit_signup').attr('disabled', false)
                     });
-            })
+        })
         </script>
         {% block extra_js %}
         {% endblock %}

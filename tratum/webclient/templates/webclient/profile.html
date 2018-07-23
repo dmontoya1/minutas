@@ -1,7 +1,10 @@
 {% extends 'webclient/base.html' %}
 {% load humanize %}
-{% load i18n %}
 {% load static %}
+
+{% block nav_class %}
+    class="navbar scrolled"
+{% endblock %}
 
 {% block content %}
 
@@ -90,3 +93,6 @@
     </div>
 </div>
 {% endblock%}
+
+{% block nav-script%}
+{% endblock %}
