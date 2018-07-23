@@ -248,6 +248,14 @@ section {
         padding: .1em 1em;
         border-radius: 20px;
     }
+        .main-options a:last-child:hover {
+            font-size: 1em;
+            font-weight: 600;
+            color: #002c55;
+            background-color: #c2c1c1;
+            padding: .1em 1em;
+            border-radius: 20px;
+        }
     .main-options .divider {
         height: 1.2em;
         margin-right: 2em;
