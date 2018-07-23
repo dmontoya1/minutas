@@ -23,6 +23,7 @@
         <link rel="stylesheet" href="{% static 'css/shards.min.css' %}">
         <link rel="stylesheet" href="{% static 'css/site.css' %}">
         <link rel="stylesheet" href="{% static 'css/tratum.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-4-navbar.css' %}">
         <title>Tratum</title>
         {% block extra_css %}
         {% endblock %}
@@ -33,19 +34,16 @@
                 <div class="contextualMenu">
                     <div class="p-4">
                         <h4 class="text-white">
-                            <a>Inicio</a>
+                            <a href="/">Inicio</a>
                         </h4>
                         <h4 class="text-white">
-                            <a>Categorias</a>
+                            <a href="/">Categorias</a>
                         </h4>
                         <h4 class="text-white">
-                            <a>Mis documentos</a>
+                            <a href="/">Mis documentos</a>
                         </h4>
                         <h4 class="text-white">
-                            <a>Historial</a>
-                        </h4>
-                        <h4 class="text-white">
-                            <a>Perfil</a>
+                            <a href="/">Perfil</a>
                         </h4>
                         <div class="mt-5">
                             {% if request.user.is_anonymous %}
@@ -56,9 +54,9 @@
                                     <a data-toggle="modal" data-target="#modal-signup">Registrarse</a>
                                 </h5>
                             {% else %}
-                            <h5 class="text-white">
-                                <a href="/logout/" id="Logout">Cerrar sesión</a>
-                            </h5></br>
+                                <h5 class="text-white">
+                                    <a href="/logout/" id="Logout">Cerrar sesión</a>
+                                </h5></br>
                             {% endif %}
                         </div>
                     </div>
@@ -66,16 +64,25 @@
                 <nav {% block nav_class %}class="navbar fixed-top bg-transparent" {% endblock %}>
                     <button class="navbar-toggler" type="button" >
                         <i class="fas fa-bars rotate"></i>
-                    </button>
+                        <a href="/"><img class="logo" src="{% static 'img/logo-placeholder@2x.png' %}"></a>
+                    </button>                    
                     <div class="float-right main-options d-none d-lg-block">
-                        <a>Categorías <i class="fas fa-caret-down"></i></a>
-                        <span class="divider">|</span>
-                        {% if request.user.is_anonymous %}
-                            <a data-toggle="modal" data-target="#modal-signup">Registrarse</a>
-                            <a data-toggle="modal" data-target="#modal-login">Iniciar sesión</a>
-                        {% else %}
-                            <a href="/logout/" id="Logout">Cerrar sesión</a>
-                        {% endif %}
+                        <div class="dropleft">
+                            <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categorías</a>
+                            <div class="dropdown-menu">
+                                {% for c in context_categories %}
+                                    {% include 'webclient/dropdown.html' %}
+                                {% endfor %}
+                            </div>
+                        </div>  
+                        <div class="auth-buttons">
+                            {% if request.user.is_anonymous %}
+                                <a data-toggle="modal" data-target="#modal-signup">Registrarse</a>
+                                <a data-toggle="modal" data-target="#modal-login">Iniciar sesión</a>
+                            {% else %}
+                                <a href="/logout/" id="Logout">Cerrar sesión</a>
+                            {% endif %}
+                        </div>
                     </div>
                 </nav>  
             </div>
@@ -340,6 +347,7 @@
         <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
         <script src="{% static 'js/jquery-validator.js' %}"></script>
         <script src="{% static 'js/shards.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap-4-navbar.js' %}"></script>
         <script>
             $.validate({
                 modules : 'html5',
@@ -426,7 +434,7 @@
 
 
             axios.defaults.headers.common['X-CSRFToken'] = '{{csrf_token}}'
-            axios.defaults.headers.common['Api-Key'] = '876640988db6c4e761ca4254d69f01f454ae0954'
+            axios.defaults.headers.common['Api-Key'] = '042c97b1f486c5bde044ba5f10dfd11ad26cb81b'
             
             toastr.options = {
                 "closeButton": false,
