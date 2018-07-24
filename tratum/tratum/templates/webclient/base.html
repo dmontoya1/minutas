@@ -134,24 +134,24 @@
                             </div>
                             <div class="row justify-content-center">
                                 <div class="col">
-                                    <form method="POST" id="login" class="form-horizontal" >
+                                    <form method="POST" id="login" class="form-horizontal login" >
                                         {% csrf_token %}
                                         <div class="form-group">
                                             <div class="col-xs-12">
-                                                <label class="control-label">Correo electrónico*</label>
+                                                <label for="id_login" class="control-label">Correo electrónico*</label>
                                             </div>
                                             <div class="col-xs-12">
-                                                <input class="form-control" name="email" data-validation="email"
+                                                <input class="form-control" type="email" name="email" data-validation="email" autofocus="autofocus" id="id_login"
                                                 data-validation-error-msg="Debes ingresar un email válido" />
                                             </div>
                                         </div>
-                        
+                                        <br>
                                         <div class="form-group">
                                             <div class="col-xs-12">
-                                                <label class="control-label">Contraseña*</label>
+                                                <label for="id_password" class="control-label">Contraseña*</label>
                                             </div>
                                             <div class="col-xs-12">
-                                                <input type="password" class="form-control" name="password" required/>
+                                                <input type="password" class="form-control" name="password" required id="id_password"/>
                                             </div>
                                         </div>
         
@@ -462,9 +462,6 @@
                 
             });
 
-
-
-
             axios.defaults.headers.common['X-CSRFToken'] = '{{csrf_token}}'
             axios.defaults.headers.common['Api-Key'] = '{{Api_Key}}'
             
@@ -486,15 +483,13 @@
                 "hideMethod": "fadeOut"
             }
 
-            // <!-- Script para enviar axios de Login -->
             $("#login").on('submit', function(ev){
                 ev.preventDefault()
                 data = new FormData($(this)[0])
                 axios.post("{% url 'webclient:login' %}", data)
                     .then(function(response){
                         if (response.data.length > 0){
-                            url = response.data['url']
-                            window.location.href = url
+                            window.location.href = response.data
                         }
                     })
                     .catch(function(error){

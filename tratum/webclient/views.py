@@ -6,12 +6,19 @@ from rest_framework.authtoken.models import Token
 from django.contrib import messages 
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.models import User
-from django.contrib.auth.hashers import make_password 
+from django.contrib.auth.hashers import make_password
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404, reverse
+from django.template import loader
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.generic.base import TemplateView, View
 from django.views.generic.detail import DetailView
+
+from utils.views import account_activation_token
 
 from business_info.models import (
     Policy,
@@ -90,20 +97,25 @@ class LoginView(View):
     def post(self, request, *args, **kwargs):
         email = request.POST['email']
         password = request.POST['password']
-        user = authenticate(email=email, password=password)
-        if user is not None:
-            url = reverse('webclient:home')
-            login(request, user)
-            messages.add_message(
-				request,
-					messages.ERROR, 
-					"Bienvenido de vuelta a Tratum"
-			)
-        else:
-            response = {'error': 'Correo y/o contraseña incorrectas.'}
+        user = User.objects.get(username=email)
+        if not user.is_active:
+            response = {'error': 'Debes activar tu cuenta para continuar...'}
             return JsonResponse(response, status=400)
+        else:
+            user = authenticate(email=email, password=password)
+            if user is not None:
+                url = reverse('webclient:profile')
+                login(request, user)
+                messages.add_message(
+                    request,
+                        messages.ERROR, 
+                        "Bienvenido de vuelta a Tratum"
+                )
+            else:
+                response = {'error': 'Correo y/o contraseña incorrectas.'}
+                return JsonResponse(response, status=400)
 
-        return JsonResponse(url, safe=False)
+            return JsonResponse(url, safe=False)
 
 
 class SignupView(View):
@@ -118,6 +130,7 @@ class SignupView(View):
             user.username = request.POST['email']
             user.set_password(request.POST['password1'])
             user.backend = 'django.contrib.auth.backends.ModelBackend'
+            user.is_active = False
             user.save()
 
             Token.objects.create(user=user)
@@ -133,8 +146,20 @@ class SignupView(View):
                 user=user
             )
             log.save()
-			
-            login(request, user)
+            current_site = get_current_site(request)
+
+            ctx = {
+                'email': user.email,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': account_activation_token.make_token(user),
+                'user_id': user.pk
+            }
+            body = loader.get_template('webclient/account_activation_email.html').render(ctx)
+            message = EmailMessage("Activa tu cuenta en Tratum", body, 'no-reply@tratum.com', [user.email])
+            message.content_subtype = 'html'
+            message.send()
+
             messages.add_message(
                 request,
                     messages.ERROR, 
@@ -164,3 +189,28 @@ class CategoryDocumentsView(TemplateView):
 class ProfileView(TemplateView):
 
     template_name = "webclient/profile.html"
+
+
+def activate(request, uidb64, token, pk):
+    try:
+        user = User.objects.get(pk=pk)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.backend = 'django.contrib.auth.backends.ModelBackend'
+        user.save()
+        login(request, user)
+        messages.add_message(
+            request,
+                messages.ERROR, 
+                "Has activado tu cuenta exitosamente."
+        )
+        return redirect('webclient:home')
+    else:
+        messages.add_message(
+            request,
+                messages.ERROR, 
+                "No hemos podido activar tu cuenta, "
+        )
+        return redirect('webclient:home')
