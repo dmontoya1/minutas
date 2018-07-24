@@ -289,6 +289,18 @@ section {
         margin-right: 2em;
     }
 
+.modal-dialog.large {
+    max-width: 50% !important;
+}
+    @media screen and (max-width: 818px) {
+        .modal-dialog.large {   
+            max-width: 100% !important;
+        }
+    }
+    .modal-dialog.large .modal-body {
+        padding: 0 !important;
+    }
+
 .navbar {
     z-index: 99999;
 }
