@@ -346,3 +346,6 @@ class DocumentFieldOption(models.Model):
         if self.field.is_text_input():
             raise ValidationError('El campo debe ser tipo "Opciones de única respuesta" para agregarle opciones')
 
+
+
+

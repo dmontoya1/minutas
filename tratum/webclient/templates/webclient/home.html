@@ -7,28 +7,42 @@
 {% endblock %}
 
 {% block content %}
+  <div class="modal fade" id="homeVideoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog large" role="document">
+      <i class="fas fa-times-circle" data-dismiss="modal"></i>
+      <div class="modal-content">
+        <div class="modal-body">
+          <iframe width="100%" height="500px" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div id="loadingAnimation">
     <img src="{% static 'img/loadingSite.gif' %}" />
     <p>Cargando...</p>
   </div>
   <div class="swiper-container">   
       <div class="swiper-wrapper">        
-          {% for s in context_slides %}
-            <div class="swiper-slide">
-              <div class="swiper-mask-left"></div>  
-              <div class="swiper-mask-right"></div> 
-              <div class="description text-center">
-                <h1>{{s.text|default_if_none:""}}</h1>
-                <p>{{s.description|default_if_none:""}}</p>
-                {% if s.youtube_video_link %}
-                  <a>
-                    <i class="fas fa-play-circle"></i>
-                  </a>
-                {% endif %}
-              </div>
-              <img src="{{s.image.url}}">
+        {% for s in context_slides %}
+          <div class="swiper-slide">
+            <div class="swiper-mask-left"></div>  
+            <div class="swiper-mask-right"></div> 
+            <div class="description text-center">
+              <h1>{{s.text|default_if_none:""}}</h1>
+              <p>{{s.description|default_if_none:""}}</p>
+              {% if s.youtube_video_link %}
+                <a class="video-trigger" data-toggle="modal" data-target="#homeVideoModal" data-embed="{{s.youtube_video_link}}">
+                  <i class="fas fa-play-circle"></i>
+                </a>
+              {% endif %}
             </div>
-          {% endfor %}
+            <img src="{{s.image.url}}">
+          </div>
+        {% endfor %}
       </div>
       <div class="swiper-pagination"></div>    
     </div>           
@@ -156,7 +170,11 @@
       $('.swiper-mask-right').on('click', function(){
         mySwiper.slideNext();
       })
-
       
+      $('.video-trigger').on('click', function(event) {
+        var embedUrl = $(this).data('embed'); 
+        var modal = $('#homeVideoModal');
+        modal.find('iframe').attr('src', embedUrl);
+      })
     </script>
 {% endblock %}
