@@ -98,13 +98,11 @@ class LoginView(View):
         email = request.POST['email']
         password = request.POST['password']
         user = User.objects.get(username=email)
-        print (user)
         if not user.is_active:
             response = {'error': 'Debes activar tu cuenta para continuar...'}
             return JsonResponse(response, status=400)
         else:
             user = authenticate(email=email, password=password)
-            print (user)
             if user is not None:
                 url = reverse('webclient:profile')
                 login(request, user)
@@ -198,7 +196,6 @@ def activate(request, uidb64, token, pk):
         user = User.objects.get(pk=pk)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
-    print (user)
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.backend = 'django.contrib.auth.backends.ModelBackend'
