@@ -71,4 +71,4 @@ class UserDocument(models.Model):
         verbose_name_plural = 'Documentos de usuarios'
 
     def __str__(self):
-        return self.name 
+        return self.pk 
