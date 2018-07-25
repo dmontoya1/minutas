@@ -17,9 +17,9 @@ urlpatterns = [
     path('policies/', views.PoliciesView.as_view(), name='policies'),
     path('faq/', views.FAQView.as_view(), name='faq'),
     path('about-us/', views.AboutUsView.as_view(), name='about-us'),
-    path('document/<slug:identifier>/edit/', views.UserDocumentView.as_view(), name='user-document'),
+    path('my-documents/<slug:identifier>/edit/', views.UserDocumentView.as_view(), name='user-document'),
     path('profile/', views.ProfileView.as_view(), name='profile'),
-    path('my-docs/', views.UserDocumentsView.as_view(), name='user-documents'),
+    path('my-documents/', views.UserDocumentsView.as_view(), name='user-documents'),
     path('activate/<uidb64>/<token>/<pk>', views.activate, name='activate'),
     url(r'^category/(?P<path>.*)', mptt_urls.view(model='document_manager.models.Category', view='document_manager.views.category', slug_field='slug'), name='category_documents'),
 ]
