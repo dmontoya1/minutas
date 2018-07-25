@@ -1,5 +1,3 @@
-
-
 import mptt_urls
 
 from allauth.account.views import SignupView, LoginView, PasswordResetView
@@ -19,10 +17,9 @@ urlpatterns = [
     path('policies/', views.PoliciesView.as_view(), name='policies'),
     path('faq/', views.FAQView.as_view(), name='faq'),
     path('about-us/', views.AboutUsView.as_view(), name='about-us'),
-    path('document/<slug:slug>/', views.DocumentDetailView.as_view(), name='document'),
+    path('document/<slug:identifier>/edit/', views.UserDocumentView.as_view(), name='user-document'),
     path('profile/', views.ProfileView.as_view(), name='profile'),
+    path('my-docs/', views.UserDocumentsView.as_view(), name='user-documents'),
     path('activate/<uidb64>/<token>/<pk>', views.activate, name='activate'),
-
-    #Documents
     url(r'^category/(?P<path>.*)', mptt_urls.view(model='document_manager.models.Category', view='document_manager.views.category', slug_field='slug'), name='category_documents'),
 ]
