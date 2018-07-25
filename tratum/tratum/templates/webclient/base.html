@@ -209,7 +209,7 @@
                         
                                         <div class="form-group">
                                             <div class="col-xs-12">
-                                                <label class="control-label">Correo Electrónico</label>
+                                                <label class="control-label">Correo Electrónico *</label>
                                             </div>
                                             <div class="col-xs-12">
                                                 <input type="text" required class="form-control" name="email" 
@@ -220,7 +220,7 @@
                         
                                         <div class="form-group">
                                             <div class="col-xs-12">
-                                                <label class="control-label">Contraseña</label>
+                                                <label class="control-label">Contraseña *</label>
                                             </div>
                                             <div class="col-xs-12">
                                                 <input required type="password" class="form-control" name="password1" id="password1"/>
@@ -232,7 +232,7 @@
                         
                                         <div class="form-group mb-3">
                                             <div class="col-xs-12">
-                                                <label class="control-label"> Repetir Contraseña</label>
+                                                <label class="control-label"> Repetir Contraseña *</label>
                                             </div>
                                             <div class="col-xs-12">
                                                 <input required type="password" class="form-control"  
@@ -240,13 +240,16 @@
                                                 <span id="valid"></span>
                                             </div>
                                         </div>
+                                        <div class="float-right">
+                                            <span style="font-size: 0.8em;">Los campos con * son obligatorios</span>
+                                        </div>
         
-                                        <div class="terms-conditions">
+                                        <div class="terms-conditions mt-5">
                                             <input type="checkbox" id="terms" style="display:inline">
                                             <label for="terms" style="color: #929292;display:inline;font-weight: 100;">
-                                            Para continuar debes aceptar lass 
+                                            Para continuar debes aceptar las 
                                             <!-- <a href="{% url 'webclient:policies' %}" target="_blank" class="signup_terms">Términos y condiciones </a> y las  -->
-                                            <a href="{% url 'webclient:policies' %}" target="_blank" class="signup_terms">Políticas de tratamiento de datos </a>de <strong>TRATUM S.A.S</strong>
+                                            <a href="{% url 'webclient:policies' %}" target="_blank" class="signup_terms"><strong>Políticas de tratamiento de datos</strong> </a>de <strong>TRATUM S.A.S</strong>
                                         </div>
         
                                         <input type="hidden" name="username" />
