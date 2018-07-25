@@ -247,7 +247,7 @@
                 <div class="form-group">
                     <label for="employees_number">Número de empleados</label>
                     <select class="form-control" id="employees_number" name="employees_number">
-                        <option disabled value="">Selecciona el número de empleados</option>
+                        <option disabled selected value="">Selecciona el número de empleados</option>
                         <option value="1">Menos de 10</option>
                         <option value="2">Entre 10 y 20</option>
                         <option value="3">Entre 20 y 50</option>
@@ -461,11 +461,14 @@
 
         $(document).ready(function(){
             sector_id = '{{request.user.company.sector.id}}'
+            if (sector_id)
             get_sector_list(sector_id)
 
             employees = '{{request.user.company.employees_number}}'
-
-            $('#employees_number').find(`option[value=${employees}]`).attr('selected', true)
+            console.log(employees)
+            if (employees){
+                $('#employees_number').find(`option[value=${employees}]`).attr('selected', true)
+            }
         })
 
 
