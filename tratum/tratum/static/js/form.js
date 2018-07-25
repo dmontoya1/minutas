@@ -132,5 +132,6 @@ $('#document-form').on('submit', function(e){
             submitFields.push(ex_fields.replace($(this).value()).match(ex_fields))
         });
     });
+
     $(this).unbind('submit').submit();
 })
