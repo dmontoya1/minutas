@@ -103,7 +103,11 @@ class LoginView(View):
     def post(self, request, *args, **kwargs):
         email = request.POST['email']
         password = request.POST['password']
-        user = User.objects.get(username=email)
+        try:
+            user = User.objects.get(username=email)
+        except User.DoesNotExist:
+            response = {'error': 'El correo no se encuentra registrado en la plataforma'}
+            return JsonResponse(response, status=400)
         if not user.is_active:
             response = {'error': 'Debes activar tu cuenta para continuar...'}
             return JsonResponse(response, status=400)
