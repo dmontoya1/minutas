@@ -242,7 +242,7 @@
                 <input type="hidden" name="pk" value={{request.user.pk}}>
                 <div class="form-group">
                     <label for="company_name">Nombre empresa</label>
-                    <input type="text" class="form-control" id="company_name" name="name" value="{{request.user.company.name}}">
+                    <input type="text" class="form-control" id="company_name" name="name" placeholder="Ingresa el nombre de tu empresa" value="{{request.user.company.name}}">
                 </div>
                 <div class="form-group">
                     <label for="employees_number">Número de empleados</label>
@@ -257,12 +257,14 @@
                 <div class="form-group">
                     <label for="sector_company">Sector</label>
                     <select class="form-control" id="sector_company" name="sector">
+                        <option disabled selected value="">Selecciona un sector</option>
                         
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="company_description">Descripción</label>
-                    <textarea class="form-control" name="description" id="company_description" rows="3" value="{{request.user.company.description}}">{{request.user.company.description}}</textarea>
+                    <textarea class="form-control" name="description" id="company_description" rows="3" placeholder="Ingresa una descripción de tu empresa"
+                     value="{{request.user.company.description}}">{{request.user.company.description}}</textarea>
                 </div>
             
         </div>
