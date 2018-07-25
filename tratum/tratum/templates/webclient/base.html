@@ -37,17 +37,14 @@
                             <a href="/">Inicio</a>
                         </h4>
                         <h4 class="text-white">
-                            <a href="/">Documentos</a>
-                        </h4>
-                        <h4 class="text-white">
-                            <a href="/">Categorias</a>
+                            <a href="{% url 'webclient:category_documents' path='' %}">Documentos</a>
                         </h4>
                         {% if request.user.is_authenticated %}
                             <h4 class="text-white">
                                 <a href="/">Mis documentos</a>
                             </h4>
                             <h4 class="text-white">
-                                <a href="/">Perfil</a>
+                                <a href="{% url 'webclient:profile' %}">Perfil</a>
                             </h4>
                         {% endif %}
                         <div class="mt-5">

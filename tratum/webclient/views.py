@@ -5,6 +5,7 @@ from rest_framework.authtoken.models import Token
 
 from django.contrib import messages 
 from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from django.contrib.sites.shortcuts import get_current_site
@@ -186,9 +187,10 @@ class CategoryDocumentsView(TemplateView):
         return context
 
 
-class ProfileView(TemplateView):
+class ProfileView(LoginRequiredMixin, TemplateView):
 
     template_name = "webclient/profile.html"
+    login_url = '/'
 
 
 def activate(request, uidb64, token, pk):
