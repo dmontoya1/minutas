@@ -5,17 +5,22 @@ from rest_framework.authtoken.models import Token
 
 from django.contrib import messages 
 from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.template import loader
+from django.utils.decorators import method_decorator
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.generic.base import TemplateView, View
+from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 
 from utils.views import account_activation_token
@@ -31,7 +36,8 @@ from document_manager.models import (
     Category
 )
 from store.models import (
-    DocumentBundle
+    DocumentBundle,
+    UserDocument
 )
 
 from users.models import LogTerms
@@ -186,9 +192,31 @@ class CategoryDocumentsView(TemplateView):
         return context
 
 
-class ProfileView(TemplateView):
+class ProfileView(LoginRequiredMixin, TemplateView):
 
     template_name = "webclient/profile.html"
+    login_url = '/'
+
+
+@method_decorator(login_required, name='dispatch')
+class UserDocumentsView(ListView):
+    model = UserDocument
+    template_name = "webclient/user_documents.html"
+
+    def get_queryset(self):
+        docs = UserDocument.objects.filter(user=self.request.user)
+        return docs
+
+
+@method_decorator(login_required, name='dispatch')
+class UserDocumentView(DetailView):
+    model = UserDocument
+    template_name = "document_form/document_detail.html"
+    slug_field = "identifier"
+
+    def get_object(self):
+        obj = UserDocument.objects.get(identifier=self.kwargs['identifier'])
+        return obj.document
 
 
 def activate(request, uidb64, token, pk):
