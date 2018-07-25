@@ -1,6 +1,11 @@
+import uuid
+
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
+
 from utils.models import SoftDeletionModelMixin
+
 from document_manager.models import Document
 
 
@@ -65,6 +70,11 @@ class UserDocument(models.Model):
         choices=STATUS_CHOICES,
         default=PURCHASED
     )
+    identifier = models.UUIDField(
+        default=uuid.uuid4, 
+        editable=False
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = 'Documento de usuario'
@@ -72,3 +82,6 @@ class UserDocument(models.Model):
 
     def __str__(self):
         return self.pk 
+    
+    def get_absolute_url(self):
+        return reverse('webclient:user-document', kwargs={'identifier': self.identifier})

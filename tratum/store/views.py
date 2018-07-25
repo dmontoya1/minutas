@@ -12,20 +12,37 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sites.models import Site
-from django.http import HttpResponse, HttpResponseNotAllowed
-from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
+from django.shortcuts import render, reverse
 from django.utils.datastructures import MultiValueDictKeyError
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, View, ListView
 
-from .models import DocumentBundle
+from document_manager.models import Document
+
+from .models import DocumentBundle, UserDocument
 from .serializers import DocumentBundleSerializer
 
 
 class DocumentBundleList(generics.ListAPIView):
     queryset = DocumentBundle.objects.alive()
     serializer_class = DocumentBundleSerializer
+
+
+class CreateUserDocument(View):
+    """CLASE DE PRUEBA PARA EMULAR COMPRA
+    """
+    
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('webclient:home'))
+        document = UserDocument(
+            user=request.user,
+            document=Document.objects.get(pk=request.GET['document_id']) 
+        )
+        document.save()
+        return HttpResponseRedirect(reverse('webclient:user-documents'))
 
 
 class Checkout(TemplateView):

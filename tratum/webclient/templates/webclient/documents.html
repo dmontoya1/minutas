@@ -134,7 +134,7 @@
                                             </div>
                                             <div class="row doc-price-content">
                                                 <div class="col-6">
-                                                    <a href="{% url 'webclient:document' slug=doc.slug %}" class="btn btn-buy float-left">Comprar</a>
+                                                    <a href="{% url 'create-user-document'  %}?document_id={{doc.pk}}" class="btn btn-buy float-left">Comprar</a>
                                                 </div>
                                                 {%if doc.price is None or doc.price == 0%}
                                                     <div class="col-6">
