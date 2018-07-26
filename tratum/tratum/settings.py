@@ -15,7 +15,7 @@ INTERNAL_IPS = [
     '192.168.0.16'
 ]
 
-API_KEY = '876640988db6c4e761ca4254d69f01f454ae0954'
+API_KEY = '042c97b1f486c5bde044ba5f10dfd11ad26cb81b'
 
 
 # Application definition
@@ -86,15 +86,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tratum.wsgi.application'
 
-SITE_ID = 1
+SITE_ID = 2
 
 
 # Database
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': 'tratum',
+        'ENGINE': 'django.db.backends.postgresql'
     }
 }
 

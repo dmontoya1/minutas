@@ -195,7 +195,7 @@ class CategoryDocumentsView(TemplateView):
         context['documents'] = Document.objects.filter(category__in=categories).order_by('order')
         return context
 
-
+@method_decorator(login_required, name='dispatch')
 class ProfileView(LoginRequiredMixin, TemplateView):
 
     template_name = "webclient/profile.html"
@@ -221,6 +221,11 @@ class UserDocumentView(DetailView):
     def get_object(self):
         obj = UserDocument.objects.get(identifier=self.kwargs['identifier'])
         return obj.document
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['identifier'] = UserDocument.objects.get(identifier=self.kwargs['identifier']).identifier
+        return context
 
 
 def activate(request, uidb64, token, pk):

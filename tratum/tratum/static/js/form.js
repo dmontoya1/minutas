@@ -1,3 +1,6 @@
+axios.defaults.headers.common['Api-Key'] = document.getElementById('doc-info').dataset.apikey;
+axios.defaults.headers.common['X-CSRFToken'] = document.getElementById('doc-info').dataset.csrftoken;
+
 $.fn.upform = function() {
     var $this = $(this);
     var container = $this.find(".upform-main");
@@ -17,7 +20,7 @@ $.fn.upform = function() {
         if (e.which == 13 || e.which == 9) {
             e.preventDefault()            
             if ($(this).hasClass("required") && $(this).val() == "") {
-            } else {
+            } else {                
                 moveNext(this);
             } 
         }
@@ -52,6 +55,7 @@ $.fn.upform = function() {
         });
         $(e).addClass("active");
         $(e).find('input').focus();
+        savePreview();
     }
 
     function rescroll(e) {
@@ -72,6 +76,17 @@ $.fn.upform = function() {
 
     function movePrev(e) {
         $(e).parent().parent().prev().click();
+    }
+
+    function savePreview() {
+        serializedForm = $('#document-form').serialize();
+        axios.post('/api/document-manager/save-preview/', serializedForm)
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     }
 };
 
@@ -135,3 +150,17 @@ $('#document-form').on('submit', function(e){
 
     $(this).unbind('submit').submit();
 })
+
+$(function(){
+    uuid = $('#doc-info').data('uuid')
+    axios.get(`/api/store/user-document/${uuid}/`)
+        .then(function (response) {
+            answers = response.data.answers
+            Object.keys(answers).forEach(function(key) {
+                input = $('#document-form').find(`input[name='${key}']`)
+                if(input){
+                    input.val(answers[key]);
+                }
+            });
+        })
+});
