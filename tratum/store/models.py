@@ -79,6 +79,7 @@ class UserDocument(models.Model):
     class Meta:
         verbose_name = 'Documento de usuario'
         verbose_name_plural = 'Documentos de usuarios'
+        ordering = ['-created_at']
 
     def __str__(self):
         return self.pk 
