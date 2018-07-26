@@ -438,3 +438,68 @@ body {
 .btn-secondary {
     border-radius: 1.5em;
 }
+
+.pass-container {
+    border: 1px solid #becad6;
+    border-radius: 10px;
+}
+
+.form-change-pass {
+    padding: 1.5em;
+}
+
+.form-change-pass label {
+    color: #555;
+    font-weight: 600;
+    font-size: 1.1em;
+}
+
+.form-change-pass input {
+    background: #eee;
+}
+
+.form-change-pass input[type="submit"] {
+    background: #002c55;
+    border-color: transparent;
+    border-radius: 100px;
+    color: #ffffff;
+    margin-top: 20px;
+    width: 100%;
+    height: 55px;
+    padding: 10px 0;
+    cursor: pointer;
+}
+
+.token-fail {
+    font-size: 1.3em;
+    padding: 1.5em;
+    text-align: justify;
+    color: #999;
+}
+
+.change-pass-title {
+    font-size: 2em;
+    font-weight: 600;
+}
+
+.fa-check-circle {
+    margin: 0.5em 0;
+    color: green
+}
+
+.btn-finish {
+    color: #fff;
+    border-color: #002c55;
+    background-color: #002c55;
+    box-shadow: none;
+    font-weight: 300;
+    font-family: Poppins,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    border: 1px solid transparent;
+    padding: .75rem 1.25rem;
+    font-size: .875rem;
+    line-height: 1.125;
+    border-radius: 1.5em;
+    transition: all 250ms cubic-bezier(.27,.01,.38,1.06);
+    cursor: pointer;
+    width: 100%;
+}
