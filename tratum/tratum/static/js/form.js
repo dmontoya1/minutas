@@ -81,12 +81,6 @@ $.fn.upform = function() {
     function savePreview() {
         serializedForm = $('#document-form').serialize();
         axios.post('/api/document-manager/save-preview/', serializedForm)
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
     }
 };
 
