@@ -22,7 +22,7 @@ from django.views.generic import TemplateView, View, ListView
 from document_manager.models import Document
 
 from .models import DocumentBundle, UserDocument
-from .serializers import DocumentBundleSerializer
+from .serializers import DocumentBundleSerializer, UserDocumentSerializer
 
 
 class DocumentBundleList(generics.ListAPIView):
@@ -43,6 +43,12 @@ class CreateUserDocument(View):
         )
         document.save()
         return HttpResponseRedirect(reverse('webclient:user-documents'))
+
+
+class UserDocumentDetailView(generics.RetrieveAPIView):
+    lookup_field = 'identifier'
+    queryset = UserDocument.objects.all()
+    serializer_class = UserDocumentSerializer
 
 
 class Checkout(TemplateView):

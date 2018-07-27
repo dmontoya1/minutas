@@ -2,6 +2,7 @@ import uuid
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import JSONField
 from django.urls import reverse
 
 from utils.models import SoftDeletionModelMixin
@@ -60,7 +61,7 @@ class UserDocument(models.Model):
         null=True,
         on_delete=models.SET_NULL
     )
-    answers = models.TextField(
+    answers = JSONField(
         'Respuestas',
         null=True,
         blank=True
@@ -82,7 +83,7 @@ class UserDocument(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return self.pk 
+        return str(self.pk)
     
     def get_absolute_url(self):
         return reverse('webclient:user-document', kwargs={'identifier': self.identifier})

@@ -18,12 +18,13 @@
   </head>
 
   <body>
+    <div id="doc-info" data-uuid="{{identifier}}" data-apikey="{{Api_Key}}" data-csrftoken="{{csrf_token}}"></div>
     <div class="row main">
       <div class="col-lg-8 form-col">
           <div class="upform">
             <a href="{% url 'webclient:user-documents' %}" class="col">Regresar</a>
             <form method="POST" action="{% url 'document_manager:process' %}" id="document-form">    
-              <input type="hidden" name="document" value="{{object.id}}" />
+              <input type="hidden" name="identifier" value="{{identifier}}" />
               {% csrf_token %}
               <div class="upform-header"></div>    
               <div class="upform-main"> 
@@ -103,6 +104,7 @@
     </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>      

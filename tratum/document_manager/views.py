@@ -1,3 +1,4 @@
+import json
 import uuid
 from io import BytesIO
 
@@ -28,6 +29,7 @@ from .serializers import (
     DocumentSerializer,
     CategorySerializer
 )
+from store.models import UserDocument
 from .utils import add_document_scripts
 
 
@@ -101,6 +103,16 @@ class ProcessDocumentView(View):
             response['Content-Disposition'] = content_disposition
             return response
 
+
+class SaveAnswersView(View):
+
+    def post(self, request, *args, **kwargs):
+        content = request.POST
+        user_document = UserDocument.objects.get(identifier=request.POST['identifier'])
+        user_document.answers = request.POST
+        user_document.save()
+        return HttpResponse(status=200)
+        
 
 class DocumentList(generics.ListAPIView):
     """Api para obtener la lista de documentos de una categoría

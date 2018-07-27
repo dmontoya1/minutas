@@ -1,7 +1,8 @@
 from django.contrib import admin
 from utils.admin import SoftDeletionModelAdminMixin
 from .models import (
-    DocumentBundle
+    DocumentBundle,
+    UserDocument
 )
 
 
@@ -10,3 +11,8 @@ class DocumentBundleAdmin(SoftDeletionModelAdminMixin):
     extra_list_display = (
         'name',
     )
+
+
+@admin.register(UserDocument)
+class UserDocumentAdmin(admin.ModelAdmin):
+    list_display = ('user', 'document', 'created_at')
