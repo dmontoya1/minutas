@@ -86,7 +86,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tratum.wsgi.application'
 
-SITE_ID = 2
+SITE_ID = 3
 
 
 # Database
