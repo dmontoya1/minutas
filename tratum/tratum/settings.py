@@ -86,15 +86,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tratum.wsgi.application'
 
-SITE_ID = 1
+SITE_ID = 2
 
 
 # Database
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': 'tratum',
+        'ENGINE': 'django.db.backends.postgresql'
     }
 }
 

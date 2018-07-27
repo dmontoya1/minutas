@@ -51,7 +51,8 @@ class SlugIdentifierMixin(models.Model):
 
     slug = models.SlugField(
         null=True,
-        blank=True
+        blank=True,
+        max_length=255
     )
 
     class Meta:
