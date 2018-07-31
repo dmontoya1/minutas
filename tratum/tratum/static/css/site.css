@@ -37,6 +37,14 @@ section {
     margin: 2em auto;
 }
 
+.action-button__primary.blue {
+    color: #fff;
+    background-color: #002c55;
+    margin: 1em auto;
+    border: 0;
+    border-radius: 5px;
+}
+
 .bg-transparent {
     background-color: transparent;
 }

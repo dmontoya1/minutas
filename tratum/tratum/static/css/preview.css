@@ -1,0 +1,10 @@
+.document-preview {
+    max-width: 400px;
+    height: 500px;
+    float: right;
+    box-shadow: 0px 0px 1px #777;
+    margin: 1.2em;
+    font-size: .8em;
+    padding: .2em;
+    overflow-y: scroll;
+}
