@@ -110,6 +110,12 @@ class SiteConfig(models.Model):
         null=True,
         blank=True
     )
+    about_page_image = models.ImageField(
+        'Imagen (Quienes somos)',
+        null=True,
+        blank=True,
+        upload_to='about-us'
+    )
     landing_contact = models.TextField(
         'Correo de contacto (landing)',
         null=True,
@@ -117,6 +123,11 @@ class SiteConfig(models.Model):
     )
     landing_phone = models.TextField(
 		'Teléfono de contacto (landing)',
+        null=True,
+        blank=True
+    )
+    landing_contract_info = models.TextField(
+		'¿Por qué construir un contrato responsablemente? (landing)',
         null=True,
         blank=True
     )

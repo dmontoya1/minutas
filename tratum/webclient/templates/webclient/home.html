@@ -57,7 +57,7 @@
             Fabio me exige, sin tapujos, que añada cerveza al whisky. 
             Jovencillo emponzoñado de whisky, ¡qué figurota exhibes! 
             La cigüeña tocaba cada vez mejor el saxofón y el búho pedía kiwi y queso. El jefe buscó el</p>
-          <a class="action-button__primary">Ver más</a>
+          <a class="action-button__primary" href="/category/derecho-laboral/">Ver más</a>
       </div>      
     </div>
   </div>
@@ -70,7 +70,7 @@
                 Fabio me exige, sin tapujos, que añada cerveza al whisky. 
                 Jovencillo emponzoñado de whisky, ¡qué figurota exhibes! 
                 La cigüeña tocaba cada vez mejor el saxofón y el búho pedía kiwi y queso. El jefe buscó el</p>
-            <a class="action-button__primary">Ver más</a>
+            <a class="action-button__primary" href="/category/derecho-societario/">Ver más</a>
         </div>      
       </div>
     <div class="col-md-6 order-1 order-md-2 category-parallax" data-stellar-background-ratio="0.1" style="background-image: url('/static/img/parallax-test-2.jpg');">
@@ -87,7 +87,7 @@
               Fabio me exige, sin tapujos, que añada cerveza al whisky. 
               Jovencillo emponzoñado de whisky, ¡qué figurota exhibes! 
               La cigüeña tocaba cada vez mejor el saxofón y el búho pedía kiwi y queso. El jefe buscó el</p>
-          <a class="action-button__primary">Ver más</a>
+          <a class="action-button__primary" href="/category/derecho-comercial/">Ver más</a>
       </div>      
     </div>
   </div>
@@ -100,7 +100,7 @@
                 Fabio me exige, sin tapujos, que añada cerveza al whisky. 
                 Jovencillo emponzoñado de whisky, ¡qué figurota exhibes! 
                 La cigüeña tocaba cada vez mejor el saxofón y el búho pedía kiwi y queso. El jefe buscó el</p>
-            <a class="action-button__primary">Ver más</a>
+            <a class="action-button__primary" href="/category/derecho-civil/">Ver más</a>
         </div>      
       </div>
     <div class="col-md-6 order-1 order-md-2 category-parallax" data-stellar-background-ratio="0.1" style="background-image: url('/static/img/parallax-test-2.jpg');">
@@ -136,8 +136,8 @@
         </div>      
       </div>
     <div class="col-md-4">
-        <div class="container-flex flex-column justify-content-center" style="padding-top: 35%;">
-            <img src="{% static 'img/white-ph.png' %}" />
+        <div class="container-flex flex-column justify-content-center" style="padding-right: 25%; padding-top: 15%;">
+            <img src="{% static 'img/steps.png' %}" width="100%" />
         </div>   
       
     </div>      
@@ -150,10 +150,7 @@
     <div class="col-md-6" data-aos="slide-up">      
       <div class="container-flex flex-column justify-content-center" style="margin-top: 25px;">
         <h2>¿Por qué construir un contrato responsablemente?</h2>
-        <p>Quiere la boca exhausta vid, kiwi, piña y fugaz jamón. 
-            Fabio me exige, sin tapujos, que añada cerveza al whisky. 
-            Jovencillo emponzoñado de whisky, ¡qué figurota exhibes! 
-            La cigüeña tocaba cada vez mejor el saxofón y el búho pedía kiwi y queso. El jefe buscó el</p>
+        <p>{{landing_contract_info}}</p>
         <a class="action-button__primary">Registrarse</a>
       </div>      
     </div>
@@ -171,20 +168,28 @@
     <div class="col text-center">
       <form>
         <div class="form-group">
-          <label for="exampleInputEmail1">Campo 1</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Campo 1">
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nombre">
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword2">Campo 2</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Campo 2">
+          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Correo electrónico">
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword3">Campo 3</label>
-          <textarea  class="form-control" placeholder="Campo 3"></textarea>
+          <textarea class="form-control" placeholder="Mensaje"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Enviar</button>
+        </div>
       </form>
     </div>
+  </div>
+
+  <div class="cookiepolicy-info">
+    <span>Al navegar en nuestro sitio, consideramos que aceptas nuestra 
+      <strong>
+        <a href="{% url 'webclient:policies' 'cookies' %}" class="underline">política de tratamiento de cookies</a>.
+      </strong>
+    </span>
+    <button class="cookiepolicy-close">Aceptar</button>
   </div>
 {% endblock %}
 
@@ -235,5 +240,18 @@
         var modal = $('#homeVideoModal');
         modal.find('iframe').attr('src', embedUrl);
       })
+
+      $('.cookiepolicy-close').on('click', function(){
+        $('.cookiepolicy-info').hide();
+      })
+
+      function cookieChecker() {
+        if (document.cookie.replace(/(?:(?:^|.*;\s*)cookiePolicyAccepted\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
+          $('.cookiepolicy-info').show();
+          document.cookie = "cookiePolicyAccepted=true; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+        }
+      }
+    
+      cookieChecker();
     </script>
 {% endblock %}
