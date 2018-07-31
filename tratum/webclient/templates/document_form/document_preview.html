@@ -1,0 +1,39 @@
+{% extends 'webclient/base.html' %}
+{% load humanize %}
+{% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/preview.css' %}">
+{% endblock %}
+
+{% block nav_class %}
+    class="navbar scrolled"
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="document-preview" id="content-preview">
+                    {{document_content|safe}}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <button class="action-button__primary blue">Descargar PDF</button>
+                <button class="action-button__primary blue">Descargar DOC</button>
+            </div>
+        </div>
+    </div>
+{% endblock%}
+
+
+{% block extra_js %}
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script>
+        $(function() {
+            $('.document-preview').text().replace(/(\r\n\t|\n|\r\t)/gm,"");
+        });
+        
+    </script>
+
+{% endblock %}

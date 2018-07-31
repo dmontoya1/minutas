@@ -161,7 +161,7 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
                     fields.append(component)
                 elif isinstance(component, DocumentSection) and component not in sections:
                     sections.append(component)
-        
+        print(result)
         return result
 
     def get_fields(self):

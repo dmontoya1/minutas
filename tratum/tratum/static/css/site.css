@@ -37,6 +37,14 @@ section {
     margin: 2em auto;
 }
 
+.action-button__primary.blue {
+    color: #fff;
+    background-color: #002c55;
+    margin: 1em auto;
+    border: 0;
+    border-radius: 5px;
+}
+
 .bg-transparent {
     background-color: transparent;
 }
@@ -147,7 +155,7 @@ section {
 }
 
 .categories .category-parallax {    
-    height: 50vh;
+    height: 70vh;
 }
 
 @media screen and (max-width: 414px) {
@@ -292,8 +300,8 @@ section {
             border-radius: 20px;
         }
     .main-options .divider {
-        height: 1.2em;
-        margin-right: 2em;
+        font-weight: 300;
+        margin-left: 2em;
     }
 
 .modal-dialog.large {
@@ -348,6 +356,41 @@ section {
     -webkit-transform: rotate(90deg);
     transform: rotate(90deg);
 }
+
+.how-to {
+    padding-top: 25px;
+    padding-bottom: 35px;
+}
+    .how-to .category-description h2, .contract-info h2 {
+        width: 5.9em;
+    }
+    .how-to ul {
+        padding: 0;
+    }
+        .how-to ul li {
+            margin-top: 4em;
+        }
+            .how-to ul li span {
+                color: #9d9d9d;
+                font-weight: 300;
+                font-size: 1.2em;
+                max-width: 15em;
+                display: inline-block;
+                vertical-align: middle;
+            }
+            .how-to ul li span.indicator {
+                color: #002c55;
+                background-color: #FCD116;
+                border-radius: 100%;
+                width: 1.5em;
+                display: inline-block;
+                height: 1.5em;
+                font-size: 1.5em;
+                text-align: center;
+                font-weight: 800;
+                margin-right: 10px;
+            }
+        
 
 #loadingAnimation {
     width: 100%;

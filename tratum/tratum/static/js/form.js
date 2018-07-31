@@ -136,8 +136,7 @@ $('#document-form').on('submit', function(e){
         console.log($(fd));
         expression = $(this).data('expression');
         ex_fields = expression.match('{{(.*?)}}')
-        $(this).find('.group-item').each(function(i, it){
-            console.log($(it));           
+        $(this).find('.group-item').each(function(i, it){     
             submitFields.push(ex_fields.replace($(this).value()).match(ex_fields))
         });
     });

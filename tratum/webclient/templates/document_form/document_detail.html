@@ -18,7 +18,11 @@
   </head>
 
   <body>
-    <div id="doc-info" data-uuid="{{identifier}}" data-apikey="{{Api_Key}}" data-csrftoken="{{csrf_token}}"></div>
+    <div 
+      id="doc-info"
+      data-uuid="{{identifier}}"
+      data-apikey="{{Api_Key}}"
+      data-csrftoken="{{csrf_token}}"></div>
     <div class="row main">
       <div class="col-lg-8 form-col">
           <div class="upform">
@@ -50,7 +54,7 @@
                 </div>                
               </div>
               <div class="upform-footer">
-                <button type="submit" class="btn btn-primary btn-lg">Previsualizar</button>
+                <a href="{% url 'webclient:user-document-preview' identifier %}" class="btn btn-primary btn-lg">Previsualizar</a>
               </div>    
             </form>
           </div>
