@@ -155,7 +155,7 @@ section {
 }
 
 .categories .category-parallax {    
-    height: 50vh;
+    height: 70vh;
 }
 
 @media screen and (max-width: 414px) {
