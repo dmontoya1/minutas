@@ -120,6 +120,11 @@ class SiteConfig(models.Model):
         null=True,
         blank=True
     )
+    landing_contract_info = models.TextField(
+		'¿Por qué construir un contrato responsablemente? (landing)',
+        null=True,
+        blank=True
+    )
     facebook_url = models.URLField(
 		'URL Facebook (landing)',
         null=True,

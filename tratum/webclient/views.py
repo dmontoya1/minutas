@@ -51,6 +51,9 @@ class HomePageView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['context_bundles'] = DocumentBundle.objects.alive()
         context['context_slides'] = SliderItem.objects.all()
+        site_config = SiteConfig.objects.last()
+        if site_config:
+            context['landing_contract_info'] = site_config.landing_contract_info
         return context
 
 
@@ -60,9 +63,17 @@ class PoliciesView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        police = get_object_or_404(Policy, policy_type='PP')
+        _type = self.kwargs.get('type', 'PP')
+        if _type:
+            if self.kwargs['type'] == 'privacy':
+                _type = 'PP'
+            elif self.kwargs['type'] == 'terms':
+                _type = 'TCP'
+            elif self.kwargs['type'] == 'cookies':
+                _type = 'CMP'
+        police = get_object_or_404(Policy, policy_type=_type)
         context = super(PoliciesView, self).get_context_data(**kwargs)
-        context['name'] = 'Política de privacidad y tratamiento de datos'
+        context['name'] = police.get_policy_type_display()
         context['content'] = police.content
         return context
 

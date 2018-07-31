@@ -253,6 +253,28 @@ section {
         }
     }
 
+.cookiepolicy-info {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    height: 3em;
+    background-color: #F8D6D9;
+    z-index: 9999999999;
+    opacity: 0.8;
+    text-align: center;
+    padding: 1em;
+    display: none;
+}
+    .cookiepolicy-info button {
+        float: right;
+        background-color: #FFF;
+        border-radius: 15px;
+        margin-bottom: 1.5em;
+        margin-right: 2em;
+        width: 140px;
+        font-size: .8em;
+    }
+
 .dropleft,
 .auth-buttons {
     display: inline-block;
@@ -354,7 +376,7 @@ section {
     padding-bottom: 35px;
 }
     .how-to .category-description h2, .contract-info h2 {
-        width: 5.9em;
+        width: 7.9em;
     }
     .how-to ul {
         padding: 0;
@@ -383,6 +405,9 @@ section {
                 margin-right: 10px;
             }
         
+.underline {
+    text-decoration: underline;
+}
 
 #loadingAnimation {
     width: 100%;
