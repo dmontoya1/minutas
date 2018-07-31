@@ -55,7 +55,7 @@ class Checkout(TemplateView):
 
         tax = 0
         taxReturnBase = 0
-        description = "Compra realizada desde Clinket"
+        description = "Compra realizada desde Tratum"
 
         if settings.DEBUG:
             test = 1
@@ -64,6 +64,7 @@ class Checkout(TemplateView):
             merchantId = 508029
             url = "https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu"
             host = 'http://clinket.apptitud.com.co'
+            local_host = 'http://localhost:8000'
         else:
             test = 0
             accountId = 730741
@@ -72,63 +73,35 @@ class Checkout(TemplateView):
             url = "https://checkout.payulatam.com/ppp-web-gateway-payu"
             host = 'http://clinket.com'
 
+        currency = 'COP'
 
         try:
-            suscription = Subscription.objects.get(pk=request.POST['plan_id'])
+            try:
+                print 
+                documents = Document.objects.filter(pk=request.POST['doc_id'])
+                doc_type = 'doc' 
+            except MultiValueDictKeyError:
+                package = DocumentBundle.objects.get(pk=request.POST['pack_id'])
+                documents = package.documents.all()
+                doc_type = package.name
         except Exception as e:
-            print (e.message)
-        
-        recurrency = request.POST['recurrency']
+            print (e)        
 
-        if recurrency == 'month':
-            try:
-                currency = request.POST['cop_month_'+str(request.POST['plan_id'])]
-            except MultiValueDictKeyError:
-                currency = request.POST['usd_month_'+str(request.POST['plan_id'])]
-            
-            if currency == 'COP':
-                amount = suscription.cop_mo_price
-            else:
-                amount = suscription.usd_mo_price
-        else:
-            try:
-                currency = request.POST['cop_year_'+str(request.POST['plan_id'])]
-            except MultiValueDictKeyError:
-                currency = request.POST['usd_year_'+str(request.POST['plan_id'])]
-            
-            if currency == 'COP':
-                amount = suscription.cop_ye_price
-            else:
-                amount = suscription.usd_ye_price
-
-
-        
-        if suscription.staff_limit == 0:
-            staff = _("Ilimitado")
-        else:
-            staff = suscription.staff_limit
-        
-        if suscription.appointments_limit == 0:
-            appointments = _("Ilimitado")
-        else:
-            appointments = suscription.appointments_limit
-        
-
-        amount = int(amount)
-        referenceCode = 'RE_{}_{}'.format(request.user.staff_profile.pk, int(time.mktime(datetime.now().timetuple())))
-        responseUrl = '{}/es/payments/confirmation/'.format(host)
-        confirmationUrl = '{}/es/payments/confirmation/'.format(host)
+        amount = 0
+        for doc in documents:
+            if doc.price:
+                amount = amount + int(doc.price)
+        referenceCode = 'RE_{}_{}'.format(request.user.pk, int(time.mktime(datetime.now().timetuple())))
+        responseUrl = '{}/store/confirmation/'.format(local_host)
+        confirmationUrl = '{}/store/confirmation/'.format(local_host)
         signature = '{}~{}~{}~{}~{}'.format(apiKey, merchantId,\
                     referenceCode, amount, currency)
+        signature = signature.encode('utf-8')
         signature = hashlib.md5(signature).hexdigest()
 
         ctx = {
-            'name': suscription.name,
-            'recurrency': recurrency,
-            'appointments': appointments,
-            'staff': staff,
-            'report': suscription.has_enabled_reports,
-            'customers_bd': suscription.has_customers_bd,
+            'type': doc_type,
+            'documents': documents,
             'merchantId' : merchantId,
             'description': description,
             'referenceCode': referenceCode,
@@ -138,7 +111,7 @@ class Checkout(TemplateView):
             'currency' : currency,
             'signature' : signature,
             'test' : test,
-            'buyerEmail' : request.user.username,
+            'buyerEmail' : request.user.email,
             'responseUrl' : responseUrl,
             'accountId' : accountId,
             'confirmationUrl' : confirmationUrl,
@@ -147,7 +120,7 @@ class Checkout(TemplateView):
 
         return render(
             request,
-            'payments/checkout.html',
+            'store/checkout.html',
             ctx
         )
 
@@ -160,7 +133,6 @@ class Checkout(TemplateView):
             apiKey     = 'IXltfYxCYPA2efIuyqj3L8k3uG'
         
         if request.method == "POST":
-            print ("POST")
             merchand_id = request.POST['merchant_id']
             reference_sale = request.POST['reference_sale']
             reference_pol = request.POST['reference_pol']

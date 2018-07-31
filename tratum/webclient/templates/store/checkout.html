@@ -17,14 +17,27 @@
                             <img src="{% static 'img/checkout.png' %}" width="40" height="40" alt="">
                             <span class="resume-title">Resumen de la compra</span>
                         </div>
-                        <div class="col-md-3">
-                            <span class="resume-subtitle">Plan básico</span>
-                        </div>
+                        {% if type == 'doc' %}
+                            <div class="col-md-3">
+                                <span class="resume-subtitle"></span>
+                            </div>
+                        {% else %}
+                            <div class="col-md-3">
+                                <span class="resume-subtitle">{{type}}</span>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
             <div class="row justify-content-between content">
-                <div class="col-md-5 doc-content">
+                {% for doc in documents %}
+                    <div class="col-md-5 doc-content">
+                        <span class="doc-title">{{doc.name}}</span>
+                        <p class="text-justify">{{doc.short_description|default:"Sin Descripción"}}</p>
+                        <span class="doc-price">$ {{doc.price|intcomma|default:'0'}}</span>
+                    </div>
+                {% endfor %}
+                <!-- <div class="col-md-5 doc-content">
                     <span class="doc-title">Título Documento</span>
                     <p class="text-justify">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
                             nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam
@@ -41,16 +54,7 @@
                             tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
                             consequat. Duis</p>
                     <span class="doc-price">$ 100.000</span>
-                </div>
-                <div class="col-md-5 doc-content">
-                    <span class="doc-title">Título Documento</span>
-                    <p class="text-justify">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-                            nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam
-                            erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci
-                            tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo
-                            consequat. Duis</p>
-                    <span class="doc-price">$ 100.000</span>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="col-md-4 pl-md-5">
@@ -61,7 +65,7 @@
                         <div class="row">
                             <div class="col-12 count-docs">
                                 <span>
-                                    3 DOCUMENTOS
+                                    {{documents.count}} DOCUMENTO{{ documents.count|pluralize:'S' }}
                                 </span>
                             </div>
                         </div>
@@ -70,7 +74,7 @@
                                 <span>Total</span>
                             </div>
                             <div class="col-lg-8 align-self-center">
-                                <span style="float: right;">$ 200.000</span>
+                                <span style="float: right;">$ {{amount|intcomma}}</span>
                             </div>
                         </div>
                     </div>
