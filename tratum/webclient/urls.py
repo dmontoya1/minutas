@@ -18,6 +18,7 @@ urlpatterns = [
     path('faq/', views.FAQView.as_view(), name='faq'),
     path('about-us/', views.AboutUsView.as_view(), name='about-us'),
     path('my-documents/<slug:identifier>/edit/', views.UserDocumentView.as_view(), name='user-document'),
+    path('my-documents/<slug:identifier>/preview/', views.UserDocumentPreviewView.as_view(), name='user-document-preview'),
     path('profile/', views.ProfileView.as_view(), name='profile'),
     path('my-documents/', views.UserDocumentsView.as_view(), name='user-documents'),
     path('activate/<uidb64>/<token>/<pk>', views.activate, name='activate'),

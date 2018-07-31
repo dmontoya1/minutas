@@ -15,7 +15,7 @@ from django.core.mail import EmailMessage
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404, reverse
-from django.template import loader
+from django.template import Template, Context, loader
 from django.utils.decorators import method_decorator
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -236,6 +236,24 @@ class UserDocumentView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['identifier'] = UserDocument.objects.get(identifier=self.kwargs['identifier']).identifier
+        return context
+
+
+class UserDocumentPreviewView(DetailView):
+    model = UserDocument
+    template_name = "document_form/document_preview.html"
+    slug_field = "identifier"
+
+    def get_object(self):
+        obj = UserDocument.objects.get(identifier=self.kwargs['identifier'])
+        return obj
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        obj = self.get_object()
+        document_content = Template(obj.document.content)
+        document_content = document_content.render(Context(obj.answers)).encode('ascii', 'xmlcharrefreplace')
+        context['document_content'] = document_content
         return context
 
 
