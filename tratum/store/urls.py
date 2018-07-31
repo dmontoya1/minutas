@@ -2,6 +2,7 @@ from django.urls import path, include
 from . import views
 
 
+app_name = 'store'
 urlpatterns = [
     path('document-bundles/', views.DocumentBundleList.as_view(), name='document-bundles'),
     path('create-user-document/', views.CreateUserDocument.as_view(), name='create-user-document'),

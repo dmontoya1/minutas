@@ -28,6 +28,12 @@ class DocumentBundle(SoftDeletionModelMixin):
         blank=True
     )
     price = models.PositiveIntegerField('Precio')
+    order = models.PositiveSmallIntegerField(
+        'Orden',
+        null=True,
+        blank=True,
+        unique=True
+    )
 
     def __str__(self):
         return self.name
@@ -35,6 +41,9 @@ class DocumentBundle(SoftDeletionModelMixin):
     class Meta:
         verbose_name = 'Paquete de documento'   
         verbose_name_plural = 'Paquetes de documentos'
+
+    def get_docs_count(self):
+        return self.documents.count()
 
 
 class UserDocument(models.Model):

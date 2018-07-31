@@ -251,6 +251,120 @@ body {
     border-radius: 10px;
 }
 
+
+/* Packages styling */
+
+.pack-content {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 30px 0px;
+    box-shadow: 1px 2px #cac8c8;
+}
+
+@media screen and (min-width: 768px) {
+    .pack-content {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin: 30px 0px;
+        flex: 0 0 47.666667%;
+        max-width: 47.666667%;
+    }
+}
+
+.pack-content .row-category {
+    padding-top: 10px;
+    margin-bottom: -20px;
+}
+
+.pack-content .row-category .btn-modal-docs {
+    color: #C89D00;
+    text-decoration: unset;
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+.pack-content .row-category .category {
+    color: #999;
+    font-size: 0.7em;
+}
+
+.pack-content .pack-info {
+    height: 4.3em;
+}
+
+.pack-content .pack-title {
+    font-size: 1.5em;
+    font-weight: 500;
+    color: #000;
+    -webkit-line-clamp: 2;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
+.pack-content .pack-description {
+    font-size: 0.7em;
+    color: #999;
+}
+
+.pack-content .pack-price-content {
+    background-color: #ffed9e;;
+    margin: 0 -30px;
+    padding: 20px 0px;
+    border-radius: 0px 0px 5px 5px;
+}
+
+.pack-content .pack-price-content .price {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: #c89D00;
+}
+
+.pack-content .pack-price-content .price-free {
+    font-size: 1em;
+    background-color: #6ec9c3;
+    color: #fff;
+    padding: 10px 25px 10px 39px;
+    margin-right: -15px;
+    border-radius: 0px 0px 0px 10px;
+}
+
+.pack-content .pack-price-content .btn-buy {
+    color: #fff;
+    border-color: #C89D00;
+    background-color: #C89D00;
+    box-shadow: none;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.popover {
+    max-width: 420;
+}
+
+.docs-list .doc-title {
+    font-size: 2em;
+    margin: 25px;
+    color: #000;
+}
+
+.docs-list .doc-items {
+    max-height: 50vh;
+    overflow-y: scroll;
+}
+
+.docs-list ul {
+    margin-left: -15px;
+}
+
+.docs-list li {
+    margin: 15px 0;
+    font-size: 1.2em;
+    color: #777;
+}
+
+
 .level3-categories{
     padding-left: 15px;
 }
