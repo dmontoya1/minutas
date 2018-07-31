@@ -110,6 +110,12 @@ class SiteConfig(models.Model):
         null=True,
         blank=True
     )
+    about_page_image = models.ImageField(
+        'Imagen (Quienes somos)',
+        null=True,
+        blank=True,
+        upload_to='about-us'
+    )
     landing_contact = models.TextField(
         'Correo de contacto (landing)',
         null=True,

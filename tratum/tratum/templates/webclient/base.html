@@ -317,23 +317,51 @@
             </div>
         </div>
 
-        <footer class="bg-dark">
+        <footer>
             <div class="container">
-                <div class="row ">
-                    <div class="col-sm-12 text-center mt-3 mb-3">
-                        <a href="/policies/" class="text-white">
-                            Quienes somos |
+                <div class="row">
+                    <div class="col-sm-12 col-md-3 faq">
+                        <i class="fas fa-question-circle"></i>
+                        <a href="#">
+                            FAQ
                         </a>
-                        <a href="/faq/" class="text-white">
-                            Dinos que documentos necesitas |
+                    </div>
+                    <div class="col-sm-12 col-md-3 link-col">
+                        <a href="{% url 'webclient:about-us' %}">
+                            Quienes somos 
                         </a>
-                        <a href="{% url 'webclient:policies' 'privacy' %}" class="text-white">
-                            Políticas de uso |
+                        <a href="/policies/" >
+                            Dinos que documentos necesitas
                         </a>
-                        <a href="{% url 'webclient:policies' 'terms' %}" class="text-white">
+                    </div>
+                    <div class="col-sm-12 col-md-3 link-col">
+                        <a href="{% url 'webclient:policies' 'privacy' %}">
+                            Políticas de uso 
+                        </a>
+                        <a href="{% url 'webclient:policies' 'terms' %}">
                             Terminos y condiciones 
                         </a>
                     </div>
+                    <div class="col-sm-12 col-md-3 social text-right">
+                        <a href="#" class="text-white">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-white">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-white">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row copyright">
+                <div class="col text-center">
+                    <span>Tratum 2018 - Powered by 
+                        <a href="http://www.apptitud.co" target="_blank" class="underline">
+                            <strong>Apptitud</strong>
+                        </a>
+                    </span>
                 </div>
             </div>
         </footer>        

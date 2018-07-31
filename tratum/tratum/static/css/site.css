@@ -20,11 +20,41 @@ footer {
     position: absolute;
     width: 100%;
     bottom: 0;
+    padding: 20px;
+    padding-bottom: 40px;
+    background-color: #000;
+    color: #e8e8e8;
 }
+    footer .faq i {
+        font-size: 1.2em;
+        margin-right: .5em;
+        color: #727272;
+    }
+    footer .link-col a {
+        display: block;
+    }
+        footer .link-col a:not(:first-child) {
+            margin-top: 1em;
+        }
+    footer .social a {
+        font-size: 1.2em;
+        margin-right: 1.2em;
+        background-color: #002c55;
+        border-radius: 100%;
+        width: 1.6em;
+        height: 1.6em;
+        padding-top: .25em;
+        text-align: center;
+        display: inline-block;
+    }
 
 section {
     margin-top: 65px;
     padding-bottom: 5px;
+}
+
+.about-us .categories .category-description.left{
+    padding-left: 0;
 }
 
 .action-button__primary {
@@ -196,8 +226,8 @@ section {
 
 .contact-form {
     padding-top: 100px;
-    padding-bottom: 100px;
-    background-color: #002c55;
+    padding-bottom: 250px;
+    background-color:#002c55;
 }
     .contact-form form {
         max-width: 50%;
@@ -206,14 +236,15 @@ section {
     .contact-form form input {
         border-radius: 0;
     }
+    .contact-form form textarea {
+        height: 150px;
+    }
     .contact-form form button {
-        margin-top: 1.2em;
         width: 100%;
         background-color: #5eccc4;
     }
     .form-group {
-        margin-top: 0;
-        margin-bottom: 0;
+        margin-top: 1.2em;
     }
 
 .contract-info {
@@ -282,6 +313,19 @@ section {
         width: 140px;
         font-size: .8em;
     }
+
+.copyright {
+    background-color: #c2c1c1;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    padding: 1px;
+    font-size: .8em;
+    color: rgb(62, 62, 62);
+}
 
 .dropleft,
 .auth-buttons {
