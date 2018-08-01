@@ -1,86 +1,141 @@
-{% extends "webclient/base.html" %}
-{% load static %} {% load i18n %}
+{% extends 'webclient/base.html' %}
 {% load humanize %}
+{% load static %}
+
+{% block nav_class %}
+    class="navbar scrolled"
+{% endblock %}
 
 {% block content %}
-<main class="row">
-    <div class="container">
-        <div class="content_payU">
-            <h3>Resumen de tu compra</h3>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Detalle</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">Nombre Plan</th>
-                        <td>{{name}}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Precio</th>
-                        <td>{{currency}} ${{amount|floatformat|intcomma}}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Cobro</th>
-                        <td>
-                            {% if recurrency == 'month' %}Mensual{%else%}Anual{%endif%}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">"Número de Citas al mes"</th>
-                        <td>{{appointments}}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">"Número máximo de Staff"</th>
-                        <td>{{staff}}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">"Informes habilitados"</th>
-                        <td>
-                            {%if report%}
-                                <i class="material-icons" style="color:green">done</i>
-                            {%else%}
-                                <i class="material-icons" style="color:red">clear</i>
-                            {%endif%}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">"Descarga base de datos de clientes"</th>
-                        <td>
-                            {%if customers_bd%}
-                                <i class="material-icons" style="color:green">done</i>
-                            {%else%}
-                                <i class="material-icons" style="color:red">clear</i>
-                            {%endif%}
-                        </td>
-                    </tr>
+<div class="container checkout-resume">
+    <div class="row body-summary justify-content-between">
+        <div class="col-md-8">
+            <div class="row header">
+                <div class="col-12">
+                    <div class="row justify-content-around">
+                        <div class="col-md-8">
+                            <img src="{% static 'img/checkout.png' %}" width="40" height="40" alt="">
+                            <span class="resume-title">Resumen de la compra</span>
+                        </div>
+                        {% if type == 'doc' %}
+                            <div class="col-md-3">
+                                <span class="resume-subtitle"></span>
+                            </div>
+                        {% else %}
+                            <div class="col-md-3">
+                                <span class="resume-subtitle">{{type}}</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-between content">
+                {% for doc in documents %}
+                    <div class="col-md-5 doc-content">
+                        <span class="doc-title">{{doc.name}}</span>
+                        <p class="text-justify">{{doc.short_description|default:"Sin Descripción"}}</p>
+                        <span class="doc-price">$ {{doc.price|intcomma|default:'0'}}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-4 pl-md-5">
+            <div class="row price">
+                <div class="col-12">
+                    <span class="resume-title">Resumen del pedido:</span>
+                    <div class="container-fluid content-resume mb-3">
+                        <div class="row">
+                            <div class="col-12 count-docs">
+                                <span>
+                                    {{documents.count}} DOCUMENTO{{ documents.count|pluralize:'S' }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row total-price">
+                            <div class="col-lg-4 align-self-center">
+                                <span>Total</span>
+                            </div>
+                            <div class="col-lg-8 align-self-center">
+                                <span style="float: right;">$ {{amount|intcomma}}</span>
+                            </div>
+                        </div>
+                    </div>
                     
-                </tbody>
-            </table>
-            <form method="POST" action="{{url}}">
-                {% csrf_token %}
-                <input name="merchantId" type="hidden" value="{{merchantId}}" >
-                <input name="accountId" type="hidden" value="{{accountId}}">
-                <input name="description" type="hidden" value="{{description}}">
-                <input name="referenceCode" type="hidden" value="{{referenceCode}}">
-                <input name="amount" type="hidden" value="{{amount}}">
-                <input name="tax" type="hidden" value="{{tax}}">
-                <input name="taxReturnBase" type="hidden" value="{{taxReturnBase}}">
-                <input name="currency" type="hidden" value="{{currency}}">
-                <input name="signature" type="hidden" value="{{signature}}">
-                <input name="test" type="hidden" value="{{test}}">
-                <input name="buyerEmail" type="hidden" value="{{buyerEmail}}">
-                <input name="responseUrl" type="hidden"  value="{{responseUrl}}" >
-                <input name="confirmationUrl" type="hidden" value="{{confirmationUrl}}">
-              
-            <button class="text-right btn btn-add" type="submit"><i class="material-icons">monetization_on</i>Pagar</button>
-            <a class="btn btn-add" href="{% url 'webclient:documents' %}">Cancelar</a>
-            </form>
-            
+                    <form method="POST" action="{{url}}">
+                        {% csrf_token %}
+                        <input name="merchantId" type="hidden" value="{{merchantId}}" >
+                        <input name="accountId" type="hidden" value="{{accountId}}">
+                        <input name="description" type="hidden" value="{{description}}">
+                        <input name="referenceCode" type="hidden" value="{{referenceCode}}">
+                        <input name="amount" type="hidden" value="{{amount}}">
+                        <input name="tax" type="hidden" value="{{tax}}">
+                        <input name="taxReturnBase" type="hidden" value="{{taxReturnBase}}">
+                        <input name="currency" type="hidden" value="{{currency}}">
+                        <input name="signature" type="hidden" value="{{signature}}">
+                        <input name="test" type="hidden" value="{{test}}">
+                        <input name="buyerEmail" type="hidden" value="{{buyerEmail}}">
+                        <input name="responseUrl" type="hidden"  value="{{responseUrl}}" >
+                        <input name="confirmationUrl" type="hidden" value="{{confirmationUrl}}">
+                        
+                        <button class="btn btn-pay" type="submit">Continuar <i class="fas fa-greater-than"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row footer-summary mb-4">
+        <div class="col-12 pay-methods">
+            <span>Opciones de pago</span>
+        </div>
+        <div class="col-12 pay-container">
+            <div class="container mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="col-12 pay-name">
+                            <span>Tarjétas de crédito</span>
+                        </div>
+                        <div class="col-12">
+                            <ul>
+                                <li><img class="img-responsive" src="{% static 'img/pay-methods/visa.png' %}" width="50" height="50" alt="visa logo" ></li>
+                                <li><img class="img-responsive" src="{% static 'img/pay-methods/tarjeta-mastercard.png' %}" width="50" height="50" alt="visa logo" ></li>
+                                <li><img class="img-responsive" src="{% static 'img/pay-methods/club-de-los-comensales.png' %}" width="50" height="50" alt="visa logo" ></li>
+                                <li><img class="img-responsive" src="{% static 'img/pay-methods/american-express.png' %}" width="50" height="50" alt="visa logo" ></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="col-12 pay-name">
+                            <span>Efectivo</span>
+                        </div>
+                        <div class="col-12">
+                            <ul>
+                                <li><img class="img-responsive" src="{% static 'img/pay-methods/efecty.png' %}" width="80" height="50" alt="visa logo" ></li>
+                                <li><img class="img-responsive" src="{% static 'img/pay-methods/img_sured.png' %}" width="80" height="50" alt="visa logo" ></li>
+                                <li><img class="img-responsive" src="{% static 'img/pay-methods/Logo-baloto.png' %}" width="80" height="50" alt="visa logo" ></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="col-12 pay-name">
+                            <span>Pago en bancos</span>
+                        </div>
+                        <div class="col-12">
+                            <ul>
+                                <li><img class="img-responsive" src="{% static 'img/pay-methods/245px-BancoDavidenda.png' %}" width="80" height="80" alt="visa logo" ></li>
+                                <li><img class="img-responsive" src="{% static 'img/pay-methods/img-banco-de-bogota.png' %}" width="80" height="50" alt="visa logo" ></li>
+                                <li><img class="img-responsive" src="{% static 'img/pay-methods/1280px-Grupo_Aval_logo.svg.png' %}" width="80" height="50" alt="visa logo" ></li>
+                                <li><img class="img-responsive" src="{% static 'img/pay-methods/Logo_Bancolombia.svg.png' %}" width="80" height="50" alt="visa logo" ></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</main>
+</div>
 
+{% endblock %}
+
+{% block nav-script%}
 {% endblock %}

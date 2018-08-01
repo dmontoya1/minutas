@@ -469,6 +469,10 @@
                     $('.rotate').toggleClass("down");
                     $('.contextualMenu').slideToggle();
                 })
+
+                $(function () {
+                    $('[data-toggle="popover"]').popover()
+                })
                 {% block nav-script%}
                     $(window).scroll(function(){
                         var scroll = $(window).scrollTop();

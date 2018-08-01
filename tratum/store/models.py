@@ -1,4 +1,8 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 import uuid
+import time
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -29,6 +33,12 @@ class DocumentBundle(SoftDeletionModelMixin):
         blank=True
     )
     price = models.PositiveIntegerField('Precio')
+    order = models.PositiveSmallIntegerField(
+        'Orden',
+        null=True,
+        blank=True,
+        unique=True
+    )
 
     def __str__(self):
         return self.name
@@ -36,6 +46,9 @@ class DocumentBundle(SoftDeletionModelMixin):
     class Meta:
         verbose_name = 'Paquete de documento'   
         verbose_name_plural = 'Paquetes de documentos'
+
+    def get_docs_count(self):
+        return self.documents.count()
 
 
 class UserDocument(models.Model):
@@ -87,3 +100,57 @@ class UserDocument(models.Model):
     
     def get_absolute_url(self):
         return reverse('webclient:user-document', kwargs={'identifier': self.identifier})
+
+
+class Invoice(models.Model):
+    """Guarda las facturas a cada usuario.
+    """
+
+    APPROVED = 'AP'
+    PENDING  = 'PE'
+    CANCEL  = 'CA'
+    REJECTED  = 'RE'
+
+    STATUS = (
+        (APPROVED, 'Aprobada'),
+        (PENDING,  'Pendiente'),
+        (CANCEL,  'Cancelada'),
+        (REJECTED,  'Rechazada'),
+    )
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="Usuario",
+    )
+    is_discharged = models.BooleanField('¿Está pago?', default=False)
+    payment_date = models.DateTimeField(
+        'Fecha de pago',
+        null=True,
+        blank=True
+    )
+    payu_reference_code = models.CharField(
+        'Referencia Pago payU',
+        max_length=255,
+        blank=True,
+        null=True
+    )
+    payment_status = models.CharField(
+        'Estado del Pago',
+        max_length=50,
+        choices=STATUS,
+        default=PENDING
+    )
+
+    class Meta:
+        verbose_name = 'Factura'
+
+    def __unicode__(self):
+        return self.get_identifier()
+    
+    def get_identifier(self):
+        return 'FAC_{}{}'.format(
+            self.pk,
+            int(time.mktime(self.payment_date.timetuple()))
+
+        )
