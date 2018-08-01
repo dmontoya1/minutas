@@ -23,7 +23,7 @@ from django.views.generic import TemplateView, View, ListView
 from document_manager.models import Document
 
 from .models import DocumentBundle, UserDocument, Invoice
-from .serializers import DocumentBundleSerializer
+from .serializers import DocumentBundleSerializer, UserDocumentSerializer
 
 
 
