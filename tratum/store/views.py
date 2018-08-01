@@ -66,7 +66,6 @@ class Checkout(TemplateView):
             merchantId = 508029
             url = "https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu"
             host = 'http://clinket.apptitud.com.co'
-            local_host = 'http://d9bbc82c.ngrok.io'
         else:
             test = 0
             accountId = 746396
@@ -97,8 +96,8 @@ class Checkout(TemplateView):
             if doc.price:
                 amount = amount + int(doc.price)
         referenceCode = '{}_{}_{}_{}'.format(ref, request.user.pk, id_ref, int(time.mktime(datetime.now().timetuple())))
-        responseUrl = '{}/store/confirmation/'.format(local_host)
-        confirmationUrl = '{}/store/confirmation/'.format(local_host)
+        responseUrl = '{}/store/confirmation/'.format(host)
+        confirmationUrl = '{}/store/confirmation/'.format(host)
         signature = '{}~{}~{}~{}~{}'.format(apiKey, merchantId,\
                     referenceCode, amount, currency)
         signature = signature.encode('utf-8')
