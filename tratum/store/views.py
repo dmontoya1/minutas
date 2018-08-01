@@ -11,6 +11,7 @@ from rest_framework import generics, status
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
 from django.shortcuts import render, reverse
@@ -21,8 +22,9 @@ from django.views.generic import TemplateView, View, ListView
 
 from document_manager.models import Document
 
-from .models import DocumentBundle, UserDocument
+from .models import DocumentBundle, UserDocument, Invoice
 from .serializers import DocumentBundleSerializer
+
 
 
 class DocumentBundleList(generics.ListAPIView):
@@ -64,12 +66,12 @@ class Checkout(TemplateView):
             merchantId = 508029
             url = "https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu"
             host = 'http://clinket.apptitud.com.co'
-            local_host = 'http://localhost:8000'
+            local_host = 'http://d9bbc82c.ngrok.io'
         else:
             test = 0
-            accountId = 730741
-            apiKey = 'IXltfYxCYPA2efIuyqj3L8k3uG'
-            merchantId = 725814
+            accountId = 746396
+            apiKey = 'vIB29Yn5GW0XVv6qVYBV1e92T1'
+            merchantId = 740818
             url = "https://checkout.payulatam.com/ppp-web-gateway-payu"
             host = 'http://clinket.com'
 
@@ -77,13 +79,16 @@ class Checkout(TemplateView):
 
         try:
             try:
-                print 
                 documents = Document.objects.filter(pk=request.POST['doc_id'])
-                doc_type = 'doc' 
+                doc_type = 'doc'
+                ref = 'DO'
+                id_ref = documents.first().pk
             except MultiValueDictKeyError:
                 package = DocumentBundle.objects.get(pk=request.POST['pack_id'])
                 documents = package.documents.all()
                 doc_type = package.name
+                ref = 'PA'
+                id_ref = package.pk
         except Exception as e:
             print (e)        
 
@@ -91,7 +96,7 @@ class Checkout(TemplateView):
         for doc in documents:
             if doc.price:
                 amount = amount + int(doc.price)
-        referenceCode = 'RE_{}_{}'.format(request.user.pk, int(time.mktime(datetime.now().timetuple())))
+        referenceCode = '{}_{}_{}_{}'.format(ref, request.user.pk, id_ref, int(time.mktime(datetime.now().timetuple())))
         responseUrl = '{}/store/confirmation/'.format(local_host)
         confirmationUrl = '{}/store/confirmation/'.format(local_host)
         signature = '{}~{}~{}~{}~{}'.format(apiKey, merchantId,\
@@ -130,7 +135,7 @@ class Checkout(TemplateView):
         if settings.DEBUG:
             apiKey     = '4Vj8eK4rloUd272L48hsrarnUA'
         else:
-            apiKey     = 'IXltfYxCYPA2efIuyqj3L8k3uG'
+            apiKey     = 'vIB29Yn5GW0XVv6qVYBV1e92T1'
         
         if request.method == "POST":
             merchand_id = request.POST['merchant_id']
@@ -149,28 +154,49 @@ class Checkout(TemplateView):
             if value_despues[1] == '0':
                 value= round(float(value),1)
             signature = '{}~{}~{}~{}~{}~{}'.format(apiKey, merchand_id,reference_sale, value, currency,state_pol)
+            signature = signature.encode('utf-8')
             signature = hashlib.md5(signature).hexdigest()
 
-            user = reference_sale.split('_')
+            reference = reference_sale.split('_')
+            ref = reference[0]
+            user_id = reference[1]
+            ref_id = reference[2]
+
 
             if signature == sign:
-                user = Staff.objects.filter(pk=user[1])
-                invoice = Invoice.objects.filter(user=user, is_discharged=False).last()
+                user = User.objects.get(pk=user_id)
+                if ref == 'DO':
+                    documents = Document.objects.filter(pk=ref_id)
+                else:
+                    package = DocumentBundle.objects.get(pk=ref_id)
+                    documents = package.documents.all()
+
+                invoice = Invoice(
+                    user = user,
+                )
+                invoice.save()
 
                 #Aprobada
                 if state_pol == '4':
                     invoice.payment_date = datetime.now()
                     invoice.payu_reference_code = reference_pol
                     invoice.payment_status = Invoice.APPROVED
-                    invoice.is_discharged = True
                     invoice.save()
+
+                    for doc in documents:
+                        d = UserDocument(
+                            user=user,
+                            document=doc,
+                            status=UserDocument.CREATED,
+                        )
+                        d.save()
+
                     return HttpResponse(status=200)
                 #Declinada
                 elif state_pol == '6':
                     invoice.payment_date = datetime.now()
                     invoice.payu_reference_code = reference_pol
                     invoice.payment_status = Invoice.REJECTED
-                    invoice.is_discharged = False
                     invoice.save()
                     return HttpResponse(status=200)
                 #Error
@@ -178,7 +204,6 @@ class Checkout(TemplateView):
                     invoice.payment_date = datetime.now()
                     invoice.payu_reference_code = reference_pol
                     invoice.payment_status = Invoice.CANCEL
-                    invoice.is_discharged = False
                     invoice.save()
                     return HttpResponse(status=200)
                 #Expirada
@@ -186,7 +211,6 @@ class Checkout(TemplateView):
                     invoice.payment_date = datetime.now()
                     invoice.payu_reference_code = reference_pol
                     invoice.payment_status = Invoice.CANCEL
-                    invoice.is_discharged = False
                     invoice.save()
                     return HttpResponse(status=200)
                 #Pendiente
@@ -194,7 +218,6 @@ class Checkout(TemplateView):
                     invoice.payment_date = datetime.now()
                     invoice.payu_reference_code = reference_pol
                     invoice.payment_status = Invoice.PENDING
-                    invoice.is_discharged = False
                     invoice.save()
                     return HttpResponse(status=200)
                 #ninguno de los state_pol
@@ -236,6 +259,7 @@ class Checkout(TemplateView):
                     value = round(float(value),1)
             
             signature = '{}~{}~{}~{}~{}~{}'.format(apiKey, merchand_id,referenceCode, value, currency,transactionState)
+            signature = signature.encode('utf-8')
             signature = hashlib.md5(signature).hexdigest()
 
            
@@ -243,7 +267,7 @@ class Checkout(TemplateView):
 
                 return render(
                     request,
-                    'payments/payment-resumen.html',
+                    'store/payment-resumen.html',
                     {
                         'merchand_id':merchand_id, 
                         'referenceCode':referenceCode,
