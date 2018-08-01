@@ -79,6 +79,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'webclient.context_processors.categories.context_categories',
                 'webclient.context_processors.api-key.api_key_processor',
+                'webclient.context_processors.faq.faq_processor',
             ],
         },
     },

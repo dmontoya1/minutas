@@ -78,16 +78,6 @@ class PoliciesView(TemplateView):
         return context
 
 
-class FAQView(TemplateView):
-
-    template_name = "webclient/faq.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['faq_categories'] = FAQCategory.objects.all()
-        return context
-
-
 class AboutUsView(TemplateView):
 
     template_name = "webclient/about_us.html"

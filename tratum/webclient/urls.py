@@ -15,7 +15,6 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(next_page="/"), name='logout'),
     path('signup/', views.SignupView.as_view(), name='signup'),
     path('policies/<str:type>/', views.PoliciesView.as_view(), name='policies'),
-    path('faq/', views.FAQView.as_view(), name='faq'),
     path('about-us/', views.AboutUsView.as_view(), name='about-us'),
     path('my-documents/<slug:identifier>/edit/', views.UserDocumentView.as_view(), name='user-document'),
     path('my-documents/<slug:identifier>/preview/', views.UserDocumentPreviewView.as_view(), name='user-document-preview'),
