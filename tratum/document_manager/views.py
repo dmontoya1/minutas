@@ -16,6 +16,8 @@ from rest_framework import generics
 from selenium import webdriver
 from xhtml2pdf import pisa as pisa
 
+from store.models import DocumentBundle
+
 from .models import (
     Document,
     DocumentField,
@@ -148,20 +150,27 @@ class CategoryChildrenList(generics.ListAPIView):
 
 
 def category(request, path, instance):
-    
-    if request.GET.get('free') is not None or request.GET.get('pay') is not None:
+
+    documents = None
+    document_list = None
+    packages = None
+    package_list = None
+
+    if request.GET.get('free') is not None or request.GET.get('pay') is not None or request.GET.get('package') is not None:
         if request.GET.get('free'):
             if instance:
                 categories = instance.get_descendants(include_self=True)
                 document_list = Document.objects.filter(Q(price=0) | Q(price=None), category__in=categories,).order_by('order')
             else:
                 document_list = Document.objects.filter(Q(price=0) | Q(price=None)).order_by('order')
-        else:
+        elif request.GET.get('pay'):
             if instance:
                 categories = instance.get_descendants(include_self=True)
                 document_list = Document.objects.filter(category__in=categories, price__gt=0).order_by('order')
             else:
                 document_list = Document.objects.filter(price__gt=0).order_by('order')
+        else:
+            package_list = DocumentBundle.objects.all().order_by('order')
 
     else:
         if instance:
@@ -170,10 +179,14 @@ def category(request, path, instance):
         else:
             document_list = Document.objects.all().order_by('order')
 
-
-    paginator = Paginator(document_list, 8)
-    page = request.GET.get('page')
-    documents = paginator.get_page(page)
+    if document_list:
+        paginator = Paginator(document_list, 8)
+        page = request.GET.get('page')
+        documents = paginator.get_page(page)
+    elif package_list:
+        paginator = Paginator(package_list, 8)
+        page = request.GET.get('page')
+        packages = paginator.get_page(page)
 
     return render(
         request,
@@ -181,6 +194,7 @@ def category(request, path, instance):
         {
             'category': instance,
             'children': instance.get_children() if instance else Category.objects.root_nodes(),
-            'documents': documents
+            'documents': documents,
+            'packages': packages
         }
     )
