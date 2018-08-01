@@ -322,7 +322,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-3 faq">
                         <i class="fas fa-question-circle"></i>
-                        <a href="#">
+                        <a data-toggle="modal" data-target="#modal-faq">
                             FAQ
                         </a>
                     </div>
@@ -365,6 +365,35 @@
                 </div>
             </div>
         </footer>        
+
+        <div class="modal fade" id="modal-faq" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="container">
+                            {% for f in faq_categories %}
+                                <div class="row">
+                                    <div class="col-sm-12 text-center qc mt-2">
+                                        <h5>{{f.name}}</h5>
+                                    </div>
+                                </div>
+                                {% for i in f.faqitem_set.all %}
+                                    <div class="row">
+                                        <div class="col-sm-12 q-title" data-id="{{i.pk}}">
+                                            {{i.question}}
+                                        </div>
+                                        <div class="col-sm-12 q-answer" data-question="{{i.pk}}">
+                                            {{i.answer}}
+                                        </div>
+                                    </div>
+                                {% endfor %}    
+                            {% endfor %}                                                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
@@ -488,6 +517,7 @@
                     })
                 {% endblock %}
                 
+                
             });
 
             axios.defaults.headers.common['X-CSRFToken'] = '{{csrf_token}}'
@@ -524,6 +554,10 @@
                         console.log(error.response.data.error)
                         toastr.error(error.response.data.error)
                     });
+            })
+
+            $('.q-title').on('click', function(){
+                $(this).toggleClass('active');
             })
 
             $("#signup").on('submit', function(ev){
