@@ -78,16 +78,6 @@ class PoliciesView(TemplateView):
         return context
 
 
-class FAQView(TemplateView):
-
-    template_name = "webclient/faq.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['faq_categories'] = FAQCategory.objects.all()
-        return context
-
-
 class AboutUsView(TemplateView):
 
     template_name = "webclient/about_us.html"
@@ -238,7 +228,6 @@ class UserDocumentView(DetailView):
         context['identifier'] = UserDocument.objects.get(identifier=self.kwargs['identifier']).identifier
         return context
 
-
 class UserDocumentPreviewView(DetailView):
     model = UserDocument
     template_name = "document_form/document_preview.html"
@@ -252,7 +241,7 @@ class UserDocumentPreviewView(DetailView):
         context = super().get_context_data(**kwargs)
         obj = self.get_object()
         document_content = Template(obj.document.content)
-        document_content = document_content.render(Context(obj.answers)).encode('ascii', 'xmlcharrefreplace')
+        document_content = document_content.render(Context(obj.answers))
         context['document_content'] = document_content
         return context
 

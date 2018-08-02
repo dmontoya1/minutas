@@ -17,7 +17,7 @@ button:active {
 }
 
 footer {
-    /* position: absolute; */
+    position: absolute; 
     width: 100%;
     bottom: 0;
     padding: 20px;
@@ -476,3 +476,32 @@ section {
         width: 220px;
         margin-top: 18%;
     }
+
+#modal-faq .row {
+    font-size: 1.1em;
+}
+
+#modal-faq .qc {
+    padding: 1em;
+}
+
+#modal-faq .q-title {
+    padding: 1em;
+    border-bottom: 1px solid #161616;
+    cursor: pointer;
+}
+    #modal-faq .q-title.active {
+        background-color: #e8e8e8;
+        color: #5eccc4;
+        border: none;
+    }
+    #modal-faq .q-title.active + .q-answer {
+        display: block;
+        margin-bottom: 1em;
+    }
+
+#modal-faq .q-answer {
+    padding: 1em;
+    display: none;
+    font-size: .9em;
+}
