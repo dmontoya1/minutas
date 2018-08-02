@@ -274,6 +274,7 @@ class UserDocumentView(LoginRequiredMixin, DetailView):
         context['identifier'] = UserDocument.objects.get(identifier=self.kwargs['identifier']).identifier
         return context
 
+
 class UserDocumentPreviewView(DetailView):
     model = UserDocument
     template_name = "document_form/document_preview.html"
