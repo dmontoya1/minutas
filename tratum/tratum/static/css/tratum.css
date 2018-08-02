@@ -780,3 +780,15 @@ body {
     display: inline;
     margin: 0 10px;
 }
+
+.terms-conditions label {
+    font-size: 1.2em;
+}
+
+.btn-accept {
+    color: #fff;
+    border-color: #002c55;
+    background-color: #002c55;
+    box-shadow: none;
+    border-radius: 10px;
+}

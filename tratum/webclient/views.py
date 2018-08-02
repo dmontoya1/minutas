@@ -39,8 +39,8 @@ from store.models import (
     DocumentBundle,
     UserDocument
 )
-
 from users.models import LogTerms
+from .mixins import TermsAndConditions
 
 
 class HomePageView(TemplateView):
@@ -184,6 +184,33 @@ class SignupView(View):
             return JsonResponse(response, status=400)
 
 
+class ValidateTerms(LoginRequiredMixin, TemplateView):
+
+    login_url = '/'
+    redirect_field_name = 'next'
+    template_name = 'webclient/validate_terms.html'
+
+    def get_context_data(self, **kwargs):
+        terms = get_object_or_404(Policy, policy_type='TCP')
+        police = get_object_or_404(Policy, policy_type='PP')
+        user = self.request.user
+        try:
+            user_token = Token.objects.get(user=user)
+        except Token.DoesNotExist:
+            user_token = Token(
+                user=user
+            )
+            user_token.save()
+        context = super(ValidateTerms, self).get_context_data(**kwargs)
+        context['terms_name'] = terms.get_policy_type_display()
+        context['terms_content'] = terms.content
+        context['police_name'] = police.get_policy_type_display()
+        context['police_content'] = police.content
+        context['user'] = user
+        context['user_token'] = user_token
+        return context
+
+
 class CategoryDocumentsView(TemplateView):
 
     template_name = "webclient/documents.html"
@@ -196,28 +223,47 @@ class CategoryDocumentsView(TemplateView):
         context['documents'] = Document.objects.filter(category__in=categories).order_by('order')
         return context
 
-@method_decorator(login_required, name='dispatch')
-class ProfileView(LoginRequiredMixin, TemplateView):
+class ProfileView(LoginRequiredMixin, TermsAndConditions, TemplateView):
 
     template_name = "webclient/profile.html"
     login_url = '/'
 
 
-@method_decorator(login_required, name='dispatch')
-class UserDocumentsView(ListView):
+class UserDocumentsView(LoginRequiredMixin, TermsAndConditions, ListView):
     model = UserDocument
     template_name = "webclient/user_documents.html"
+    login_url = '/'
+    redirect_field_name = 'next'
 
     def get_queryset(self):
         docs = UserDocument.objects.filter(user=self.request.user)
         return docs
+    
+    def get(self, request, *args, **kwargs):
+        if request.user.is_anonymous:
+            pass
+        else:
+            user = request.user
+            docs = UserDocument.objects.filter(user=user)
+            if not docs:
+                messages.add_message(
+                    request,
+                        messages.ERROR, 
+                        "No tienes documentos creados. \
+                        Crea o compra tu primer documento desde aquí"
+                )
+                return redirect(reverse('webclient:category_documents', args=("",)))
+        self.object_list = self.get_queryset()
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)
 
 
-@method_decorator(login_required, name='dispatch')
-class UserDocumentView(DetailView):
+class UserDocumentView(LoginRequiredMixin, DetailView):
     model = UserDocument
     template_name = "document_form/document_detail.html"
     slug_field = "identifier"
+    login_url = '/'
+    redirect_field_name = 'next'
 
     def get_object(self):
         obj = UserDocument.objects.get(identifier=self.kwargs['identifier'])

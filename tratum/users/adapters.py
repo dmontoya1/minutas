@@ -53,7 +53,6 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
     def save_user(self, request, sociallogin, form=None):
         u = sociallogin.user
         u.set_unusable_password()
-        u.user_type = 'PC'
         u.email_validated = True
         u.save()
         if form:
