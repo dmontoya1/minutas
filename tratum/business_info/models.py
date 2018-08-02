@@ -115,7 +115,8 @@ class SiteConfig(models.Model):
         'Imagen (Quienes somos)',
         null=True,
         blank=True,
-        upload_to='about-us'
+        upload_to='about-us',
+        help_text='La resolución requerida es de 800x1000px'
     )
     landing_contact = models.TextField(
         'Correo de contacto (landing)',
