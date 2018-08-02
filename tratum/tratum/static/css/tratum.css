@@ -344,14 +344,12 @@ body {
 }
 
 .docs-list .doc-title {
-    font-size: 2em;
-    margin: 25px;
+    font-size: 1.5em;
     color: #000;
 }
 
-.docs-list .doc-items {
-    max-height: 50vh;
-    overflow-y: scroll;
+.btn-secondary {
+    padding: 10px 40px;
 }
 
 .docs-list ul {
@@ -452,7 +450,7 @@ body {
 #pswd_info ul, li {
     margin:0;
     padding:0;
-    list-style-type:none;
+    list-style-type:disc;
 }
 
 #pswd_info::before {

@@ -179,15 +179,7 @@
                                                         <p class="category">{{pack.get_docs_count}} documento{{ pack.get_docs_count|pluralize }}</p>
                                                     </div>
                                                     <div class="col-6 text-right">
-                                                        <a tabindex="0"
-                                                            class="btn-modal-docs" 
-                                                            data-trigger="focus"
-                                                            data-toggle="popover" 
-                                                            data-container="body"
-                                                            data-placement="top"
-                                                            data-html="true"
-                                                            id="pack-{{pack.id}}"
-                                                            >
+                                                        <a class="btn-modal-docs" data-toggle="modal" data-target="#pack-{{pack.id}}-docs">
                                                             Ver documentos
                                                         </a>
                                                     </div>
@@ -222,6 +214,33 @@
                                             </div>
                                         </div>
 
+                                        <div class="modal fade" id="pack-{{pack.id}}-docs" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalCenterTitle">{{pack.name}}</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body docs-list">
+                                                        <div class="col-12 doc-title">
+                                                            <span>Documentos ({{pack.get_docs_count}})</span>
+                                                        </div>
+                                                        <div class="col-12 doc-items">
+                                                            <ul>
+                                                                {% for d in pack.documents.all %}
+                                                                    <li>{{d.name}}</li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div hidden id="pack-{{pack.id}}-docs">
                                             <div class="row docs-list">
                                                 <div class="col-12 doc-title">
@@ -332,15 +351,6 @@
     </script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
     <script>
-
-        $('.btn-modal-docs').popover({
-            trigger: 'focus',
-            html: true,
-            content: function() {
-                var id = $(this).attr('id')
-                return $(`#${id}-docs`).html();
-            }
-        })
 
         $(function(){
             createSticky($("#search"));

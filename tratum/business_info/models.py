@@ -107,6 +107,7 @@ class SiteConfig(models.Model):
     )
     about_page_content = models.TextField(
 		'Contenido (Quienes sómos)',
+        max_length=600,
         null=True,
         blank=True
     )
