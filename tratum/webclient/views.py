@@ -274,7 +274,6 @@ class UserDocumentView(LoginRequiredMixin, DetailView):
         context['identifier'] = UserDocument.objects.get(identifier=self.kwargs['identifier']).identifier
         return context
 
-
 class UserDocumentPreviewView(DetailView):
     model = UserDocument
     template_name = "document_form/document_preview.html"
@@ -288,7 +287,7 @@ class UserDocumentPreviewView(DetailView):
         context = super().get_context_data(**kwargs)
         obj = self.get_object()
         document_content = Template(obj.document.content)
-        document_content = document_content.render(Context(obj.answers)).encode('ascii', 'xmlcharrefreplace')
+        document_content = document_content.render(Context(obj.answers))
         context['document_content'] = document_content
         return context
 

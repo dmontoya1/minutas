@@ -14,13 +14,13 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <div class="document-preview" id="content-preview">
+                <div class="document-preview" id="content-preview" data-name="{{object.document.name}}">
                     {{document_content|safe}}
                 </div>
             </div>
             <div class="col-md-6">
-                <button class="action-button__primary blue">Descargar PDF</button>
-                <button class="action-button__primary blue">Descargar DOC</button>
+                <button class="action-button__primary blue pdf-gen">Descargar PDF</button>
+                <button class="action-button__primary blue doc-gen">Descargar DOC</button>
             </div>
         </div>
     </div>
@@ -28,12 +28,9 @@
 
 
 {% block extra_js %}
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script>
-        $(function() {
-            $('.document-preview').text().replace(/(\r\n\t|\n|\r\t)/gm,"");
-        });
-        
-    </script>
-
+    <script type="text/javascript" src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/FileSaver.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/html-docx.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/pdfRender.js' %}"></script>    
+    <script type="text/javascript" src="{% static 'js/docRender.js' %}"></script> 
 {% endblock %}
