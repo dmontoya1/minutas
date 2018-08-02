@@ -64,12 +64,13 @@ class SlugIdentifierMixin(models.Model):
     
     def _get_unique_slug(self):
         slug = self.name
+        name = str(self.name).replace('_', '-')
         if hasattr(self, 'document'):
             if self.document:
-                slug = slugify('{}-{}'.format(self.name, self.document.slug))
+                slug = slugify('{}-{}'.format(name, self.document.slug))
         if hasattr(self, 'section'):
             if self.section:
-                slug = slugify('{}-{}'.format(self.name, self.section.slug))
+                slug = slugify('{}-{}'.format(name, self.section.slug))
         return slugify(slug)   
     
     def formated_slug(self):
