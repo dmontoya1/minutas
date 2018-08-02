@@ -6,52 +6,50 @@ $(function(){
         }).insertAfter(this);
         $(this).remove();
     })    
-    $('body').append('<button id="generatePDF">Generar PDF</button>')
-    $('p').each(function(i, e){
-        if($(this).css('text-align') == 'center'){
-
-        } else {$(this).css('text-align', 'justify')}
+    $('#content-preview p').each(function(i, e){
+        $(this).css('text-align', 'justify');
+        $(this).css('color', '#000');
     })
-    $('#generatePDF').on('click', function(){
-        var doc = new jsPDF();
-        doc.fromHTML($('body').get(0), 10, 10, {
-            'width': 180
-        });
-        doc.save()
+    $('.pdf-gen').on('click', function(){
+        margins = {
+            top: 70,
+            bottom: 80,
+            left: 30,
+            width: 550
+        };
+        var pdf = new jsPDF('p', 'pt', 'a4');
+        pdf.setFontSize(18);
+        pdf.fromHTML(document.getElementById('content-preview'), 
+            margins.left,
+            margins.top,
+            {
+                width: margins.width
+            }, 
+            function(dispose) {
+                headerFooterFormatting(pdf)
+            }, 
+            margins
+        );
+            
+        pdf.save();
+
+        function headerFooterFormatting(doc) {
+            var totalPages  = doc.internal.getNumberOfPages();
+
+            for (var i = totalPages; i >= 1; i--) { 
+                doc.setPage(i);  
+                header(doc);
+                footer(doc, i); 
+            }
+        };
+        function header(doc){
+            doc.setFontSize(8);
+            doc.text(270, 40, $('#content-preview').data('name'));
+        };
+        function footer(doc, pageNumber){
+            doc.setFontSize(8);
+            doc.text(30, 800, String(pageNumber));
+        };
     })
 })
 
-function onRender(){
-    var url = '//cdn.mozilla.net/pdfjs/PDF.pdf';
-    var pdfjsLib = window['pdfjs-dist/build/pdf'];
-    pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
-
-    var loadingTask = pdfjsLib.getDocument(url);
-    loadingTask.promise.then(function(pdf) {
-    console.log('PDF loaded');
-    
-    var pageNumber = 1;
-    pdf.getPage(pageNumber).then(function(page) {
-            console.log('Page loaded');
-            
-            var scale = 1.5;
-            var viewport = page.getViewport(scale);
-
-            var canvas = document.getElementById('the-canvas');
-            var context = canvas.getContext('2d');
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
-
-            var renderContext = {
-                canvasContext: context,
-                viewport: viewport
-            };
-            var renderTask = page.render(renderContext);
-            renderTask.then(function () {
-            console.log('Page rendered');
-        });
-    });
-    }, function (reason) {
-        console.error(reason);
-    });
-}
