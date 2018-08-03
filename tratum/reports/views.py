@@ -1,3 +1,5 @@
+from io import BytesIO
+
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template import Context
@@ -31,17 +33,15 @@ class DocumentExport(View):
                 'summary': request.POST['summary']
             }
 
-            response = HttpResponse(content_type='application/pdf')
-            response['Content-Disposition'] = 'attachment; filename="report.pdf"'
-            
             template = get_template(template_path)
             html = template.render(context)
 
-            pisaStatus = pisa.CreatePDF(
-                html, 
-                dest=response
-            )
-            return response
+            result = BytesIO()
+            pdf = pisa.pisaDocument(BytesIO(html.encode("utf-8")), dest=result) 
+            if not pdf.err: 
+                return HttpResponse(result.getvalue(), content_type='application/pdf') 
+            else: return HttpResponse('Errors') 
+
         response = HttpResponse(export_type, content_type=content_type)
         response['Content-Disposition'] = 'attachment; filename="report.{}"'.format(format)
         return response
