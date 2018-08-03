@@ -15,6 +15,7 @@ urlpatterns = [
     path('document-manager/', include('document_manager.urls'), name='document_manager'),
     path('users/', include('users.urls'), name='users'),
     path('auth/', include('rest_auth.urls')),
+    path('reports/', include('reports.urls', namespace='reports')),
     path('auth/registration/', include('rest_auth.registration.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
