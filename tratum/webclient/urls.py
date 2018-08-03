@@ -22,5 +22,5 @@ urlpatterns = [
     path('profile/', views.ProfileView.as_view(), name='profile'),
     path('my-documents/', views.UserDocumentsView.as_view(), name='user-documents'),
     path('activate/<token>/<pk>/', views.activate, name='activate'),
-    url(r'^category/(?P<path>.*)', mptt_urls.view(model='document_manager.models.Category', view='document_manager.views.category', slug_field='slug'), name='category_documents'),
+    url(r'^documents/(?P<path>.*)', mptt_urls.view(model='document_manager.models.Category', view='document_manager.views.category', slug_field='slug'), name='category_documents'),
 ]
