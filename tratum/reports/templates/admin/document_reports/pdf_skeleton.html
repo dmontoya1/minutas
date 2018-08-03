@@ -1,0 +1,34 @@
+<div class=”results”>
+    <table>
+        
+    <thead>
+        <tr>
+        <th>
+            <div class=”text”>
+            <a href=”#”>Nombre de documento</a>
+            </div>
+        </th>
+        <th>
+            <div class=”text”>
+            <a href=”#”>Categoría</a>
+            </div>
+        </th>
+        <th>
+            <div class=”text”>
+                <a href=”#”>Ventas totales</a>
+            </div>
+        </th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for row in summary %}
+        <tr>
+        <td> {{ row.name }} </td>
+        <td> {{ row.category.name }} </td>
+        <td> {{ row.userdocument_set.all.count }} </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    
+    </table>
+</div>
