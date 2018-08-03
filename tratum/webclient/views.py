@@ -162,12 +162,16 @@ class SignupView(View):
             ctx = {
                 'email': user.email,
                 'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': account_activation_token.make_token(user),
                 'user_id': user.pk
             }
-            body = loader.get_template('webclient/account_activation_email.html').render(ctx)
-            message = EmailMessage("Activa tu cuenta en Tratum", body, 'no-reply@tratum.com', [user.email])
+            body = loader.get_template('webclient/email/account_activation_email.html').render(ctx)
+            message = EmailMessage(
+                "Activa tu cuenta en Tratum",
+                body,
+                'no-reply@tratum.com',
+                [user.email]
+            )
             message.content_subtype = 'html'
             message.send()
 
@@ -293,7 +297,7 @@ class UserDocumentPreviewView(DetailView):
         return context
 
 
-def activate(request, uidb64, token, pk):
+def activate(request, token, pk):
     try:
         user = User.objects.get(pk=pk)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
