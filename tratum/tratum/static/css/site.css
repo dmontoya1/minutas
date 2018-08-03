@@ -482,16 +482,22 @@ section {
 }
 
 #modal-faq .qc {
+    background-color: #e8e8e8;
+    color: #5eccc4;
+    border: none;
     padding: 1em;
 }
 
 #modal-faq .q-title {
     padding: 1em;
-    border-bottom: 1px solid #161616;
     cursor: pointer;
+    border-bottom: 1px solid #a2a2a2;
+}
+
+#modal-faq .row.content.last .q-title {
+    border: none;
 }
     #modal-faq .q-title.active {
-        background-color: #e8e8e8;
         color: #5eccc4;
         border: none;
     }
@@ -503,5 +509,6 @@ section {
 #modal-faq .q-answer {
     padding: 1em;
     display: none;
-    font-size: .9em;
+    font-size: .85em;
+    color: #686868;
 }
