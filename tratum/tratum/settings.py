@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
     'rest_auth.registration',
+    'import_export',
     'mptt_urls',
     'api',
     'debug_toolbar',
@@ -48,7 +49,8 @@ INSTALLED_APPS = [
     'business_info',
     'store',
     'users',
-    'webclient'
+    'webclient',
+    'reports'
 ]
 
 MIDDLEWARE = [
