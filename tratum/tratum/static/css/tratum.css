@@ -447,7 +447,7 @@ body {
     font-weight:normal;
 }
 
-#pswd_info ul, li {
+#pswd_info ul, #pswd_info li {
     margin:0;
     padding:0;
     list-style-type:disc;
