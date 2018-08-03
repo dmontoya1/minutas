@@ -33,7 +33,7 @@
             <div class="col-12" id="search">
                 <div class="container">
                     <div class="row search">
-                        <div class="col-sm-12 col-md-6 col-lg-4">
+                        <div class="col-sm-12 col-md-6 col-lg-4 child">
                             <form action="">
                                 <div class="form-group">
                                     <label for="searcher"><i class="fa fa-file-sound-o" aria-hidden="true"></i></label>
@@ -41,7 +41,7 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="col-sm-12 col-md-6 col-lg-4">
+                        <div class="col-sm-12 col-md-6 col-lg-4 child">
                             <form action="">
                                 <div class="form-group">
                                     <label for="subcategory1"><i class="fa fa-file-sound-o" aria-hidden="true"></i></label>
@@ -361,7 +361,15 @@
                 var	pos = sticky.offset().top,
                     win = $(window);
                 win.on("scroll", function() {
-                    win.scrollTop() >= pos ? sticky.addClass("fixed") : sticky.removeClass("fixed");      
+                    if (win.scrollTop() >= pos){
+                        sticky.addClass("fixed")
+                        $('.filters').addClass('margin-top')
+                    }
+                    else {
+                        sticky.removeClass("fixed"); 
+                        $('.filters').removeClass('margin-top')
+                    }
+                    // win.scrollTop() >= pos ? sticky.addClass("fixed") : sticky.removeClass("fixed");      
                 });			
             }
         }
