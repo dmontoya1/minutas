@@ -22,10 +22,10 @@
     </thead>
     <tbody>
     {% for row in summary %}
-        <tr>
-        <td> {{ row.name }} </td>
-        <td> {{ row.category.name }} </td>
-        <td> {{ row.userdocument_set.all.count }} </td>
+        <tr style="text-align: center;">
+            <td> {{ row.nombre }} </td>
+            <td> {{ row.categoria }} </td>
+            <td> {{ row.cantidad }} </td>
         </tr>
     {% endfor %}
     </tbody>

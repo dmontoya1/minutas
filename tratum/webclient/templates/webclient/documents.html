@@ -142,7 +142,11 @@
                                                 <div class="row doc-price-content">
                                                     {%if doc.price is None or doc.price == 0%}
                                                         <div class="col-6">
-                                                            <a href="{% url 'store:create-user-document'  %}?document_id={{doc.pk}}" class="btn btn-buy float-left">Comprar</a>
+                                                            {% if user.is_authenticated %}
+                                                                <a href="{% url 'store:create-user-document'  %}?document_id={{doc.pk}}" class="btn btn-buy float-left">Comprar</a>
+                                                            {% else %}
+                                                                <a data-toggle="modal" data-target="#modal-login" class="btn btn-buy float-left">Comprar</a>
+                                                            {% endif %}
                                                         </div>
                                                     
                                                         <div class="col-6">
@@ -150,11 +154,15 @@
                                                         </div>
                                                     {%else%}
                                                         <div class="col-6">
-                                                            <form method="POST" action="{% url 'store:checkout' %}">
-                                                                {% csrf_token %}
-                                                                <input type="hidden" name="doc_id" value="{{doc.id}}">
-                                                                <button type="submit" class="btn btn-buy float-left">Comprar</button>
-                                                            </form>
+                                                            {% if user.is_authenticated %}
+                                                                <form method="POST" action="{% url 'store:checkout' %}">
+                                                                    {% csrf_token %}
+                                                                    <input type="hidden" name="doc_id" value="{{doc.id}}">
+                                                                    <button type="submit" class="btn btn-buy float-left">Comprar</button>
+                                                                </form>
+                                                            {% else %}
+                                                                <a data-toggle="modal" data-target="#modal-login" class="btn btn-buy float-left">Comprar</a>
+                                                            {% endif %}
                                                         </div>
                                                         <div class="col-6">
                                                             <span class="float-right price">$ {{doc.price|intcomma}}</span>
@@ -192,7 +200,11 @@
                                                 <div class="row pack-price-content">
                                                     {%if pack.price is None or pack.price == 0%}
                                                         <div class="col-6">
-                                                            <a href="{% url 'store:create-user-document'  %}?document_id={{doc.pk}}" class="btn btn-buy float-left">Comprar</a>
+                                                            {% if user.is_authenticated %}
+                                                                <a href="{% url 'store:create-user-document' %}?document_id={{doc.pk}}" class="btn btn-buy float-left">Comprar</a>
+                                                            {% else %}
+                                                                <a data-toggle="modal" data-target="#modal-login" class="btn btn-buy float-left">Comprar</a>
+                                                            {% endif %}
                                                         </div>
                                                     
                                                         <div class="col-6">
@@ -200,11 +212,15 @@
                                                         </div>
                                                     {%else%}
                                                         <div class="col-6">
-                                                            <form method="POST" action="{% url 'store:checkout' %}">
-                                                                {% csrf_token %}
-                                                                <input type="hidden" name="pack_id" value="{{pack.id}}">
-                                                                <button type="submit" class="btn btn-buy float-left">Comprar</button>
-                                                            </form>
+                                                            {% if user.is_authenticated %}
+                                                                <form method="POST" action="{% url 'store:checkout' %}">
+                                                                    {% csrf_token %}
+                                                                    <input type="hidden" name="pack_id" value="{{pack.id}}">
+                                                                    <button type="submit" class="btn btn-buy float-left">Comprar</button>
+                                                                </form>
+                                                            {% else %}
+                                                                <a data-toggle="modal" data-target="#modal-login" class="btn btn-buy float-left">Comprar</a>
+                                                            {% endif %}
                                                         </div>
                                                         <div class="col-6">
                                                             <span class="float-right price">$ {{pack.price|intcomma}}</span>
