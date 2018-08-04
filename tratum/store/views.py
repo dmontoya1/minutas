@@ -71,14 +71,14 @@ class Checkout(TemplateView):
             apiKey = '4Vj8eK4rloUd272L48hsrarnUA'
             merchantId = 508029
             url = "https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu"
-            host = 'http://clinket.apptitud.com.co'
+            host = 'http://cb14d2bc.ngrok.io'
         else:
             test = 0
             accountId = 746396
             apiKey = 'vIB29Yn5GW0XVv6qVYBV1e92T1'
             merchantId = 740818
             url = "https://checkout.payulatam.com/ppp-web-gateway-payu"
-            host = 'http://clinket.com'
+            host = 'http://tratum.com'
 
         currency = 'COP'
 
@@ -170,15 +170,17 @@ class Checkout(TemplateView):
 
             if signature == sign:
                 user = User.objects.get(pk=user_id)
-                if ref == 'DO':
-                    documents = Document.objects.filter(pk=ref_id)
-                else:
-                    package = DocumentBundle.objects.get(pk=ref_id)
-                    documents = package.documents.all()
-
                 invoice = Invoice(
                     user = user,
                 )
+                invoice.save()
+                if ref == 'DO':
+                    documents = Document.objects.filter(pk=ref_id)
+                    invoice.document = documents.first()
+                else:
+                    package = DocumentBundle.objects.get(pk=ref_id)
+                    documents = package.documents.all()
+                    invoice.package = package
                 invoice.save()
 
                 #Aprobada
