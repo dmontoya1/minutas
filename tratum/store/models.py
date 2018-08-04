@@ -124,6 +124,18 @@ class Invoice(models.Model):
         verbose_name="Usuario",
     )
     is_discharged = models.BooleanField('¿Está pago?', default=False)
+    document = models.ForeignKey(
+        Document,
+        verbose_name='Documento',
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    package = models.ForeignKey(
+        DocumentBundle,
+        verbose_name='Paquete',
+        null=True,
+        on_delete=models.SET_NULL
+    )
     payment_date = models.DateTimeField(
         'Fecha de pago',
         null=True,
