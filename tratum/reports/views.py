@@ -1,8 +1,9 @@
 from io import BytesIO
+import json
 
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.template import Context
+from django.template import Context, RequestContext
 from django.template.loader import get_template
 from django.views.generic.base import View
 
@@ -30,9 +31,9 @@ class DocumentExport(View):
             template_path = 'admin/document_reports/pdf_skeleton.html'
 
             context = {
-                'summary': request.POST['summary']
+                'summary': json.loads(dataset.json)
             }
-
+            
             template = get_template(template_path)
             html = template.render(context)
 
