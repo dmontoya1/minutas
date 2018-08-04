@@ -1,6 +1,15 @@
+from io import BytesIO
+
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.template import Context
+from django.template.loader import get_template
 from django.views.generic.base import View
+
+from xhtml2pdf import pisa
+
+from document_manager.models import Document
+from .admin import DocumentSaleSummaryAdmin
 from .resources import DocumentResource
 
 
@@ -17,6 +26,22 @@ class DocumentExport(View):
             export_type = dataset.xls
             content_type = 'application/vnd.ms-excel'
             format = 'xls'
+        elif request.POST.get('PDF', None):
+            template_path = 'admin/document_reports/pdf_skeleton.html'
+
+            context = {
+                'summary': request.POST['summary']
+            }
+
+            template = get_template(template_path)
+            html = template.render(context)
+
+            result = BytesIO()
+            pdf = pisa.pisaDocument(BytesIO(html.encode("utf-8")), dest=result) 
+            if not pdf.err: 
+                return HttpResponse(result.getvalue(), content_type='application/pdf') 
+            else: return HttpResponse('Errors') 
+
         response = HttpResponse(export_type, content_type=content_type)
         response['Content-Disposition'] = 'attachment; filename="report.{}"'.format(format)
         return response
