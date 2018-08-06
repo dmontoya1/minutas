@@ -1,0 +1,34 @@
+<div class=”results”>
+    <table>
+        
+    <thead>
+        <tr>
+        <th>
+            <div class=”text”>
+            <a href=”#”>Usuario</a>
+            </div>
+        </th>
+        <th>
+            <div class=”text”>
+                <a href=”#”>Fecha de compra</a>
+            </div>
+        </th>
+        <th>
+            <div class=”text”>
+                <a href=”#”>Elemento</a>
+            </div>
+        </th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for row in summary %}
+        <tr style="text-align: center;">
+            <td> {{ row.usuario }} </td>
+            <td> {{ row.fecha }} </td>
+            <td> {{ row.elemento }} </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    
+    </table>
+</div>

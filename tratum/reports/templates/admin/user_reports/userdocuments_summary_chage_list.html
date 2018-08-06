@@ -12,8 +12,9 @@
       padding: 1em;
     }
   </style>
-  <form action="{% url 'reports:document-sales' %}" method="POST">
+  <form action="{% url 'reports:user-sales' %}" method="POST">
     {% csrf_token %}
+    <input type="hidden" name="summary" value="{{summary}}"/>
     <input type="submit" name="CSV" class="default export" value="Exportar a CSV">
     <input type="submit" name="XLS" class="default export" value="Exportar a XLS">
     <input type="submit" name="PDF" class="default export" value="Exportar a PDF">
@@ -28,17 +29,17 @@
       <tr>
         <th>
           <div class=”text”>
-            <a href=”#”>Nombre de documento</a>
+            <a href=”#”>Usuario</a>
           </div>
         </th>
         <th>
           <div class=”text”>
-            <a href=”#”>Categoría</a>
+            <a href=”#”>Fecha de pago</a>
           </div>
         </th>
         <th>
             <div class=”text”>
-                <a href=”#”>Ventas totales</a>
+                <a href=”#”>Elemento comprado</a>
             </div>
         </th>
       </tr>
@@ -46,9 +47,9 @@
     <tbody>
     {% for row in summary %}
       <tr>
-        <td> {{ row.name }} </td>
-        <td> {{ row.category.name }} </td>
-        <td> {{ row.userdocument_set.all.count }} </td>
+        <td> {{ row.user.email }} </td>
+        <td> {{ row.payment_date }} </td>
+        <td> {{ row.get_purchased_element }} </td>
       </tr>
     {% endfor %}
     </tbody>
