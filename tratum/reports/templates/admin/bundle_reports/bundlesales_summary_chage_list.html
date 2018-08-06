@@ -12,7 +12,7 @@
       padding: 1em;
     }
   </style>
-  <form action="{% url 'reports:document-sales' %}" method="POST">
+  <form action="{% url 'reports:documentbundle-sales' %}" method="POST">
     {% csrf_token %}
     <input type="submit" name="CSV" class="default export" value="Exportar a CSV">
     <input type="submit" name="XLS" class="default export" value="Exportar a XLS">
@@ -28,13 +28,13 @@
       <tr>
         <th>
           <div class=”text”>
-            <a href=”#”>Nombre de documento</a>
+            <a href=”#”>Nombre de paquete</a>
           </div>
         </th>
         <th>
-          <div class=”text”>
-            <a href=”#”>Categoría</a>
-          </div>
+            <div class=”text”>
+                <a href=”#”>Documentos</a>
+            </div>
         </th>
         <th>
             <div class=”text”>
@@ -47,8 +47,11 @@
     {% for row in summary %}
       <tr>
         <td> {{ row.name }} </td>
-        <td> {{ row.category.name }} </td>
-        <td> {{ row.userdocument_set.all.count }} </td>
+        <td> 
+        {% for d in row.documents.all %}
+            <a>{{d.name}}</a>{% if not forloop.last %},{% endif %}
+        {% endfor %}</td>
+        <td> {{ row.invoce_set.all.count }} </td>
       </tr>
     {% endfor %}
     </tbody>

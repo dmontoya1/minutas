@@ -166,3 +166,8 @@ class Invoice(models.Model):
             int(time.mktime(self.payment_date.timetuple()))
 
         )
+    
+    def get_purchased_element(self):
+        if self.document:
+            return self.document
+        return self.package

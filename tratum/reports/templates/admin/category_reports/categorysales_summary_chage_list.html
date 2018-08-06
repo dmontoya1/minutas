@@ -12,7 +12,7 @@
       padding: 1em;
     }
   </style>
-  <form action="{% url 'reports:document-sales' %}" method="POST">
+  <form action="{% url 'reports:category-sales' %}" method="POST">
     {% csrf_token %}
     <input type="submit" name="CSV" class="default export" value="Exportar a CSV">
     <input type="submit" name="XLS" class="default export" value="Exportar a XLS">
@@ -28,12 +28,7 @@
       <tr>
         <th>
           <div class=”text”>
-            <a href=”#”>Nombre de documento</a>
-          </div>
-        </th>
-        <th>
-          <div class=”text”>
-            <a href=”#”>Categoría</a>
+            <a href=”#”>Nombre de categoria</a>
           </div>
         </th>
         <th>
@@ -47,8 +42,7 @@
     {% for row in summary %}
       <tr>
         <td> {{ row.name }} </td>
-        <td> {{ row.category.name }} </td>
-        <td> {{ row.userdocument_set.all.count }} </td>
+        <td> {{ row.get_purchased_docs_count }} </td>
       </tr>
     {% endfor %}
     </tbody>

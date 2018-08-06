@@ -60,6 +60,13 @@ class Category(MPTTModel, SoftDeletionModelMixin, SlugIdentifierMixin):
         # return reverse('webclient:category-documents', kwargs={'slug': self.slug})
         return reverse('webclient:category_documents', kwargs={'path': self.get_path()})
 
+    def get_purchased_docs_count(self):
+        docs = self.document_set.all()
+        i = 0
+        for d in docs:
+            i = i + d.userdocument_set.all().count()
+        return i
+
 
 class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
     """Guarda las documentos.
