@@ -128,12 +128,14 @@ class Invoice(models.Model):
         Document,
         verbose_name='Documento',
         null=True,
+        blank=True,
         on_delete=models.SET_NULL
     )
     package = models.ForeignKey(
         DocumentBundle,
         verbose_name='Paquete',
         null=True,
+        blank=True,
         on_delete=models.SET_NULL
     )
     payment_date = models.DateTimeField(
@@ -169,5 +171,5 @@ class Invoice(models.Model):
     
     def get_purchased_element(self):
         if self.document:
-            return self.document
-        return self.package
+            return self.document.name
+        return self.package.name

@@ -297,6 +297,31 @@ class UserDocumentPreviewView(DetailView):
         return context
 
 
+class ContactFormView(View):
+    """Mensajes del formulario de contacto
+    """
+
+    def post(self, request, *args, **kwargs):
+        name = request.POST['name']
+        email = request.POST['email']
+        message = request.POST['message']
+        topic = 'Mensaje de {name} desde el formulario de Tratum'.format(name=name)
+        if request.POST.get('is_document', None):
+            topic = 'Solicitud de nuevo documento de {name} desde Tratum'.format(name=name)
+        email = EmailMessage(
+            topic,
+            '{email} envía esto: {message}'.format(
+                email=email,
+                message=message
+            ), 
+            'no-reply@tratum.com',
+            ['dcastano@apptitud.com.co']
+        )
+        email.send()
+        messages.success(request, 'Mensaje envíado correctamente')
+        return redirect('webclient:home')
+
+
 def activate(request, token, pk):
     try:
         user = User.objects.get(pk=pk)

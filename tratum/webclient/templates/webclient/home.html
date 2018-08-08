@@ -25,39 +25,43 @@
     <img src="{% static 'img/loadingSite.gif' %}" />
     <p>Cargando...</p>
   </div>
+
   <div class="swiper-container">   
-      <div class="swiper-wrapper">        
-        {% for s in context_slides %}
-          <div class="swiper-slide">
-            <div class="swiper-mask-left"></div>  
-            <div class="swiper-mask-right"></div> 
-            <div class="description text-center">
-              <h1>{{s.text|default_if_none:""}}</h1>
-              <p>{{s.description|default_if_none:""}}</p>
-              {% if s.youtube_video_link %}
-                <a class="video-trigger" data-toggle="modal" data-target="#homeVideoModal" data-embed="{{s.youtube_video_link}}">
-                  <i class="fas fa-play-circle"></i>
-                </a>
-              {% endif %}
-            </div>
-            <img src="{{s.image.url}}">
+    <div class="swiper-wrapper">        
+      {% for s in context_slides %}
+        <div class="swiper-slide">
+          <div class="swiper-mask-left"></div>  
+          <div class="swiper-mask-right"></div> 
+          <div class="description text-center">
+            <h1>{{s.text|default_if_none:""}}</h1>
+            <p>{{s.description|default_if_none:""}}</p>
+            {% if s.youtube_video_link %}
+              <a class="video-trigger" data-toggle="modal" data-target="#homeVideoModal" data-embed="{{s.youtube_video_link}}">
+                <i class="fas fa-play-circle"></i>
+              </a>
+            {% endif %}
           </div>
-        {% endfor %}
-      </div>
-      <div class="swiper-pagination"></div>    
-    </div>           
-  </div>
+          <img src="{{s.image.url}}">
+        </div>
+      {% endfor %}
+    </div>
+    <div class="swiper-pagination"></div>  
+    <div class="search-landing">
+      <input type="text" placeholder="Buscar documentos...">
+    </div>  
+  </div>  
+
   <div class="row categories">
     <div class="col-md-6 order-1 category-parallax" data-stellar-background-ratio="0.1" style="background-image: url('/static/img/parallax-test.jpg');">
     </div>
     <div class="col-md-6 order-2 category-description" data-aos="slide-left">      
       <div class="container">
-          <h2>Derecho laboral</h2>
+          <h2>Creación de empresa</h2>
           <p>Quiere la boca exhausta vid, kiwi, piña y fugaz jamón. 
             Fabio me exige, sin tapujos, que añada cerveza al whisky. 
             Jovencillo emponzoñado de whisky, ¡qué figurota exhibes! 
             La cigüeña tocaba cada vez mejor el saxofón y el búho pedía kiwi y queso. El jefe buscó el</p>
-          <a class="action-button__primary" href="/documents/derecho-laboral/">Ver más</a>
+          <a class="action-button__primary" href="/documents/creacion-de-empresa/">Ver más</a>
       </div>      
     </div>
   </div>
@@ -65,12 +69,12 @@
   <div class="row categories">
     <div class="col-md-6 order-2 order-md-1 category-description left" data-aos="slide-right">      
         <div class="container">
-            <h2>Derecho societario</h2>
+            <h2>Gestión contractual</h2>
             <p>Quiere la boca exhausta vid, kiwi, piña y fugaz jamón. 
                 Fabio me exige, sin tapujos, que añada cerveza al whisky. 
                 Jovencillo emponzoñado de whisky, ¡qué figurota exhibes! 
                 La cigüeña tocaba cada vez mejor el saxofón y el búho pedía kiwi y queso. El jefe buscó el</p>
-            <a class="action-button__primary" href="/documents/derecho-societario/">Ver más</a>
+            <a class="action-button__primary" href="/documents/gestion-contractual/">Ver más</a>
         </div>      
       </div>
     <div class="col-md-6 order-1 order-md-2 category-parallax" data-stellar-background-ratio="0.1" style="background-image: url('/static/img/parallax-test-2.jpg');">
@@ -82,12 +86,12 @@
     </div>
     <div class="col-md-6 order-2 category-description" data-aos="slide-left">      
       <div class="container">
-          <h2>Derecho comercial</h2>
+          <h2>Gestión empresarial</h2>
           <p>Quiere la boca exhausta vid, kiwi, piña y fugaz jamón. 
               Fabio me exige, sin tapujos, que añada cerveza al whisky. 
               Jovencillo emponzoñado de whisky, ¡qué figurota exhibes! 
               La cigüeña tocaba cada vez mejor el saxofón y el búho pedía kiwi y queso. El jefe buscó el</p>
-          <a class="action-button__primary" href="/documents/derecho-comercial/">Ver más</a>
+          <a class="action-button__primary" href="/documents/gestion-empresarial/">Ver más</a>
       </div>      
     </div>
   </div>
@@ -95,12 +99,12 @@
   <div class="row categories">
     <div class="col-md-6 order-2 order-md-1 category-description left" data-aos="slide-right">      
         <div class="container">
-            <h2>Derecho civil</h2>
+            <h2>Negocios y asuntos personales</h2>
             <p>Quiere la boca exhausta vid, kiwi, piña y fugaz jamón. 
                 Fabio me exige, sin tapujos, que añada cerveza al whisky. 
                 Jovencillo emponzoñado de whisky, ¡qué figurota exhibes! 
                 La cigüeña tocaba cada vez mejor el saxofón y el búho pedía kiwi y queso. El jefe buscó el</p>
-            <a class="action-button__primary" href="/documents/derecho-civil/">Ver más</a>
+            <a class="action-button__primary" href="/documents/negocios-y-asuntos-personales/">Ver más</a>
         </div>      
       </div>
     <div class="col-md-6 order-1 order-md-2 category-parallax" data-stellar-background-ratio="0.1" style="background-image: url('/static/img/parallax-test-2.jpg');">
@@ -151,8 +155,8 @@
       <div class="container-flex flex-column justify-content-center" style="margin-top: 25px;">
         <h2>¿Por qué construir un contrato responsablemente?</h2>
         <p>{{landing_contract_info}}</p>
-        <a class="action-button__primary">Registrarse</a>
-      </div>      
+        <a class="action-button__primary" href="/documents/">Ver documentos</a>
+      </div>       
     </div>
   </div>
 
@@ -166,15 +170,16 @@
 
   <div class="row contact-form">
     <div class="col text-center">
-      <form>
+      <form action="{% url 'webclient:contact-form' %}" method="POST">
+        {% csrf_token %}
         <div class="form-group">
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nombre">
+          <input required name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nombre">
         </div>
         <div class="form-group">
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Correo electrónico">
+          <input required name="email" type="email" class="form-control" id="exampleInputPassword1" placeholder="Correo electrónico">
         </div>
         <div class="form-group">
-          <textarea class="form-control" placeholder="Mensaje"></textarea>
+          <textarea required name="message" class="form-control" placeholder="Mensaje"></textarea>
         </div>
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Enviar</button>

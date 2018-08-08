@@ -5,6 +5,15 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123601727-1"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-123601727-1');
+        </script>
+
         <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="description" content="Tratum, documentos legales online">
@@ -330,7 +339,7 @@
                         <a href="{% url 'webclient:about-us' %}">
                             Quienes somos 
                         </a>
-                        <a href="/policies/" >
+                        <a data-toggle="modal" data-target="#modal-documents" >
                             Dinos que documentos necesitas
                         </a>
                     </div>
@@ -389,6 +398,37 @@
                                     </div>
                                 {% endfor %}    
                             {% endfor %}                                                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-documents" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col text-center">
+                                    <form action="{% url 'webclient:contact-form' %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="is_document" value="true"/>
+                                        <div class="form-group">
+                                            <input required name="name" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Nombre">
+                                        </div>
+                                        <div class="form-group">
+                                            <input required name="email" type="email" class="form-control"  placeholder="Correo electrónico">
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea required name="message" class="form-control" placeholder="¿Qué documentos necesitas?"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary">Enviar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>                                          
                         </div>
                     </div>
                 </div>
