@@ -332,7 +332,9 @@ class DocumentField(SlugIdentifierMixin):
             return 'date'
         elif self.field_type == self.NUMBER:
             return 'number'
-
+    
+    def get_ordered_group_fields(self):
+        return self.field_group.all().order_by('group_order')
 
 class DocumentFieldOption(models.Model):
     name = models.CharField(

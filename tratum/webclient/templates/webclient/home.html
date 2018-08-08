@@ -175,28 +175,22 @@
             <p>{% lorem 1 p %}</p>
         </div>
         <div class="row">
-          <div class="col-lg-4 h-50">
-            <div class="bundle">
-              <span class="name">Básico</span>
-              <span class="pricetag">$50.000</span>
-              <div class="documents">
-                <span class="title">Documentos del paquete</span>
-                <ul>
-                  <li>Documento 1</li>
-                  <li>Documento 1</li>
-                  <li>Documento 1</li>
-                  <li>Documento 1</li>
-                </ul>
-              </div>
-              <button>Adquirir</button>
+          {% for i in 'xxx' %}
+            <div class="col-lg-4 h-50">
+                <div class="bundle">
+                  <span class="name">Básico</span>
+                  <span class="pricetag">$50.000</span>
+                  <div class="documents">
+                    <span class="title">Documentos del paquete</span>
+                    <span class="document">Documento 1 </span>
+                    <span class="document">Documento 1 </span>
+                    <span class="document">Documento 1 </span>
+                    <span class="document">Documento 1 </span>
+                  </div>
+                  <button class="btn btn-primary">Adquirir</button>
+                </div>
             </div>
-          </div>
-          <div class="col-lg-4 h-50">
-
-          </div>
-          <div class="col-lg-4 bg-dark h-50">
-
-          </div>
+          {% endfor %}
         </div>      
       </div>
     </div>

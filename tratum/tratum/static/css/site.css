@@ -159,19 +159,51 @@ section {
     padding: 80px 0;
 }
     .bundles .bundle {
-        padding-top: 25px;
+        padding: 35px 55px;
+        border: 2px solid rgb(201, 199, 199);
+        border-radius: 15px;
+        display: inline-block;
     }
         .bundles .bundle span {
             display: block;
         }
         .bundles .bundle span.name {
-            padding: .5em 1em;
-            border-radius: 10px;
+            padding: .5em 2em;
+            border-radius: 15px;
             background-color: #65eee5;
             color: #1e7e78;
             display: inline-block;
             margin-bottom: 1em;
+            font-size: .85em;
+            font-weight: 600;
         }
+        .bundles .bundle span.pricetag {
+            font-size: 1.4em;
+            color: #5eccc4;
+            font-weight: 800;
+            margin-bottom: 1.2em;
+        }
+        .bundles .bundle .documents  {
+            margin-bottom: 1.2em;
+        }
+            .bundles .bundle .documents span.title {
+                font-weight: 800;                
+                border-bottom: 1px solid #686868;
+                display: inline-block;
+                line-height: 1.8em;
+            }
+            .bundles .bundle .documents span {
+                margin: 1.2em auto;
+                font-size: .9em;
+            }
+            .bundles .bundle button {
+                background-color: #5eccc4;
+                color: #fff;
+                border: none;
+                border-radius: 20px;
+                padding: .5em 2em;
+                margin-top: 1em;
+            }
 
 .categories .category-description h2,
 .contract-info h2 {
