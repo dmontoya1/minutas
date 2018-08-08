@@ -155,6 +155,23 @@ section {
     }
 }
 
+.bundles {
+    padding: 80px 0;
+}
+    .bundles .bundle {
+        padding-top: 25px;
+    }
+        .bundles .bundle span {
+            display: block;
+        }
+        .bundles .bundle span.name {
+            padding: .5em 1em;
+            border-radius: 10px;
+            background-color: #65eee5;
+            color: #1e7e78;
+            display: inline-block;
+            margin-bottom: 1em;
+        }
 
 .categories .category-description h2,
 .contract-info h2 {

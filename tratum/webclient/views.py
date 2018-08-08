@@ -227,6 +227,7 @@ class CategoryDocumentsView(TemplateView):
         context['documents'] = Document.objects.filter(category__in=categories).order_by('order')
         return context
 
+
 class ProfileView(LoginRequiredMixin, TermsAndConditions, TemplateView):
 
     template_name = "webclient/profile.html"
@@ -315,7 +316,7 @@ class ContactFormView(View):
                 message=message
             ), 
             'no-reply@tratum.com',
-            ['dcastano@apptitud.com.co']
+            ['nrodriguez@apptitud.com.co']
         )
         email.send()
         messages.success(request, 'Mensaje envíado correctamente')
