@@ -168,7 +168,6 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
                     fields.append(component)
                 elif isinstance(component, DocumentSection) and component not in sections:
                     sections.append(component)
-        print(result)
         return result
 
     def get_fields(self):
@@ -303,7 +302,13 @@ class DocumentField(SlugIdentifierMixin):
         null=True,
         blank=True
     )
-    
+    group_order = models.PositiveIntegerField(
+        'Orden de campo en el grupo',
+        help_text='Indica el orden de aparición del campo en el formulario (Sólo aplica para grupos)',
+        null=True,
+        blank=True
+    )
+
     class Meta:
         verbose_name = 'Campo'
         unique_together = ('name', 'document')

@@ -57,6 +57,10 @@ section {
     padding-left: 0;
 }
 
+.about-us .categories .category-description h2, .contract-info h2{
+    width: 7.1em;
+}
+
 .action-button__primary {
     font-size: 1em;
     font-weight: 600;

@@ -298,7 +298,7 @@ class UserDocumentPreviewView(DetailView):
 
 
 class ContactFormView(View):
-    """Mensajes del formulario de contacto
+    """Mensajes del formulario de contacto y solicitud de documentos
     """
 
     def post(self, request, *args, **kwargs):
