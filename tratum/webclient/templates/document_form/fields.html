@@ -47,7 +47,7 @@
             <div class="counter">
                 {{field.field_group_verbose_name}} #<span>1</span>
             </div>
-            {% for gf in field.field_group.all %}  
+            {% for gf in field.get_ordered_group_fields %}  
                 {% if gf.is_text_input %}
                     <div class="input-block">
                         <div class="label">{{forloop.counter}}. {{gf.display_name}}</div>
