@@ -1,5 +1,6 @@
 {% extends 'webclient/base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block extra_css %}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/css/swiper.min.css">
@@ -175,19 +176,34 @@
             <p>{% lorem 1 p %}</p>
         </div>
         <div class="row">
-          {% for i in 'xxx' %}
+          {% for i in context_bundles %}
             <div class="col-lg-4 h-50">
-                <div class="bundle">
-                  <span class="name">Básico</span>
-                  <span class="pricetag">$50.000</span>
+                <div class="bundle 
+                  {% if forloop.counter == 2 %}
+                    dark-blue
+                  {% else %}
+                    {% if forloop.counter == 3 %}
+                      light-yellow
+                    {% endif %}
+                  {% endif %}">
+                  <span class="name">{{i.name}}</span>
+                  <span class="pricetag">${{i.price|intcomma}}</span>
                   <div class="documents">
                     <span class="title">Documentos del paquete</span>
-                    <span class="document">Documento 1 </span>
-                    <span class="document">Documento 1 </span>
-                    <span class="document">Documento 1 </span>
-                    <span class="document">Documento 1 </span>
+                    {% for d in i.documents.all %}
+                      <span class="document">{{d.name}}</span>
+                    {% endfor %}
                   </div>
-                  <button class="btn btn-primary">Adquirir</button>
+                  
+                  {% if user.is_authenticated %}
+                    <form method="POST" action="{% url 'store:checkout' %}">
+                      {% csrf_token %}
+                      <input type="hidden" name="pack_id" value="{{i.id}}">
+                      <button type="submit" class="btn btn-primary">Comprar</button>
+                    </form>
+                  {% else %}
+                    <button data-toggle="modal" data-target="#modal-login" class="btn btn-primary">Comprar</button>
+                  {% endif %}
                 </div>
             </div>
           {% endfor %}

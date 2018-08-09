@@ -49,7 +49,7 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['context_bundles'] = DocumentBundle.objects.alive()
+        context['context_bundles'] = DocumentBundle.objects.alive().filter(show_on_landing=True)
         context['context_slides'] = SliderItem.objects.all()
         site_config = SiteConfig.objects.last()
         if site_config:
