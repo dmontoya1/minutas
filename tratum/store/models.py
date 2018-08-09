@@ -7,6 +7,7 @@ import time
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import JSONField
+from django.core.exceptions import ValidationError
 from django.urls import reverse
 
 from utils.models import SoftDeletionModelMixin
@@ -33,6 +34,7 @@ class DocumentBundle(SoftDeletionModelMixin):
         blank=True
     )
     price = models.PositiveIntegerField('Precio')
+    show_on_landing = models.BooleanField(default=False)
     order = models.PositiveSmallIntegerField(
         'Orden',
         null=True,
@@ -47,8 +49,19 @@ class DocumentBundle(SoftDeletionModelMixin):
         verbose_name = 'Paquete de documento'   
         verbose_name_plural = 'Paquetes de documentos'
 
+    def clean(self):
+        """Retorna ValidationError si se intenta crear más tres instancias para la landing
+        """
+
+        model = self.__class__
+        if (model.objects.filter(show_on_landing=True).exclude(pk=self.pk).count() >= 3 and 
+                self.show_on_landing is True):
+            raise ValidationError(
+                "Sólo se puede agregar 3 paquetes a la landing.")
+
     def get_docs_count(self):
         return self.documents.count()
+    
 
 
 class UserDocument(models.Model):

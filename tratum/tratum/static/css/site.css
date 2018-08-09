@@ -177,21 +177,38 @@ section {
             font-size: .85em;
             font-weight: 600;
         }
+            .bundles .bundle.dark-blue span.name {
+                background-color: #98A9BC;
+                color: #39475c;
+            }
+            .bundles .bundle.light-yellow span.name {
+                background-color: #ffee9e;
+                color: #b19c45;
+            }
         .bundles .bundle span.pricetag {
             font-size: 1.4em;
             color: #5eccc4;
             font-weight: 800;
             margin-bottom: 1.2em;
         }
+            .bundles .bundle.dark-blue span.pricetag {
+                color: #39475c;
+            }
+            .bundles .bundle.light-yellow span.pricetag {
+                color: #b19c45;
+            }
         .bundles .bundle .documents  {
             margin-bottom: 1.2em;
+            height: 210px;
+            overflow-y: scroll;
+            overflow-x: hidden;
         }
             .bundles .bundle .documents span.title {
                 font-weight: 800;                
                 border-bottom: 1px solid #686868;
                 display: inline-block;
                 line-height: 1.8em;
-            }
+            }                
             .bundles .bundle .documents span {
                 margin: 1.2em auto;
                 font-size: .9em;
@@ -203,7 +220,17 @@ section {
                 border-radius: 20px;
                 padding: .5em 2em;
                 margin-top: 1em;
+                font-weight: 600;
+                box-shadow: 0 5px 15px rgba(0,0,0,.05), 0 4px 10px rgba(0,123,255,.25);            
             }
+                .bundles .bundle.dark-blue button {
+                    background-color: #002856;
+                    color: #fff;
+                }
+                .bundles .bundle.light-yellow button {
+                    background-color: #ffd301;
+                    color: #002856;
+                }
 
 .categories .category-description h2,
 .contract-info h2 {
