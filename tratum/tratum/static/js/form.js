@@ -152,6 +152,8 @@ $('.preview').on('click', function(e){
     window.location.reload = $(this).attr('href');
 })
 
+$('.selectpicker').selectpicker();
+
 $(function(){
     uuid = $('#doc-info').data('uuid')
     axios.get(`/api/store/user-document/${uuid}/`)

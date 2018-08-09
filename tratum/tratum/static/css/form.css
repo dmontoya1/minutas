@@ -166,3 +166,9 @@ iframe {
     background-color: #fff;
     border: 3px solid #c2c2c2;
 }
+
+.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn){
+    width: 100% !important;
+    border: 3px dashed rgb(150, 150, 150);
+    border-radius: 10px;
+}

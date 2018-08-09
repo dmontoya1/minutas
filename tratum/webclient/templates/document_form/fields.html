@@ -42,7 +42,7 @@
             {% endif %}
         </div>   
         <div class="input-control col">
-            <select multiple="true">
+            <select multiple="true" class="selectpicker">
                 <option selected disabled>Selecciona uno     o varios elementos de la lista</option>
                 {% for f in field.documentfieldoption_set.all %}
                     <option value="{{f.name}}">{{f.name}}</option>
