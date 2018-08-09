@@ -230,6 +230,7 @@ class DocumentField(SlugIdentifierMixin):
     TEXT = 'TX'
     DATE = 'DT'
     SELECT = 'SE'
+    SELECT_MULTIPLE = 'SM'
     LIST = 'LI'
     GROUP = 'GP'
 
@@ -238,6 +239,7 @@ class DocumentField(SlugIdentifierMixin):
         (TEXT, 'Texto abierto'),
         (DATE, 'Fecha'),
         (SELECT, 'Opciones de única respuesta'),
+        (SELECT_MULTIPLE, 'Opciones agrupadas'),
         (LIST, 'Listado'),
         (GROUP, 'Agrupación de campos')
     )
@@ -302,6 +304,12 @@ class DocumentField(SlugIdentifierMixin):
         null=True,
         blank=True
     )
+    group_items = models.TextField(
+        'Opciones del grupo',
+        help_text='Indica cada uno de los items de un campo múltiple, separados por *',
+        null=True,
+        blank=True
+    )
     group_order = models.PositiveIntegerField(
         'Orden de campo en el grupo',
         help_text='Indica el orden de aparición del campo en el formulario (Sólo aplica para grupos)',
@@ -336,10 +344,10 @@ class DocumentField(SlugIdentifierMixin):
     def get_ordered_group_fields(self):
         return self.field_group.all().order_by('group_order')
 
+
 class DocumentFieldOption(models.Model):
-    name = models.CharField(
+    name = models.TextField(
         'Nombre',
-        max_length=50,
         null=True,
         blank=True
     )

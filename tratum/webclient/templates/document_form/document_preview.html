@@ -18,10 +18,23 @@
                     {{document_content|safe}}
                 </div>
             </div>
-            <div class="col-md-6">
-                <button class="action-button__primary blue pdf-gen">Descargar PDF</button>
-                <button class="action-button__primary blue doc-gen">Descargar DOC</button>
-            </div>
+            {% if object.is_complete %}
+                <div class="col-md-6">
+                    <span>El tiempo límite para exportar el documento a caducado</span>
+                </div>
+            {% else %}
+                {% if object.is_previewed %}
+                    <div class="col-md-6">
+                        <button class="action-button__primary blue pdf-gen">Descargar PDF</button>
+                        <button class="action-button__primary blue doc-gen">Descargar DOC</button>
+                    </div>
+                {% else %}
+                    <div class="col-md-6">
+                        <button class="action-button__primary blue preview" data-href="">Finalizar</button>
+                        <button class="action-button__primary blank update" data-href="{{object.get_absolute_url}}">Editar</button>
+                    </div>
+                {% endif %}                
+            {% endif %}    
         </div>
     </div>
 {% endblock%}
@@ -31,6 +44,7 @@
     <script type="text/javascript" src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
     <script type="text/javascript" src="{% static 'js/FileSaver.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/html-docx.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/preview.js' %}"></script>    
     <script type="text/javascript" src="{% static 'js/pdfRender.js' %}"></script>    
     <script type="text/javascript" src="{% static 'js/docRender.js' %}"></script> 
 {% endblock %}

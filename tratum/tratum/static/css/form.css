@@ -123,14 +123,20 @@ iframe {
             margin: 20px 0;
             position: relative;
         }
-            .upform .upform-main .input-block .input-control input[type=text] {
+            .upform .upform-main .input-block .input-control input[type=text],
+            .upform .upform-main .input-block .input-control select {
                 border: 3px dashed rgb(150, 150, 150);
                 border-radius: 10px;
-                font-size: 1.2em;
+                font-size: 1em;
                 outline-width: 0;
                 padding: 10px;
                 width: 100%;
             }
+                .upform .upform-main .input-block .input-control select option {
+                    white-space: pre-wrap;
+                    margin-bottom: .8em;
+                    font-size: .8em;
+                }
         .upform .upform-main .input-block .label {
             color: rgb(8, 54, 97);
             display: block;
