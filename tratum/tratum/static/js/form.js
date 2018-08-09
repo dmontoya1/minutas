@@ -1,6 +1,12 @@
 axios.defaults.headers.common['Api-Key'] = document.getElementById('doc-info').dataset.apikey;
 axios.defaults.headers.common['X-CSRFToken'] = document.getElementById('doc-info').dataset.csrftoken;
 
+
+function savePreview() {
+    serializedForm = $('#document-form').serialize();
+    axios.post('/api/document-manager/save-preview/', serializedForm)
+}
+
 $.fn.upform = function() {
     var $this = $(this);
     var container = $this.find(".upform-main");
@@ -17,6 +23,7 @@ $.fn.upform = function() {
     });
 
     $(container).find(".input-block input").keydown(function(e) {
+        savePreview();
         if (e.which == 13 || e.which == 9) {
             e.preventDefault()            
             if ($(this).hasClass("required") && $(this).val() == "") {
@@ -55,7 +62,6 @@ $.fn.upform = function() {
         });
         $(e).addClass("active");
         $(e).find('input').focus();
-        savePreview();
     }
 
     function rescroll(e) {
@@ -78,10 +84,6 @@ $.fn.upform = function() {
         $(e).parent().parent().prev().click();
     }
 
-    function savePreview() {
-        serializedForm = $('#document-form').serialize();
-        axios.post('/api/document-manager/save-preview/', serializedForm)
-    }
 };
 
 form = $(".upform").upform();
@@ -142,6 +144,12 @@ $('#document-form').on('submit', function(e){
     });
 
     $(this).unbind('submit').submit();
+})
+
+$('.preview').on('click', function(e){
+    e.preventDefault();
+    savePreview();
+    window.location.reload = $(this).attr('href');
 })
 
 $(function(){
