@@ -114,6 +114,16 @@ class SaveAnswersView(View):
         user_document.answers = request.POST
         user_document.save()
         return HttpResponse(status=200)
+
+
+class FinishDocumentView(View):
+
+    def post(self, request, *args, **kwargs):
+        body = json.loads(request.body)
+        user_document = UserDocument.objects.get(identifier=body['identifier'])
+        user_document.status = UserDocument.FINISHED
+        user_document.save()
+        return HttpResponse(status=200)
         
 
 class DocumentList(generics.ListAPIView):
