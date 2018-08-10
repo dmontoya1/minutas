@@ -149,10 +149,8 @@ $('#document-form').on('submit', function(e){
 $('.preview').on('click', function(e){
     e.preventDefault();
     savePreview();
-    window.location.reload = $(this).attr('href');
+    window.location.href = $(this).attr('href');
 })
-
-$('.selectpicker').selectpicker();
 
 $(function(){
     uuid = $('#doc-info').data('uuid')
