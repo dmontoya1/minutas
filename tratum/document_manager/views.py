@@ -165,6 +165,7 @@ def category(request, path, instance):
     document_list = None
     packages = None
     package_list = None
+    q = request.GET.get('q', None)
 
     if request.GET.get('free') is not None or request.GET.get('pay') is not None or request.GET.get('package') is not None:
         if request.GET.get('free'):
@@ -187,7 +188,14 @@ def category(request, path, instance):
             categories = instance.get_descendants(include_self=True)
             document_list = Document.objects.filter(category__in=categories).order_by('order')
         else:
-            document_list = Document.objects.all().order_by('order')
+            if q:
+                document_list = Document.objects.filter(
+                    Q(name__icontains=q) | Q(category__name__icontains=q)
+                ).order_by('order')
+                print(document_list)
+            else:
+                document_list = Document.objects.all().order_by('order')
+
 
     if document_list:
         paginator = Paginator(document_list, 8)
@@ -197,7 +205,7 @@ def category(request, path, instance):
         paginator = Paginator(package_list, 8)
         page = request.GET.get('page')
         packages = paginator.get_page(page)
-
+    
     return render(
         request,
         'webclient/documents.html',

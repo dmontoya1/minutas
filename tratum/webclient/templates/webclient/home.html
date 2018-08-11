@@ -48,7 +48,7 @@
     </div>
     <div class="swiper-pagination"></div>  
     <div class="search-landing">
-      <input type="text" placeholder="Buscar documentos...">
+      <input type="search" placeholder="Buscar documentos..." id="search_documents">
     </div>  
   </div>  
 
@@ -258,6 +258,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/js/swiper.min.js"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
+      $('#search_documents').on('keyup', function(e){
+        if (e.keyCode === 13) {
+          window.location.href = `/documents?q=${$(this).val()}`
+        }
+      })
+
       var mySwiper = new Swiper ('.swiper-container', {
           direction: 'horizontal',
           loop: true,
