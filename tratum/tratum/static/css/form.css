@@ -166,3 +166,30 @@ iframe {
     background-color: #fff;
     border: 3px solid #c2c2c2;
 }
+
+.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn){
+    width: 100% !important;
+    border: 3px dashed rgb(150, 150, 150);
+    border-radius: 10px;
+}
+
+.bootstrap-select.show>.dropdown-menu>.dropdown-menu {
+    display: block;
+}
+
+.bootstrap-select > .dropdown-menu > .dropdown-menu li.hidden{
+    display:none;
+}
+
+.bootstrap-select > .dropdown-menu > .dropdown-menu li a{
+    display: block;
+    width: 100%;
+    padding: 3px 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #292b2c;
+    text-align: inherit;
+    white-space: nowrap;
+    background: 0 0;
+    border: 0;
+}

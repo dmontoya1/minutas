@@ -25,9 +25,19 @@
                         <td>{{object.created_at}}</td>
                         <td>{{object.get_status_display}}</td>
                         <th scope="row" >
-                            <a href="{{object.get_absolute_url}}">
-                                Continuar editando
-                            </a>
+                            {% if object.status != object.is_expired %}
+                                {% if object.status == object.FINISHED %}
+                                    <a href="{% url 'webclient:user-document-preview' object.identifier %}">
+                                        Descargar
+                                    </a>
+                                {% else %}
+                                    <a href="{% url 'webclient:user-document' object.identifier %}">
+                                        Editar
+                                    </a>
+                                {% endif %}
+                            {% else %}
+                                <span>No hay acciones disponibles</span>
+                            {% endif %}
                         </th>
                     </tr>
                 {% endfor %}

@@ -35,20 +35,24 @@
     </div>
 {% elif field.field_type == field.SELECT_MULTIPLE %}
     <div class="input-block">
-        <div class="label col clearfix">
+        <div class="label col clearfix mb-2">
             <span class="float-left">{{forloop.counter}}. {{field.display_name}} </span>
             {% if field.help_text %}
-                <i class="fas fa-question-circle float-right" data-toggle="tooltip" data-placement="left" title="{{field.help_text}}"></i>
+                <i class="fas fa-question-circle float-right " data-toggle="tooltip" data-placement="left" title="{{field.help_text}}"></i>
             {% endif %}
         </div>   
-        <div class="input-control col">
-            <select multiple="true">
-                <option selected disabled>Selecciona uno     o varios elementos de la lista</option>
-                {% for f in field.documentfieldoption_set.all %}
-                    <option value="{{f.name}}">{{f.name}}</option>
-                {% endfor %}                
-            </select>
-        </div>
+        {% for f in field.documentfieldoption_set.all %}
+            <div class="col mb-2">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <input type="checkbox" id="{{field.name}}__{{f.pk}}" value="{{f.name}}">
+                    </div>
+                    <div class="col-sm-11 pl-0">
+                        <label for="{{field.name}}__{{f.pk}}">{{f.name}}</label>
+                    </div>
+                </div>              
+            </div>
+        {% endfor %}
     </div>
 {% elif field.field_type == field.GROUP  %}
     <div class="input-block">

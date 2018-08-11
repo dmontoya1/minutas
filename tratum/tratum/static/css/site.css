@@ -275,21 +275,25 @@ section {
 }
 
 .contextualMenu {
-    height: 100vh;
+    height: 100%;
     background-color: #5eccc4;
-    padding-top: 5em;
+    padding-top: 3em;
     display: none;
-    width: 100vw;
-    z-index: 9999;
-    position: absolute;
+    z-index: 999999;
+    position: fixed;
 }
+    .contextualMenu i {
+        font-size: 2em;
+        color: #FFF;
+        cursor: pointer;
+    }
     .contextualMenu > div {
         padding-left: 30px !important;
     }
     .contextualMenu h4 {
         font-weight: 600;
-        font-size: 2.5em;
-        margin-bottom: .5em;
+        font-size: 2em;
+        margin-bottom: .8em;
     }
     .contextualMenu h5 {
         padding: .1em 1em;

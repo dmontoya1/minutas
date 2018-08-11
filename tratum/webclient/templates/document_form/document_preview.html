@@ -4,6 +4,8 @@
 
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'css/preview.css' %}">
+  <meta http-equiv="Cache-control" content="no-cache">
+
 {% endblock %}
 
 {% block nav_class %}
@@ -11,6 +13,11 @@
 {% endblock %}
 
 {% block content %}
+    <div 
+      id="doc-info"
+      data-uuid="{{object.identifier}}"
+      data-apikey="{{Api_Key}}"
+      data-csrftoken="{{csrf_token}}"></div>
     <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -18,19 +25,20 @@
                     {{document_content|safe}}
                 </div>
             </div>
-            {% if object.is_complete %}
-                <div class="col-md-6">
+            {% if object.status == object.is_expired %}
+                <div class="col-md-6 mt-4">
                     <span>El tiempo límite para exportar el documento a caducado</span>
                 </div>
             {% else %}
-                {% if object.is_previewed %}
-                    <div class="col-md-6">
+                {% if object.status == object.FINISHED %}
+                    <div class="col-md-6 mt-4">
+                        <a href="{% url 'webclient:user-documents' %}" class="underline">Ver mis documentos</a></br>
                         <button class="action-button__primary blue pdf-gen">Descargar PDF</button>
                         <button class="action-button__primary blue doc-gen">Descargar DOC</button>
                     </div>
                 {% else %}
                     <div class="col-md-6">
-                        <button class="action-button__primary blue preview" data-href="">Finalizar</button>
+                        <button class="action-button__primary blue finish">Finalizar</button>
                         <button class="action-button__primary blank update" data-href="{{object.get_absolute_url}}">Editar</button>
                     </div>
                 {% endif %}                

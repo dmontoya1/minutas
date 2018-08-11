@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 import uuid
+import datetime
 import time
 
 from django.db import models
@@ -68,11 +69,13 @@ class UserDocument(models.Model):
     CREATED = 'CR'
     PURCHASED = 'PU'
     FINISHED = 'FI'
+    EXPIRED = 'EX'
 
     STATUS_CHOICES = (
         (CREATED, 'Creado'),
         (PURCHASED, 'Comprado'),
-        (FINISHED, 'Finalizado')
+        (FINISHED, 'Finalizado'),
+        (EXPIRED, 'Caducado'),
     )
 
     user = models.ForeignKey(
@@ -113,6 +116,15 @@ class UserDocument(models.Model):
     
     def get_absolute_url(self):
         return reverse('webclient:user-document', kwargs={'identifier': self.identifier})
+    
+    def is_expired(self):
+        return False
+        created_at = datetime.datetime.strptime(self.created_at, "%Y-%m-%d") 
+        diff = abs((datetime.datetime.now() - created_at).days)
+        print(diff)
+        if diff > 10:
+            return False
+        return True
 
 
 class Invoice(models.Model):
