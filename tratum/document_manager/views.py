@@ -119,7 +119,7 @@ class SaveAnswersView(View):
 class FinishDocumentView(View):
 
     def post(self, request, *args, **kwargs):
-        body = json.loads(request.body)
+        body = json.loads(request.body.decode('utf-8'))
         user_document = UserDocument.objects.get(identifier=body['identifier'])
         user_document.status = UserDocument.FINISHED
         user_document.save()

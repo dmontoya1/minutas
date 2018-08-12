@@ -56,8 +56,7 @@ class Company(models.Model):
         verbose_name = "Compañía"
 
     def __str__(self):
-        return self.name
-
+        return self.name    
 
 
 class LogTerms(models.Model):
