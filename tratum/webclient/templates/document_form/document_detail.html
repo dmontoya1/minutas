@@ -30,7 +30,6 @@
             <a href="{% url 'webclient:user-documents' %}" class="col">Regresar</a>
             <form method="POST" action="{% url 'document_manager:process' %}" id="document-form">    
               <input type="hidden" name="identifier" value="{{identifier}}" />
-              {% csrf_token %}
               <div class="upform-header"></div>    
               <div class="upform-main"> 
                 {% for field in object.get_fields %}
