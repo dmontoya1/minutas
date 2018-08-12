@@ -15,7 +15,7 @@ INTERNAL_IPS = [
     '192.168.0.16'
 ]
 
-API_KEY = '042c97b1f486c5bde044ba5f10dfd11ad26cb81b'
+API_KEY = 'd492009ed1b5395f64230e13fb71ce33cc855156'
 
 
 # Application definition
@@ -89,7 +89,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tratum.wsgi.application'
 
-SITE_ID = 2
+SITE_ID = 3
 
 
 # Database
@@ -139,6 +139,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "tratum/static"),
 ]
+STATIC_ROOT = '/var/www/tratum/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'tratum/media')
 
