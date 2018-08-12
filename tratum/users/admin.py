@@ -6,7 +6,15 @@ from django.contrib import messages
 from django.contrib.auth.admin import UserAdmin as django_user_admin
 from django.contrib.auth.forms import UserChangeForm as django_change_form
 from django.utils.translation import ugettext, ugettext_lazy as _
-from .models import Company, LogTerms
+from .models import Company, LogTerms, Sector
+
+
+@admin.register(Sector)
+class CompanyAdmin(admin.ModelAdmin):
+    """Administrador para las compañías
+    """
+    
+    model = Sector
 
 
 @admin.register(Company)

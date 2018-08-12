@@ -1,3 +1,12 @@
+axios.defaults.headers.common['Api-Key'] = document.getElementById('doc-info').dataset.apikey;
+axios.defaults.headers.common['X-CSRFToken'] = document.getElementById('doc-info').dataset.csrftoken;
+
+
+function savePreview() {
+    serializedForm = $('#document-form').serialize();
+    axios.post('/api/document-manager/save-preview/', serializedForm)
+}
+
 $.fn.upform = function() {
     var $this = $(this);
     var container = $this.find(".upform-main");
@@ -14,10 +23,11 @@ $.fn.upform = function() {
     });
 
     $(container).find(".input-block input").keydown(function(e) {
+        savePreview();
         if (e.which == 13 || e.which == 9) {
             e.preventDefault()            
             if ($(this).hasClass("required") && $(this).val() == "") {
-            } else {
+            } else {                
                 moveNext(this);
             } 
         }
@@ -73,6 +83,7 @@ $.fn.upform = function() {
     function movePrev(e) {
         $(e).parent().parent().prev().click();
     }
+
 };
 
 form = $(".upform").upform();
@@ -127,10 +138,30 @@ $('#document-form').on('submit', function(e){
         console.log($(fd));
         expression = $(this).data('expression');
         ex_fields = expression.match('{{(.*?)}}')
-        $(this).find('.group-item').each(function(i, it){
-            console.log($(it));           
+        $(this).find('.group-item').each(function(i, it){     
             submitFields.push(ex_fields.replace($(this).value()).match(ex_fields))
         });
     });
+
     $(this).unbind('submit').submit();
 })
+
+$('.preview').on('click', function(e){
+    e.preventDefault();
+    savePreview();
+    window.location.href = $(this).attr('href');
+})
+
+$(function(){
+    uuid = $('#doc-info').data('uuid')
+    axios.get(`/api/store/user-document/${uuid}/`)
+        .then(function (response) {
+            answers = response.data.answers
+            Object.keys(answers).forEach(function(key) {
+                input = $('#document-form').find(`input[name='${key}']`)
+                if(input){
+                    input.val(answers[key]);
+                }
+            });
+        })
+});

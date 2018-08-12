@@ -60,6 +60,13 @@ class Category(MPTTModel, SoftDeletionModelMixin, SlugIdentifierMixin):
         # return reverse('webclient:category-documents', kwargs={'slug': self.slug})
         return reverse('webclient:category_documents', kwargs={'path': self.get_path()})
 
+    def get_purchased_docs_count(self):
+        docs = self.document_set.all()
+        i = 0
+        for d in docs:
+            i = i + d.userdocument_set.all().count()
+        return i
+
 
 class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
     """Guarda las documentos.
@@ -161,7 +168,6 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
                     fields.append(component)
                 elif isinstance(component, DocumentSection) and component not in sections:
                     sections.append(component)
-        
         return result
 
     def get_fields(self):
@@ -224,6 +230,7 @@ class DocumentField(SlugIdentifierMixin):
     TEXT = 'TX'
     DATE = 'DT'
     SELECT = 'SE'
+    SELECT_MULTIPLE = 'SM'
     LIST = 'LI'
     GROUP = 'GP'
 
@@ -232,6 +239,7 @@ class DocumentField(SlugIdentifierMixin):
         (TEXT, 'Texto abierto'),
         (DATE, 'Fecha'),
         (SELECT, 'Opciones de única respuesta'),
+        (SELECT_MULTIPLE, 'Opciones agrupadas'),
         (LIST, 'Listado'),
         (GROUP, 'Agrupación de campos')
     )
@@ -296,7 +304,19 @@ class DocumentField(SlugIdentifierMixin):
         null=True,
         blank=True
     )
-    
+    group_items = models.TextField(
+        'Opciones del grupo',
+        help_text='Indica cada uno de los items de un campo múltiple, separados por *',
+        null=True,
+        blank=True
+    )
+    group_order = models.PositiveIntegerField(
+        'Orden de campo en el grupo',
+        help_text='Indica el orden de aparición del campo en el formulario (Sólo aplica para grupos)',
+        null=True,
+        blank=True
+    )
+
     class Meta:
         verbose_name = 'Campo'
         unique_together = ('name', 'document')
@@ -320,12 +340,14 @@ class DocumentField(SlugIdentifierMixin):
             return 'date'
         elif self.field_type == self.NUMBER:
             return 'number'
+    
+    def get_ordered_group_fields(self):
+        return self.field_group.all().order_by('group_order')
 
 
 class DocumentFieldOption(models.Model):
-    name = models.CharField(
+    name = models.TextField(
         'Nombre',
-        max_length=50,
         null=True,
         blank=True
     )
@@ -345,4 +367,7 @@ class DocumentFieldOption(models.Model):
     def clean(self):
         if self.field.is_text_input():
             raise ValidationError('El campo debe ser tipo "Opciones de única respuesta" para agregarle opciones')
+
+
+
 

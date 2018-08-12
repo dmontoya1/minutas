@@ -1,0 +1,58 @@
+{% extends 'webclient/base.html' %}
+{% load humanize %}
+{% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/preview.css' %}">
+  <meta http-equiv="Cache-control" content="no-cache">
+
+{% endblock %}
+
+{% block nav_class %}
+    class="navbar scrolled"
+{% endblock %}
+
+{% block content %}
+    <div 
+      id="doc-info"
+      data-uuid="{{object.identifier}}"
+      data-apikey="{{Api_Key}}"
+      data-csrftoken="{{csrf_token}}"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="document-preview" id="content-preview" data-name="{{object.document.name}}">
+                    {{document_content|safe}}
+                </div>
+            </div>
+            {% if object.status == object.is_expired %}
+                <div class="col-md-6 mt-4">
+                    <span>El tiempo límite para exportar el documento a caducado</span>
+                </div>
+            {% else %}
+                {% if object.status == object.FINISHED %}
+                    <div class="col-md-6 mt-4">
+                        <a href="{% url 'webclient:user-documents' %}" class="underline">Ver mis documentos</a></br>
+                        <button class="action-button__primary blue pdf-gen">Descargar PDF</button>
+                        <button class="action-button__primary blue doc-gen">Descargar DOC</button>
+                    </div>
+                {% else %}
+                    <div class="col-md-6">
+                        <button class="action-button__primary blue finish">Finalizar</button>
+                        <button class="action-button__primary blank update" data-href="{{object.get_absolute_url}}">Editar</button>
+                    </div>
+                {% endif %}                
+            {% endif %}    
+        </div>
+    </div>
+{% endblock%}
+
+
+{% block extra_js %}
+    <script type="text/javascript" src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/FileSaver.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/html-docx.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/preview.js' %}"></script>    
+    <script type="text/javascript" src="{% static 'js/pdfRender.js' %}"></script>    
+    <script type="text/javascript" src="{% static 'js/docRender.js' %}"></script> 
+{% endblock %}

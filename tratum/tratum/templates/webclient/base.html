@@ -5,10 +5,19 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123601727-1"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-123601727-1');
+        </script>
+
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="description" content="Tratum, documentos legales online">
-        <meta name="author" content="Tratum S.A.S">
+        <meta name="author" content="Apptitud">
         <link rel="icon" href="https://getbootstrap.com/assets/img/favicons/favicon-32x32.png">
         <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400,600,700" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" 
@@ -23,6 +32,7 @@
         <link rel="stylesheet" href="{% static 'css/shards.min.css' %}">
         <link rel="stylesheet" href="{% static 'css/site.css' %}">
         <link rel="stylesheet" href="{% static 'css/tratum.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-4-navbar.css' %}">
         <title>Tratum</title>
         {% block extra_css %}
         {% endblock %}
@@ -31,41 +41,64 @@
         <header>
             <div class="pos-f-t">
                 <div class="contextualMenu">
+                    <div class="pl-4">
+                        <i class="fas fa-times contextual-closer"></i>
+                    </div>
                     <div class="p-4">
                         <h4 class="text-white">
-                            <a>Inicio</a>
+                            <a href="/">Inicio</a>
                         </h4>
                         <h4 class="text-white">
-                            <a>Categorias</a>
+                            <a href="{% url 'webclient:category_documents' path='' %}">Tienda de documentos</a>
                         </h4>
-                        <h4 class="text-white">
-                            <a>Mis documentos</a>
-                        </h4>
-                        <h4 class="text-white">
-                            <a>Historial</a>
-                        </h4>
-                        <h4 class="text-white">
-                            <a>Perfil</a>
-                        </h4>
+                        {% if request.user.is_authenticated %}
+                            <h4 class="text-white">
+                                <a href="{% url 'webclient:user-documents' %}">Mis documentos</a>
+                            </h4>
+                            <h4 class="text-white">
+                                <a href="{% url 'webclient:profile' %}">Mi cuenta</a>
+                            </h4>
+                        {% endif %}
                         <div class="mt-5">
-                            <h5 class="text-white">
-                                <a>Iniciar sesión</a>
-                            </h5></br>
-                            <h5 class="text-white">
-                                <a>Registrarse</a>
-                            </h5>
+                            {% if request.user.is_anonymous %}
+                                <h5 class="text-white">
+                                    <a data-toggle="modal" data-target="#modal-login">Iniciar sesión</a>
+                                </h5></br>
+                                <h5 class="text-white">
+                                    <a data-toggle="modal" data-target="#modal-signup">Registrarse</a>
+                                </h5>
+                            {% else %}
+                                <h5 class="text-white">
+                                    <a href="/logout/" id="Logout">Cerrar sesión</a>
+                                </h5></br>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
-                <nav class="navbar fixed-top bg-transparent ">
+                <nav {% block nav_class %}class="navbar fixed-top bg-transparent" {% endblock %}>
                     <button class="navbar-toggler" type="button" >
                         <i class="fas fa-bars rotate"></i>
-                    </button>
+                        <a href="/">
+                            <img class="logo" src="{% static 'img/logo-placeholder@2x.png' %}">
+                        </a>
+                    </button>                    
                     <div class="float-right main-options d-none d-lg-block">
-                        <a>Categorías <i class="fas fa-caret-down"></i></a>
-                        <span class="divider">|</span>
-                        <a data-toggle="modal" data-target="#modal-signup">Registrarse</a>
-                        <a data-toggle="modal" data-target="#modal-login">Iniciar sesión</a>
+                        <div class="dropleft">
+                            <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categorías <span class="divider">|</span></a>
+                            <div class="dropdown-menu">
+                                {% for c in context_categories %}
+                                    {% include 'webclient/dropdown.html' %}
+                                {% endfor %}
+                            </div>
+                        </div>  
+                        <div class="auth-buttons">
+                            {% if request.user.is_anonymous %}
+                                <a data-toggle="modal" data-target="#modal-signup">Registrarse</a>
+                                <a data-toggle="modal" data-target="#modal-login">Iniciar sesión</a>
+                            {% else %}
+                                <a href="/logout/" id="Logout">Cerrar sesión</a>
+                            {% endif %}
+                        </div>
                     </div>
                 </nav>  
             </div>
@@ -110,24 +143,24 @@
                             </div>
                             <div class="row justify-content-center">
                                 <div class="col">
-                                    <form method="POST" id="login" class="form-horizontal" >
+                                    <form method="POST" id="login" class="form-horizontal login" >
                                         {% csrf_token %}
                                         <div class="form-group">
                                             <div class="col-xs-12">
-                                                <label class="control-label">Correo electrónico*</label>
+                                                <label for="id_login" class="control-label">Correo electrónico*</label>
                                             </div>
                                             <div class="col-xs-12">
-                                                <input class="form-control" name="email" data-validation="email"
+                                                <input class="form-control" type="email" name="email" data-validation="email" autofocus="autofocus" id="id_login"
                                                 data-validation-error-msg="Debes ingresar un email válido" />
                                             </div>
                                         </div>
-                        
+                                        <br>
                                         <div class="form-group">
                                             <div class="col-xs-12">
-                                                <label class="control-label">Contraseña*</label>
+                                                <label for="id_password" class="control-label">Contraseña*</label>
                                             </div>
                                             <div class="col-xs-12">
-                                                <input type="password" class="form-control" name="password" required/>
+                                                <input type="password" class="form-control" name="password" required id="id_password"/>
                                             </div>
                                         </div>
         
@@ -188,7 +221,7 @@
                         
                                         <div class="form-group">
                                             <div class="col-xs-12">
-                                                <label class="control-label">Correo Electrónico</label>
+                                                <label class="control-label">Correo Electrónico *</label>
                                             </div>
                                             <div class="col-xs-12">
                                                 <input type="text" required class="form-control" name="email" 
@@ -199,41 +232,41 @@
                         
                                         <div class="form-group">
                                             <div class="col-xs-12">
-                                                <label class="control-label">Contraseña</label>
+                                                <label class="control-label">Contraseña *</label>
                                             </div>
                                             <div class="col-xs-12">
-                                                <input required type="password" class="form-control" 
-                                                name="password1" data-validation="length strength" 
-                                                data-validation-length="min8"
-                                                data-validation-strength="2"
-                                                data-validation-error-msg="Tu contraseña debe tener mínimo 8 caracteres, un número y una letra"/>
+                                                <input required type="password" class="form-control" name="password1" id="password1"/>
+                                                <span id="result"></span>
                                             </div>
+                                            
                                         </div>
                                         <br>
                         
-                                        <div class="form-group">
+                                        <div class="form-group mb-3">
                                             <div class="col-xs-12">
-                                                <label class="control-label"> Repetir Contraseña</label>
+                                                <label class="control-label"> Repetir Contraseña *</label>
                                             </div>
                                             <div class="col-xs-12">
                                                 <input required type="password" class="form-control"  
-                                                name="password2" data-validation="confirmation" data-validation-confirm="password1"
-                                                data-validation-error-msg="Las contraseñas no coinciden"/>
+                                                name="password2" id="password2"/>
+                                                <span id="valid"></span>
                                             </div>
                                         </div>
+                                        <div class="float-right">
+                                            <span style="font-size: 0.8em;color: red;">Los campos con * son obligatorios</span>
+                                        </div>
         
-                                        <div class="terms-conditions">
+                                        <div class="terms-conditions mt-5">
                                             <input type="checkbox" id="terms" style="display:inline">
                                             <label for="terms" style="color: #929292;display:inline;font-weight: 100;">
-                                            Para continuar debes aceptar los 
-                                            <a href="{% url 'web_client:terms" class="signup_terms">Términos y condiciones </a> y las 
-                                            <a href="{% url 'web_client:privacy-policy" class="signup_terms">Políticas de tratamiento de datos </a>de <strong>TRATUM S.A.S</strong>
+                                            Para continuar debes aceptar las 
+                                            <a href="{% url 'webclient:policies' 'privacy' %}" target="_blank" class="signup_terms"><strong>Políticas de tratamiento de datos</strong> </a>de <strong>TRATUM S.A.S</strong>
                                         </div>
         
                                         <input type="hidden" name="username" />
                         
                                         <div class="text-center">
-                                            <input type="submit" id="reg_submit_signup" value="Registrarse"/>
+                                            <input type="submit" disabled id="reg_submit_signup" value="Registrarse"/>
                                         </div>
                                     </form>
                                 </div>
@@ -296,26 +329,115 @@
             </div>
         </div>
 
-        <footer class="bg-dark">
+        <footer>
             <div class="container">
-                <div class="row ">
-                    <div class="col-sm-12 text-center mt-5 mb-5">
-                        <a href="/policies/" class="text-white">
-                            Quienes somos |
+                <div class="row">
+                    <div class="col-sm-12 col-md-3 faq">
+                        <i class="fas fa-question-circle"></i>
+                        <a data-toggle="modal" data-target="#modal-faq">
+                            FAQ
                         </a>
-                        <a href="/faq/" class="text-white">
-                            Dinos que documentos necesitas |
+                    </div>
+                    <div class="col-sm-12 col-md-3 link-col">
+                        <a href="{% url 'webclient:about-us' %}">
+                            Quienes somos 
                         </a>
-                        <a href="/faq/" class="text-white">
-                            Políticas de uso |
+                        <a data-toggle="modal" data-target="#modal-documents" >
+                            Dinos que documentos necesitas
                         </a>
-                        <a href="/faq/" class="text-white">
+                    </div>
+                    <div class="col-sm-12 col-md-3 link-col">
+                        <a href="{% url 'webclient:policies' 'privacy' %}">
+                            Políticas de uso 
+                        </a>
+                        <a href="{% url 'webclient:policies' 'terms' %}">
                             Terminos y condiciones 
+                        </a>
+                    </div>
+                    <div class="col-sm-12 col-md-3 social text-right">
+                        <a href="#" class="text-white">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-white">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-white">
+                            <i class="fab fa-instagram"></i>
                         </a>
                     </div>
                 </div>
             </div>
+            <div class="row copyright">
+                <div class="col text-center">
+                    <span>Tratum 2018 - Powered by 
+                        <a href="http://www.apptitud.co" target="_blank" class="underline">
+                            <strong>Apptitud</strong>
+                        </a>
+                    </span>
+                </div>
+            </div>
         </footer>        
+
+        <div class="modal fade" id="modal-faq" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="container">
+                            {% for f in faq_categories %}
+                                <div class="row qc-title">
+                                    <div class="col-sm-12 text-center qc mt-2">
+                                        {{f.name}}
+                                    </div>
+                                </div>
+                                {% for i in f.faqitem_set.all %}
+                                    <div class="row content {% if forloop.last %}last{% endif %}">
+                                        <div class="col-sm-12 q-title" data-id="{{i.pk}}">
+                                            {{i.question}}
+                                            <i class="fas fa-caret-down float-right"></i>
+                                        </div>
+                                        <div class="col-sm-12 q-answer" data-question="{{i.pk}}">
+                                            {{i.answer}}
+                                        </div>
+                                    </div>
+                                {% endfor %}    
+                            {% endfor %}                                                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-documents" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col text-center">
+                                    <form action="{% url 'webclient:contact-form' %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="is_document" value="true"/>
+                                        <div class="form-group">
+                                            <input required name="name" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Nombre">
+                                        </div>
+                                        <div class="form-group">
+                                            <input required name="email" type="email" class="form-control"  placeholder="Correo electrónico">
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea required name="message" class="form-control" placeholder="¿Qué documentos necesitas?"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary">Enviar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>                                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
@@ -328,38 +450,122 @@
 
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
 
-        <!-- <script src="{% static 'js/shards.min.js' %}"></script> -->
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+        <script src="{% static 'js/jquery-validator.js' %}"></script>
+        <script src="{% static 'js/shards.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap-4-navbar.js' %}"></script>
         <script>
             $.validate({
-            modules : 'html5 security',
-            onModulesLoaded : function() {
-                var optionalConfig = {
-                    fontSize: '0.9em',
-                    padding: '4px',
-                    float: 'right',
-                    bad : 'Muy débil',
-                    weak : 'Débil',
-                    good : 'Segura',
-                    strong : 'Muy Segura'
-                };
-            
-                $('input[name="password1"]').displayPasswordStrength(optionalConfig);
-                }
+                modules : 'html5',
             });
         </script>
+
+        {% if messages  %}
+            {% for message in messages %}
+                <script>
+                    toastr.options = {
+                        "closeButton": false,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": true,
+                        "onclick": null,
+                        "showDuration": "1000",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    }
+                    toastr.info('{{message}}')
+                </script>
+            {% endfor %}
+        {% endif %}
         
         <script type="text/javascript">
+            function checkStrength(password) {
+                var strength = 0
+                if (password.length < 6) {
+                    $('#result').removeClass()
+                    $('#result').addClass('short')
+                    $('#reg_submit_signup').attr('disabled', true)
+
+                    return 'Muy corta'
+                }
+                if (password.length > 7) strength += 1
+                // If password contains both lower and uppercase characters, increase strength value.
+                if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) strength += 1
+                // If it has numbers and characters, increase strength value.
+                if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) strength += 1
+                // If it has one special character, increase strength value.
+                if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
+                // If it has two special characters, increase strength value.
+                if (password.match(/(.*[!,%,&,@,#,$,^,*,?,_,~].*[!,%,&,@,#,$,^,*,?,_,~])/)) strength += 1
+                // Calculated strength value, we can return messages
+                // If value is less than 2
+                if (strength < 2) {
+                    $('#result').removeClass()
+                    $('#result').addClass('weak')
+                    $('#reg_submit_signup').attr('disabled', true)
+                    return 'Débil'
+                } else if (strength == 2) {
+                    $('#result').removeClass()
+                    $('#result').addClass('good')
+                    return 'Buena'
+                } else {
+                    $('#result').removeClass()
+                    $('#result').addClass('strong')
+                    return 'Fuerte'
+                    }
+            }
+            
+            function checkValid(password1, password2){
+                if (password1 != password2){
+                    $('#valid').removeClass()
+                    $('#valid').addClass('nopass')
+                    $('#reg_submit_signup').attr('disabled', true)
+                    return 'Las contraseñas no coinciden'
+                }
+                else{
+                    $('#valid').removeClass()
+                    $('#reg_submit_signup').attr('disabled', false)
+                    return ''
+                }
+            }
+            
             $(document).ready(function() {
-                $('.navbar-toggler').on('click', function(){
+                $('.navbar-toggler, .contextual-closer').on('click', function(){
                     $('.rotate').toggleClass("down");
-                    $('.contextualMenu').slideToggle();
+                    $('.contextualMenu').fadeToggle();
                 })
+
+                {% block nav-script%}
+                    $(window).scroll(function(){
+                        var scroll = $(window).scrollTop();
+                        if (scroll > 100) {
+                            $(".navbar").addClass('scrolled');
+                        }
+                        else{
+                            $(".navbar").removeClass('scrolled');
+                        }
+                    })
+                    $('#password1').keyup(function() {
+                        $('#result').html(checkStrength($('#password1').val()))
+                    })
+                    $('#password2').keyup(function() {
+                        $('#valid').html(checkValid($('#password1').val(), $('#password2').val()))
+                    })
+                {% endblock %}
+                
+                
             });
 
             axios.defaults.headers.common['X-CSRFToken'] = '{{csrf_token}}'
-            axios.defaults.headers.common['Api-Key'] = 'd492009ed1b5395f64230e13fb71ce33cc855156'
+            axios.defaults.headers.common['Api-Key'] = '{{Api_Key}}'
             
             toastr.options = {
                 "closeButton": false,
@@ -379,21 +585,23 @@
                 "hideMethod": "fadeOut"
             }
 
-            // <!-- Script para enviar axios de Login -->
             $("#login").on('submit', function(ev){
                 ev.preventDefault()
                 data = new FormData($(this)[0])
                 axios.post("{% url 'webclient:login' %}", data)
                     .then(function(response){
                         if (response.data.length > 0){
-                            url = response.data['url']
-                            window.location.href = url
+                            window.location.href = response.data
                         }
                     })
                     .catch(function(error){
                         console.log(error.response.data.error)
                         toastr.error(error.response.data.error)
                     });
+            })
+
+            $('.q-title').on('click', function(){
+                $(this).toggleClass('active');
             })
 
             $("#signup").on('submit', function(ev){
@@ -426,18 +634,17 @@
                 data = $(this).serialize(),
                 axios.post("/accounts/password/reset/", data)
                     .then(function(response){
-                        console.log(response.data)
-                        toastr.success(response.data['detail'])
+                        toastr.success("Se ha enviado un correo con el link de restablecimiento de tu contraseña.")
                         setTimeout(function(){
-                            $('#modal-forget').modal('toggle')
                             location.reload()
                         }, 1500);
                     })
                     .catch(function(error){
+                        console.log(error)
                         toastr.error("El correo electrónico no se encuentra registrado")
                         $('#reg_submit_signup').attr('disabled', false)
                     });
-            })
+        })
         </script>
         {% block extra_js %}
         {% endblock %}

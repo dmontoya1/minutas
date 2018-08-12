@@ -1,5 +1,13 @@
+a {
+    cursor: pointer !important;
+    color: inherit;
+    text-decoration: inherit;
+}
+
+html,
 body {
     overflow-x: hidden !important;
+    position: relative;
 }
 
 button:focus,
@@ -8,9 +16,49 @@ button:active {
     box-shadow: none;
 }
 
+footer {
+    position: absolute; 
+    width: 100%;
+    bottom: 0;
+    padding: 20px;
+    padding-bottom: 40px;
+    background-color: #000;
+    color: #e8e8e8;
+}
+    footer .faq i {
+        font-size: 1.2em;
+        margin-right: .5em;
+        color: #727272;
+    }
+    footer .link-col a {
+        display: block;
+    }
+        footer .link-col a:not(:first-child) {
+            margin-top: 1em;
+        }
+    footer .social a {
+        font-size: 1.2em;
+        margin-right: 1.2em;
+        background-color: #002c55;
+        border-radius: 100%;
+        width: 1.6em;
+        height: 1.6em;
+        padding-top: .25em;
+        text-align: center;
+        display: inline-block;
+    }
+
 section {
     margin-top: 65px;
     padding-bottom: 5px;
+}
+
+.about-us .categories .category-description.left{
+    padding-left: 0;
+}
+
+.about-us .categories .category-description h2, .contract-info h2{
+    width: 7.1em;
 }
 
 .action-button__primary {
@@ -21,6 +69,14 @@ section {
     padding: .5em 2em;
     border-radius: 20px;
     margin: 2em auto;
+}
+
+.action-button__primary.blue {
+    color: #fff;
+    background-color: #002c55;
+    margin: 1em auto;
+    border: 0;
+    border-radius: 5px;
 }
 
 .bg-transparent {
@@ -42,8 +98,8 @@ section {
     .swiper-container .swiper-slide .description {
         position: absolute;
         left: 50%;
-        top: 50%;
-        transform: translate(-50%,-50%);     
+        top: 45%;
+        transform: translate(-50%,-45%);     
         color: #fff;   
         z-index: 99999;
     }
@@ -99,6 +155,96 @@ section {
     }
 }
 
+.bundles {
+    padding: 80px 0;
+}   
+    .bundles h2 {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .bundles span.counter {
+        font-size: 0.755em !important;
+        background-color: #dbdbdb;
+        padding: 0.5em;
+        border-radius: 15px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-top: -5px;
+        margin-left: 10px;
+    }
+    .bundles .bundle {
+        padding: 35px 55px;
+        border: 2px solid rgb(201, 199, 199);
+        border-radius: 15px;
+        display: inline-block;
+    }
+        .bundles .bundle span {
+            display: block;
+        }
+        .bundles .bundle span.name {
+            padding: .5em 2em;
+            border-radius: 15px;
+            background-color: #65eee5;
+            color: #1e7e78;
+            display: inline-block;
+            margin-bottom: 1em;
+            font-size: .85em;
+            font-weight: 600;
+        }
+            .bundles .bundle.dark-blue span.name {
+                background-color: #98A9BC;
+                color: #39475c;
+            }
+            .bundles .bundle.light-yellow span.name {
+                background-color: #ffee9e;
+                color: #b19c45;
+            }
+        .bundles .bundle span.pricetag {
+            font-size: 1.4em;
+            color: #5eccc4;
+            font-weight: 800;
+            margin-bottom: 1.2em;
+        }
+            .bundles .bundle.dark-blue span.pricetag {
+                color: #39475c;
+            }
+            .bundles .bundle.light-yellow span.pricetag {
+                color: #b19c45;
+            }
+        .bundles .bundle .documents  {
+            margin-bottom: 1.2em;
+            height: 210px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+            .bundles .bundle .documents span.title {
+                font-weight: 800;                
+                border-bottom: 1px solid #686868;
+                display: inline-block;
+                line-height: 1.8em;
+            }                
+            .bundles .bundle .documents span {
+                margin: 1.2em auto;
+                font-size: .9em;
+            }
+            .bundles .bundle button {
+                background-color: #5eccc4;
+                color: #fff;
+                border: none;
+                border-radius: 20px;
+                padding: .5em 2em;
+                margin-top: 1em;
+                font-weight: 600;
+                box-shadow: 0 5px 15px rgba(0,0,0,.05), 0 4px 10px rgba(0,123,255,.25);            
+            }
+                .bundles .bundle.dark-blue button {
+                    background-color: #002856;
+                    color: #fff;
+                }
+                .bundles .bundle.light-yellow button {
+                    background-color: #ffd301;
+                    color: #002856;
+                }
 
 .categories .category-description h2,
 .contract-info h2 {
@@ -111,7 +257,7 @@ section {
     border-bottom: 5px solid #002c55;
     line-height: 1em;
     padding-bottom: .3em;
-    width: 1em;
+    width: 5em;
 }
 
 .categories .category-description p {
@@ -133,8 +279,11 @@ section {
 }
 
 .categories .category-parallax {    
-    height: 50vh;
+    height: 70vh;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
 }
+
 @media screen and (max-width: 414px) {
     .categories .category-parallax {    
         height: 180px;
@@ -142,20 +291,31 @@ section {
 }
 
 .contextualMenu {
-    height: 100vh;
+    height: 100%;
     background-color: #5eccc4;
-    padding-top: 4em;
+    padding-top: 3em;
     display: none;
-    width: 100vw;
+    z-index: 999999;
+    position: fixed;
 }
+    .contextualMenu i {
+        font-size: 2em;
+        color: #FFF;
+        cursor: pointer;
+    }
+    .contextualMenu > div {
+        padding-left: 30px !important;
+    }
     .contextualMenu h4 {
         font-weight: 600;
+        font-size: 2em;
+        margin-bottom: .8em;
     }
     .contextualMenu h5 {
         padding: .1em 1em;
         border-radius: 20px;
         display: inline-block;
-        font-size: .85em;
+        font-size: 1em;
     }
     .contextualMenu h5:first-child {
         background-color: #002c55;
@@ -166,8 +326,8 @@ section {
 
 .contact-form {
     padding-top: 100px;
-    padding-bottom: 100px;
-    background-color: #002c55;
+    padding-bottom: 250px;
+    background-color:#002c55;
 }
     .contact-form form {
         max-width: 50%;
@@ -176,45 +336,112 @@ section {
     .contact-form form input {
         border-radius: 0;
     }
+    .contact-form form textarea {
+        height: 150px;
+    }
     .contact-form form button {
-        margin-top: 1.2em;
         width: 100%;
         background-color: #5eccc4;
     }
     .form-group {
-        margin-top: 0;
-        margin-bottom: 0;
+        margin-top: 1.2em;
     }
 
 .contract-info {
-    margin-top: 30px;
     background-color: #f4f3f3;
-    padding: 45px auto;
+    padding: 50px auto;
 }
 
 .contract-info h2 {
-    width: 6em;
+    width: 5em;
+}
+@media screen and (max-width: 414px) {
+    .contract-info h2 {   
+        font-size: 2.3em;
+    }
 }
 
 .corporate-signature {
-    height: 85px;
+    height: 170px;
 }
     .corporate-signature span {
-        margin-top: 30px;
+        margin-top: 45px;
         display: inline-block;
         font-size: 1.2em;
         font-weight: 300;
+        color: #727272;
+    }
+    @media screen and (max-width: 414px) {
+        .corporate-signature span {   
+            margin-top: 10px;
+        }
     }
     .corporate-signature span img {
         margin-left: 15px;
+        width: 320px;
+        padding: 10px 50px 8px 50px;
+        box-shadow: 0px 0px 5px #9d9d9d;
+        border-radius: 15px;
+    }
+    @media screen and (max-width: 414px) {
+        .corporate-signature span img {   
+            margin-left: 0px;
+            width: 100%;
+            width: 90%;
+            margin-top: 10px;
+        }
     }
 
-.navbar-toggler {
-    color: #fff;
-    background:transparent;
-    font-size: 1.5em;
-    outline: 0;
+.cookiepolicy-info {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    height: 3em;
+    background-color: #F8D6D9;
+    z-index: 9999999999;
+    opacity: 0.8;
+    text-align: center;
+    padding: 1em;
+    display: none;
 }
+    .cookiepolicy-info button {
+        float: right;
+        background-color: #FFF;
+        border-radius: 15px;
+        margin-bottom: 1.5em;
+        margin-right: 2em;
+        width: 140px;
+        font-size: .8em;
+    }
+
+.copyright {
+    background-color: #c2c1c1;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    padding: 1px;
+    font-size: .8em;
+    color: rgb(62, 62, 62);
+}
+
+.dropleft,
+.auth-buttons {
+    display: inline-block;
+}
+
+.dropdown-menu {
+    min-width: 15rem;
+}
+
+.dropleft.subdrop a {
+    padding-left: 1em;
+}
+    .dropleft.subdrop .dropdown-menu.show {
+        left: -160px !important;
+    }
 
 .main-options {
     color: #FFF;
@@ -230,10 +457,58 @@ section {
         padding: .1em 1em;
         border-radius: 20px;
     }
+        .main-options a:last-child:hover {
+            font-size: 1em;
+            font-weight: 600;
+            color: #002c55;
+            background-color: #c2c1c1;
+            padding: .1em 1em;
+            border-radius: 20px;
+        }
     .main-options .divider {
-        height: 1.2em;
-        margin-right: 2em;
+        font-weight: 300;
+        margin-left: 2em;
     }
+
+.modal-dialog.large {
+    max-width: 50% !important;
+}
+    @media screen and (max-width: 818px) {
+        .modal-dialog.large {   
+            max-width: 100% !important;
+        }
+    }
+    .modal-dialog.large .modal-body {
+        padding: 0 !important;
+    }
+
+.navbar {
+    z-index: 99999;
+}
+    .navbar.scrolled {
+        background-color: #FFF !important;
+        border-bottom: 2px solid rgb(214, 211, 211);
+        height: 80px;
+    }
+
+    .navbar.scrolled .navbar-toggler,
+    .navbar.scrolled .main-options {
+        color: #161616;
+        transition: all 0.5s ease-in-out;
+    }
+
+.navbar img.logo {
+    width: 60px;
+    margin-left: 15px;
+}
+
+.navbar-toggler {
+    color: #fff;
+    z-index: 99999;
+    background:transparent;
+    font-size: 1.5em;
+    outline: 0;
+}
 
 .rotate {
     -moz-transition: all 0.5s ease-in-out;
@@ -246,6 +521,61 @@ section {
     -moz-transform: rotate(90deg);
     -webkit-transform: rotate(90deg);
     transform: rotate(90deg);
+}
+
+.search-landing {
+    position: absolute;
+    width: 100vw;
+    bottom: 25%;
+    left: 0;
+    z-index: 99999999;
+    text-align: center;
+}
+    .search-landing input {
+        width: 50%;
+        padding: .5em;
+        font-size: 1.2em;
+        border-radius: 10px;
+        outline: none;
+    }
+
+.how-to {
+    padding-top: 25px;
+    padding-bottom: 35px;
+}
+    .how-to .category-description h2, .contract-info h2 {
+        width: 7.9em;
+    }
+    .how-to ul {
+        padding: 0;
+        list-style-type: none;
+    }
+        .how-to ul li {
+            margin-top: 4em;
+        }
+            .how-to ul li span {
+                color: #9d9d9d;
+                font-weight: 300;
+                font-size: 1.2em;
+                max-width: 15em;
+                display: inline-block;
+                vertical-align: middle;
+            }
+            .how-to ul li span.indicator {
+                color: #002c55;
+                background-color: #FCD116;
+                border-radius: 100%;
+                width: 1.5em;
+                display: inline-block;
+                height: 1.5em;
+                font-size: 1.5em;
+                text-align: center;
+                font-weight: 800;
+                margin-right: 10px;
+            }
+        
+.underline {
+    text-decoration: underline;
 }
 
 #loadingAnimation {
@@ -263,3 +593,39 @@ section {
         width: 220px;
         margin-top: 18%;
     }
+
+#modal-faq .row {
+    font-size: 1.1em;
+}
+
+#modal-faq .qc {
+    background-color: #e8e8e8;
+    color: #5eccc4;
+    border: none;
+    padding: 1em;
+}
+
+#modal-faq .q-title {
+    padding: 1em;
+    cursor: pointer;
+    border-bottom: 1px solid #a2a2a2;
+}
+
+#modal-faq .row.content.last .q-title {
+    border: none;
+}
+    #modal-faq .q-title.active {
+        color: #5eccc4;
+        border: none;
+    }
+    #modal-faq .q-title.active + .q-answer {
+        display: block;
+        margin-bottom: 1em;
+    }
+
+#modal-faq .q-answer {
+    padding: 1em;
+    display: none;
+    font-size: .85em;
+    color: #686868;
+}

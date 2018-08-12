@@ -15,6 +15,8 @@ INTERNAL_IPS = [
     '192.168.0.16'
 ]
 
+API_KEY = '042c97b1f486c5bde044ba5f10dfd11ad26cb81b'
+
 
 # Application definition
 
@@ -36,6 +38,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
     'rest_auth.registration',
+    'import_export',
     'mptt_urls',
     'api',
     'debug_toolbar',
@@ -46,7 +49,8 @@ INSTALLED_APPS = [
     'business_info',
     'store',
     'users',
-    'webclient'
+    'webclient',
+    'reports'
 ]
 
 MIDDLEWARE = [
@@ -75,6 +79,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'webclient.context_processors.categories.context_categories',
+                'webclient.context_processors.api-key.api_key_processor',
+                'webclient.context_processors.faq.faq_processor',
             ],
         },
     },
@@ -82,15 +89,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tratum.wsgi.application'
 
-SITE_ID = 1
+SITE_ID = 2
 
 
 # Database
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': 'tratum',
+        'ENGINE': 'django.db.backends.postgresql'
     }
 }
 

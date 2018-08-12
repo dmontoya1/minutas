@@ -1,5 +1,6 @@
 {% extends 'webclient/base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block extra_css %}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/css/swiper.min.css">
@@ -7,42 +8,61 @@
 {% endblock %}
 
 {% block content %}
+  <div class="modal fade" id="homeVideoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog large" role="document">
+      <i class="fas fa-times-circle" data-dismiss="modal"></i>
+      <div class="modal-content">
+        <div class="modal-body">
+          <iframe width="100%" height="500px" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div id="loadingAnimation">
     <img src="{% static 'img/loadingSite.gif' %}" />
     <p>Cargando...</p>
   </div>
+
   <div class="swiper-container">   
-      <div class="swiper-wrapper">        
-          {% for s in context_slides %}
-            <div class="swiper-slide">
-              <div class="swiper-mask-left"></div>  
-              <div class="swiper-mask-right"></div> 
-              <div class="description text-center">
-                <h1>{{s.text}}</h1>
-                <p>{{s.description}}</p>
+    <div class="swiper-wrapper">        
+      {% for s in context_slides %}
+        <div class="swiper-slide">
+          <div class="swiper-mask-left"></div>  
+          <div class="swiper-mask-right"></div> 
+          <div class="description text-center">
+            <h1>{{s.text|default_if_none:""}}</h1>
+            <p>{{s.description|default_if_none:""}}</p>
+            {% if s.youtube_video_link %}
+              <a class="video-trigger" data-toggle="modal" data-target="#homeVideoModal" data-embed="{{s.youtube_video_link}}">
                 <i class="fas fa-play-circle"></i>
-              </div>
-              <img src="{{s.image.url}}">
-            </div>
-          {% endfor %}
-      </div>
-      <div class="swiper-pagination"></div>    
-    </div>           
-  </div>
-  
-  <div class="row bg-dark">
-    <div class="col text-center h-40 p-5">
-      <h1 class="text-white">Espacio para pasos</h1>
+              </a>
+            {% endif %}
+          </div>
+          <img src="{{s.image.url}}">
+        </div>
+      {% endfor %}
     </div>
-  </div>
+    <div class="swiper-pagination"></div>  
+    <div class="search-landing">
+      <input type="search" placeholder="Buscar documentos..." id="search_documents">
+    </div>  
+  </div>  
+
   <div class="row categories">
-    <div class="col-md-6 order-1 category-parallax" data-stellar-background-ratio="0.1" style="background-image: url('/static/img/parallax-test.jpg');">
+    <div class="col-md-6 order-1 category-parallax" data-stellar-background-ratio="0.1" style="background-image: url('/static/img/c1.jpg');">
     </div>
     <div class="col-md-6 order-2 category-description" data-aos="slide-left">      
       <div class="container">
-          <h2>Derecho laboral</h2>
-          <p>Muy lejos, más allá de las montañas de palabras, alejados de los países de las vocales y las consonantes, viven los texto</p>
-          <a class="action-button__primary">Ver más</a>
+          <h2>Creación de empresa</h2>
+          <p>Quiere la boca exhausta vid, kiwi, piña y fugaz jamón. 
+            Fabio me exige, sin tapujos, que añada cerveza al whisky. 
+            Jovencillo emponzoñado de whisky, ¡qué figurota exhibes! 
+            La cigüeña tocaba cada vez mejor el saxofón y el búho pedía kiwi y queso. El jefe buscó el</p>
+          <a class="action-button__primary" href="/documents/creacion-de-empresa/">Ver más</a>
       </div>      
     </div>
   </div>
@@ -50,25 +70,82 @@
   <div class="row categories">
     <div class="col-md-6 order-2 order-md-1 category-description left" data-aos="slide-right">      
         <div class="container">
-            <h2>Derecho laboral</h2>
-            <p>Muy lejos, más allá de las montañas de palabras, alejados de los países de las vocales y las consonantes, viven los text</p>
-            <a class="action-button__primary">Ver más</a>
+            <h2>Gestión contractual</h2>
+            <p>Quiere la boca exhausta vid, kiwi, piña y fugaz jamón. 
+                Fabio me exige, sin tapujos, que añada cerveza al whisky. 
+                Jovencillo emponzoñado de whisky, ¡qué figurota exhibes! 
+                La cigüeña tocaba cada vez mejor el saxofón y el búho pedía kiwi y queso. El jefe buscó el</p>
+            <a class="action-button__primary" href="/documents/gestion-contractual/">Ver más</a>
         </div>      
       </div>
-    <div class="col-md-6 order-1 order-md-2 category-parallax" data-stellar-background-ratio="0.1" style="background-image: url('/static/img/parallax-test-2.jpg');">
+    <div class="col-md-6 order-1 order-md-2 category-parallax" data-stellar-background-ratio="1" style="background-image: url('/static/img/c2.jpg');">
     </div>      
   </div>
 
   <div class="row categories">
-    <div class="col-md-6 order-1 category-parallax" data-stellar-background-ratio="0.1" style="background-image: url('/static/img/parallax-test-3.jpg');">
+    <div class="col-md-6 order-1 category-parallax" data-stellar-background-ratio="0.1" style="background-image: url('/static/img/c3.jpg');">
     </div>
     <div class="col-md-6 order-2 category-description" data-aos="slide-left">      
       <div class="container">
-          <h2>Derecho laboral</h2>
-          <p>Muy lejos, más allá de las montañas de palabras, alejados de los países de las vocales y las consonantes, viven los text</p>
-          <a class="action-button__primary">Ver más</a>
+          <h2>Gestión empresarial</h2>
+          <p>Quiere la boca exhausta vid, kiwi, piña y fugaz jamón. 
+              Fabio me exige, sin tapujos, que añada cerveza al whisky. 
+              Jovencillo emponzoñado de whisky, ¡qué figurota exhibes! 
+              La cigüeña tocaba cada vez mejor el saxofón y el búho pedía kiwi y queso. El jefe buscó el</p>
+          <a class="action-button__primary" href="/documents/gestion-empresarial/">Ver más</a>
       </div>      
     </div>
+  </div>
+
+  <div class="row categories">
+    <div class="col-md-6 order-2 order-md-1 category-description left" data-aos="slide-right">      
+        <div class="container">
+            <h2>Negocios y asuntos personales</h2>
+            <p>Quiere la boca exhausta vid, kiwi, piña y fugaz jamón. 
+                Fabio me exige, sin tapujos, que añada cerveza al whisky. 
+                Jovencillo emponzoñado de whisky, ¡qué figurota exhibes! 
+                La cigüeña tocaba cada vez mejor el saxofón y el búho pedía kiwi y queso. El jefe buscó el</p>
+            <a class="action-button__primary" href="/documents/negocios-y-asuntos-personales/">Ver más</a>
+        </div>      
+      </div>
+    <div class="col-md-6 order-1 order-md-2 category-parallax" data-stellar-background-ratio="1" style="background-image: url('/static/img/c4.jpg');">
+    </div>      
+  </div>
+  
+  <div class="row categories how-to">
+    <div class="col-md-8 category-description left" data-aos="slide-down">      
+        <div class="container">
+            <h2>Cómo crear un documento</h2>
+            <ul>
+              <li>
+                <span class="indicator">1</span>
+                <span>Iniciar sesión o registrarte en nuestra plataforma.</span> 
+              </li>
+              <li>
+                <span class="indicator">2</span>
+                <span>Ingresar a nuestros documentos y seleccionar el que necesitas.</span> 
+              </li>
+              <li>
+                <span class="indicator">3</span>
+                <span>Si el documento no es gratuito, debes realizar el pago antes de diligenciarlo.</span> 
+              </li>
+              <li>
+                <span class="indicator">4</span>
+                <span>Diligencia el formulario, tendrás la oportunidad de previsualizarlo.</span> 
+              </li>
+              <li>
+                <span class="indicator">5</span>
+                <span>Exportalo a formato PDF o DOC.</span> 
+              </li>
+            </ul>
+        </div>      
+      </div>
+    <div class="col-md-4">
+        <div class="container-flex flex-column justify-content-center" style="padding-right: 25%; padding-top: 15%;">
+            <img src="{% static 'img/steps.png' %}" width="100%" />
+        </div>   
+      
+    </div>      
   </div>
 
   <div class="row contract-info p-3">
@@ -78,36 +155,91 @@
     <div class="col-md-6" data-aos="slide-up">      
       <div class="container-flex flex-column justify-content-center" style="margin-top: 25px;">
         <h2>¿Por qué construir un contrato responsablemente?</h2>
-        <p>Muy lejos, más allá de las montañas de palabras, alejados de los países de las vocales y las consonantes, viven los text</p>
-        <a class="action-button__primary">Registrarse</a>
-      </div>      
+        <p>{{landing_contract_info}}</p>
+        <a class="action-button__primary" href="/documents/">Ver documentos</a>
+      </div>       
+    </div>
+  </div>
+  
+  <div class="row corporate-signature">
+    <div class="col text-center">
+      <span>Con el respaldo jurídico de <a><img src="{% static 'img/gonzales-aldana-logos-08.png' %}" width="120px"/></span></a>
     </div>
   </div>
 
-  <div class="row corporate-signature">
-    <div class="col text-center">
-      <span>Con el respaldo jurídico de <img src="logo.jpg"/></span>
+  <div class="row bundles">
+    <div class="container">
+      <div class="col text-center">
+        <div class="container">
+            <h2>Paquetes</h2>
+            <span class="counter">{{context_bundle_count}} disponibles</span>
+            <p>{% lorem 1 p %}</p>
+        </div>
+        <div class="row">
+          {% for i in context_bundles %}
+            <div class="col-lg-4 h-50">
+                <div class="bundle 
+                  {% if forloop.counter == 2 %}
+                    dark-blue
+                  {% else %}
+                    {% if forloop.counter == 3 %}
+                      light-yellow
+                    {% endif %}
+                  {% endif %}">
+                  <span class="name">{{i.name}}</span>
+                  <span class="pricetag">${{i.price|intcomma}}</span>
+                  <div class="documents">
+                    <span class="title">Documentos del paquete</span>
+                    {% for d in i.documents.all %}
+                      <span class="document">{{d.name}}</span>
+                    {% endfor %}
+                  </div>
+                  
+                  {% if user.is_authenticated %}
+                    <form method="POST" action="{% url 'store:checkout' %}">
+                      {% csrf_token %}
+                      <input type="hidden" name="pack_id" value="{{i.id}}">
+                      <button type="submit" class="btn btn-primary">Comprar</button>
+                    </form>
+                  {% else %}
+                    <button data-toggle="modal" data-target="#modal-login" class="btn btn-primary">Comprar</button>
+                  {% endif %}
+                </div>
+            </div>
+          {% endfor %}
+        </div>      
+      </div>
     </div>
   </div>
 
   <div class="row contact-form">
     <div class="col text-center">
-      <form>
+      <form action="{% url 'webclient:contact-form' %}" method="POST">
+        {% csrf_token %}
         <div class="form-group">
-          <label for="exampleInputEmail1">Campo 1</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Campo 1">
+          <input required name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nombre">
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">Campo 2</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Campo 2">
+          <input required name="email" type="email" class="form-control" id="exampleInputPassword1" placeholder="Correo electrónico">
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">Campo 3</label>
-          <textarea  class="form-control" placeholder="Campo 3"></textarea>
+          <textarea required name="message" class="form-control" placeholder="Mensaje"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Enviar</button>
+        </div>
       </form>
     </div>
+  </div>
+
+
+  <div class="cookiepolicy-info">
+    <span>Al navegar en nuestro sitio, consideramos que aceptas nuestra 
+      <strong>
+        <a href="{% url 'webclient:policies' 'cookies' %}" target="_blank" class="underline">política de tratamiento de cookies</a>.
+      </strong>
+    </span>
+    <button class="cookiepolicy-close">Aceptar</button>
   </div>
 {% endblock %}
 
@@ -115,12 +247,26 @@
     <script>      
       window.onload = function(){ document.getElementById("loadingAnimation").style.display = "none" }   
     </script>
+    
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script
+    src="https://code.jquery.com/color/jquery.color-2.1.2.min.js"
+    integrity="sha256-H28SdxWrZ387Ldn0qogCzFiUDDxfPiNIyJX7BECQkDE="
+    crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar.js/0.6.2/jquery.stellar.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/js/swiper.min.js"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
+      window.scrollTo(0, 0);
+
+
+      $('#search_documents').on('keyup', function(e){
+        if (e.keyCode === 13) {
+          window.location.href = `/documents?q=${$(this).val()}`
+        }
+      })
+
       var mySwiper = new Swiper ('.swiper-container', {
           direction: 'horizontal',
           loop: true,
@@ -147,5 +293,24 @@
       $('.swiper-mask-right').on('click', function(){
         mySwiper.slideNext();
       })
+      
+      $('.video-trigger').on('click', function(event) {
+        var embedUrl = $(this).data('embed'); 
+        var modal = $('#homeVideoModal');
+        modal.find('iframe').attr('src', embedUrl);
+      })
+
+      $('.cookiepolicy-close').on('click', function(){
+        $('.cookiepolicy-info').hide();
+      })
+
+      function cookieChecker() {
+        if (document.cookie.replace(/(?:(?:^|.*;\s*)cookiePolicyAccepted\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
+          $('.cookiepolicy-info').show();
+          document.cookie = "cookiePolicyAccepted=true; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+        }
+      }
+    
+      cookieChecker();
     </script>
 {% endblock %}

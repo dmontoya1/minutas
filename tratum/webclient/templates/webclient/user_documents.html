@@ -1,0 +1,49 @@
+{% extends 'webclient/base.html' %}
+{% load humanize %}
+{% load static %}
+
+{% block nav_class %}
+    class="navbar scrolled"
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid mt-5">
+        <h1>Mis documentos</h1>
+            <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th scope="col">Documento</th>
+                    <th scope="col">Fecha de compra</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Acción disponible</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for object in object_list %}
+                    <tr>
+                        <td scope="row">{{object.document}}</td>
+                        <td>{{object.created_at}}</td>
+                        <td>{{object.get_status_display}}</td>
+                        <th scope="row" >
+                            {% if object.status != object.is_expired %}
+                                {% if object.status == object.FINISHED %}
+                                    <a href="{% url 'webclient:user-document-preview' object.identifier %}">
+                                        Descargar
+                                    </a>
+                                {% else %}
+                                    <a href="{% url 'webclient:user-document' object.identifier %}">
+                                        Editar
+                                    </a>
+                                {% endif %}
+                            {% else %}
+                                <span>No hay acciones disponibles</span>
+                            {% endif %}
+                        </th>
+                    </tr>
+                {% endfor %}
+                
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+

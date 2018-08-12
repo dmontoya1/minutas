@@ -1,0 +1,34 @@
+<div class=”results”>
+        <table>
+            
+        <thead>
+            <tr>
+            <th>
+                <div class=”text”>
+                <a href=”#”>Nombre</a>
+                </div>
+            </th>
+            <th>
+                <div class=”text”>
+                    <a href=”#”>Documentos</a>
+                </div>
+            </th>
+            <th>
+                <div class=”text”>
+                    <a href=”#”>Ventas totales</a>
+                </div>
+            </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for row in summary %}
+            <tr style="text-align: center;">
+                <td> {{ row.nombre }} </td>
+                <td> {{ row.documentos }} </td>
+                <td> {{ row.cantidad }} </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        
+        </table>
+    </div>
