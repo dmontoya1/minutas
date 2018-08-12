@@ -53,7 +53,7 @@
   </div>  
 
   <div class="row categories">
-    <div class="col-md-6 order-1 category-parallax" data-stellar-background-ratio="0.1" style="background-image: url('/static/img/parallax-test.jpg');">
+    <div class="col-md-6 order-1 category-parallax" data-stellar-background-ratio="0.1" style="background-image: url('/static/img/c1.jpg');">
     </div>
     <div class="col-md-6 order-2 category-description" data-aos="slide-left">      
       <div class="container">
@@ -78,12 +78,12 @@
             <a class="action-button__primary" href="/documents/gestion-contractual/">Ver más</a>
         </div>      
       </div>
-    <div class="col-md-6 order-1 order-md-2 category-parallax" data-stellar-background-ratio="0.1" style="background-image: url('/static/img/parallax-test-2.jpg');">
+    <div class="col-md-6 order-1 order-md-2 category-parallax" data-stellar-background-ratio="1" style="background-image: url('/static/img/c2.jpg');">
     </div>      
   </div>
 
   <div class="row categories">
-    <div class="col-md-6 order-1 category-parallax" data-stellar-background-ratio="0.1" style="background-image: url('/static/img/parallax-test-3.jpg');">
+    <div class="col-md-6 order-1 category-parallax" data-stellar-background-ratio="0.1" style="background-image: url('/static/img/c3.jpg');">
     </div>
     <div class="col-md-6 order-2 category-description" data-aos="slide-left">      
       <div class="container">
@@ -108,7 +108,7 @@
             <a class="action-button__primary" href="/documents/negocios-y-asuntos-personales/">Ver más</a>
         </div>      
       </div>
-    <div class="col-md-6 order-1 order-md-2 category-parallax" data-stellar-background-ratio="0.1" style="background-image: url('/static/img/parallax-test-2.jpg');">
+    <div class="col-md-6 order-1 order-md-2 category-parallax" data-stellar-background-ratio="1" style="background-image: url('/static/img/c4.jpg');">
     </div>      
   </div>
   
@@ -172,7 +172,7 @@
       <div class="col text-center">
         <div class="container">
             <h2>Paquetes</h2>
-            <span>100 disponibles</span>
+            <span class="counter">{{context_bundle_count}} disponibles</span>
             <p>{% lorem 1 p %}</p>
         </div>
         <div class="row">
@@ -258,6 +258,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/js/swiper.min.js"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
+      window.scrollTo(0, 0);
+
+
       $('#search_documents').on('keyup', function(e){
         if (e.keyCode === 13) {
           window.location.href = `/documents?q=${$(this).val()}`

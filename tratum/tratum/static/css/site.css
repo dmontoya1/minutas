@@ -157,7 +157,21 @@ section {
 
 .bundles {
     padding: 80px 0;
-}
+}   
+    .bundles h2 {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .bundles span.counter {
+        font-size: 0.755em !important;
+        background-color: #dbdbdb;
+        padding: 0.5em;
+        border-radius: 15px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-top: -5px;
+        margin-left: 10px;
+    }
     .bundles .bundle {
         padding: 35px 55px;
         border: 2px solid rgb(201, 199, 199);
@@ -266,6 +280,8 @@ section {
 
 .categories .category-parallax {    
     height: 70vh;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
 }
 
 @media screen and (max-width: 414px) {
