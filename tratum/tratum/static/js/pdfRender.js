@@ -6,10 +6,6 @@ $(function(){
         }).insertAfter(this);
         $(this).remove();
     })    
-    $('#content-preview p').each(function(i, e){
-        $(this).css('text-align', 'justify');
-        $(this).css('color', '#000');
-    })
     $('.pdf-gen').on('click', function(){
         margins = {
             top: 70,

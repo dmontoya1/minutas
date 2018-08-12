@@ -64,7 +64,6 @@ class DocumentBundle(SoftDeletionModelMixin):
         return self.documents.count()
     
 
-
 class UserDocument(models.Model):
     CREATED = 'CR'
     PURCHASED = 'PU'
@@ -105,6 +104,11 @@ class UserDocument(models.Model):
         editable=False
     )
     created_at = models.DateTimeField(auto_now_add=True)
+    html_file = models.FileField(
+        null=True,
+        blank=True,
+        editable=False
+    )
 
     class Meta:
         verbose_name = 'Documento de usuario'
