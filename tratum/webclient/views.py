@@ -120,8 +120,8 @@ class LoginView(View):
                 login(request, user)
                 messages.add_message(
                     request,
-                        messages.ERROR, 
-                        "Bienvenido de vuelta a Tratum"
+                    messages.ERROR, 
+                    "Bienvenido de vuelta a Tratum"
                 )
             else:
                 response = {'error': 'Correo y/o contraseña incorrectas.'}
