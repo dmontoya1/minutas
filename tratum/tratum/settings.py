@@ -131,10 +131,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join("/var/www/tratum/static/"),
+    os.path.join("/var/www/static/"),
 ]
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join("/var/www/tratum/media/"),
+MEDIA_ROOT = os.path.join("/var/www/media/"),
 
 # CKEditor config
 
