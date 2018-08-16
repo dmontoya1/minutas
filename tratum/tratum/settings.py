@@ -2,14 +2,14 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'zbua(=8tqz9(l_wkqapp!j4@c2&qnkgtk+=4-30f+td(_gr_2w')
+SECRET_KEY = 'zbua(=8tqz9(l_wkqapp!j4@c2&qnkgtk+=4-30f+td(_gr_2w'
 
 DEBUG = False
 
 ALLOWED_HOSTS = [
     'www.tratum.co', 
     'tratum.co', 
-    '206.189.177.121'
+    '142.93.182.238'
 ]
 
 API_KEY = '042c97b1f486c5bde044ba5f10dfd11ad26cb81b'
@@ -88,9 +88,9 @@ SITE_ID = 1
 
 DATABASES = {
     'default': {
-        'NAME': os.environ['DJANGO_DB_NAME'],
-        'USER': os.environ['DJANGO_DB_USER'],
-        'PASSWORD': os.environ['DJANGO_DB_PASSWORD'],
+        'NAME': 'tratum',
+        'USER': 'postgres',
+        'PASSWORD': 'plJhgdCuyKnuyV',
         'ENGINE': 'django.db.backends.postgresql'
     }
 }
@@ -226,8 +226,8 @@ AUTHENTICATION_BACKENDS = (
 #email configuration
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_USER = 'Tratum <no-reply@tratum.com>'
-EMAIL_HOST_USER = os.environ['DJANGO_EMAIL_HOST_USER']
-EMAIL_HOST_PASSWORD = os.environ['DJANGO_EMAIL_HOST_PASSWORD']
+EMAIL_HOST_USER = 'apptitud'
+EMAIL_HOST_PASSWORD = 'jkdsjk4534.sd!"'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
