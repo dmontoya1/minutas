@@ -89,7 +89,7 @@ SITE_ID = 1
 DATABASES = {
     'default': {
         'NAME': 'tratum',
-        'USER': 'postgres',
+        'USER': 'tratum',
         'PASSWORD': 'plJhgdCuyKnuyVasfmbtcg',
         'ENGINE': 'django.db.backends.postgresql'
     }
