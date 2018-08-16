@@ -178,8 +178,8 @@ class SignupView(View):
 
             messages.add_message(
                 request,
-                    messages.ERROR, 
-                    "Te has registrado correctamente. Revisa tu correo para activar tu cuenta"
+                messages.ERROR, 
+                "Te has registrado correctamente. Revisa tu correo para activar tu cuenta"
             )
             url = reverse('webclient:home')
             return JsonResponse(url, safe=False)
@@ -335,9 +335,9 @@ def activate(request, token, pk):
         user.save()
         login(request, user)
         messages.add_message(
-            request,
-                messages.ERROR, 
-                "Has activado tu cuenta exitosamente."
+            request,    
+            messages.ERROR, 
+            "Has activado tu cuenta exitosamente."
         )
         return redirect('webclient:home')
     else:
