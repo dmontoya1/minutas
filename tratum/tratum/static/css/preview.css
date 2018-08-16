@@ -1,10 +1,38 @@
+button {
+    cursor: pointer;
+}
+
+strong {
+    font-weight: 600;
+}
+
+button {
+    border-radius: 30px !important;
+}
+
+button.blank {
+    background-color: transparent !important;
+    border-color: #002c55;
+    margin-left: 1em;
+}
+
 .document-preview {
     max-width: 400px;
     height: 500px;
     float: right;
     box-shadow: 0px 0px 1px #777;
     margin: 1.2em;
+    margin-top: 2em;
     font-size: .8em;
-    padding: .2em;
+    padding: 1em;
     overflow-y: scroll;
+}
+@media screen and (max-width: 1440px) {
+    .document-preview {
+        height: 64vh;
+    }
+}
+
+.jconfirm-title {
+    line-height: 1em;
 }

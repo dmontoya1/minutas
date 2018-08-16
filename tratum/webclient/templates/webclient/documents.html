@@ -33,7 +33,7 @@
             <div class="col-12" id="search">
                 <div class="container">
                     <div class="row search">
-                        <div class="col-sm-12 col-md-6 col-lg-4">
+                        <div class="col-sm-12 col-md-6 col-lg-4 child">
                             <form action="">
                                 <div class="form-group">
                                     <label for="searcher"><i class="fa fa-file-sound-o" aria-hidden="true"></i></label>
@@ -41,7 +41,7 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="col-sm-12 col-md-6 col-lg-4">
+                        <div class="col-sm-12 col-md-6 col-lg-4 child">
                             <form action="">
                                 <div class="form-group">
                                     <label for="subcategory1"><i class="fa fa-file-sound-o" aria-hidden="true"></i></label>
@@ -91,15 +91,21 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-check">
-                                        <input class="form-check-input free-pay" type="checkbox" value="free">
+                                        <input id="free" class="form-check-input free-pay" type="checkbox" value="free">
                                         <label class="form-check-label" for="free">
                                             Gratis
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input free-pay" type="checkbox" value="pay">
+                                        <input id="pay" class="form-check-input free-pay" type="checkbox" value="pay">
                                         <label class="form-check-label" for="pay">
                                             De Pago
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input id="package" class="form-check-input free-pay" type="checkbox" value="package">
+                                        <label class="form-check-label" for="package">
+                                            Paquetes
                                         </label>
                                     </div>
                                 </div>
@@ -109,56 +115,176 @@
                     <div class="col-md-12 col-lg-9 documents">
                         <div class="container-fluid">
                             <div class="row justify-content-around document-list">
-                                {% for doc in documents %}
-                                    <div class="col-md-5 doc-content">
-                                        <div class="container-fluid">
-                                            <div class="row row-category">
-                                                <div class="col">
-                                                    <p class="category">{{doc.category.name}}</p>
-                                                </div> 
-                                            </div>
-                                            <div class="row justify-content-between">
-                                                <div class="col-10 doc-info">
-                                                    <span class="doc-title">{{doc.name}}</span>
-                                                    <p class="doc-description">{{doc.short_description|default:"Sin Descripción"}}</p>
+                                {% if documents %}
+                                    {% for doc in documents %}
+                                        <div class="col-md-5 doc-content">
+                                            <div class="container-fluid">
+                                                <div class="row row-category">
+                                                    <div class="col">
+                                                        <p class="category">{{doc.category.name}}</p>
+                                                    </div> 
                                                 </div>
-                                                <div class="col-1">
-                                                    <a data-video="{{doc.video_url}}"
-                                                    data-name="{{doc.name}}"
-                                                    data-shortdescription="{{doc.short_description}}"
-                                                    data-longdescription="{{doc.long_description}}"
-                                                    class="btn-modal-info">
-                                                        <i class="fas fa-info-circle float-right"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="row doc-price-content">
-                                                <div class="col-6">
-                                                    <a href="{% url 'create-user-document'  %}?document_id={{doc.pk}}" class="btn btn-buy float-left">Comprar</a>
-                                                </div>
-                                                {%if doc.price is None or doc.price == 0%}
-                                                    <div class="col-6">
-                                                        <span class="float-right price-free">GRATIS</span>
+                                                <div class="row justify-content-between">
+                                                    <div class="col-10 doc-info">
+                                                        <span class="doc-title">{{doc.name}}</span>
+                                                        <p class="doc-description">{{doc.short_description|default:"Sin Descripción"}}</p>
                                                     </div>
-
-                                                {%else%}
-                                                    <div class="col-6">
-                                                        <span class="float-right price">$ {{doc.price|intcomma}}</span>
+                                                    <div class="col-1">
+                                                        <a data-video="{{doc.video_url}}"
+                                                        data-name="{{doc.name}}"
+                                                        data-shortdescription="{{doc.short_description}}"
+                                                        data-longdescription="{{doc.long_description}}"
+                                                        class="btn-modal-info">
+                                                            <i class="fas fa-info-circle float-right"></i>
+                                                        </a>
                                                     </div>
-                                                {%endif%}
+                                                </div>
+                                                <div class="row doc-price-content">
+                                                    {%if doc.price is None or doc.price == 0%}
+                                                        <div class="col-6">
+                                                            {% if user.is_authenticated %}
+                                                                <a href="{% url 'store:create-user-document'  %}?document_id={{doc.pk}}" class="btn btn-buy float-left">Comprar</a>
+                                                            {% else %}
+                                                                <a data-toggle="modal" data-target="#modal-login" class="btn btn-buy float-left">Comprar</a>
+                                                            {% endif %}
+                                                        </div>
+                                                    
+                                                        <div class="col-6">
+                                                            <span class="float-right price-free">GRATIS</span>
+                                                        </div>
+                                                    {%else%}
+                                                        <div class="col-6">
+                                                            {% if user.is_authenticated %}
+                                                                <form method="POST" action="{% url 'store:checkout' %}">
+                                                                    {% csrf_token %}
+                                                                    <input type="hidden" name="doc_id" value="{{doc.id}}">
+                                                                    <button type="submit" class="btn btn-buy float-left">Comprar</button>
+                                                                </form>
+                                                            {% else %}
+                                                                <a data-toggle="modal" data-target="#modal-login" class="btn btn-buy float-left">Comprar</a>
+                                                            {% endif %}
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <span class="float-right price">$ {{doc.price|intcomma}}</span>
+                                                        </div>
+                                                    {%endif%}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                
-                                {% empty %}
-                                <div class="col-12 doc-not-found text-center my-5">
-                                    <img src="/static/img/not-found.png" width="100" height="100" class="img-fluid" >
-                                    <p>Tu búsqueda no obtuvo resultados.<br>
-                                    Por favor intenta nuevamente</p>
-                                </div>
-                                    
+                                    {% empty %}
+                                        <div class="col-12 doc-not-found text-center my-5">
+                                            <img src="/static/img/not-found.png" width="100" height="100" class="img-fluid" >
+                                            <p>Tu búsqueda no obtuvo resultados.<br>
+                                            Por favor intenta nuevamente</p>
+                                        </div>
+                                    {% endfor %}
+                                {% elif packages %}
+                                    {% for pack in packages %}
+                                        <div class="col-md-5 pack-content">
+                                            <div class="container-fluid">
+                                                <div class="row row-category">
+                                                    <div class="col-6">
+                                                        <p class="category">{{pack.get_docs_count}} documento{{ pack.get_docs_count|pluralize }}</p>
+                                                    </div>
+                                                    <div class="col-6 text-right">
+                                                        <a class="btn-modal-docs" data-toggle="modal" data-target="#pack-{{pack.id}}-docs">
+                                                            Ver documentos
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="row justify-content-between">
+                                                    <div class="col-12 pack-info">
+                                                        <span class="pack-title">{{pack.name}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row pack-price-content">
+                                                    {%if pack.price is None or pack.price == 0%}
+                                                        <div class="col-6">
+                                                            {% if user.is_authenticated %}
+                                                                <a href="{% url 'store:create-user-document' %}?document_id={{doc.pk}}" class="btn btn-buy float-left">Comprar</a>
+                                                            {% else %}
+                                                                <a data-toggle="modal" data-target="#modal-login" class="btn btn-buy float-left">Comprar</a>
+                                                            {% endif %}
+                                                        </div>
+                                                    
+                                                        <div class="col-6">
+                                                            <span class="float-right price-free">GRATIS</span>
+                                                        </div>
+                                                    {%else%}
+                                                        <div class="col-6">
+                                                            {% if user.is_authenticated %}
+                                                                <form method="POST" action="{% url 'store:checkout' %}">
+                                                                    {% csrf_token %}
+                                                                    <input type="hidden" name="pack_id" value="{{pack.id}}">
+                                                                    <button type="submit" class="btn btn-buy float-left">Comprar</button>
+                                                                </form>
+                                                            {% else %}
+                                                                <a data-toggle="modal" data-target="#modal-login" class="btn btn-buy float-left">Comprar</a>
+                                                            {% endif %}
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <span class="float-right price">$ {{pack.price|intcomma}}</span>
+                                                        </div>
+                                                    {%endif%}
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                {% endfor %}
+                                        <div class="modal fade" id="pack-{{pack.id}}-docs" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalCenterTitle">{{pack.name}}</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body docs-list">
+                                                        <div class="col-12 doc-title">
+                                                            <span>Documentos ({{pack.get_docs_count}})</span>
+                                                        </div>
+                                                        <div class="col-12 doc-items">
+                                                            <ul>
+                                                                {% for d in pack.documents.all %}
+                                                                    <li>{{d.name}}</li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div hidden id="pack-{{pack.id}}-docs">
+                                            <div class="row docs-list">
+                                                <div class="col-12 doc-title">
+                                                    <span>Documentos ({{pack.get_docs_count}})</span>
+                                                </div>
+                                                <div class="col-12 doc-items">
+                                                    <ul>
+                                                        {% for d in pack.documents.all %}
+                                                            <li>{{d.name}}</li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% empty %}
+                                        <div class="col-12 pack-not-found text-center my-5">
+                                            <img src="/static/img/not-found.png" width="100" height="100" class="img-fluid" >
+                                            <p>Tu búsqueda no obtuvo resultados.<br>
+                                            Por favor intenta nuevamente</p>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="col-12 pack-not-found text-center my-5">
+                                        <img src="/static/img/not-found.png" width="100" height="100" class="img-fluid" >
+                                        <p>Tu búsqueda no obtuvo resultados.<br>
+                                        Por favor intenta nuevamente</p>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -166,21 +292,39 @@
                 </div>
                 <nav aria-label="Page navigation example">
                     <div class="pagination justify-content-center">
-                        <span class="step-links">
-                            {% if documents.has_previous %}
-                                <a href="?page=1">&laquo; primera</a>
-                                <a href="?page={{ documents.previous_page_number }}">anterior</a>
-                            {% endif %}
-                    
-                            <span class="current">
-                                Página {{ documents.number }} de {{ documents.paginator.num_pages }}.
+                        {% if documents %}
+                            <span class="step-links">
+                                {% if documents.has_previous %}
+                                    <a href="?page=1">&laquo; primera</a>
+                                    <a href="?page={{ documents.previous_page_number }}">anterior</a>
+                                {% endif %}
+                        
+                                <span class="current">
+                                    Página {{ documents.number }} de {{ documents.paginator.num_pages }}.
+                                </span>
+                        
+                                {% if documents.has_next %}
+                                    <a href="?page={{ documents.next_page_number }}">siguiente</a>
+                                    <a href="?page={{ documents.paginator.num_pages }}">última &raquo;</a>
+                                {% endif %}
                             </span>
-                    
-                            {% if documents.has_next %}
-                                <a href="?page={{ documents.next_page_number }}">siguiente</a>
-                                <a href="?page={{ documents.paginator.num_pages }}">última &raquo;</a>
-                            {% endif %}
-                        </span>
+                        {% elif packages %}
+                            <span class="step-links">
+                                {% if packages.has_previous %}
+                                    <a href="?page=1">&laquo; primera</a>
+                                    <a href="?page={{ packages.previous_page_number }}">anterior</a>
+                                {% endif %}
+                        
+                                <span class="current">
+                                    Página {{ packages.number }} de {{ packages.paginator.num_pages }}.
+                                </span>
+                        
+                                {% if packages.has_next %}
+                                    <a href="?page={{ packages.next_page_number }}">siguiente</a>
+                                    <a href="?page={{ packages.paginator.num_pages }}">última &raquo;</a>
+                                {% endif %}
+                            </span>
+                        {% endif %}
                     </div>
                 </nav>
             </div>
@@ -227,7 +371,6 @@
     <script>
         window.onload = function(){ document.getElementById("loadingAnimation").style.display = "none" }   
     </script>
-    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
     <script>
 
         $(function(){
@@ -239,7 +382,15 @@
                 var	pos = sticky.offset().top,
                     win = $(window);
                 win.on("scroll", function() {
-                    win.scrollTop() >= pos ? sticky.addClass("fixed") : sticky.removeClass("fixed");      
+                    if (win.scrollTop() >= pos){
+                        sticky.addClass("fixed")
+                        $('.filters').addClass('margin-top')
+                    }
+                    else {
+                        sticky.removeClass("fixed"); 
+                        $('.filters').removeClass('margin-top')
+                    }
+                    // win.scrollTop() >= pos ? sticky.addClass("fixed") : sticky.removeClass("fixed");      
                 });			
             }
         }
@@ -331,7 +482,7 @@
                                 $('#level2-categories').append(
                                     `
                                         <div class="form-check accordion">
-                                            <label class="form-check-label" for="${v.name}">
+                                            <label class="form-check-label dropdown-toggle" for="${v.name}">
                                                 <input class="form-check-input" checked="true" type="checkbox" value="${v.url}" data-slug="${v.slug}" id="${v.name}" >
                                                 ${v.name}
                                             </label>
@@ -345,7 +496,7 @@
                                 $('#level2-categories').append(
                                     `
                                         <div class="form-check accordion">
-                                            <label class="form-check-label" for="${v.name}">
+                                            <label class="form-check-label dropdown-toggle" for="${v.name}">
                                                 <input class="form-check-input" type="checkbox" value="${v.url}" data-slug="${v.slug}" id="${v.name}">
                                                 ${v.name}
                                             </label>

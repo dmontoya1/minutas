@@ -33,6 +33,27 @@
             </select>
         </div>
     </div>
+{% elif field.field_type == field.SELECT_MULTIPLE %}
+    <div class="input-block">
+        <div class="label col clearfix mb-2">
+            <span class="float-left">{{forloop.counter}}. {{field.display_name}} </span>
+            {% if field.help_text %}
+                <i class="fas fa-question-circle float-right " data-toggle="tooltip" data-placement="left" title="{{field.help_text}}"></i>
+            {% endif %}
+        </div>   
+        {% for f in field.documentfieldoption_set.all %}
+            <div class="col mb-2">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <input type="checkbox" id="{{field.name}}__{{f.pk}}" value="{{f.name}}">
+                    </div>
+                    <div class="col-sm-11 pl-0">
+                        <label for="{{field.name}}__{{f.pk}}">{{f.name}}</label>
+                    </div>
+                </div>              
+            </div>
+        {% endfor %}
+    </div>
 {% elif field.field_type == field.GROUP  %}
     <div class="input-block">
         <div class="label col clearfix">
@@ -47,7 +68,7 @@
             <div class="counter">
                 {{field.field_group_verbose_name}} #<span>1</span>
             </div>
-            {% for gf in field.field_group.all %}  
+            {% for gf in field.get_ordered_group_fields %}  
                 {% if gf.is_text_input %}
                     <div class="input-block">
                         <div class="label">{{forloop.counter}}. {{gf.display_name}}</div>

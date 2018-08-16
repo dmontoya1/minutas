@@ -107,8 +107,16 @@ class SiteConfig(models.Model):
     )
     about_page_content = models.TextField(
 		'Contenido (Quienes sómos)',
+        max_length=600,
         null=True,
         blank=True
+    )
+    about_page_image = models.ImageField(
+        'Imagen (Quienes somos)',
+        null=True,
+        blank=True,
+        upload_to='about-us',
+        help_text='La resolución requerida es de 800x1000px'
     )
     landing_contact = models.TextField(
         'Correo de contacto (landing)',
@@ -117,6 +125,11 @@ class SiteConfig(models.Model):
     )
     landing_phone = models.TextField(
 		'Teléfono de contacto (landing)',
+        null=True,
+        blank=True
+    )
+    landing_contract_info = models.TextField(
+		'¿Por qué construir un contrato responsablemente? (landing)',
         null=True,
         blank=True
     )

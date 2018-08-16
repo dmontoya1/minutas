@@ -5,6 +5,15 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123601727-1"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-123601727-1');
+        </script>
+
         <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="description" content="Tratum, documentos legales online">
@@ -32,6 +41,9 @@
         <header>
             <div class="pos-f-t">
                 <div class="contextualMenu">
+                    <div class="pl-4">
+                        <i class="fas fa-times contextual-closer"></i>
+                    </div>
                     <div class="p-4">
                         <h4 class="text-white">
                             <a href="/">Inicio</a>
@@ -248,8 +260,7 @@
                                             <input type="checkbox" id="terms" style="display:inline">
                                             <label for="terms" style="color: #929292;display:inline;font-weight: 100;">
                                             Para continuar debes aceptar las 
-                                            <!-- <a href="{% url 'webclient:policies' %}" target="_blank" class="signup_terms">Términos y condiciones </a> y las  -->
-                                            <a href="{% url 'webclient:policies' %}" target="_blank" class="signup_terms"><strong>Políticas de tratamiento de datos</strong> </a>de <strong>TRATUM S.A.S</strong>
+                                            <a href="{% url 'webclient:policies' 'privacy' %}" target="_blank" class="signup_terms"><strong>Políticas de tratamiento de datos</strong> </a>de <strong>TRATUM S.A.S</strong>
                                         </div>
         
                                         <input type="hidden" name="username" />
@@ -318,26 +329,116 @@
             </div>
         </div>
 
-        <footer class="bg-dark">
+        <footer>
             <div class="container">
-                <div class="row ">
-                    <div class="col-sm-12 text-center mt-3 mb-3">
-                        <a href="/policies/" class="text-white">
-                            Quienes somos |
+                <div class="row">
+                    <div class="col-sm-12 col-md-3 faq">
+                        <i class="fas fa-question-circle"></i>
+                        <a data-toggle="modal" data-target="#modal-faq">
+                            FAQ
                         </a>
-                        <a href="/faq/" class="text-white">
-                            Dinos que documentos necesitas |
+                    </div>
+                    <div class="col-sm-12 col-md-3 link-col">
+                        <a href="{% url 'webclient:about-us' %}">
+                            Quienes somos 
                         </a>
-                        <a href="/faq/" class="text-white">
-                            Políticas de uso |
+                        <a data-toggle="modal" data-target="#modal-documents" >
+                            Dinos que documentos necesitas
                         </a>
-                        <a href="/faq/" class="text-white">
+                    </div>
+                    <div class="col-sm-12 col-md-3 link-col">
+                        <a href="{% url 'webclient:policies' 'privacy' %}">
+                            Políticas de uso 
+                        </a>
+                        <a href="{% url 'webclient:policies' 'terms' %}">
                             Terminos y condiciones 
                         </a>
                     </div>
+                    <div class="col-sm-12 col-md-3 social text-right">
+                        <a href="#" class="text-white">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-white">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-white">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <span class="white-text">{{bussiness_info.landing_contact}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row copyright">
+                <div class="col text-center">
+                    <span>Tratum 2018 - Powered by 
+                        <a href="http://www.apptitud.co" target="_blank" class="underline">
+                            <strong>Apptitud</strong>
+                        </a>
+                    </span>
                 </div>
             </div>
         </footer>        
+
+        <div class="modal fade" id="modal-faq" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="container">
+                            {% for f in faq_categories %}
+                                <div class="row qc-title">
+                                    <div class="col-sm-12 text-center qc mt-2">
+                                        {{f.name}}
+                                    </div>
+                                </div>
+                                {% for i in f.faqitem_set.all %}
+                                    <div class="row content {% if forloop.last %}last{% endif %}">
+                                        <div class="col-sm-12 q-title" data-id="{{i.pk}}">
+                                            {{i.question}}
+                                            <i class="fas fa-caret-down float-right"></i>
+                                        </div>
+                                        <div class="col-sm-12 q-answer" data-question="{{i.pk}}">
+                                            {{i.answer}}
+                                        </div>
+                                    </div>
+                                {% endfor %}    
+                            {% endfor %}                                                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modal-documents" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col text-center">
+                                    <form action="{% url 'webclient:contact-form' %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="is_document" value="true"/>
+                                        <div class="form-group">
+                                            <input required name="name" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Nombre">
+                                        </div>
+                                        <div class="form-group">
+                                            <input required name="email" type="email" class="form-control"  placeholder="Correo electrónico">
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea required name="message" class="form-control" placeholder="¿Qué documentos necesitas?"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary">Enviar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>                                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
@@ -438,10 +539,11 @@
             }
             
             $(document).ready(function() {
-                $('.navbar-toggler').on('click', function(){
+                $('.navbar-toggler, .contextual-closer').on('click', function(){
                     $('.rotate').toggleClass("down");
-                    $('.contextualMenu').slideToggle();
+                    $('.contextualMenu').fadeToggle();
                 })
+
                 {% block nav-script%}
                     $(window).scroll(function(){
                         var scroll = $(window).scrollTop();
@@ -459,6 +561,7 @@
                         $('#valid').html(checkValid($('#password1').val(), $('#password2').val()))
                     })
                 {% endblock %}
+                
                 
             });
 
@@ -496,6 +599,10 @@
                         console.log(error.response.data.error)
                         toastr.error(error.response.data.error)
                     });
+            })
+
+            $('.q-title').on('click', function(){
+                $(this).toggleClass('active');
             })
 
             $("#signup").on('submit', function(ev){

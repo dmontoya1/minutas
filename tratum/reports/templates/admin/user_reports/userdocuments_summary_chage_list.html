@@ -1,0 +1,61 @@
+{% extends 'admin/change_list.html' %}
+{% load humanize %}
+
+{% block content_title %}
+  <style>
+    input.default.export {
+      margin: .5em;
+      margin-bottom: 1em;
+      float: left;
+    }
+    #changelist table thead th {
+      padding: 1em;
+    }
+  </style>
+  <form action="{% url 'reports:user-sales' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="summary" value="{{summary}}"/>
+    <input type="submit" name="CSV" class="default export" value="Exportar a CSV">
+    <input type="submit" name="XLS" class="default export" value="Exportar a XLS">
+    <input type="submit" name="PDF" class="default export" value="Exportar a PDF">
+  </form>
+{% endblock %}
+
+{% block result_list %}
+<div class=”results”>
+    <table>
+        
+    <thead>
+      <tr>
+        <th>
+          <div class=”text”>
+            <a href=”#”>Usuario</a>
+          </div>
+        </th>
+        <th>
+          <div class=”text”>
+            <a href=”#”>Fecha de pago</a>
+          </div>
+        </th>
+        <th>
+            <div class=”text”>
+                <a href=”#”>Elemento comprado</a>
+            </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for row in summary %}
+      <tr>
+        <td> {{ row.user.email }} </td>
+        <td> {{ row.payment_date }} </td>
+        <td> {{ row.get_purchased_element }} </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+    
+  </table>
+</div>
+{% endblock %}
+
+{% block pagination %}{% endblock %}

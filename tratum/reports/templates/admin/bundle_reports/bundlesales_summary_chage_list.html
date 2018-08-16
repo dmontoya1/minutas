@@ -1,0 +1,63 @@
+{% extends 'admin/change_list.html' %}
+{% load humanize %}
+
+{% block content_title %}
+  <style>
+    input.default.export {
+      margin: .5em;
+      margin-bottom: 1em;
+      float: left;
+    }
+    #changelist table thead th {
+      padding: 1em;
+    }
+  </style>
+  <form action="{% url 'reports:documentbundle-sales' %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" name="CSV" class="default export" value="Exportar a CSV">
+    <input type="submit" name="XLS" class="default export" value="Exportar a XLS">
+    <input type="submit" name="PDF" class="default export" value="Exportar a PDF">
+  </form>
+{% endblock %}
+
+{% block result_list %}
+<div class=”results”>
+    <table>
+        
+    <thead>
+      <tr>
+        <th>
+          <div class=”text”>
+            <a href=”#”>Nombre de paquete</a>
+          </div>
+        </th>
+        <th>
+            <div class=”text”>
+                <a href=”#”>Documentos</a>
+            </div>
+        </th>
+        <th>
+            <div class=”text”>
+                <a href=”#”>Ventas totales</a>
+            </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for row in summary %}
+      <tr>
+        <td> {{ row.name }} </td>
+        <td> 
+        {% for d in row.documents.all %}
+            <a>{{d.name}}</a>{% if not forloop.last %},{% endif %}
+        {% endfor %}</td>
+        <td> {{ row.invoce_set.all.count }} </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+    
+  </table>
+</div>
+{% endblock %}
+
+{% block pagination %}{% endblock %}

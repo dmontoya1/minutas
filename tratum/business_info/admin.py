@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .forms import SliderItemForm
+from .forms import SliderItemForm, SiteConfigForm
 from .models import (
     Policy,
     FAQCategory,
@@ -32,6 +32,7 @@ class FAQCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(SiteConfig)
 class SiteConfigAdmin(admin.ModelAdmin):
+    form = SiteConfigForm
     
     def has_add_permission(self, request):
         if self.model.objects.count() > 0:

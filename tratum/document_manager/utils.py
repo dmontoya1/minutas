@@ -1,8 +1,6 @@
 
-def add_document_scripts(content: str):
-    jquery_tag = '<script \
-    src="https://code.jquery.com/jquery-3.3.1.slim.min.js" \
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" \
-    crossorigin="anonymous" type="text/javascript"></script>'
-    formatter_tag = '<script type="text/javascript" src="/static/js/documentFormatter.js">'
-    return content + (jquery_tag, formatter_tag)
+def get_static_path(scheme, host, static):
+    """Retorna un string formateado con la URL absoluta de un estático o ruta dada.
+    """
+
+    return f'{scheme}://{host}{static}'

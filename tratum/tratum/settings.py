@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
     'rest_auth.registration',
+    'import_export',
     'mptt_urls',
     'api',
     'ckeditor',
@@ -44,7 +45,8 @@ INSTALLED_APPS = [
     'business_info',
     'store',
     'users',
-    'webclient'
+    'webclient',
+    'reports'
 ]
 
 MIDDLEWARE = [
@@ -74,6 +76,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'webclient.context_processors.categories.context_categories',
                 'webclient.context_processors.api-key.api_key_processor',
+                'webclient.context_processors.faq.faq_processor',
             ],
         },
     },

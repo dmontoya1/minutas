@@ -1,8 +1,14 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 import uuid
+import datetime
+import time
 
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import JSONField
+from django.core.exceptions import ValidationError
 from django.urls import reverse
 
 from utils.models import SoftDeletionModelMixin
@@ -29,6 +35,13 @@ class DocumentBundle(SoftDeletionModelMixin):
         blank=True
     )
     price = models.PositiveIntegerField('Precio')
+    show_on_landing = models.BooleanField(default=False)
+    order = models.PositiveSmallIntegerField(
+        'Orden',
+        null=True,
+        blank=True,
+        unique=True
+    )
 
     def __str__(self):
         return self.name
@@ -37,16 +50,31 @@ class DocumentBundle(SoftDeletionModelMixin):
         verbose_name = 'Paquete de documento'   
         verbose_name_plural = 'Paquetes de documentos'
 
+    def clean(self):
+        """Retorna ValidationError si se intenta crear más tres instancias para la landing
+        """
+
+        model = self.__class__
+        if (model.objects.filter(show_on_landing=True).exclude(pk=self.pk).count() >= 3 and 
+                self.show_on_landing is True):
+            raise ValidationError(
+                "Sólo se puede agregar 3 paquetes a la landing.")
+
+    def get_docs_count(self):
+        return self.documents.count()
+    
 
 class UserDocument(models.Model):
     CREATED = 'CR'
     PURCHASED = 'PU'
     FINISHED = 'FI'
+    EXPIRED = 'EX'
 
     STATUS_CHOICES = (
         (CREATED, 'Creado'),
         (PURCHASED, 'Comprado'),
-        (FINISHED, 'Finalizado')
+        (FINISHED, 'Finalizado'),
+        (EXPIRED, 'Caducado'),
     )
 
     user = models.ForeignKey(
@@ -76,6 +104,18 @@ class UserDocument(models.Model):
         editable=False
     )
     created_at = models.DateTimeField(auto_now_add=True)
+    html_file = models.FileField(
+        null=True,
+        blank=True,
+        editable=False,
+        upload_to='documents'
+    )
+    pdf_file = models.FileField(
+        null=True,
+        blank=True,
+        editable=False,
+        upload_to='pdfs'
+    )
 
     class Meta:
         verbose_name = 'Documento de usuario'
@@ -87,3 +127,85 @@ class UserDocument(models.Model):
     
     def get_absolute_url(self):
         return reverse('webclient:user-document', kwargs={'identifier': self.identifier})
+    
+    def is_expired(self):
+        return False
+        created_at = datetime.datetime.strptime(self.created_at, "%Y-%m-%d") 
+        diff = abs((datetime.datetime.now() - created_at).days)
+        print(diff)
+        if diff > 10:
+            return False
+        return True
+
+
+class Invoice(models.Model):
+    """Guarda las facturas a cada usuario.
+    """
+
+    APPROVED = 'AP'
+    PENDING  = 'PE'
+    CANCEL  = 'CA'
+    REJECTED  = 'RE'
+
+    STATUS = (
+        (APPROVED, 'Aprobada'),
+        (PENDING,  'Pendiente'),
+        (CANCEL,  'Cancelada'),
+        (REJECTED,  'Rechazada'),
+    )
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="Usuario",
+    )
+    is_discharged = models.BooleanField('¿Está pago?', default=False)
+    document = models.ForeignKey(
+        Document,
+        verbose_name='Documento',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
+    )
+    package = models.ForeignKey(
+        DocumentBundle,
+        verbose_name='Paquete',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
+    )
+    payment_date = models.DateTimeField(
+        'Fecha de pago',
+        null=True,
+        blank=True
+    )
+    payu_reference_code = models.CharField(
+        'Referencia Pago payU',
+        max_length=255,
+        blank=True,
+        null=True
+    )
+    payment_status = models.CharField(
+        'Estado del Pago',
+        max_length=50,
+        choices=STATUS,
+        default=PENDING
+    )
+
+    class Meta:
+        verbose_name = 'Factura'
+
+    def __unicode__(self):
+        return self.get_identifier()
+    
+    def get_identifier(self):
+        return 'FAC_{}{}'.format(
+            self.pk,
+            int(time.mktime(self.payment_date.timetuple()))
+
+        )
+    
+    def get_purchased_element(self):
+        if self.document:
+            return self.document.name
+        return self.package.name

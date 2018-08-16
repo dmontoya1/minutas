@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
     integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
     crossorigin="anonymous">
+
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400" rel="stylesheet">
   </head>
 
@@ -29,7 +30,6 @@
             <a href="{% url 'webclient:user-documents' %}" class="col">Regresar</a>
             <form method="POST" action="{% url 'document_manager:process' %}" id="document-form">    
               <input type="hidden" name="identifier" value="{{identifier}}" />
-              {% csrf_token %}
               <div class="upform-header"></div>    
               <div class="upform-main"> 
                 {% for field in object.get_fields %}
@@ -54,7 +54,7 @@
                 </div>                
               </div>
               <div class="upform-footer">
-                <a href="{% url 'webclient:user-document-preview' identifier %}" class="btn btn-primary btn-lg">Previsualizar</a>
+                <a href="{% url 'webclient:user-document-preview' identifier %}" class="btn btn-primary btn-lg preview">Previsualizar</a>
               </div>    
             </form>
           </div>
@@ -111,7 +111,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>      
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>   
     <script src="{% static 'js/form.js' %}"></script>
 
   </body>

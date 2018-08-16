@@ -39,8 +39,8 @@ from store.models import (
     DocumentBundle,
     UserDocument
 )
-
 from users.models import LogTerms
+from .mixins import TermsAndConditions
 
 
 class HomePageView(TemplateView):
@@ -49,8 +49,12 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['context_bundles'] = DocumentBundle.objects.alive()
+        context['context_bundles'] = DocumentBundle.objects.alive().filter(show_on_landing=True)
         context['context_slides'] = SliderItem.objects.all()
+        context['context_bundle_count'] = DocumentBundle.objects.alive().count()
+        site_config = SiteConfig.objects.last()
+        if site_config:
+            context['landing_contract_info'] = site_config.landing_contract_info
         return context
 
 
@@ -60,20 +64,18 @@ class PoliciesView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        police = get_object_or_404(Policy, policy_type='PP')
+        _type = self.kwargs.get('type', 'PP')
+        if _type:
+            if self.kwargs['type'] == 'privacy':
+                _type = 'PP'
+            elif self.kwargs['type'] == 'terms':
+                _type = 'TCP'
+            elif self.kwargs['type'] == 'cookies':
+                _type = 'CMP'
+        police = get_object_or_404(Policy, policy_type=_type)
         context = super(PoliciesView, self).get_context_data(**kwargs)
-        context['name'] = 'Política de privacidad y tratamiento de datos'
+        context['name'] = police.get_policy_type_display()
         context['content'] = police.content
-        return context
-
-
-class FAQView(TemplateView):
-
-    template_name = "webclient/faq.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['faq_categories'] = FAQCategory.objects.all()
         return context
 
 
@@ -118,8 +120,8 @@ class LoginView(View):
                 login(request, user)
                 messages.add_message(
                     request,
-                        messages.ERROR, 
-                        "Bienvenido de vuelta a Tratum"
+                    messages.ERROR, 
+                    "Bienvenido de vuelta a Tratum"
                 )
             else:
                 response = {'error': 'Correo y/o contraseña incorrectas.'}
@@ -161,19 +163,23 @@ class SignupView(View):
             ctx = {
                 'email': user.email,
                 'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': account_activation_token.make_token(user),
                 'user_id': user.pk
             }
-            body = loader.get_template('webclient/account_activation_email.html').render(ctx)
-            message = EmailMessage("Activa tu cuenta en Tratum", body, 'no-reply@tratum.com', [user.email])
+            body = loader.get_template('webclient/email/account_activation_email.html').render(ctx)
+            message = EmailMessage(
+                "Activa tu cuenta en Tratum",
+                body,
+                'no-reply@tratum.com',
+                [user.email]
+            )
             message.content_subtype = 'html'
             message.send()
 
             messages.add_message(
                 request,
-                    messages.ERROR, 
-                    "Te has registrado correctamente. Revisa tu correo para activar tu cuenta"
+                messages.ERROR, 
+                "Te has registrado correctamente. Revisa tu correo para activar tu cuenta"
             )
             url = reverse('webclient:home')
             return JsonResponse(url, safe=False)
@@ -181,6 +187,33 @@ class SignupView(View):
             msg = 'Tu correo ya está registrado. Por favor inicia sesión'
             response = {'error': msg}
             return JsonResponse(response, status=400)
+
+
+class ValidateTerms(LoginRequiredMixin, TemplateView):
+
+    login_url = '/'
+    redirect_field_name = 'next'
+    template_name = 'webclient/validate_terms.html'
+
+    def get_context_data(self, **kwargs):
+        terms = get_object_or_404(Policy, policy_type='TCP')
+        police = get_object_or_404(Policy, policy_type='PP')
+        user = self.request.user
+        try:
+            user_token = Token.objects.get(user=user)
+        except Token.DoesNotExist:
+            user_token = Token(
+                user=user
+            )
+            user_token.save()
+        context = super(ValidateTerms, self).get_context_data(**kwargs)
+        context['terms_name'] = terms.get_policy_type_display()
+        context['terms_content'] = terms.content
+        context['police_name'] = police.get_policy_type_display()
+        context['police_content'] = police.content
+        context['user'] = user
+        context['user_token'] = user_token
+        return context
 
 
 class CategoryDocumentsView(TemplateView):
@@ -195,28 +228,48 @@ class CategoryDocumentsView(TemplateView):
         context['documents'] = Document.objects.filter(category__in=categories).order_by('order')
         return context
 
-@method_decorator(login_required, name='dispatch')
-class ProfileView(LoginRequiredMixin, TemplateView):
+
+class ProfileView(LoginRequiredMixin, TermsAndConditions, TemplateView):
 
     template_name = "webclient/profile.html"
     login_url = '/'
 
 
-@method_decorator(login_required, name='dispatch')
-class UserDocumentsView(ListView):
+class UserDocumentsView(LoginRequiredMixin, TermsAndConditions, ListView):
     model = UserDocument
     template_name = "webclient/user_documents.html"
+    login_url = '/'
+    redirect_field_name = 'next'
 
     def get_queryset(self):
         docs = UserDocument.objects.filter(user=self.request.user)
         return docs
+    
+    def get(self, request, *args, **kwargs):
+        if request.user.is_anonymous:
+            pass
+        else:
+            user = request.user
+            docs = UserDocument.objects.filter(user=user)
+            if not docs:
+                messages.add_message(
+                    request,
+                        messages.ERROR, 
+                        "No tienes documentos creados. \
+                        Crea o compra tu primer documento desde aquí"
+                )
+                return redirect(reverse('webclient:category_documents', args=("",)))
+        self.object_list = self.get_queryset()
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)
 
 
-@method_decorator(login_required, name='dispatch')
-class UserDocumentView(DetailView):
+class UserDocumentView(LoginRequiredMixin, DetailView):
     model = UserDocument
     template_name = "document_form/document_detail.html"
     slug_field = "identifier"
+    login_url = '/'
+    redirect_field_name = 'next'
 
     def get_object(self):
         obj = UserDocument.objects.get(identifier=self.kwargs['identifier'])
@@ -241,12 +294,37 @@ class UserDocumentPreviewView(DetailView):
         context = super().get_context_data(**kwargs)
         obj = self.get_object()
         document_content = Template(obj.document.content)
-        document_content = document_content.render(Context(obj.answers)).encode('ascii', 'xmlcharrefreplace')
+        document_content = document_content.render(Context(obj.answers))
         context['document_content'] = document_content
         return context
 
 
-def activate(request, uidb64, token, pk):
+class ContactFormView(View):
+    """Mensajes del formulario de contacto y solicitud de documentos
+    """
+
+    def post(self, request, *args, **kwargs):
+        name = request.POST['name']
+        email = request.POST['email']
+        message = request.POST['message']
+        topic = 'Mensaje de {name} desde el formulario de Tratum'.format(name=name)
+        if request.POST.get('is_document', None):
+            topic = 'Solicitud de nuevo documento de {name} desde Tratum'.format(name=name)
+        email = EmailMessage(
+            topic,
+            '{email} envía esto: {message}'.format(
+                email=email,
+                message=message
+            ), 
+            'no-reply@tratum.com',
+            ['nrodriguez@apptitud.com.co']
+        )
+        email.send()
+        messages.success(request, 'Mensaje envíado correctamente')
+        return redirect('webclient:home')
+
+
+def activate(request, token, pk):
     try:
         user = User.objects.get(pk=pk)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
@@ -257,9 +335,9 @@ def activate(request, uidb64, token, pk):
         user.save()
         login(request, user)
         messages.add_message(
-            request,
-                messages.ERROR, 
-                "Has activado tu cuenta exitosamente."
+            request,    
+            messages.ERROR, 
+            "Has activado tu cuenta exitosamente."
         )
         return redirect('webclient:home')
     else:
