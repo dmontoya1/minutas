@@ -2,17 +2,14 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = 'zbua(=8tqz9(l_wkqapp!j4@c2&qnkgtk+=4-30f+td(_gr_2w'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'zbua(=8tqz9(l_wkqapp!j4@c2&qnkgtk+=4-30f+td(_gr_2w')
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
-
-INTERNAL_IPS = [
-    'localhost',
-    'localhost.org',
-    '127.0.0.1',
-    '192.168.0.16'
+ALLOWED_HOSTS = [
+    'www.tratum.co', 
+    'tratum.co', 
+    '206.189.177.121'
 ]
 
 API_KEY = '042c97b1f486c5bde044ba5f10dfd11ad26cb81b'
@@ -40,7 +37,6 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'mptt_urls',
     'api',
-    'debug_toolbar',
     'ckeditor',
     'mptt',
     'utils',
@@ -52,7 +48,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -86,7 +81,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tratum.wsgi.application'
 
-SITE_ID = 2
+SITE_ID = 1
 
 
 # Database
@@ -134,10 +129,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "tratum/static"),
+    os.path.join("/var/www/tratum/static/"),
 ]
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'tratum/media')
+MEDIA_ROOT = os.path.join("/var/www/tratum/media/"),
 
 # CKEditor config
 
