@@ -130,8 +130,9 @@ USE_TZ = True
 # Static and files 
 
 STATIC_URL = '/static/'
+STATIC_ROOT = "/var/www/static/"
 STATICFILES_DIRS = [
-    os.path.join("/var/www/static/"),
+    os.path.join(BASE_DIR, "tratum/static"),
 ]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join("/var/www/media/"),
