@@ -4,7 +4,7 @@
 
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'css/preview.css' %}">
-  <meta http-equiv="Cache-control" content="no-cache">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
 
 {% endblock %}
 
@@ -33,13 +33,13 @@
                 {% if object.status == object.FINISHED %}
                     <div class="col-md-6 mt-4">
                         <a href="{% url 'webclient:user-documents' %}" class="underline">Ver mis documentos</a></br>
-                        <button class="action-button__primary blue pdf-gen">Descargar PDF</button>
+                        <button class="action-button__primary blue link-button" data-href="{{object.pdf_file.url}}">Descargar PDF</button>
                         <button class="action-button__primary blue doc-gen">Descargar DOC</button>
                     </div>
                 {% else %}
                     <div class="col-md-6">
                         <button class="action-button__primary blue finish">Finalizar</button>
-                        <button class="action-button__primary blank update" data-href="{{object.get_absolute_url}}">Editar</button>
+                        <button class="action-button__primary blank link-button" data-href="{{object.get_absolute_url}}">Editar</button>
                     </div>
                 {% endif %}                
             {% endif %}    
@@ -49,8 +49,7 @@
 
 
 {% block extra_js %}
-    <script type="text/javascript" src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
-    <script type="text/javascript" src="{% static 'js/FileSaver.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
     <script type="text/javascript" src="{% static 'js/html-docx.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/preview.js' %}"></script>    
     <script type="text/javascript" src="{% static 'js/pdfRender.js' %}"></script>    

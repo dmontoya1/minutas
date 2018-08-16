@@ -1,7 +1,0 @@
-<p>{% extends &#39;dynamic_documents_templates/base.html&#39; %}</p>
-
-<p>{% block content %}</p>
-
-<p>Prueba 123</p>
-
-<p>{% endblock %}</p>

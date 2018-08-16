@@ -107,7 +107,14 @@ class UserDocument(models.Model):
     html_file = models.FileField(
         null=True,
         blank=True,
-        editable=False
+        editable=False,
+        upload_to='documents'
+    )
+    pdf_file = models.FileField(
+        null=True,
+        blank=True,
+        editable=False,
+        upload_to='pdfs'
     )
 
     class Meta:
