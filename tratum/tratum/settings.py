@@ -90,7 +90,7 @@ DATABASES = {
     'default': {
         'NAME': 'tratum',
         'USER': 'postgres',
-        'PASSWORD': 'plJhgdCuyKnuyV',
+        'PASSWORD': 'plJhgdCuyKnuyVasfmbtcg',
         'ENGINE': 'django.db.backends.postgresql'
     }
 }
