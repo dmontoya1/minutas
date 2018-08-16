@@ -88,7 +88,9 @@ SITE_ID = 1
 
 DATABASES = {
     'default': {
-        'NAME': 'tratum',
+        'NAME': os.environ['DJANGO_DB_NAME'],
+        'USER': os.environ['DJANGO_DB_USER'],
+        'PASSWORD': os.environ['DJANGO_DB_PASSWORD'],
         'ENGINE': 'django.db.backends.postgresql'
     }
 }
@@ -224,8 +226,8 @@ AUTHENTICATION_BACKENDS = (
 #email configuration
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_USER = 'Tratum <no-reply@tratum.com>'
-EMAIL_HOST_USER = 'apptitud'
-EMAIL_HOST_PASSWORD = 'jkdsjk4534.sd!"'
+EMAIL_HOST_USER = os.environ['DJANGO_EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = os.environ['DJANGO_EMAIL_HOST_PASSWORD']
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
