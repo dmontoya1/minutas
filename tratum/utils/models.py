@@ -71,9 +71,7 @@ class SlugIdentifierMixin(models.Model):
         if hasattr(self, 'section'):
             if self.section:
                 slug = slugify('{}-{}'.format(name, self.section.slug))
-        if self.__class__.__name__ == 'Category':
-            slug = '{name}-{pk}'.format(name=name, pk=self.pk)
-        return slugify(slug)   
+        return slugify(slug)
     
     def formated_slug(self):
         return str(self.slug).replace('-', '_')
