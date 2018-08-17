@@ -295,7 +295,7 @@ section {
     background-color: #5eccc4;
     padding-top: 3em;
     display: none;
-    z-index: 999999;
+    z-index: 9998;
     position: fixed;
 }
     .contextualMenu i {
