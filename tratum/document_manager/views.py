@@ -169,7 +169,7 @@ class FinishDocumentView(View):
         
     
     def send_email(self, request, user_document):
-        subject = f'Tu {user_document.document.name} de Tratum'
+        subject = 'Tu {} de Tratum'.format(user_document.document.name)
         context = {
             'title': subject,
             'username': user_document.user.get_full_name(),
