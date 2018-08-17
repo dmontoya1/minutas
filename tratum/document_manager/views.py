@@ -165,7 +165,7 @@ class FinishDocumentView(View):
         template = Template(content)
         template = template.render(Context(user_document.answers)).encode('ascii', 'xmlcharrefreplace')
         file = ContentFile(template)
-        user_document.html_file.save(f'{user_document.identifier}.html', file)
+        user_document.html_file.save('{}.html'.format(user_document.identifier), file)
         
     
     def send_email(self, request, user_document):
