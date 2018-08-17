@@ -164,7 +164,6 @@ $(function(){
                 if(input.length > 0){
                     input.val(answers[key]);
                 } else {
-                    console.log(input)
                     input = $('#document-form').find(`select[name='${key}']`)
                     input.find(`option[value='${answers[key]}']`).prop("selected", true);
                 }
