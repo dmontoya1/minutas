@@ -71,7 +71,7 @@ class Checkout(TemplateView):
             apiKey = '4Vj8eK4rloUd272L48hsrarnUA'
             merchantId = 508029
             url = "https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu"
-            host = 'https://d03eb3ce.ngrok.io'
+            host = 'http://tratum.apptitud.com.co'
         else:
             test = 0
             accountId = 746396
