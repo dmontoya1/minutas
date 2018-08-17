@@ -81,7 +81,14 @@
                     
                 </tbody>
             </table>
-            <a class="btn btn-add" href="{% url 'webclient:user-documents' %}">Ir mis documentos</a>
+            {% if ref == 'DO'%}
+                <a class="btn btn-action" href="{% url 'webclient:user-documents' %}">Ir mis documentos</a>
+                {% if identifier%}
+                    <a class="btn btn-action" href="{% url 'webclient:user-document-preview' identifier %}">Editar mi documento</a>
+                {% endif %}
+            {% else %}
+                <a class="btn btn-action" href="{% url 'webclient:user-documents' %}">Ir mis documentos</a>
+            {% endif %}
             </form>
             
         </div>
