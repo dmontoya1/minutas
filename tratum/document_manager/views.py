@@ -120,7 +120,7 @@ class FinishDocumentView(View):
             'footer-center': '[page]',
             'footer-spacing': '14',
             'footer-font-size': '9',
-            'header-right': f'{user_document.document.name}',
+            'header-right': '{}'.format(user_document.document.name),
             'header-spacing': '15',
             'header-font-size': '7',
             'no-outline': None
@@ -135,8 +135,8 @@ class FinishDocumentView(View):
     def generate_html(self, request, user_document):
 
         def get_scripted_html(request, html_string):
-            css_tag = lambda path: f'<link rel="stylesheet" type="text/css" href="{path}" />' 
-            script_tag = lambda path: f'<script src="{path}"></script>'
+            css_tag = lambda path: '<link rel="stylesheet" type="text/css" href="{path}" />'.format(path=path) 
+            script_tag = lambda path: '<script src="{path}"></script>'.format(path=path) 
             iterator = lambda tag, paths: [tag(path) for path in paths]
             css_paths = (
                 get_static_path(
@@ -159,7 +159,7 @@ class FinishDocumentView(View):
             )
             scripts = '\n'.join(iterator(script_tag, script_paths))
             css = '\n'.join(iterator(css_tag, css_paths))
-            return f'{css} {html_string} {scripts}'
+            return '{css} {html_string} {scripts}'.format(css=css, html_string=html_string, scripts=scripts) 
 
         content = get_scripted_html(request, user_document.document.content)
         template = Template(content)
@@ -169,7 +169,7 @@ class FinishDocumentView(View):
         
     
     def send_email(self, request, user_document):
-        subject = f'Tu {user_document.document.name} de Tratum'
+        subject = 'Tu {} de Tratum'.format(user_document.document.name)
         context = {
             'title': subject,
             'username': user_document.user.get_full_name(),
