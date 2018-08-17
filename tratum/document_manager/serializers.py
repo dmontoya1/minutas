@@ -7,11 +7,18 @@ from .models import (
 )
 
 
-class DocumentFieldSerializer(serializers.ModelSerializer):
+class FieldGroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DocumentField
-        fields = ('name', 'field_type', 'formated_slug')
+        fields = ('formated_slug',)
+
+class DocumentFieldSerializer(serializers.ModelSerializer):
+    field_group = FieldGroupSerializer(source='get_ordered_group_fields', many=True)
+
+    class Meta:
+        model = DocumentField
+        fields = ('name', 'field_type', 'formated_slug', 'group_expression', 'field_group')
 
 
 class DocumentSectionSerializer(serializers.ModelSerializer):
