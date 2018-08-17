@@ -283,6 +283,7 @@ class Checkout(TemplateView):
                     identifier = user_doc.identifier
                 except:
                     pass
+            print ("IDENTIFIER" +str(identifier))
 
             if signature == signature_get:  
 
