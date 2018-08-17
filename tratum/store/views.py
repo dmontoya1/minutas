@@ -44,7 +44,7 @@ class CreateUserDocument(View):
             document=Document.objects.get(pk=request.GET['document_id']) 
         )
         document.save()
-        return HttpResponseRedirect(reverse('webclient:user-documents'))
+        return HttpResponseRedirect(reverse('webclient:user-document', kwargs={'identifier': document.identifier}))
 
 
 class UserDocumentDetailView(generics.RetrieveAPIView):
@@ -71,7 +71,7 @@ class Checkout(TemplateView):
             apiKey = '4Vj8eK4rloUd272L48hsrarnUA'
             merchantId = 508029
             url = "https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu"
-            host = 'http://www.tratum.apptitud.com.co'
+            host = 'https://d03eb3ce.ngrok.io'
         else:
             test = 0
             accountId = 746396
@@ -269,7 +269,21 @@ class Checkout(TemplateView):
             signature = signature.encode('utf-8')
             signature = hashlib.md5(signature).hexdigest()
 
-           
+            reference = referenceCode.split('_')
+            ref = reference[0]
+            user_id = reference[1]
+            ref_id = reference[2]
+
+            identifier = None
+            if ref == 'DO':
+                try:
+                    document = Document.objects.get(pk=ref_id)
+                    user = get_user_model().objects.get(pk=user_id)
+                    user_doc = UserDocument.objects.get(user=user, document=document)
+                    identifier = user_doc.identifier
+                except:
+                    pass
+
             if signature == signature_get:  
 
                 return render(
@@ -284,6 +298,8 @@ class Checkout(TemplateView):
                         'id_compra':referenceCode,
                         'reference_pol': reference_pol,
                         'polPaymentMethodType': polPaymentMethodType,
+                        'ref': ref,
+                        'identifier': identifier,
                     }
                     
                 ) 
