@@ -135,8 +135,8 @@ class FinishDocumentView(View):
     def generate_html(self, request, user_document):
 
         def get_scripted_html(request, html_string):
-            css_tag = lambda path: '<link rel="stylesheet" type="text/css" href="{path}" />'.format(path=path) 
-            script_tag = lambda path: '<script src="{path}"></script>'.format(path=path) 
+            css_tag = lambda path: f'<link rel="stylesheet" type="text/css" href="{path}" />'
+            script_tag = lambda path: f'<script src="{path}"></script>'
             iterator = lambda tag, paths: [tag(path) for path in paths]
             css_paths = (
                 get_static_path(
@@ -159,7 +159,7 @@ class FinishDocumentView(View):
             )
             scripts = '\n'.join(iterator(script_tag, script_paths))
             css = '\n'.join(iterator(css_tag, css_paths))
-            return '{css} {html_string} {scripts}'.format(css=css, html_string=html_string, scripts=scripts) 
+            return f'{css} {html_string} {scripts}'
 
         content = get_scripted_html(request, user_document.document.content)
         template = Template(content)
@@ -169,7 +169,7 @@ class FinishDocumentView(View):
         
     
     def send_email(self, request, user_document):
-        subject = 'Tu {} de Tratum'.format(user_document.document.name)
+        subject = f'Tu {user_document.document.name} de Tratum'
         context = {
             'title': subject,
             'username': user_document.user.get_full_name(),
