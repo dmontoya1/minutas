@@ -50,6 +50,16 @@ class DocumentFieldList(generics.ListAPIView):
         return q
 
 
+class DocumentFieldDetail(generics.RetrieveAPIView):
+    serializer_class = DocumentFieldSerializer
+    lookup_field = 'slug'
+
+    def get_object(self):
+        ins = DocumentField()
+        slug = ins.formated_to_raw_slug(self.kwargs['slug'])
+        return DocumentField.objects.get(slug=slug)
+        
+
 class DocumentSectionList(generics.ListAPIView):
     serializer_class = DocumentSectionSerializer
 
@@ -74,7 +84,7 @@ class DocumentSectionDetail(generics.RetrieveAPIView):
         ins = DocumentSection()
         slug = ins.formated_to_raw_slug(self.kwargs['slug'])
         return DocumentSection.objects.get(slug=slug)
-    
+
 
 class ProcessDocumentView(View):
 
