@@ -25,7 +25,7 @@
             {% endif %}
         </div>   
         <div class="input-control col">
-            <select>
+            <select name="{{field.formated_slug}}">
                 <option selected disabled>Selecciona un elemento de la lista</option>
                 {% for f in field.documentfieldoption_set.all %}
                     <option value="{{f.name}}">{{f.name}}</option>
@@ -80,7 +80,7 @@
                     <div class="input-block">
                         <div class="label">{{forloop.counter}}. {{gf.display_name}} </div>
                         <div class="input-control">
-                            <select>
+                            <select name="{{gf.formated_slug}}">
                                 <option selected disabled>Selecciona un elemento de la lista</option>
                                 {% for f in gf.documentfieldoption_set.all %}
                                     <option value="{{f.name}}">{{f.name}}</option>

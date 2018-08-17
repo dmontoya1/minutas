@@ -83,7 +83,6 @@ class ProcessDocumentView(View):
         pdf_file = open(user_document.pdf_path)
 
 
-
 class SaveAnswersView(View):
 
     def post(self, request, *args, **kwargs):
@@ -120,7 +119,7 @@ class FinishDocumentView(View):
             'footer-center': '[page]',
             'footer-spacing': '14',
             'footer-font-size': '9',
-            'header-right': '{}'.format(user_document.document.name),
+            'header-right': f'{user_document.document.name}',
             'header-spacing': '15',
             'header-font-size': '7',
             'no-outline': None

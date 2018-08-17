@@ -37,8 +37,10 @@ $.fn.upform = function() {
             movePrev(this);
         } 
     });
+    
 
     $(container).find('.input-block select').change(function(e) {
+        savePreview();
         moveNext(this);
     });
 
@@ -158,9 +160,13 @@ $(function(){
         .then(function (response) {
             answers = response.data.answers
             Object.keys(answers).forEach(function(key) {
-                input = $('#document-form').find(`input[name='${key}']`)
-                if(input){
+                input = $('#document-form').find(`input[name='${key}']`) 
+                if(input.length > 0){
                     input.val(answers[key]);
+                } else {
+                    console.log(input)
+                    input = $('#document-form').find(`select[name='${key}']`)
+                    input.find(`option[value='${answers[key]}']`).prop("selected", true);
                 }
             });
         })
