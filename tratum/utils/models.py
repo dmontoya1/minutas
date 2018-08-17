@@ -59,6 +59,7 @@ class SlugIdentifierMixin(models.Model):
         abstract = True
 
     def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
         self.slug = self._get_unique_slug()
         super().save(*args, **kwargs)
     
@@ -71,7 +72,9 @@ class SlugIdentifierMixin(models.Model):
         if hasattr(self, 'section'):
             if self.section:
                 slug = slugify('{}-{}'.format(name, self.section.slug))
-        return slugify(slug)
+        if self.__class__.__name__ == 'Category':
+            slug = '{name}-{pk}'.format(name=name, pk=self.pk)
+        return slugify(slug)   
     
     def formated_slug(self):
         return str(self.slug).replace('-', '_')

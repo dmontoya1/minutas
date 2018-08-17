@@ -30,7 +30,7 @@ class Category(MPTTModel, SoftDeletionModelMixin, SlugIdentifierMixin):
     name = models.CharField(
         'Nombre',
         max_length=50,
-        unique=False
+        unique=True
     )
     parent = TreeForeignKey(
         'self',
@@ -55,12 +55,6 @@ class Category(MPTTModel, SoftDeletionModelMixin, SlugIdentifierMixin):
         if self.parent:
             if self.parent.get_ancestors().count() == 3:
                 raise ValidationError('Las categorías sólo pueden tener hasta 4 niveles de profundidad')
-            siblings = self.parent.get_children()
-            print (siblings)
-            if siblings.exists():
-                for s in siblings:
-                    if s.name == self.name:
-                        raise ValidationError('Ya existe una categoría con este nombre en el mismo nivel')
     
     def get_absolute_url(self):
         # return reverse('webclient:category-documents', kwargs={'slug': self.slug})
