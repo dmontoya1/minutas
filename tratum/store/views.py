@@ -274,20 +274,15 @@ class Checkout(TemplateView):
             user_id = reference[1]
             ref_id = reference[2]
 
-            print (reference)
-
             identifier = None
             if ref == 'DO':
-                print ("ref es DO")
                 try:
                     document = Document.objects.get(pk=ref_id)
                     user = get_user_model().objects.get(pk=user_id)
                     user_doc = UserDocument.objects.filter(user=user, document=document).last()
                     identifier = user_doc.identifier
                 except:
-                    print ("PASSS")
-                    
-            print ("IDENTIFIER " +str(identifier))
+                    pass                    
 
             if signature == signature_get:  
 
