@@ -83,7 +83,6 @@ class ProcessDocumentView(View):
         pdf_file = open(user_document.pdf_path)
 
 
-
 class SaveAnswersView(View):
 
     def post(self, request, *args, **kwargs):
