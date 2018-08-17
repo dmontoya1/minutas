@@ -150,7 +150,7 @@
                                                 <label for="id_login" class="control-label">Correo electrónico*</label>
                                             </div>
                                             <div class="col-xs-12">
-                                                <input class="form-control" type="email" name="email" data-validation="email" autofocus="autofocus" id="id_login"
+                                                <input class="form-control" type="email" name="email" data-validation="email" id="id_login"
                                                 data-validation-error-msg="Debes ingresar un email válido" />
                                             </div>
                                         </div>
@@ -335,7 +335,7 @@
                     <div class="col-sm-12 col-md-3 faq">
                         <i class="fas fa-question-circle"></i>
                         <a data-toggle="modal" data-target="#modal-faq">
-                            FAQ
+                            Preguntas Frecuentes
                         </a>
                     </div>
                     <div class="col-sm-12 col-md-3 link-col">
@@ -348,7 +348,7 @@
                     </div>
                     <div class="col-sm-12 col-md-3 link-col">
                         <a href="{% url 'webclient:policies' 'privacy' %}">
-                            Políticas de uso 
+                            Políticas de tratamiento de datos personales 
                         </a>
                         <a href="{% url 'webclient:policies' 'terms' %}">
                             Terminos y condiciones 
@@ -470,8 +470,8 @@
                         "debug": false,
                         "newestOnTop": false,
                         "progressBar": false,
-                        "positionClass": "toast-top-right",
-                        "preventDuplicates": true,
+                        "positionClass": "toast-top-full-width",
+                        "preventDuplicates": false,
                         "onclick": null,
                         "showDuration": "1000",
                         "hideDuration": "1000",
@@ -573,8 +573,8 @@
                 "debug": false,
                 "newestOnTop": false,
                 "progressBar": true,
-                "positionClass": "toast-top-right",
-                "preventDuplicates": true,
+                "positionClass": "toast-top-full-width",
+                "preventDuplicates": false,
                 "onclick": null,
                 "showDuration": "1000",
                 "hideDuration": "1000",
