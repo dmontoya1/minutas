@@ -3,23 +3,26 @@ axios.defaults.headers.common['X-CSRFToken'] = document.getElementById('doc-info
 
 
 function savePreview() {
-    function addGroupFields(serializedForm){
-        $('.group-fields').each(function(i, fd){
-            name = $(this).data('name')
-            axios.get(`/api/document-manager/document-fields/${name}/`)
-                .then(function (response) {
-                    fields = response.data.field_group
-                    regex = response.data.group_expression
-                    $(this).find('.group-item').each(function(i, it){     
-                        continue;
-                    });
-                })
-            
+    function getGroupFields(serializedForm){      
+        groups = {};
+        $('.group-fields').each(function(i1, gf){  
+            group_responses = [];          
+            items = $(this).find('.group-item');
+            regex = $(this).data('regex');
+            $(items).each(function(i2, gi){  
+                fields = $(this).find('input, select');
+                $(fields).each(function(i3, git){
+                    regex = regex.replace($(this).attr('name'), $(this).val());
+                    group_responses[i2] = regex;
+                });                
+            });
+            groups[$(this).data('name')] = group_responses.join(', ').toString();
         });
+       return $.param(groups)
     }   
-    addGroupFields();
-    serializedForm = $('#document-form').serialize();
-    axios.post('/api/document-manager/save-preview/', serializedForm)
+    form = $('#document-form').serialize();
+    form = form + '&' + getGroupFields();
+    axios.post('/api/document-manager/save-preview/', form);
 }
 
 $.fn.upform = function() {
@@ -145,23 +148,6 @@ $('.group-adder').on('click', function(e){
     }
 })
 
-$('#document-form').on('submit', function(e){
-    e.preventDefault();
-    submitFields = []
-    formFields = $(this).serializeArray();
-    submitFields.push(formFields);
-    $('#loadingModal').modal();
-    $('.group-fields').each(function(i, fd){
-        console.log($(fd));
-        expression = $(this).data('expression');
-        ex_fields = expression.match('{{(.*?)}}')
-        $(this).find('.group-item').each(function(i, it){     
-            submitFields.push(ex_fields.replace($(this).value()).match(ex_fields))
-        });
-    });
-
-    $(this).unbind('submit').submit();
-})
 
 $('.preview').on('click', function(e){
     e.preventDefault();
