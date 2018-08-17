@@ -146,15 +146,10 @@ class FinishDocumentView(View):
             )
             script_paths = (
                 get_static_path(
-                    'https',
-                    'code.jquery.com',
-                    '/jquery-3.3.1.slim.min.js'
-                ),
-                get_static_path(
                     request.scheme,
                     request.get_host(),
                     static("js/pdfRender.js")
-                )
+                ),
             )
             scripts = '\n'.join(iterator(script_tag, script_paths))
             css = '\n'.join(iterator(css_tag, css_paths))
@@ -164,8 +159,7 @@ class FinishDocumentView(View):
         template = Template(content)
         template = template.render(Context(user_document.answers)).encode('ascii', 'xmlcharrefreplace')
         file = ContentFile(template)
-        user_document.html_file.save(f'{user_document.identifier}.html', file)
-        
+        user_document.html_file.save(f'{user_document.identifier}.html', file)       
     
     def send_email(self, request, user_document):
         subject = f'Tu {user_document.document.name} de Tratum'

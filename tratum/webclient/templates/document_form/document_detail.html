@@ -46,7 +46,7 @@
                   <h3 class="mb-3">Secciones opcionales disponibles: </h3>
                   {% for s in object.get_sections %}
                     <div class="col">
-                      <input type="checkbox" class="section-item mb-3"> {{s.display_name}}</input>
+                      <input type="checkbox" name="{{s.formated_slug}}" class="section-item mb-3"> {{s.display_name}}</input>
                     </div>
                   {% empty %}
                     <p>Este documento no contiene secciones opcionales</p>
@@ -68,7 +68,6 @@
           {% endif %}
           <h4>Notas importantes: </h4>
           <ul class="text-left mt-4">
-            <li>Todas las preguntas son obligatorias</li>
             <li>Puedes utilizar las teclas <strong>TAB</strong>, <strong>ENTER</strong>,  <i class="fas fa-arrow-circle-up"></i>  y  <i class="fas fa-arrow-circle-down"></i>  para navegar entre preguntas</li>
             <li>Cada vez que pases de pregunta, se guardará tu progreso automáticamente</li>
             <li>Una vez completes el formulario, podrás ver una previsualización del documento antes de finalizarlo</li>
