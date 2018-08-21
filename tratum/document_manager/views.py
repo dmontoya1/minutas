@@ -109,7 +109,7 @@ class FinishDocumentView(View):
         body = json.loads(request.body.decode('utf-8'))
         user_document = UserDocument.objects.get(identifier=body['identifier'])
         self.update_status(user_document)
-        self.generate_html(request, user_document)
+        self.generate_html(request, user_document, body['identifier'])
         self.generate_pdf(request, user_document)
         self.send_email(request, user_document)
         return HttpResponse(status=200)
@@ -132,16 +132,17 @@ class FinishDocumentView(View):
             'header-right': f'{user_document.document.name}',
             'header-spacing': '15',
             'header-font-size': '7',
+            'javascript-delay': 300,
             'no-outline': None
         } 
         output_filename = '{}.pdf'.format(user_document.identifier)
         html_file = user_document.html_file.read().decode('utf-8')
         file = pdfkit.PDFKit(html_file, "string", options=options).to_pdf()
         file = BytesIO(file)
-        user_document.pdf_file.save('{}'.format(output_filename), file)
+        user_document.pdf_file.save(output_filename, file)
         file.close()
         
-    def generate_html(self, request, user_document):
+    def generate_html(self, request, user_document, content):
 
         def get_scripted_html(request, html_string):
             css_tag = lambda path: f'<link rel="stylesheet" type="text/css" href="{path}" />'
@@ -165,9 +166,8 @@ class FinishDocumentView(View):
             css = '\n'.join(iterator(css_tag, css_paths))
             return f'{css} {html_string} {scripts}'
 
-        content = get_scripted_html(request, user_document.document.content)
         template = Template(content)
-        template = template.render(Context(user_document.answers)).encode('ascii', 'xmlcharrefreplace')
+        template = template.render({}).encode('ascii', 'xmlcharrefreplace')
         file = ContentFile(template)
         user_document.html_file.save(f'{user_document.identifier}.html', file)       
     
