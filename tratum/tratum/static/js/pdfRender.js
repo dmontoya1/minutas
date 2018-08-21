@@ -3,5 +3,5 @@ var i;
 for (i = 0; i < x.length; i++) {
     var span = document.createElement('span');
     span.innerHTML = i + 1;
-    x[i].replaceWith(span);
+    x[i].parentNode.replaceChild(span, x[i]);
 }
