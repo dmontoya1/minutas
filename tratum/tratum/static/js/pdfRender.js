@@ -1,9 +1,7 @@
-$(function(){
-    $('input[value="dynamic_counter"]').each(function(index){
-        $("<span />", {
-            text: index + 1,
-            "class": "dynamic_counter"
-        }).insertAfter(this);
-        $(this).remove();
-    })
-})
+var x = document.querySelectorAll('input[value="dynamic_counter"');
+var i;
+for (i = 1; i < x.length; i++) {
+    var span = document.createElement('span');
+    span.innerHTML = i;
+    x[i].replaceWith(span);
+}
