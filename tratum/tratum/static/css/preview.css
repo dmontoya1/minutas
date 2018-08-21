@@ -1,19 +1,15 @@
 button {
+    border-radius: 30px !important;
     cursor: pointer;
 }
+    button.blank {
+        background-color: transparent !important;
+        border-color: #002c55;
+        margin-left: 1em;
+    }
 
 strong {
     font-weight: 600;
-}
-
-button {
-    border-radius: 30px !important;
-}
-
-button.blank {
-    background-color: transparent !important;
-    border-color: #002c55;
-    margin-left: 1em;
 }
 
 .document-preview {
@@ -28,8 +24,12 @@ button.blank {
     overflow-y: scroll;
 }
 @media screen and (max-width: 1440px) {
+    main {
+        padding-bottom: 165px;
+    }
     .document-preview {
-        height: 64vh;
+        height: 65vh;
+        max-width: 480px;
     }
 }
 

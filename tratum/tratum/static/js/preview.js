@@ -11,10 +11,14 @@ $(function(){
             y se te enviará una copia a tu correo electrónico. Pasados los 10 días, el documento dejará de estar disponible.',
             buttons: {
                 Confirmar: async function () {
-                    axios.post(`/api/document-manager/finish/`, {identifier: identifier})
-                        .then(function (response) {
-                            location.reload(true);
+                    axios.post(`/api/document-manager/finish/`, 
+                        {
+                            identifier: identifier,
+                            content: $('#content-preview').html()
                         })
+                            .then(function (response) {
+                                location.reload(true);
+                            })
                 },
                 Cancelar: function () {
                 }
