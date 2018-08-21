@@ -132,13 +132,14 @@ class FinishDocumentView(View):
             'header-right': f'{user_document.document.name}',
             'header-spacing': '15',
             'header-font-size': '7',
+            'javascript-delay': 300,
             'no-outline': None
         } 
         output_filename = f'{user_document.identifier}.pdf'
         html_file = user_document.html_file.read().decode('utf-8')
         file = pdfkit.PDFKit(html_file, "string", options=options).to_pdf()
         file = BytesIO(file)
-        user_document.pdf_file.save(f'{output_filename}', file)
+        user_document.pdf_file.save(output_filename, file)
         file.close()
         
     def generate_html(self, request, user_document):
