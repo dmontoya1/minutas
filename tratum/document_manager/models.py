@@ -229,6 +229,7 @@ class DocumentField(SlugIdentifierMixin):
     NUMBER = 'NU'
     TEXT = 'TX'
     DATE = 'DT'
+    NATURAL_DATE = 'ND'
     SELECT = 'SE'
     SELECT_MULTIPLE = 'SM'
     LIST = 'LI'
@@ -238,6 +239,7 @@ class DocumentField(SlugIdentifierMixin):
         (NUMBER, 'Numérico'),
         (TEXT, 'Texto abierto'),
         (DATE, 'Fecha'),
+        (NATURAL_DATE, 'Fecha natural'),
         (SELECT, 'Opciones de única respuesta'),
         (SELECT_MULTIPLE, 'Opciones agrupadas'),
         (LIST, 'Listado'),
@@ -336,7 +338,7 @@ class DocumentField(SlugIdentifierMixin):
     def get_html_input_type(self):
         if self.field_type == self.TEXT or self.field_type == self.LIST:
             return 'text'
-        elif self.field_type == self.DATE:
+        elif self.field_type == self.DATE or self.field_type == self.NATURAL_DATE:
             return 'date'
         elif self.field_type == self.NUMBER:
             return 'number'
