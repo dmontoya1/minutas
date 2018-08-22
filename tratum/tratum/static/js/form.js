@@ -81,7 +81,7 @@ $.fn.upform = function() {
             $(this).blur();
         });
         $(e).addClass("active");
-        $(e).find('input').focus();
+        $(e).find('input:not(.date)').focus();
     }
 
     function rescroll(e) {
@@ -113,6 +113,19 @@ $('.modal-trigger').on('click', function() {
 });
 
 $('[data-toggle="tooltip"]').tooltip(); 
+
+$('.date').attr('placeholder', 'Seleccione una fecha...');
+
+$('.pickadate').pickadate({
+    format: 'dd/mm/yyyy',
+    formatSubmit: 'dd/mm/yyyy',
+});
+
+$('.natural').pickadate({
+    format: 'dddd, dd mmmm !d!e!l yyyy',
+    formatSubmit: 'dddd, dd mmmm !d!e yyyy',
+});
+
 
 $('.group-adder').on('click', function(e){
     e.preventDefault();

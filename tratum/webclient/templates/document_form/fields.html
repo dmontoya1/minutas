@@ -8,7 +8,8 @@
             {% endif %}
         </div>        
         <div class="input-control col">
-            <input required name="{{field.formated_slug}}" type="{{field.get_html_input_type}}" id="{{field.formated_slug}}" class="required" autocomplete="off">
+            <input required name="{{field.formated_slug}}" type="{{field.get_html_input_type}}" id="{{field.formated_slug}}"
+            class="{% if field.is_date_input %}date {% if field.field_type == field.NATURAL_DATE %}natural {% else %}pickadate {% endif %}{% endif %}required" autocomplete="off">
         </div>             
         {% if field.youtube_help_video_link %}
             <div class="col">
