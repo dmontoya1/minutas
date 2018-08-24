@@ -9,7 +9,7 @@
         x[i].parentNode.replaceChild(span, x[i]);
     }
 
-    window.addEventListener("DOMContentLoaded", function(event) {
+    setTimeout(function(){
         var x = document.querySelectorAll('p:empty');
         for (i = 0; i < x.length; i++) {
             x[i].remove();
@@ -21,5 +21,5 @@
                 x[i].remove();
             }
         }
-    });
+    }, 2000);
 })();
