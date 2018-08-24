@@ -49,6 +49,12 @@
                     <div class="col">
                       <input type="checkbox" name="{{s.formated_slug}}" class="section-item mb-3"> {{s.display_name}}</input>
                     </div>
+                    <div class="section-fields" data-section="{{s.formated_slug}}">
+                      {% for field in s.get_fields %}
+                        {% include 'document_form/fields.html' %}
+                      {% endfor %}
+                    </div>
+                    
                   {% empty %}
                     <p>Este documento no contiene secciones opcionales</p>
                   {% endfor %}

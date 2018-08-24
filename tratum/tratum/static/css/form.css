@@ -192,3 +192,8 @@ iframe {
     background: 0 0;
     border: 0;
 }
+
+.section-fields {
+    display: none;
+    margin-bottom: 3.5em;
+}
