@@ -171,6 +171,10 @@ $('.preview').on('click', function(e){
     window.location.href = $(this).attr('href');
 })
 
+$('.section-item').on('click', function(e){
+    $(`*[data-section="${$(this).attr('name')}"]`).toggle();
+})
+
 $(function(){
     uuid = $('#doc-info').data('uuid')
     axios.get(`/api/store/user-document/${uuid}/`)

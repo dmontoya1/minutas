@@ -8,6 +8,7 @@ import uuid
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Q
 from django.urls import reverse
 
 from mptt.models import MPTTModel, TreeForeignKey
@@ -213,6 +214,11 @@ class DocumentSection(SlugIdentifierMixin):
 
     def __str__(self):
         return self.name 
+    
+    def get_fields(self):
+        return self.documentfield_set.all().filter(
+            Q(field_group__isnull=False) & Q(field_type=DocumentField.GROUP)
+        )
 
 
 class DocumentField(SlugIdentifierMixin):
