@@ -217,7 +217,8 @@ class DocumentSection(SlugIdentifierMixin):
     
     def get_fields(self):
         return self.documentfield_set.all().filter(
-            Q(field_group__isnull=False) & Q(field_type=DocumentField.GROUP)
+            Q(field_group__isnull=False) & Q(field_type=DocumentField.GROUP) 
+            | Q(field_group__isnull=True)
         )
 
 
