@@ -9,15 +9,12 @@
         x[i].parentNode.replaceChild(span, x[i]);
     }
 
-    
-   
-
-    window.addEventListener("load", function(event) {
+    window.addEventListener("DOMContentLoaded", function(event) {
         var x = document.querySelectorAll('p:empty');
         for (i = 0; i < x.length; i++) {
             x[i].remove();
         }
-        
+
         var x = document.getElementsByTagName('li');
         for (i = 0; i < x.length; i++) {
             if(x[i].innerText == ""){
