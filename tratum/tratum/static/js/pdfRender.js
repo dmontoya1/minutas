@@ -9,15 +9,20 @@
         x[i].parentNode.replaceChild(span, x[i]);
     }
 
-    var x = document.querySelectorAll('p:empty');
-    for (i = 0; i < x.length; i++) {
-        x[i].remove();
-    }
+    
+   
 
-    var x = document.getElementsByTagName('li');
-    for (i = 0; i < x.length; i++) {
-        if(x[i].innerText == ""){
+    window.addEventListener("load", function(event) {
+        var x = document.querySelectorAll('p:empty');
+        for (i = 0; i < x.length; i++) {
             x[i].remove();
         }
-    }
+        
+        var x = document.getElementsByTagName('li');
+        for (i = 0; i < x.length; i++) {
+            if(x[i].innerText == ""){
+                x[i].remove();
+            }
+        }
+    });
 })();
