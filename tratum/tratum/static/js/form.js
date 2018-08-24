@@ -176,14 +176,16 @@ $(function(){
     axios.get(`/api/store/user-document/${uuid}/`)
         .then(function (response) {
             answers = response.data.answers
-            Object.keys(answers).forEach(function(key) {
-                input = $('#document-form').find(`input[name='${key}']`) 
-                if(input.length > 0){
-                    input.val(answers[key]);
-                } else {
-                    input = $('#document-form').find(`select[name='${key}']`)
-                    input.find(`option[value='${answers[key]}']`).prop("selected", true);
-                }
-            });
+            if(answers){
+                Object.keys(answers).forEach(function(key) {
+                    input = $('#document-form').find(`input[name='${key}']`) 
+                    if(input.length > 0){
+                        input.val(answers[key]);
+                    } else {
+                        input = $('#document-form').find(`select[name='${key}']`)
+                        input.find(`option[value='${answers[key]}']`).prop("selected", true);
+                    }
+                }); 
+            }            
         })
 });
