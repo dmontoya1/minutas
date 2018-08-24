@@ -3,7 +3,7 @@ axios.defaults.headers.common['X-CSRFToken'] = document.getElementById('doc-info
 
 
 function savePreview() {
-    function getGroupFields(serializedForm){      
+    function getGroupFields(){      
         groups = {};
         $('.group-fields').each(function(i1, gf){  
             group_responses = [];          
@@ -12,16 +12,19 @@ function savePreview() {
             $(items).each(function(i2, gi){  
                 fields = $(this).find('input, select');
                 $(fields).each(function(i3, git){
-                    regex = regex.replace($(this).attr('name'), $(this).val());
-                    group_responses[i2] = regex;
-                });                
+                    regexed_text = regex.replace($(this).attr('name'), $(this).val());
+                    group_responses.push(regexed_text);
+                });
+                
             });
             groups[$(this).data('name')] = group_responses.join(', ').toString();
         });
        return $.param(groups)
     }   
+    
     form = $('#document-form').serialize();
     form = form + '&' + getGroupFields();
+    
     axios.post('/api/document-manager/save-preview/', form);
 }
 

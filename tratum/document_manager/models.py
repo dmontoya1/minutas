@@ -162,6 +162,7 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
             ex = r'{% if (.*?) %}'
         raw_fields = re.findall(ex, c)
         for f in raw_fields:
+            f = f.split('|')[0]
             component = self.query_component(f)
             if component is not None:
                 if isinstance(component, DocumentField) and component not in fields:
@@ -303,12 +304,6 @@ class DocumentField(SlugIdentifierMixin):
     group_expression = models.TextField(
         'Expresión regular de la agrupación',
         help_text='Indica la expresión final de cada campo del grupo mediante el lenguaje de formateo',
-        null=True,
-        blank=True
-    )
-    group_items = models.TextField(
-        'Opciones del grupo',
-        help_text='Indica cada uno de los items de un campo múltiple, separados por *',
         null=True,
         blank=True
     )
