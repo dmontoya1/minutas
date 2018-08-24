@@ -8,4 +8,9 @@
         span.style.color = '#000';
         x[i].parentNode.replaceChild(span, x[i]);
     }
+
+    var x = document.querySelectorAll('li:empty');
+    for (i = 0; i < x.length; i++) {
+        x[i].remove();
+    }
 })();
