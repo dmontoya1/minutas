@@ -9,7 +9,7 @@
         x[i].parentNode.replaceChild(span, x[i]);
     }
 
-    var x = document.querySelectorAll('li:empty');
+    var x = document.querySelectorAll('p:empty, li:empty');
     for (i = 0; i < x.length; i++) {
         x[i].remove();
     }
