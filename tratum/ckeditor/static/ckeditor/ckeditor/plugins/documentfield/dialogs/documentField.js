@@ -36,15 +36,15 @@ CKEDITOR.dialog.add( 'fieldDialog', function(editor){
         onOk: function(){
             var dialog = this;
 
-            var abbr = editor.document.createElement('abbr');
+            var span = editor.document.createElement('span');
 
             var field_name = document.querySelector('select.document-select')
             var field_name = field_name.options[field_name.selectedIndex].innerHTML;
 
-            abbr.setAttribute( 'title', field_name);
-            abbr.setText(dialog.getValueOf('tab-select-field', 'document-field'));
+            span.setAttribute('title', field_name);
+            span.setText(dialog.getValueOf('tab-select-field', 'document-field'));
 
-            editor.insertElement(abbr);
+            editor.insertElement(span);
         },
         onShow: function(){
             existingLinks = document.querySelector('a.link')

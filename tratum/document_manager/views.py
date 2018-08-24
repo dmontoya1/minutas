@@ -109,7 +109,7 @@ class FinishDocumentView(View):
         body = json.loads(request.body.decode('utf-8'))
         user_document = UserDocument.objects.get(identifier=body['identifier'])
         self.update_status(user_document)
-        self.generate_html(request, user_document, body['identifier'])
+        self.generate_html(request, user_document)
         self.generate_pdf(request, user_document)
         self.send_email(request, user_document)
         return HttpResponse(status=200)
@@ -142,11 +142,12 @@ class FinishDocumentView(View):
         user_document.pdf_file.save(output_filename, file)
         file.close()
         
-    def generate_html(self, request, user_document, content):
+    def generate_html(self, request, user_document):
 
         def get_scripted_html(request, html_string):
             css_tag = lambda path: f'<link rel="stylesheet" type="text/css" href="{path}" />'
             script_tag = lambda path: f'<script src="{path}"></script>'
+            django_temptag_tag = lambda path: '{{% load {path} %}}'.format(path=path)
             iterator = lambda tag, paths: [tag(path) for path in paths]
             css_paths = (
                 get_static_path(
@@ -162,12 +163,18 @@ class FinishDocumentView(View):
                     static("js/pdfRender.js")
                 ),
             )
+            django_temptag_paths = (
+                'fieldformatter',
+            )
             scripts = '\n'.join(iterator(script_tag, script_paths))
             css = '\n'.join(iterator(css_tag, css_paths))
-            return f'{css} {html_string} {scripts}'
+            django_temptags = '\n'.join(iterator(django_temptag_tag, django_temptag_paths))
+            escape = '\n'
+            return f'{django_temptags} {escape} {css} {html_string} {escape} {scripts}'
 
+        content = get_scripted_html(request, user_document.document.content)
         template = Template(content)
-        template = template.render({}).encode('ascii', 'xmlcharrefreplace')
+        template = template.render(Context(user_document.answers)).encode('ascii', 'xmlcharrefreplace')
         file = ContentFile(template)
         user_document.html_file.save(f'{user_document.identifier}.html', file)       
     
