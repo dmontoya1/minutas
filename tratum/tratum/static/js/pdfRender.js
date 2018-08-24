@@ -21,5 +21,16 @@
                 x[i].remove();
             }
         }
-    }, 3000);
+    }, 1000);
+
+
+    setTimeout(function(){
+        var x = document.getElementsByTagName('li');
+        for (i = 0; i < x.length; i++) {
+            if(x[i].innerText == ""){
+                x[i].remove();
+            }
+        }
+    }, 1500);
+
 })();
