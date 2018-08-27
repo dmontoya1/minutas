@@ -497,17 +497,30 @@ section {
         transition: all 0.5s ease-in-out;
     }
 
+    .navbar.scrolled img.logo.color {
+        display: none;
+    }
+
+    .navbar.scrolled img.logo.baw {
+        display: inline-block;
+    }
+
 .navbar img.logo {
     width: 180px;
     margin-left: 15px;
 }
 
+.navbar img.logo.baw {
+    display: none;
+}
+
 .navbar-toggler {
     color: #fff;
     z-index: 99999;
-    background:transparent;
+    background: transparent;
     font-size: 1.5em;
     outline: 0;
+    vertical-align: sub;
 }
 
 .rotate {
