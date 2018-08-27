@@ -12,14 +12,14 @@ function savePreview() {
             $(items).each(function(i2, gi){  
                 fields = $(this).find('input, select');
                 $(fields).each(function(i3, git){
-                    regexed_text = regex.replace($(this).attr('name'), $(this).val());
+                    regexed_text = regex.replace($(this).data('name'), $(this).val());
                     group_responses.push(regexed_text);
-                });
-                
+                });                
             });
             groups[$(this).data('name')] = group_responses.join(', ').toString();
         });
-       return $.param(groups)
+        
+        return $.param(groups)
     }   
     
     form = $('#document-form').serialize();
@@ -129,19 +129,34 @@ $('.natural').pickadate({
     formatSubmit: 'dddd, dd mmmm !d!e yyyy',
 });
 
+$('.pricetag').priceFormat({
+    prefix: '$',
+    centsSeparator: ',',
+    thousandsSeparator: '.',
+    centsLimit: 0,
+    clearOnEmpty: true
+});
+
 
 $('.group-adder').on('click', function(e){
     e.preventDefault();
-    el = $('.group-fields').find(`[data-group='${$(this).data('group')}']`).first();
-    clone = el.clone();
-    clone.find('input').val('');
-    counter = $('.group-fields').find(`[data-group='${$(this).data('group')}']`).length; 
-    clone.find('div.counter span').html(counter);
+    items = $('.group-fields').find(`.group-item[data-group='${$(this).data('group')}']`)
+    length = items.length + 1
+    last = $(items).last();
+    clone = last.clone();
+    inputs = clone.find('input, select')
+    $(inputs).each(function(i, element){
+        $(element).val('');
+        name = $(element).data('name')
+        $(element).attr('name', `${name}_${length}`)
+        $(element).attr('id', `${name}_${length}`)
+    })
     clone.append(
         '<a class="deleter" href="#">' +
             'Eliminar' +
         '</a>'
     )
+    
     clone.insertBefore($(this));
     
     rescroll(clone);

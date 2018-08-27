@@ -240,6 +240,7 @@ class DocumentField(SlugIdentifierMixin):
     """ 
 
     NUMBER = 'NU'
+    PRICE = 'PR'
     TEXT = 'TX'
     DATE = 'DT'
     NATURAL_DATE = 'ND'
@@ -250,6 +251,7 @@ class DocumentField(SlugIdentifierMixin):
 
     FIELD_TYPE = (
         (NUMBER, 'Numérico'),
+        (PRICE, 'Precio'),
         (TEXT, 'Texto abierto'),
         (DATE, 'Fecha'),
         (NATURAL_DATE, 'Fecha natural'),
@@ -340,17 +342,17 @@ class DocumentField(SlugIdentifierMixin):
             raise ValidationError('Selecciona un documento o una sección para éste campo')
     
     def is_text_input(self):
-        return self.field_type in (self.TEXT, self.DATE, self.NUMBER, self.NATURAL_DATE)
+        return self.field_type in (self.TEXT, self.DATE, self.NUMBER, self.NATURAL_DATE, self.PRICE)
     
     def is_date_input(self):
         return self.field_type in (self.DATE, self.NATURAL_DATE)
 
     def get_html_input_type(self):
-        if self.field_type == self.TEXT or self.field_type == self.LIST:
+        if self.field_type == self.TEXT or self.field_type == self.LIST or self.field_type == self.PRICE:
             return 'text'
         elif self.field_type == self.DATE or self.field_type == self.NATURAL_DATE:
             return 'date'
-        elif self.field_type == self.NUMBER:
+        elif self.field_type == self.NUMBERE:
             return 'number'
     
     def get_ordered_group_fields(self):
