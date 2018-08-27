@@ -36,12 +36,13 @@ iframe {
 
 .group-adder {
     position: absolute;
-    right: 20px;
     z-index: 9999;
+    font-display: .9em;
 }
 
 .group-fields {
-	padding-left: 30px;
+    padding-left: 30px;
+    position: relative;
 }
     .group-fields p {
         font-weight: 300;
