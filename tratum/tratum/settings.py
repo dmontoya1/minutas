@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'import_export',
     'mptt_urls',
+    'embed_video',
     'api',
     'debug_toolbar',
     'ckeditor',
