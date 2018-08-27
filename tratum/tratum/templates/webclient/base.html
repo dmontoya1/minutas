@@ -41,9 +41,6 @@
         <header>
             <div class="pos-f-t">
                 <div class="contextualMenu">
-                    <div class="pl-4">
-                        <i class="fas fa-times contextual-closer"></i>
-                    </div>
                     <div class="p-4">
                         <h4 class="text-white">
                             <a href="/">Inicio</a>
@@ -76,13 +73,13 @@
                     </div>
                 </div>
                 <nav {% block nav_class %}class="navbar fixed-top bg-transparent" {% endblock %}>
-                    <button type="button" class="outlined">
+                    <div>
                         <i class="fas fa-bars rotate navbar-toggler"></i>
                         <a href="/">
                             <img class="logo color" src="{% static 'img/logo-color-placeholder@2x.png' %}">
                             <img class="logo baw" src="{% static 'img/logo-placeholder@2x.png' %}">
                         </a>    
-                    </button>   
+                    </div>   
                                  
                     <div class="float-right main-options d-none d-lg-block">
                         <div class="dropleft">
@@ -545,9 +542,11 @@
             }
             
             $(document).ready(function() {
-                $('.navbar-toggler, .contextual-closer').on('click', function(){
+                $('.navbar-toggler').on('click', function(){
                     $('.rotate').toggleClass("down");
                     $('.contextualMenu').fadeToggle();
+                    $('.logo.color').toggle();
+                    $('.logo.baw').toggle();
                 })
 
                 {% block nav-script%}
