@@ -206,6 +206,11 @@ class DocumentSection(SlugIdentifierMixin):
         Document,
         on_delete=models.CASCADE,
     )
+    help_text = models.TextField(
+        'Texto de ayuda',
+        blank=True,
+        null=True
+    )
     
     class Meta:
         verbose_name = 'Sección'
