@@ -11,5 +11,5 @@ def comma_sep_to_list(value, autoescape=True):
     items = value.split(',')
     lis = lambda items: [f'<li><p style="text-align:justify">{item}</p></li>' for item in items]
     items = '\n'.join(lis(items))
-    print(items)
+    items = f'<ul>{items}</ul>'
     return mark_safe(items)
