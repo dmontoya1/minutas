@@ -1,4 +1,6 @@
 {% load static %}
+{% load embed_video_tags %}
+
 <!doctype html>
 <html lang="es">
   <head>
@@ -74,7 +76,7 @@
           <h1 class="mt-5">{{document.name}}</h1>
           <p class="text-justify mb-4">{{document.long_description}}</p>
           {% if document.video_url %}
-            <iframe class="mb-4" width="100%" height="215" src="{{document.video_url}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            {% video document.video_url '100% x 215' %}
           {% endif %}
           <h4>Notas importantes: </h4>
           <ul class="text-left mt-4">

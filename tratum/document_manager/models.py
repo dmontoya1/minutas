@@ -13,6 +13,7 @@ from django.urls import reverse
 
 from mptt.models import MPTTModel, TreeForeignKey
 from ckeditor.fields import RichTextField
+from embed_video.fields import EmbedVideoField
 
 from utils.models import SoftDeletionModelMixin, SlugIdentifierMixin
 
@@ -123,7 +124,7 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
         null=True, 
         blank=True
     )
-    video_url = models.URLField(
+    video_url = EmbedVideoField(
         'URL del video explicativo',
         blank=True,
         null=True
