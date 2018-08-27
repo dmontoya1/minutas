@@ -185,6 +185,8 @@ $(function(){
                     input = $('#document-form').find(`input[name='${key}']`) 
                     if(input.length > 0){
                         input.val(answers[key]);
+                        input.prop("checked", true);
+                        $(`*[data-section="${$(input).attr('name')}"]`).toggle();
                     } else {
                         input = $('#document-form').find(`select[name='${key}']`)
                         input.find(`option[value='${answers[key]}']`).prop("selected", true);

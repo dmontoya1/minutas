@@ -148,6 +148,11 @@ class SiteConfig(models.Model):
         null=True,
         blank=True
     )
+    meta_tags = models.TextField(
+		'Tags de SEO y SEM',
+        null=True,
+        blank=True
+    )
 
     class Meta:
         verbose_name = 'Configuración de sitio'
