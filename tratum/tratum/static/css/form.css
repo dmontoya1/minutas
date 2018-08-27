@@ -34,6 +34,12 @@ iframe {
 	min-height: 100vh;
 }
 
+.group-adder {
+    position: absolute;
+    right: 20px;
+    z-index: 9999;
+}
+
 .group-fields {
 	padding-left: 30px;
 }
