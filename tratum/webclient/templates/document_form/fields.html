@@ -9,7 +9,20 @@
         </div>        
         <div class="input-control col">
             <input required name="{{field.formated_slug}}" type="{{field.get_html_input_type}}" id="{{field.formated_slug}}"
-            class="{% if field.is_date_input %}date {% if field.field_type == field.NATURAL_DATE %}natural {% else %}pickadate {% endif %}{% endif %}required" autocomplete="off">
+            class="{% spaceless %}
+                {% if field.is_date_input %}
+                    date
+                    {% if field.field_type == field.NATURAL_DATE %}
+                        natural
+                    {% else %}
+                        pickadate
+                    {% endif %}
+                {% else %}
+                    {% if field.field_type == field.PRICE %}
+                        pricetag 
+                    {% endif %}
+                {% endif %}            
+            required{% endspaceless %}" autocomplete="off">
         </div>             
         {% if field.youtube_help_video_link %}
             <div class="col">
@@ -66,22 +79,33 @@
     </div>     
     <div class="group-fields mt-3 mb-3" data-name="{{field.formated_slug}}" data-regex="{{field.group_expression}}">        
         <div class="group-item mt-2" data-group="{{field.pk}}">
-            <div class="counter">
-                {{field.field_group_verbose_name}} #<span>1</span>
-            </div>
             {% for gf in field.get_ordered_group_fields %}  
                 {% if gf.is_text_input %}
                     <div class="input-block">
                         <div class="label">{{forloop.counter}}. {{gf.display_name}}</div>
                         <div class="input-control">
-                            <input required name="{{gf.formated_slug}}" type="{{gf.get_html_input_type}}" id="{{gf.formated_slug}}" class="required" autocomplete="off">
+                            <input required data-name="{{gf.formated_slug}}" name="{{gf.formated_slug}}" type="{{gf.get_html_input_type}}" id="{{gf.formated_slug}}" 
+                            class="{% spaceless %}
+                                {% if gf.is_date_input %}
+                                    date
+                                    {% if gf.field_type == gf.NATURAL_DATE %}
+                                        natural
+                                    {% else %}
+                                        pickadate
+                                    {% endif %}
+                                {% else %}
+                                    {% if gf.field_type == gf.PRICE %}
+                                        pricetag 
+                                    {% endif %}
+                                {% endif %}            
+                            required{% endspaceless %}" autocomplete="off">
                         </div>
                     </div>        
                 {% elif gf.field_type == gf.SELECT %}
                     <div class="input-block">
                         <div class="label">{{forloop.counter}}. {{gf.display_name}} </div>
                         <div class="input-control">
-                            <select name="{{gf.formated_slug}}">
+                            <select data-name="{{gf.formated_slug}}" name="{{gf.formated_slug}}">
                                 <option selected disabled>Selecciona un elemento de la lista</option>
                                 {% for f in gf.documentfieldoption_set.all %}
                                     <option value="{{f.name}}">{{f.name}}</option>

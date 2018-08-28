@@ -37,7 +37,7 @@ iframe {
 .group-adder {
     position: absolute;
     z-index: 9999;
-    font-display: .9em;
+    font-size: .9em;
 }
 
 .group-fields {
@@ -129,7 +129,7 @@ iframe {
             margin: 20px 0;
             position: relative;
         }
-            .upform .upform-main .input-block .input-control input[type=text],
+            .upform .upform-main .input-block .input-control input,
             .upform .upform-main .input-block .input-control select {
                 border: 3px dashed rgb(150, 150, 150);
                 border-radius: 10px;
