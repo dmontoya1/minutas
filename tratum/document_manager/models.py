@@ -352,7 +352,7 @@ class DocumentField(SlugIdentifierMixin):
             return 'text'
         elif self.field_type == self.DATE or self.field_type == self.NATURAL_DATE:
             return 'date'
-        elif self.field_type == self.NUMBERE:
+        elif self.field_type == self.NUMBER:
             return 'number'
     
     def get_ordered_group_fields(self):
