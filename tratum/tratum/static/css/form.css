@@ -216,6 +216,10 @@ iframe {
     }
 }
 
+.picker__select--month, .picker__select--year{
+    height: auto !important;
+}
+
 
 
 
