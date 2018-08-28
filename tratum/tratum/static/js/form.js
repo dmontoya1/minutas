@@ -3,8 +3,9 @@ axios.defaults.headers.common['X-CSRFToken'] = document.getElementById('doc-info
 
 
 function savePreview() {
-    function getGroupFields(){      
+    function getGroupFields(form){      
         groups = {};
+        quantity = {};
         $('.group-fields').each(function(i1, gf){  
             group_responses = [];          
             items = $(this).find('.group-item');
@@ -16,14 +17,14 @@ function savePreview() {
                     group_responses.push(regexed_text);
                 });                
             });
+            quantity['Q_' + $(this).data('name')] = items.length;
             groups[$(this).data('name')] = group_responses.join(', ').toString();
         });
-        
-        return $.param(groups)
+        return form + '&' + $.param(groups) + '&' + $.param(quantity)
     }   
     
     form = $('#document-form').serialize();
-    form = form + '&' + getGroupFields();
+    form = getGroupFields(form);
     
     axios.post('/api/document-manager/save-preview/', form);
 }
@@ -198,6 +199,11 @@ $(function(){
             if(answers){
                 Object.keys(answers).forEach(function(key) {
                     input = $('#document-form').find(`input[name='${key}']`) 
+                    if(key.startsWith('Q_')){
+                        key = key.substring(2)
+                        group = $(`.group-fields[data-name="${key}"]`)
+                        console.log(group)
+                    }
                     if(input.length > 0){
                         input.val(answers[key]);
                         input.prop("checked", true);
