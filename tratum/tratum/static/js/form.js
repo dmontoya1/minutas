@@ -41,17 +41,28 @@ function cloneGroupItem(groupAdder, fromGroupAdder){
         $(element).attr('name', `${name}_${length}`)
         $(element).attr('id', `${name}_${length}`)
     })
-    clone.append(
-        '<a class="deleter" href="#">' +
-            'Eliminar' +
-        '</a>'
-    )
-    
+
+    if(clone.find('.deleter').length == 0){
+        clone.append(
+            '<a class="deleter" href="#">' +
+                'Eliminar' +
+            '</a>'
+        )
+    }
+
     clone.insertBefore($(groupAdder));
 
     if(fromGroupAdder==true){
         rescroll(clone);
     }
+
+    $('a.deleter').on('click', function(e){
+        console.log(e);
+        e.preventDefault();
+        prev = $(this).parent().prev();        
+        $(this).parent().remove();
+        rescroll(prev);
+    })  
     
 }
 
@@ -177,15 +188,7 @@ $('.pricetag').priceFormat({
 
 $('.group-adder').on('click', function(e){
     e.preventDefault();
-    cloneGroupItem($(this), true);  
-    
-    $('a.deleter').on('click', function(e){
-        console.log(e);
-        e.preventDefault();
-        prev = $(this).parent().prev();        
-        $(this).parent().remove();
-        rescroll(prev);
-    })    
+    cloneGroupItem($(this), true);    
 })
 
 
