@@ -170,11 +170,17 @@ $('.date').attr('placeholder', 'Seleccione una fecha...');
 $('.pickadate').pickadate({
     format: 'dd/mm/yyyy',
     formatSubmit: 'dd/mm/yyyy',
+    selectYears: 100,
+    selectMonths: true,
+    max: new Date(2050,7,14)
 });
 
 $('.natural').pickadate({
     format: 'dddd, dd mmmm !d!e!l yyyy',
     formatSubmit: 'dddd, dd mmmm !d!e yyyy',
+    selectYears: 100,
+    selectMonths: true,
+    max: new Date(2050,7,14)
 });
 
 $('.pricetag').priceFormat({
