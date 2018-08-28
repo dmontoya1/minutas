@@ -29,6 +29,42 @@ function savePreview() {
     axios.post('/api/document-manager/save-preview/', form);
 }
 
+function cloneGroupItem(groupAdder, fromGroupAdder){
+    items = $('.group-fields').find(`.group-item[data-group='${$(groupAdder).data('group')}']`)
+    length = items.length + 1
+    last = $(items).last();
+    clone = last.clone();
+    inputs = clone.find('input, select')
+    $(inputs).each(function(i, element){
+        $(element).val('');
+        name = $(element).data('name')
+        $(element).attr('name', `${name}_${length}`)
+        $(element).attr('id', `${name}_${length}`)
+    })
+    clone.append(
+        '<a class="deleter" href="#">' +
+            'Eliminar' +
+        '</a>'
+    )
+    
+    clone.insertBefore($(groupAdder));
+
+    if(fromGroupAdder==true){
+        rescroll(clone);
+    }
+    
+}
+
+function rescroll(e){
+    $(window).scrollTo($(e), 200, {
+        offset: {
+            left: 100,
+            top: -200
+        },
+        queue: false
+    });
+}
+
 $.fn.upform = function() {
     var $this = $(this);
     var container = $this.find(".upform-main");
@@ -141,43 +177,14 @@ $('.pricetag').priceFormat({
 
 $('.group-adder').on('click', function(e){
     e.preventDefault();
-    items = $('.group-fields').find(`.group-item[data-group='${$(this).data('group')}']`)
-    length = items.length + 1
-    last = $(items).last();
-    clone = last.clone();
-    inputs = clone.find('input, select')
-    $(inputs).each(function(i, element){
-        $(element).val('');
-        name = $(element).data('name')
-        $(element).attr('name', `${name}_${length}`)
-        $(element).attr('id', `${name}_${length}`)
-    })
-    clone.append(
-        '<a class="deleter" href="#">' +
-            'Eliminar' +
-        '</a>'
-    )
+    cloneGroupItem($(this), true);  
     
-    clone.insertBefore($(this));
-    
-    rescroll(clone);
-
     $('a.deleter').on('click', function(e){
         e.preventDefault();
         prev = $(this).parent().prev();        
         $(this).parent().remove();
         rescroll(prev);
-    })
-
-    function rescroll(e){
-        $(window).scrollTo($(e), 200, {
-            offset: {
-                left: 100,
-                top: -200
-            },
-            queue: false
-        });
-    }
+    })    
 })
 
 
@@ -200,9 +207,10 @@ $(function(){
                 Object.keys(answers).forEach(function(key) {
                     input = $('#document-form').find(`input[name='${key}']`) 
                     if(key.startsWith('Q_')){
-                        key = key.substring(2)
-                        group = $(`.group-fields[data-name="${key}"]`)
-                        console.log(group)
+                        length = answers[key];
+                        key = key.substring(2);
+                        group = $(`.group-fields[data-name="${key}"]`);
+                        adder = group.find('.group-adder'); 
                     }
                     if(input.length > 0){
                         input.val(answers[key]);
