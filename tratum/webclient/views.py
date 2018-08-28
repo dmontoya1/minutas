@@ -299,6 +299,20 @@ class UserDocumentPreviewView(DetailView):
         return context
 
 
+class UserDocumentProcessPreviewView(View):
+    model = UserDocument
+    slug_field = "identifier"
+
+    def get_object(self):
+        obj = UserDocument.objects.get(identifier=self.kwargs['identifier'])
+        return obj
+
+    def get(self, request, *args, **kwargs):
+        obj = self.get_object()
+        preview = reverse('webclient:user-document-preview', kwargs={'identifier': obj.identifier})
+        return HttpResponseRedirect(preview)
+
+
 class ContactFormView(View):
     """Mensajes del formulario de contacto y solicitud de documentos
     """
