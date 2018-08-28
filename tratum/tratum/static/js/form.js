@@ -180,6 +180,7 @@ $('.group-adder').on('click', function(e){
     cloneGroupItem($(this), true);  
     
     $('a.deleter').on('click', function(e){
+        console.log(e);
         e.preventDefault();
         prev = $(this).parent().prev();        
         $(this).parent().remove();
@@ -204,14 +205,23 @@ $(function(){
         .then(function (response) {
             answers = response.data.answers
             if(answers){
-                Object.keys(answers).forEach(function(key) {
-                    input = $('#document-form').find(`input[name='${key}']`) 
+                Object.keys(answers).forEach(function(key) {                    
                     if(key.startsWith('Q_')){
                         length = answers[key];
                         key = key.substring(2);
                         group = $(`.group-fields[data-name="${key}"]`);
                         adder = group.find('.group-adder'); 
+                        if(length > 1){
+                            c = length - 1;
+                            for (i = 0; i < c; i++) {
+                                cloneGroupItem(adder, false);
+                            }
+                        }                        
+                        
                     }
+                }); 
+                Object.keys(answers).forEach(function(key) {                    
+                    input = $('#document-form').find(`input[name='${key}']`) 
                     if(input.length > 0){
                         input.val(answers[key]);
                         input.prop("checked", true);
@@ -220,7 +230,7 @@ $(function(){
                         input = $('#document-form').find(`select[name='${key}']`)
                         input.find(`option[value='${answers[key]}']`).prop("selected", true);
                     }
-                }); 
+                });            
             }            
         })
 });
