@@ -20,9 +20,26 @@ const tens = {
 (function() {
     var femaleCounters = document.querySelectorAll('input[value="dynamic_counter"]');
     var maleCounters = document.querySelectorAll('input[value="dynamic_counter_male"]');
+    var internalCounters = document.querySelectorAll('input[value^="section_dynamic_counter"]');
 
     addCounters(femaleCounters, 'a');
     addCounters(maleCounters, 'o');
+    addInternalCounters(internalCounters);
+    
+    function addInternalCounters(internalCounters){
+        var sections = [];
+        for (i = 0; i < internalCounters.length; i++) {
+            section = internalCounters[i].value.split('section_dynamic_counter_')
+            sections.push(section[1]);
+        }
+
+        sections = Array.from(new Set(sections));
+
+        for (i = 0; i < sections.length; i++) {
+            var internalCounters = document.querySelectorAll(`input[value="section_dynamic_counter_${sections[i]}"]`);
+            addCounters(internalCounters, 'o');
+        } 
+    }
 
     function addCounters(dynamic_counters, gender){
         var i;
