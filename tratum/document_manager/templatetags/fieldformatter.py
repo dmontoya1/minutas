@@ -10,7 +10,7 @@ def comma_sep_to_ul(value, autoescape=True):
     items = value.split(',')
     lis = lambda items: [f'<li><p style="text-align:justify">{item}</p></li>' for item in items]
     items = '\n'.join(lis(items))
-    items = f'<ul>{items}</ul>'
+    items = f'<ol>{items}</ol>'
     return mark_safe(items)
 
 
@@ -18,6 +18,6 @@ def comma_sep_to_ul(value, autoescape=True):
 @stringfilter
 def comma_sep_to_li(value, autoescape=True):
     items = value.split(',')
-    lis = lambda items: [f'<li>{item}</li>' for item in items]
+    lis = lambda items: [f'<li><p style="text-align:justify">{item}</p></li>' for item in items]
     items = '\n'.join(lis(items))
     return mark_safe(items)
