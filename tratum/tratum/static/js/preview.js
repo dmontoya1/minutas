@@ -11,6 +11,14 @@ $(function(){
             y se te enviará una copia a tu correo electrónico. Pasados los 10 días, el documento dejará de estar disponible.',
             buttons: {
                 Confirmar: async function () {
+                    $.alert({
+                        title: 'Finalizando edición del documento',
+                        content: 'Espera un momento....',
+                        confirmButton: false,
+                        cancelButton: false,
+                        backgroundDismiss: false,
+                        closeIcon: false
+                    });
                     axios.post(`/api/document-manager/finish/`, 
                         {
                             identifier: identifier,
