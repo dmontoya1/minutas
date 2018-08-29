@@ -57,7 +57,6 @@ function cloneGroupItem(groupAdder, fromGroupAdder){
     }
 
     $('a.deleter').on('click', function(e){
-        console.log(e);
         e.preventDefault();
         prev = $(this).parent().prev();        
         $(this).parent().remove();
@@ -132,6 +131,8 @@ $.fn.upform = function() {
             $(this).blur();
         });
         $(e).addClass("active");
+        $('[data-toggle="tooltip"]').tooltip('hide'); 
+        $(e).find('[data-toggle="tooltip"]').tooltip('show'); 
         $(e).find('input:not(.date)').focus();
     }
 
