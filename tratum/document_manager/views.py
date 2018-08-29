@@ -1,6 +1,7 @@
 import json
 import uuid
 import pdfkit
+import pypandoc
 
 from io import BytesIO
 
@@ -110,6 +111,7 @@ class FinishDocumentView(View):
         user_document = UserDocument.objects.get(identifier=body['identifier'])
         self.generate_html(request, user_document, body['content'])
         self.generate_pdf(request, user_document)
+        self.generate_doc(request, user_document)
         self.update_status(user_document)
         self.send_email(request, user_document)
         return HttpResponse(status=200)
@@ -141,7 +143,14 @@ class FinishDocumentView(View):
         file = BytesIO(file)
         user_document.pdf_file.save(output_filename, file)
         file.close()
-        
+    
+    def generate_doc(self, request, user_document):
+        html_file = user_document.html_file.read().decode('utf-8')
+        doc = DocX()
+        doc.add_paragraph(html_file)
+        doc.save(f'{user_document.identifier}.docx')
+
+
     def generate_html(self, request, user_document, TEMPORARY_HTML_FILE):
 
         def get_scripted_html(request, html_string):
