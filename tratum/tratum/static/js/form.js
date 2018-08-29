@@ -18,7 +18,7 @@ function savePreview() {
                 });                
             });
             quantity['Q_' + $(this).data('name')] = items.length;
-            groups[$(this).data('name')] = group_responses.join(', ').toString();
+            groups[$(this).data('name')] = group_responses.join('¬ ').toString();
         });
         return form + '&' + $.param(groups) + '&' + $.param(quantity)
     }   
