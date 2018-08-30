@@ -62,12 +62,14 @@ class DocumentFieldAdmin(admin.ModelAdmin):
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         obj = request.current_object
+        filters = {}
         if obj:
-            print(db_field.name)
+            if obj.document:
+                filters['document__pk'] = obj.document.pk
+            else:
+                filters['section__pk'] = obj.section.pk
             if db_field.name == "field_group":
-                kwargs["queryset"] = DocumentField.objects.filter(
-                    document__pk=obj.document.pk
-                ).exclude(field_type=DocumentField.GROUP)
+                kwargs["queryset"] = DocumentField.objects.filter(**filters).exclude(field_type=DocumentField.GROUP)
         return super(DocumentFieldAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
     class Media:
