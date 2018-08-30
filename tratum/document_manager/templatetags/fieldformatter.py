@@ -18,9 +18,16 @@ def comma_sep_to_ul(value, autoescape=True):
 @register.filter(needs_autoescape=True)
 @stringfilter
 def comma_sep_to_li(value, autoescape=True):
-    print(value)
     items = value.split('¬')
-    print(items)
     lis = lambda items: [f'<li><p style="text-align:justify">{item}</p></li>' for item in items]
+    items = '\n'.join(lis(items))
+    return mark_safe(items)
+
+
+@register.filter(needs_autoescape=True)
+@stringfilter
+def retain_comma(value, autoescape=True):
+    items = value.split('¬')
+    lis = lambda items: [f'{item};' for item in items]
     items = '\n'.join(lis(items))
     return mark_safe(items)

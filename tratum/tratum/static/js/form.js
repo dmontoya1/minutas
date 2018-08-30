@@ -12,13 +12,15 @@ function savePreview() {
             regex = $(this).data('regex');
             $(items).each(function(i2, gi){  
                 fields = $(this).find('input, select');
+                regexed_text = regex;
                 $(fields).each(function(i3, git){
-                    regexed_text = regex.replace($(this).data('name'), $(this).val());
-                    group_responses.push(regexed_text);
+                    regexed_text = regexed_text.replace($(this).data('name'), $(this).val());
                 });                
+                group_responses.push(regexed_text);
             });
             quantity['Q_' + $(this).data('name')] = items.length;
             groups[$(this).data('name')] = group_responses.join('¬ ').toString();
+            
         });
         return form + '&' + $.param(groups) + '&' + $.param(quantity)
     }   
