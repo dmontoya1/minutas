@@ -246,7 +246,6 @@ class DocumentField(SlugIdentifierMixin):
     NATURAL_DATE = 'ND'
     SELECT = 'SE'
     SELECT_MULTIPLE = 'SM'
-    LIST = 'LI'
     GROUP = 'GP'
 
     FIELD_TYPE = (
@@ -257,7 +256,6 @@ class DocumentField(SlugIdentifierMixin):
         (NATURAL_DATE, 'Fecha natural'),
         (SELECT, 'Opciones de única respuesta'),
         (SELECT_MULTIPLE, 'Opciones agrupadas'),
-        (LIST, 'Listado'),
         (GROUP, 'Agrupación de campos')
     )
 

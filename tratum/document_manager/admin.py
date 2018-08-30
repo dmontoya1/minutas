@@ -55,7 +55,25 @@ class DocumentFieldAdmin(admin.ModelAdmin):
         'field_type'
     )
     readonly_fields = ('slug',)
+    
+    def get_form(self, request, obj=None, **kwargs):
+        request.current_object = obj
+        return super(DocumentFieldAdmin, self).get_form(request, obj, **kwargs)
 
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        obj = request.current_object
+        if obj:
+            print(db_field.name)
+            if db_field.name == "field_group":
+                kwargs["queryset"] = DocumentField.objects.filter(
+                    document__pk=obj.document.pk
+                ).exclude(field_type=DocumentField.GROUP)
+        return super(DocumentFieldAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
+    class Media:
+        js = (
+            '/static/js/admin/documentfields.js',
+        )
 
 @admin.register(DocumentSection)
 class DocumentSectionAdmin(admin.ModelAdmin):
@@ -70,6 +88,7 @@ class DocumentSectionAdmin(admin.ModelAdmin):
         js = (
             '//unpkg.com/axios/dist/axios.min.js',
         )
+
 
 @admin.register(DocumentFieldOption)
 class DocumentFieldOptionAdmin(admin.ModelAdmin):
