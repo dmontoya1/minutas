@@ -346,7 +346,7 @@ class DocumentField(SlugIdentifierMixin):
         return self.field_type in (self.DATE, self.NATURAL_DATE)
 
     def get_html_input_type(self):
-        if self.field_type == self.TEXT or self.field_type == self.LIST or self.field_type == self.PRICE:
+        if self.field_type == self.TEXT or self.field_type == self.PRICE:
             return 'text'
         elif self.field_type == self.DATE or self.field_type == self.NATURAL_DATE:
             return 'date'
