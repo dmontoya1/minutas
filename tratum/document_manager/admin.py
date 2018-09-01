@@ -77,6 +77,7 @@ class DocumentFieldAdmin(admin.ModelAdmin):
             '/static/js/admin/documentfields.js',
         )
 
+
 @admin.register(DocumentSection)
 class DocumentSectionAdmin(admin.ModelAdmin):
     list_display = (
