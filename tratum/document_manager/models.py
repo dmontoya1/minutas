@@ -300,6 +300,12 @@ class DocumentField(SlugIdentifierMixin):
         blank=True,
         verbose_name='Sección'
     )
+    order = models.PositiveIntegerField(
+        'Orden de campo en el formulario',
+        help_text='Indica el orden de aparición del campo en el formulario',
+        null=True,
+        blank=True
+    )
     field_group = models.ManyToManyField(
         'self',
         blank=True,
@@ -321,7 +327,7 @@ class DocumentField(SlugIdentifierMixin):
     )
     group_order = models.PositiveIntegerField(
         'Orden de campo en el grupo',
-        help_text='Indica el orden de aparición del campo en el formulario (Sólo aplica para grupos)',
+        help_text='Indica el orden de aparición del campo en el grupo corrspondiente (Sólo aplica para campos de una agrupación)',
         null=True,
         blank=True
     )
