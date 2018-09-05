@@ -113,7 +113,7 @@ class FinishDocumentView(View):
         self.generate_pdf(request, user_document)
         self.generate_doc(request, user_document)
         self.update_status(user_document)
-        self.send_email(request, user_document)
+        self.send_email(request, user_document) 
         return HttpResponse(status=200)
     
     def update_status(self, user_document):
