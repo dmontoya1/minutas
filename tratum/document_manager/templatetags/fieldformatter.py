@@ -29,5 +29,7 @@ def comma_sep_to_li(value, autoescape=True):
 def retain_comma(value, autoescape=True):
     items = value.split('¬')
     lis = lambda items: [f'{item};' for item in items]
-    items = '\n'.join(lis(items))
+    items = '\n'.join(lis(items)) 
     return mark_safe(items)
+
+ 

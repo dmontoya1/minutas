@@ -57,7 +57,7 @@ class Category(MPTTModel, SoftDeletionModelMixin, SlugIdentifierMixin):
         if self.parent:
             if self.parent.get_ancestors().count() == 3:
                 raise ValidationError('Las categorías sólo pueden tener hasta 4 niveles de profundidad')
-    
+        
     def get_absolute_url(self):
         # return reverse('webclient:category-documents', kwargs={'slug': self.slug})
         return reverse('webclient:category_documents', kwargs={'path': self.get_path()})
@@ -300,6 +300,12 @@ class DocumentField(SlugIdentifierMixin):
         blank=True,
         verbose_name='Sección'
     )
+    order = models.PositiveIntegerField(
+        'Orden de campo en el formulario',
+        help_text='Indica el orden de aparición del campo en el formulario',
+        null=True,
+        blank=True
+    )
     field_group = models.ManyToManyField(
         'self',
         blank=True,
@@ -321,7 +327,7 @@ class DocumentField(SlugIdentifierMixin):
     )
     group_order = models.PositiveIntegerField(
         'Orden de campo en el grupo',
-        help_text='Indica el orden de aparición del campo en el formulario (Sólo aplica para grupos)',
+        help_text='Indica el orden de aparición del campo en el grupo corrspondiente (Sólo aplica para campos de una agrupación)',
         null=True,
         blank=True
     )
@@ -367,6 +373,12 @@ class DocumentFieldOption(models.Model):
         DocumentField,
         on_delete=models.CASCADE,
         verbose_name='Campo'
+    )
+    linked_fields = models.ManyToManyField(
+        DocumentField,
+        blank=True,
+        related_name='linkedfields_set',
+        verbose_name='Campos de la opción (si aplica)'
     )
 
     class Meta:
