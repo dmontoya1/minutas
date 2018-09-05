@@ -2,7 +2,7 @@
 {% if field.is_text_input %}
     <div class="input-block">
         <div class="label col clearfix">
-            <span class="float-left">{{forloop.counter}}. {{field.display_name}} </span>
+            <span class="float-left">{{forloop.counter}}. {{field.display_name}}</span>
             {% if field.help_text %}
                 <i class="fas fa-question-circle float-right" data-toggle="tooltip" data-placement="left" title="{{field.help_text}}"></i>
             {% endif %}
@@ -30,7 +30,7 @@
             </div>
         {% endif %}    
     </div>        
-{% elif field.field_type == field.SELECT %}
+{% elif field.field_type == field.SELECT or field.field_type == field.DYNAMIC_SELECT %}
     <div class="input-block">
         <div class="label col clearfix">
             <span class="float-left">{{forloop.counter}}. {{field.display_name}} </span>
@@ -39,7 +39,7 @@
             {% endif %}
         </div>   
         <div class="input-control col">
-            <select name="{{field.formated_slug}}">
+            <select name="{{field.formated_slug}}" class="{% if field.field_type == field.DYNAMIC_SELECT %}dynamic{% endif %}">
                 <option selected disabled>Selecciona un elemento de la lista</option>
                 {% for f in field.documentfieldoption_set.all %}
                     <option value="{{f.name}}">{{f.name}}</option>

@@ -149,6 +149,9 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
                 component = self.documentsection_set.get(slug=slug)
             except:
                 component = None
+        if isinstance(component, DocumentField):
+            if component.linkedfields_set.all().count() > 0:
+                component = None
         return component
 
     def get_components(self, type_: str):
@@ -223,7 +226,9 @@ class DocumentSection(SlugIdentifierMixin):
     
     def get_fields(self):
         return self.documentfield_set.all().exclude(
-            Q(field_group__isnull=False) & ~Q(field_type=DocumentField.GROUP) 
+            Q(field_group__isnull=False)
+            & ~Q(field_type=DocumentField.GROUP) 
+            | Q(linkedfields_set__isnull=False)
         )
 
 
@@ -247,6 +252,7 @@ class DocumentField(SlugIdentifierMixin):
     SELECT = 'SE'
     SELECT_MULTIPLE = 'SM'
     GROUP = 'GP'
+    DYNAMIC_SELECT = 'DS'
 
     FIELD_TYPE = (
         (NUMBER, 'Numérico'),
@@ -255,7 +261,8 @@ class DocumentField(SlugIdentifierMixin):
         (DATE, 'Fecha'),
         (NATURAL_DATE, 'Fecha natural'),
         (SELECT, 'Opciones de única respuesta'),
-        (SELECT_MULTIPLE, 'Opciones agrupadas'),
+        (DYNAMIC_SELECT, 'Opciones de única respuesta con preguntas dinámicas'),
+        (SELECT_MULTIPLE, 'Opciones de múltiple respuesta'),
         (GROUP, 'Agrupación de campos')
     )
 
