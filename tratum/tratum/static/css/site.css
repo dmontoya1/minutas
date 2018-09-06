@@ -293,7 +293,7 @@ section {
 .contextualMenu {
     height: 100%;
     background-color: #5eccc4;
-    padding-top: 3em;
+    padding-top: 5em;
     display: none;
     z-index: 9998;
     position: fixed;
@@ -601,36 +601,36 @@ section {
         margin-top: 18%;
     }
 
-#modal-faq .row {
+#faq .row {
     font-size: 1.1em;
 }
 
-#modal-faq .qc {
+#faq .qc {
     background-color: #e8e8e8;
     color: #5eccc4;
     border: none;
     padding: 1em;
 }
 
-#modal-faq .q-title {
+#faq .q-title {
     padding: 1em;
     cursor: pointer;
     border-bottom: 1px solid #a2a2a2;
 }
 
-#modal-faq .row.content.last .q-title {
+#faq .row.content.last .q-title {
     border: none;
 }
-    #modal-faq .q-title.active {
+    #faq .q-title.active {
         color: #5eccc4;
         border: none;
     }
-    #modal-faq .q-title.active + .q-answer {
+    #faq .q-title.active + .q-answer {
         display: block;
         margin-bottom: 1em;
     }
 
-#modal-faq .q-answer {
+#faq .q-answer {
     padding: 1em;
     display: none;
     font-size: .85em;
