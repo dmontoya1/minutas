@@ -152,14 +152,9 @@
         <a class="action-button__primary" href="/documents/">Ver documentos</a>
       </div>       
     </div>
-  </div>
-  
-  <div class="row corporate-signature">
-    <div class="col text-center">
-      <span>Con el respaldo jurídico de <a><img src="{% static 'img/gonzales-aldana-logos-08.png' %}" width="120px"/></span></a>
-    </div>
-  </div>
+  </div>  
 
+  <!--
   <div class="row bundles">
     <div class="container">
       <div class="col text-center">
@@ -204,7 +199,7 @@
       </div>
     </div>
   </div>
-
+  -->
   <div class="row contact-form">
     <div class="col text-center">
       <h5 class="text-white">Contáctanos</h5>
@@ -225,7 +220,11 @@
       </form>
     </div>
   </div>
-
+  <div class="row corporate-signature">
+    <div class="col text-center">
+      <span>Con el respaldo jurídico de <a><img src="{% static 'img/gonzales-aldana-logos-08.png' %}" width="120px"/></span></a>
+    </div>
+  </div>
 
   <div class="cookiepolicy-info">
     <span>Al navegar en nuestro sitio, consideramos que aceptas nuestra 
@@ -268,6 +267,9 @@
           },
           pagination: {
             el: '.swiper-pagination',
+          },
+          autoplay: {
+            delay: 5000,
           }
       })
 
