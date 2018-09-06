@@ -16,13 +16,13 @@
     <div class="container mt-5">
         <h2 class="flow-text">{{ terms_name }}</h2>
         <p id="police">
-            {{ terms_content }}
+            {{ terms_content|safe }}
         </p>
     </div>
     <div class="container">
         <h2 class="flow-text">{{ police_name }}</h2>
         <p id="police">
-            {{ police_content }}
+            {{ police_content|safe }}
         </p>
     </div>
     <br>

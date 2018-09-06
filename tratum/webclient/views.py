@@ -43,7 +43,7 @@ from users.models import LogTerms
 from .mixins import TermsAndConditions
 
 
-class HomePageView(TemplateView):
+class HomePageView(TermsAndConditions):
 
     template_name = "webclient/home.html"
 
@@ -221,7 +221,7 @@ class ValidateTerms(LoginRequiredMixin, TemplateView):
         return context
 
 
-class CategoryDocumentsView(TemplateView):
+class CategoryDocumentsView(TermsAndConditions):
 
     template_name = "webclient/documents.html"
 
@@ -234,7 +234,7 @@ class CategoryDocumentsView(TemplateView):
         return context
 
 
-class ProfileView(LoginRequiredMixin, TermsAndConditions, TemplateView):
+class ProfileView(LoginRequiredMixin, TermsAndConditions):
 
     template_name = "webclient/profile.html"
     login_url = '/'

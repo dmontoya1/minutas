@@ -15,12 +15,16 @@ class TermsAndConditions(TemplateView):
     """
 
     def get(self, request, *args, **kwargs):
+
         user = request.user
-        try:
-            log = LogTerms.objects.get(user=user)
-            context = super(TermsAndConditions, self).get_context_data() 
-            return self.render_to_response(context)
-        except LogTerms.DoesNotExist:
-            return redirect('/validate-terms/', )
+        if not user.is_authenticated or user.is_superuser:
+            return super(TermsAndConditions, self).get(request, *args, **kwargs)
+        else:
+            try:
+                log = LogTerms.objects.get(user=user)
+                context = super(TermsAndConditions, self).get_context_data() 
+                return self.render_to_response(context)
+            except LogTerms.DoesNotExist:
+                return redirect('/validate-terms/')
         
 
