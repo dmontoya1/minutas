@@ -1,3 +1,6 @@
+from re import sub
+from decimal import Decimal
+from num2words import num2words
 from django import template
 from django.template.defaultfilters import stringfilter
 from django.utils.safestring import mark_safe
@@ -32,4 +35,9 @@ def retain_comma(value, autoescape=True):
     items = '\n'.join(lis(items)) 
     return mark_safe(items)
 
+
+@register.filter(needs_autoescape=True)
+def num_to_text(value, autoescape=True):
+    value = ''.join( c for c in value if c not in '$.' )
+    return num2words(int(value), lang='es')
  
