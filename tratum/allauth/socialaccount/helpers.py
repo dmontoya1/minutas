@@ -133,7 +133,7 @@ def _add_social_account(request, sociallogin):
             'action': action
         }
     )
-    return HttpResponseRedirect('/profile/')
+    return HttpResponseRedirect(next_url)
 
 
 def complete_social_login(request, sociallogin):
@@ -156,7 +156,7 @@ def complete_social_login(request, sociallogin):
 
 
 def _social_login_redirect(request, sociallogin):
-    next_url = sociallogin.get_redirect_url(request) or '/profile/'
+    next_url = sociallogin.get_redirect_url(request) or '/'
     return HttpResponseRedirect(next_url)
 
 
