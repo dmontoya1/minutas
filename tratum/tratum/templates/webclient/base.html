@@ -332,7 +332,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-3 faq">
                         <i class="fas fa-question-circle"></i>
-                        <a data-toggle="modal" data-target="#modal-faq">
+                        <a href="{% url 'webclient:faq' %}">
                             Preguntas Frecuentes
                         </a>
                     </div>
@@ -379,35 +379,6 @@
                 </div>
             </div>
         </footer>        
-
-        <div class="modal fade" id="modal-faq" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="container">
-                            {% for f in faq_categories %}
-                                <div class="row qc-title">
-                                    <div class="col-sm-12 text-center qc mt-2">
-                                        {{f.name}}
-                                    </div>
-                                </div>
-                                {% for i in f.faqitem_set.all %}
-                                    <div class="row content {% if forloop.last %}last{% endif %}">
-                                        <div class="col-sm-12 q-title" data-id="{{i.pk}}">
-                                            {{i.question}}
-                                            <i class="fas fa-caret-down float-right"></i>
-                                        </div>
-                                        <div class="col-sm-12 q-answer" data-question="{{i.pk}}">
-                                            {{i.answer}}
-                                        </div>
-                                    </div>
-                                {% endfor %}    
-                            {% endfor %}                                                    
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="modal fade" id="modal-documents" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
             <div class="modal-dialog" role="document">

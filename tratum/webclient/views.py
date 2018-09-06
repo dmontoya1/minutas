@@ -93,6 +93,11 @@ class AboutUsView(TemplateView):
         return context
 
 
+class FAQView(TemplateView):
+
+    template_name = "webclient/faq.html"
+
+
 class DocumentDetailView(DetailView):
 
     model = Document
