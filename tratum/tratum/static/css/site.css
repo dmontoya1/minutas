@@ -302,6 +302,8 @@ section {
         font-size: 2em;
         color: #FFF;
         cursor: pointer;
+        position: absolute;
+        top: 20px;
     }
     .contextualMenu > div {
         padding-left: 30px !important;
