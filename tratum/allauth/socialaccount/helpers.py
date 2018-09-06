@@ -156,7 +156,7 @@ def complete_social_login(request, sociallogin):
 
 
 def _social_login_redirect(request, sociallogin):
-    next_url = sociallogin.get_redirect_url(request) or '/'
+    next_url = sociallogin.get_redirect_url(request) or '/profile/'
     return HttpResponseRedirect(next_url)
 
 
