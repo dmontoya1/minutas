@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 
+from ckeditor.fields import RichTextField
+
 
 class Policy(models.Model):
     """Guarda las políticas de la plataforma
@@ -22,7 +24,7 @@ class Policy(models.Model):
         (COOKIES_MANAGEMENT, 'Política de tratamiento de Cookies'),
     )
 
-    content = models.TextField('Contenido')
+    content = RichTextField('Contenido')
     last_update_date = models.DateTimeField(
         'Fecha de última actualización',
         auto_now_add=True
