@@ -278,7 +278,6 @@ def category(request, path, instance):
                 document_list = Document.objects.filter(
                     Q(name__icontains=q) | Q(category__name__icontains=q)
                 ).order_by('order')
-                print(document_list)
             else:
                 document_list = Document.objects.all().order_by('order')
 
