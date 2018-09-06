@@ -53,9 +53,9 @@
   </div>  
 
   <div class="row categories">
-    <div class="col-md-6 order-1 category-parallax" data-stellar-background-ratio="0.1" style="background-image: url('/static/img/c1.jpg');">
+    <div class="col-md-6 order-1 category-parallax" style="background-image: url('/static/img/c1.jpg');">
     </div>
-    <div class="col-md-6 order-2 category-description" data-aos="slide-left">      
+    <div class="col-md-6 order-2 category-description">      
       <div class="container">
           <h2>Creación de empresa</h2>
           <p>¡Es hora de crear tu empresa! En Tratum te ayudamos con la creación de los estatutos a la medida para la formalización de tu empresa.
@@ -66,7 +66,7 @@
   </div>
 
   <div class="row categories">
-    <div class="col-md-6 order-2 order-md-1 category-description left" data-aos="slide-right">      
+    <div class="col-md-6 order-2 order-md-1 category-description left">      
         <div class="container">
           
             <h2>Gestión contractual</h2>
@@ -75,14 +75,14 @@
             <a class="action-button__primary" href="/documents/gestion-contractual-22/">Ver más</a>
         </div>      
       </div>
-    <div class="col-md-6 order-1 order-md-2 category-parallax" data-stellar-background-ratio="1" style="background-image: url('/static/img/c2.jpg');">
+    <div class="col-md-6 order-1 order-md-2 category-parallax" style="background-image: url('/static/img/c2.jpg');">
     </div>      
   </div>
 
   <div class="row categories">
-    <div class="col-md-6 order-1 category-parallax" data-stellar-background-ratio="0.1" style="background-image: url('/static/img/c3.jpg');">
+    <div class="col-md-6 order-1 category-parallax" style="background-image: url('/static/img/c3.jpg');">
     </div>
-    <div class="col-md-6 order-2 category-description" data-aos="slide-left">      
+    <div class="col-md-6 order-2 category-description">      
       <div class="container">
           <h2>Gestión empresarial</h2>
           <p>¡Es hora de organizar la casa! En Tratum te ayudamos con la creación de diferentes documentos legales exigidos por la ley colombiana para que una empresa opere de manera legal. 
@@ -93,7 +93,7 @@
   </div>
 
   <div class="row categories">
-    <div class="col-md-6 order-2 order-md-1 category-description left" data-aos="slide-right">      
+    <div class="col-md-6 order-2 order-md-1 category-description left">      
         <div class="container">
             <h2>Negocios y asuntos personales</h2>
             <p>¡Es hora de cuidar tus asuntos personales! En Tratum te ayudamos con la creación de documentos legales importantes para tu vida diaria y personal. 
@@ -101,12 +101,12 @@
             <a class="action-button__primary" href="/documents/negocios-y-asuntos-personales/">Ver más</a>
         </div>      
       </div>
-    <div class="col-md-6 order-1 order-md-2 category-parallax" data-stellar-background-ratio="1" style="background-image: url('/static/img/c4.jpg');">
+    <div class="col-md-6 order-1 order-md-2 category-parallax" style="background-image: url('/static/img/c4.jpg');">
     </div>      
   </div>
   
   <div class="row categories how-to">
-    <div class="col-md-8 category-description left" data-aos="slide-down">      
+    <div class="col-md-8 category-description left">      
         <div class="container">
             <h2>Cómo crear un documento</h2>
             <ul>
@@ -145,7 +145,7 @@
     <div class="col-md-6">
       <img src="{% static 'img/Web2-40.png' %}" width="100%" />
     </div>    
-    <div class="col-md-6" data-aos="slide-up">      
+    <div class="col-md-6">      
       <div class="container-flex flex-column justify-content-center" style="margin-top: 25px;">
         <h2>¿Por qué construir un contrato responsablemente?</h2>
         <p>{{landing_contract_info}}</p>
@@ -248,9 +248,7 @@
     src="https://code.jquery.com/color/jquery.color-2.1.2.min.js"
     integrity="sha256-H28SdxWrZ387Ldn0qogCzFiUDDxfPiNIyJX7BECQkDE="
     crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar.js/0.6.2/jquery.stellar.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/js/swiper.min.js"></script>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
       window.scrollTo(0, 0);
 
@@ -272,13 +270,6 @@
             el: '.swiper-pagination',
           }
       })
-
-      $(window).stellar();
-
-      AOS.init({
-        duration: 600,
-        easing: 'ease-in-out' 
-      });
 
       $('.swiper-mask-left').on('click', function(){
         mySwiper.slidePrev();

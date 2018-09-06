@@ -24,9 +24,9 @@
                         <td scope="row">{{object.document}}</td>
                         <td>{{object.created_at}}</td>
                         <td>{{object.get_status_display}}</td>
-                        <th scope="row" >
+                        <th scope="row">
                             {% if object.status != object.is_expired %}
-                                {% if object.status == object.FINISHED %}
+                                 {% if object.status == object.FINISHED %}
                                     <a href="{% url 'webclient:user-document-preview' object.identifier %}">
                                         Descargar
                                     </a>
@@ -41,7 +41,6 @@
                         </th>
                     </tr>
                 {% endfor %}
-                
             </tbody>
         </table>
     </div>
