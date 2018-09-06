@@ -48,7 +48,7 @@ class AccountAdapter(DefaultAccountAdapter):
 class SocialAccountAdapter(DefaultSocialAccountAdapter):
 
     def get_connect_redirect_url(self, request):
-        return reverse('webclient:home')
+        return reverse('webclient:profile')
 
     def save_user(self, request, sociallogin, form=None):
         u = sociallogin.user
@@ -60,7 +60,7 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
         else:
             get_adapter().populate_username(request, u)
         sociallogin.save(request)
-        return redirect(reverse('webclient:home'))
+        return redirect(reverse('webclient:profile'))
 
     def pre_social_login(self, request, sociallogin):
         existing_user = True
