@@ -23,6 +23,7 @@ footer {
     padding-bottom: 40px;
     background-color: #000;
     color: #e8e8e8;
+    position: absolute;
 }
     footer .faq i {
         font-size: 1.2em;
@@ -362,6 +363,7 @@ section {
 
 .corporate-signature {
     height: 170px;
+    padding-bottom: 320px;
 }
     .corporate-signature span {
         margin-top: 45px;
