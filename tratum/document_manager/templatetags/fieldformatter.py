@@ -1,3 +1,4 @@
+from num2words import num2words
 from django import template
 from django.template.defaultfilters import stringfilter
 from django.utils.safestring import mark_safe
@@ -32,4 +33,9 @@ def retain_comma(value, autoescape=True):
     items = '\n'.join(lis(items)) 
     return mark_safe(items)
 
+
+@register.filter(needs_autoescape=True)
+def num_to_text(value, autoescape=True):
+    value = int(value) 
+    return num2words(value, lang='es')
  
