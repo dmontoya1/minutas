@@ -12,6 +12,7 @@ body {
 
 main {
     margin-bottom: 35px;
+    min-height: calc(100% - 220px);
 } 
 
 button:focus,
