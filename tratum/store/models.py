@@ -116,6 +116,12 @@ class UserDocument(models.Model):
         editable=False,
         upload_to='pdfs'
     )
+    word_file = models.FileField(
+        null=True,
+        blank=True,
+        editable=False,
+        upload_to='docxs'
+    )
 
     class Meta:
         verbose_name = 'Documento de usuario'
