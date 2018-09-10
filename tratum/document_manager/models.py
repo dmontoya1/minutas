@@ -92,7 +92,7 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
         max_length=120,
         help_text="Cantidad máxima de caracteres: 120"
     )
-    long_description = models.TextField(
+    long_description = RichTextField(
         'Descripción larga',
         blank=True,
         null=True,
