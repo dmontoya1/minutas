@@ -208,10 +208,11 @@ class Invoice(models.Model):
         return 'FAC_{}{}'.format(
             self.pk,
             int(time.mktime(self.payment_date.timetuple()))
-
         )
     
     def get_purchased_element(self):
         if self.document:
             return self.document.name
-        return self.package.name
+        if self.package:
+            return self.package.name
+        return None
