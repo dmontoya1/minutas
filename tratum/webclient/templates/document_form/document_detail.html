@@ -74,7 +74,7 @@
       <div class="col-lg-4 p-0">
         <div class="info-col p-3 text-center">
           <h1 class="mt-5">{{document.name}}</h1>
-          <p class="text-justify mb-4">{{document.long_description}}</p>
+          <p class="text-justify mb-4">{{document.long_description|safe}}</p>
           {% if document.video_url %}
             {% video document.video_url '100% x 215' %}
           {% endif %}
