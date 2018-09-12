@@ -8,7 +8,6 @@ from api.helpers import get_api_user
 from users.models import LogTerms
 
 
-
 class TermsAndConditions(TemplateView):
     """Clase para validar si el usuario ya tiene aceptados los
     términos y condiciones
