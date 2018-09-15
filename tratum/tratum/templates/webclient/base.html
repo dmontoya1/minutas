@@ -41,10 +41,8 @@
         <header>
             <div class="pos-f-t">
                 <div class="contextualMenu">
-                    <div class="pl-4">
-                        <i class="fas fa-times contextual-closer"></i>
-                    </div>
                     <div class="p-4">
+                        <i class="fas fa-times navbar-toggler"></i>
                         <h4 class="text-white">
                             <a href="/">Inicio</a>
                         </h4>
@@ -76,12 +74,13 @@
                     </div>
                 </div>
                 <nav {% block nav_class %}class="navbar fixed-top bg-transparent" {% endblock %}>
-                    <button class="navbar-toggler" type="button" >
-                        <i class="fas fa-bars rotate"></i>
+                    <div>
+                        <i class="fas fa-bars rotate navbar-toggler"></i>
                         <a href="/">
-                            <img class="logo" src="{% static 'img/logo-placeholder@2x.png' %}">
-                        </a>
-                    </button>                    
+                            <img class="logo" src="{% static 'img/logo-color-placeholder@2x.png' %}">
+                        </a>    
+                    </div>   
+                                 
                     <div class="float-right main-options d-none d-lg-block">
                         <div class="dropleft">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categorías <span class="divider">|</span></a>
@@ -150,7 +149,7 @@
                                                 <label for="id_login" class="control-label">Correo electrónico*</label>
                                             </div>
                                             <div class="col-xs-12">
-                                                <input class="form-control" type="email" name="email" data-validation="email" autofocus="autofocus" id="id_login"
+                                                <input class="form-control" type="email" name="email" data-validation="email" id="id_login"
                                                 data-validation-error-msg="Debes ingresar un email válido" />
                                             </div>
                                         </div>
@@ -200,13 +199,13 @@
                             </div>
                             <div class="row" style="margin-bottom: 30px;">
                                 <div class="col-md-6 clear-fix">
-                                    <a href="{% provider_login_url 'facebook' method='oauth2' next='/' %}" class="btn-fb float-left">
+                                    <a href="{% provider_login_url 'facebook' method='oauth2' next='/profile' %}" class="btn-fb float-left">
                                         <i class="fab fa-facebook-square"></i>
                                         Continuar con Facebook
                                     </a>
                                 </div>
                                 <div class="col-md-6 clear-fix">
-                                    <a href="{% provider_login_url 'google' method='oauth2' next='/' %}" class="btn-gl float-right">
+                                    <a href="{% provider_login_url 'google' method='oauth2' next='/profile' %}" class="btn-gl float-right">
                                         <i class="fab fa-google"></i>
                                         Continuar con Google
                                     </a>
@@ -334,8 +333,8 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-3 faq">
                         <i class="fas fa-question-circle"></i>
-                        <a data-toggle="modal" data-target="#modal-faq">
-                            FAQ
+                        <a href="{% url 'webclient:faq' %}">
+                            Preguntas Frecuentes
                         </a>
                     </div>
                     <div class="col-sm-12 col-md-3 link-col">
@@ -348,7 +347,7 @@
                     </div>
                     <div class="col-sm-12 col-md-3 link-col">
                         <a href="{% url 'webclient:policies' 'privacy' %}">
-                            Políticas de uso 
+                            Políticas de tratamiento de datos personales 
                         </a>
                         <a href="{% url 'webclient:policies' 'terms' %}">
                             Terminos y condiciones 
@@ -364,7 +363,10 @@
                         <a href="#" class="text-white">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <span class="white-text">{{bussiness_info.landing_contact}}</span>
+                        <div class="col mt-3">
+                            <span class="white-text">{{bussiness_info.landing_contact}}</span>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -379,38 +381,15 @@
             </div>
         </footer>        
 
-        <div class="modal fade" id="modal-faq" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="container">
-                            {% for f in faq_categories %}
-                                <div class="row qc-title">
-                                    <div class="col-sm-12 text-center qc mt-2">
-                                        {{f.name}}
-                                    </div>
-                                </div>
-                                {% for i in f.faqitem_set.all %}
-                                    <div class="row content {% if forloop.last %}last{% endif %}">
-                                        <div class="col-sm-12 q-title" data-id="{{i.pk}}">
-                                            {{i.question}}
-                                            <i class="fas fa-caret-down float-right"></i>
-                                        </div>
-                                        <div class="col-sm-12 q-answer" data-question="{{i.pk}}">
-                                            {{i.answer}}
-                                        </div>
-                                    </div>
-                                {% endfor %}    
-                            {% endfor %}                                                    
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="modal fade" id="modal-documents" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
+                    <div class="modal-header">
+                        <h5>Cuéntanos, ¿que documentos necesitas?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                     <div class="modal-body">
                         <div class="container">
                             <div class="row">
@@ -440,6 +419,7 @@
         </div>
 
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
             integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
@@ -470,8 +450,8 @@
                         "debug": false,
                         "newestOnTop": false,
                         "progressBar": false,
-                        "positionClass": "toast-top-right",
-                        "preventDuplicates": true,
+                        "positionClass": "toast-top-full-width",
+                        "preventDuplicates": false,
                         "onclick": null,
                         "showDuration": "1000",
                         "hideDuration": "1000",
@@ -539,9 +519,10 @@
             }
             
             $(document).ready(function() {
-                $('.navbar-toggler, .contextual-closer').on('click', function(){
+                $('.navbar-toggler').on('click', function(){
                     $('.rotate').toggleClass("down");
                     $('.contextualMenu').fadeToggle();
+                    $('.logo').toggle();
                 })
 
                 {% block nav-script%}
@@ -573,8 +554,8 @@
                 "debug": false,
                 "newestOnTop": false,
                 "progressBar": true,
-                "positionClass": "toast-top-right",
-                "preventDuplicates": true,
+                "positionClass": "toast-top-full-width",
+                "preventDuplicates": false,
                 "onclick": null,
                 "showDuration": "1000",
                 "hideDuration": "1000",

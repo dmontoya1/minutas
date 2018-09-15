@@ -56,8 +56,7 @@
                                 <div class="form-group">
                                     <label for="subcategory"><i class="fa fa-file-sound-o" aria-hidden="true"></i></label>
                                     <select class="custom-select" id="level1-categories">
-                                        <option selected disabled>Seleccione primero una categoría</option>
-                                        
+                                        <option selected disabled>Seleccione primero una categoría</option>     
                                     </select>
                                 </div>
                             </form>
@@ -375,6 +374,11 @@
 
         $(function(){
             createSticky($("#search"));
+            $('#searcher').on('keyup', function(e){
+                if (e.keyCode === 13) {
+                window.location.href = `/documents?q=${$(this).val()}`
+                }
+            })
         });
 
         function createSticky(sticky) {
@@ -400,8 +404,8 @@
             "debug": false,
             "newestOnTop": false,
             "progressBar": true,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": true,
+            "positionClass": "toast-top-full-width",
+            "preventDuplicates": false,
             "onclick": null,
             "showDuration": "1000",
             "hideDuration": "1000",

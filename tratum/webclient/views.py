@@ -43,19 +43,9 @@ from users.models import LogTerms
 from .mixins import TermsAndConditions
 
 
-class HomePageView(TemplateView):
+class HomePageView(TermsAndConditions):
 
     template_name = "webclient/home.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['context_bundles'] = DocumentBundle.objects.alive().filter(show_on_landing=True)
-        context['context_slides'] = SliderItem.objects.all()
-        context['context_bundle_count'] = DocumentBundle.objects.alive().count()
-        site_config = SiteConfig.objects.last()
-        if site_config:
-            context['landing_contract_info'] = site_config.landing_contract_info
-        return context
 
 
 class PoliciesView(TemplateView):
@@ -91,6 +81,11 @@ class AboutUsView(TemplateView):
             context['content'] = site_config.about_page_content
             context['image'] = site_config.about_page_image
         return context
+
+
+class FAQView(TemplateView):
+
+    template_name = "webclient/faq.html"
 
 
 class DocumentDetailView(DetailView):
@@ -216,7 +211,7 @@ class ValidateTerms(LoginRequiredMixin, TemplateView):
         return context
 
 
-class CategoryDocumentsView(TemplateView):
+class CategoryDocumentsView(TermsAndConditions):
 
     template_name = "webclient/documents.html"
 
@@ -229,7 +224,7 @@ class CategoryDocumentsView(TemplateView):
         return context
 
 
-class ProfileView(LoginRequiredMixin, TermsAndConditions, TemplateView):
+class ProfileView(LoginRequiredMixin, TermsAndConditions):
 
     template_name = "webclient/profile.html"
     login_url = '/'
@@ -297,6 +292,20 @@ class UserDocumentPreviewView(DetailView):
         document_content = document_content.render(Context(obj.answers))
         context['document_content'] = document_content
         return context
+
+
+class UserDocumentProcessPreviewView(View):
+    model = UserDocument
+    slug_field = "identifier"
+
+    def get_object(self):
+        obj = UserDocument.objects.get(identifier=self.kwargs['identifier'])
+        return obj
+
+    def get(self, request, *args, **kwargs):
+        obj = self.get_object()
+        preview = reverse('webclient:user-document-preview', kwargs={'identifier': obj.identifier})
+        return HttpResponseRedirect(preview)
 
 
 class ContactFormView(View):

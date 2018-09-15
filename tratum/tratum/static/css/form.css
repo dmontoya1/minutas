@@ -34,8 +34,15 @@ iframe {
 	min-height: 100vh;
 }
 
+.group-adder {
+    position: absolute;
+    z-index: 9999;
+    font-size: .9em;
+}
+
 .group-fields {
-	padding-left: 30px;
+    padding-left: 30px;
+    position: relative;
 }
     .group-fields p {
         font-weight: 300;
@@ -48,7 +55,7 @@ iframe {
 .group-item {
 	border-radius: 10px;
 	box-shadow: .5px .5px 5px rgb(184, 184, 184);
-	padding: 5px 20px;
+	padding: 30px 20px;
 	position: relative;
 }
     .group-item div.counter {
@@ -122,8 +129,8 @@ iframe {
             margin: 20px 0;
             position: relative;
         }
-            .upform .upform-main .input-block .input-control input[type=text],
-            .upform .upform-main .input-block .input-control select {
+            .upform .upform-main .input-block .input-control input,
+            .upform .upform-main .input-block .input-control select:not([class^="picker"]) {
                 border: 3px dashed rgb(150, 150, 150);
                 border-radius: 10px;
                 font-size: 1em;
@@ -192,3 +199,27 @@ iframe {
     background: 0 0;
     border: 0;
 }
+
+.section-fields {
+    display: none;
+    margin-bottom: 3.5em;
+}
+
+@media screen and (min-height: 40.125em){
+    .picker__box {
+        font-size: 1.2em;
+        border-bottom-width: 1px;
+        border-radius: 5px;
+    }
+    .picker__frame {
+        margin-bottom: 20.5%;
+    }
+}
+
+.picker__select--month, .picker__select--year{
+    height: auto !important;
+}
+
+
+
+

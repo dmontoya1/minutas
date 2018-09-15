@@ -59,6 +59,7 @@ class SlugIdentifierMixin(models.Model):
         abstract = True
 
     def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
         self.slug = self._get_unique_slug()
         super().save(*args, **kwargs)
     

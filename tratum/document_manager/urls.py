@@ -1,6 +1,7 @@
 from django.urls import path, include
 from .views import (
     DocumentFieldList,
+    DocumentFieldDetail,
     DocumentSectionList,
     DocumentSectionDetail,
     DocumentSectionFieldsList,
@@ -16,6 +17,7 @@ app_name = 'document_manager'
 
 urlpatterns = [
     path('document-fields/', DocumentFieldList.as_view(), name='document-fields'),
+    path('document-fields/<slug:slug>/', DocumentFieldDetail.as_view(), name='document-field'),
     path('document-sections/', DocumentSectionList.as_view(), name='document-sections'),
     path('document-sections/<slug:slug>/', DocumentSectionDetail.as_view(), name='document-section'),
     path('document-sections/<slug:slug>/section-fields/', DocumentSectionFieldsList.as_view(), name='document-section-fields'),

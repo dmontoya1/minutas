@@ -1,4 +1,6 @@
 {% load static %}
+{% load embed_video_tags %}
+
 <!doctype html>
 <html lang="es">
   <head>
@@ -9,13 +11,14 @@
     <link rel="icon" href="https://getbootstrap.com/assets/img/favicons/favicon-32x32.png">
     <title>Tratum</title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
-    crossorigin="anonymous">
-    <link href="{% static 'css/form.css' %}" rel="stylesheet">
+    crossorigin="anonymous">    
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
     integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
     crossorigin="anonymous">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/themes/default.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/themes/default.date.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400" rel="stylesheet">
+    <link href="{% static 'css/form.css' %}" rel="stylesheet">
   </head>
 
   <body>
@@ -46,15 +49,24 @@
                   <h3 class="mb-3">Secciones opcionales disponibles: </h3>
                   {% for s in object.get_sections %}
                     <div class="col">
-                      <input type="checkbox" class="section-item mb-3"> {{s.display_name}}</input>
+                      <input type="checkbox" name="{{s.formated_slug}}" class="section-item mb-3"> {{s.display_name}}</input>
+                      {% if s.help_text %}
+                        <i class="fas fa-question-circle float-right" data-toggle="tooltip" data-placement="left" title="{{s.help_text}}"></i>
+                      {% endif %}
                     </div>
+                    <div class="section-fields" data-section="{{s.formated_slug}}">
+                      {% for field in s.get_fields %}
+                        {% include 'document_form/fields.html' %}
+                      {% endfor %}
+                    </div>
+                    
                   {% empty %}
                     <p>Este documento no contiene secciones opcionales</p>
                   {% endfor %}
                 </div>                
               </div>
               <div class="upform-footer">
-                <a href="{% url 'webclient:user-document-preview' identifier %}" class="btn btn-primary btn-lg preview">Previsualizar</a>
+                <a href="{% url 'webclient:user-document-process' identifier %}" class="btn btn-primary btn-lg preview">Previsualizar</a>
               </div>    
             </form>
           </div>
@@ -62,13 +74,12 @@
       <div class="col-lg-4 p-0">
         <div class="info-col p-3 text-center">
           <h1 class="mt-5">{{document.name}}</h1>
-          <p class="text-justify mb-4">{{document.long_description}}</p>
+          <p class="text-justify mb-4">{{document.long_description|safe}}</p>
           {% if document.video_url %}
-            <iframe class="mb-4" width="100%" height="215" src="{{document.video_url}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            {% video document.video_url '100% x 215' %}
           {% endif %}
           <h4>Notas importantes: </h4>
           <ul class="text-left mt-4">
-            <li>Todas las preguntas son obligatorias</li>
             <li>Puedes utilizar las teclas <strong>TAB</strong>, <strong>ENTER</strong>,  <i class="fas fa-arrow-circle-up"></i>  y  <i class="fas fa-arrow-circle-down"></i>  para navegar entre preguntas</li>
             <li>Cada vez que pases de pregunta, se guardará tu progreso automáticamente</li>
             <li>Una vez completes el formulario, podrás ver una previsualización del documento antes de finalizarlo</li>
@@ -111,7 +122,13 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>   
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/legacy.js"></script>   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/picker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/picker.date.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/picker.time.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/translations/es_ES.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-price-format/2.2.0/jquery.priceformat.min.js"></script>
     <script src="{% static 'js/form.js' %}"></script>
 
   </body>

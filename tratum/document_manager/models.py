@@ -8,10 +8,12 @@ import uuid
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Q
 from django.urls import reverse
 
 from mptt.models import MPTTModel, TreeForeignKey
 from ckeditor.fields import RichTextField
+from embed_video.fields import EmbedVideoField
 
 from utils.models import SoftDeletionModelMixin, SlugIdentifierMixin
 
@@ -55,7 +57,7 @@ class Category(MPTTModel, SoftDeletionModelMixin, SlugIdentifierMixin):
         if self.parent:
             if self.parent.get_ancestors().count() == 3:
                 raise ValidationError('Las categorías sólo pueden tener hasta 4 niveles de profundidad')
-    
+        
     def get_absolute_url(self):
         # return reverse('webclient:category-documents', kwargs={'slug': self.slug})
         return reverse('webclient:category_documents', kwargs={'path': self.get_path()})
@@ -90,7 +92,7 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
         max_length=120,
         help_text="Cantidad máxima de caracteres: 120"
     )
-    long_description = models.TextField(
+    long_description = RichTextField(
         'Descripción larga',
         blank=True,
         null=True,
@@ -122,7 +124,7 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
         null=True, 
         blank=True
     )
-    video_url = models.URLField(
+    video_url = EmbedVideoField(
         'URL del video explicativo',
         blank=True,
         null=True
@@ -147,6 +149,9 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
                 component = self.documentsection_set.get(slug=slug)
             except:
                 component = None
+        if isinstance(component, DocumentField):
+            if component.linkedfields_set.all().count() > 0:
+                component = None
         return component
 
     def get_components(self, type_: str):
@@ -162,6 +167,7 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
             ex = r'{% if (.*?) %}'
         raw_fields = re.findall(ex, c)
         for f in raw_fields:
+            f = f.split('|')[0]
             component = self.query_component(f)
             if component is not None:
                 if isinstance(component, DocumentField) and component not in fields:
@@ -204,6 +210,11 @@ class DocumentSection(SlugIdentifierMixin):
         Document,
         on_delete=models.CASCADE,
     )
+    help_text = models.TextField(
+        'Texto de ayuda',
+        blank=True,
+        null=True
+    )
     
     class Meta:
         verbose_name = 'Sección'
@@ -212,6 +223,13 @@ class DocumentSection(SlugIdentifierMixin):
 
     def __str__(self):
         return self.name 
+    
+    def get_fields(self):
+        return self.documentfield_set.all().exclude(
+            Q(field_group__isnull=False)
+            & ~Q(field_type=DocumentField.GROUP) 
+            | Q(linkedfields_set__isnull=False)
+        )
 
 
 class DocumentField(SlugIdentifierMixin):
@@ -227,20 +245,24 @@ class DocumentField(SlugIdentifierMixin):
     """ 
 
     NUMBER = 'NU'
+    PRICE = 'PR'
     TEXT = 'TX'
     DATE = 'DT'
+    NATURAL_DATE = 'ND'
     SELECT = 'SE'
     SELECT_MULTIPLE = 'SM'
-    LIST = 'LI'
     GROUP = 'GP'
+    DYNAMIC_SELECT = 'DS'
 
     FIELD_TYPE = (
         (NUMBER, 'Numérico'),
+        (PRICE, 'Precio'),
         (TEXT, 'Texto abierto'),
         (DATE, 'Fecha'),
+        (NATURAL_DATE, 'Fecha natural'),
         (SELECT, 'Opciones de única respuesta'),
-        (SELECT_MULTIPLE, 'Opciones agrupadas'),
-        (LIST, 'Listado'),
+        (DYNAMIC_SELECT, 'Opciones de única respuesta con preguntas dinámicas'),
+        (SELECT_MULTIPLE, 'Opciones de múltiple respuesta'),
         (GROUP, 'Agrupación de campos')
     )
 
@@ -285,6 +307,12 @@ class DocumentField(SlugIdentifierMixin):
         blank=True,
         verbose_name='Sección'
     )
+    order = models.PositiveIntegerField(
+        'Orden de campo en el formulario',
+        help_text='Indica el orden de aparición del campo en el formulario',
+        null=True,
+        blank=True
+    )
     field_group = models.ManyToManyField(
         'self',
         blank=True,
@@ -304,15 +332,9 @@ class DocumentField(SlugIdentifierMixin):
         null=True,
         blank=True
     )
-    group_items = models.TextField(
-        'Opciones del grupo',
-        help_text='Indica cada uno de los items de un campo múltiple, separados por *',
-        null=True,
-        blank=True
-    )
     group_order = models.PositiveIntegerField(
         'Orden de campo en el grupo',
-        help_text='Indica el orden de aparición del campo en el formulario (Sólo aplica para grupos)',
+        help_text='Indica el orden de aparición del campo en el grupo corrspondiente (Sólo aplica para campos de una agrupación)',
         null=True,
         blank=True
     )
@@ -331,12 +353,15 @@ class DocumentField(SlugIdentifierMixin):
             raise ValidationError('Selecciona un documento o una sección para éste campo')
     
     def is_text_input(self):
-        return self.field_type in (self.TEXT, self.DATE, self.NUMBER)
+        return self.field_type in (self.TEXT, self.DATE, self.NUMBER, self.NATURAL_DATE, self.PRICE)
     
+    def is_date_input(self):
+        return self.field_type in (self.DATE, self.NATURAL_DATE)
+
     def get_html_input_type(self):
-        if self.field_type == self.TEXT or self.field_type == self.LIST:
+        if self.field_type == self.TEXT or self.field_type == self.PRICE:
             return 'text'
-        elif self.field_type == self.DATE:
+        elif self.field_type == self.DATE or self.field_type == self.NATURAL_DATE:
             return 'date'
         elif self.field_type == self.NUMBER:
             return 'number'
@@ -355,6 +380,12 @@ class DocumentFieldOption(models.Model):
         DocumentField,
         on_delete=models.CASCADE,
         verbose_name='Campo'
+    )
+    linked_fields = models.ManyToManyField(
+        DocumentField,
+        blank=True,
+        related_name='linkedfields_set',
+        verbose_name='Campos de la opción (si aplica)'
     )
 
     class Meta:

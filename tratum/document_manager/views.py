@@ -1,6 +1,7 @@
 import json
 import uuid
 import pdfkit
+import pypandoc
 
 from io import BytesIO
 
@@ -50,6 +51,16 @@ class DocumentFieldList(generics.ListAPIView):
         return q
 
 
+class DocumentFieldDetail(generics.RetrieveAPIView):
+    serializer_class = DocumentFieldSerializer
+    lookup_field = 'slug'
+
+    def get_object(self):
+        ins = DocumentField()
+        slug = ins.formated_to_raw_slug(self.kwargs['slug'])
+        return DocumentField.objects.get(slug=slug)
+        
+
 class DocumentSectionList(generics.ListAPIView):
     serializer_class = DocumentSectionSerializer
 
@@ -74,14 +85,13 @@ class DocumentSectionDetail(generics.RetrieveAPIView):
         ins = DocumentSection()
         slug = ins.formated_to_raw_slug(self.kwargs['slug'])
         return DocumentSection.objects.get(slug=slug)
-    
+
 
 class ProcessDocumentView(View):
 
     def post(self, request, *args, **kwargs):
         user_document = UserDocument.objects.get(id=request.POST['document'])
         pdf_file = open(user_document.pdf_path)
-
 
 
 class SaveAnswersView(View):
@@ -99,10 +109,11 @@ class FinishDocumentView(View):
     def post(self, request, *args, **kwargs):
         body = json.loads(request.body.decode('utf-8'))
         user_document = UserDocument.objects.get(identifier=body['identifier'])
-        self.update_status(user_document)
-        self.generate_html(request, user_document)
+        self.generate_html(request, user_document, body['content'])
         self.generate_pdf(request, user_document)
-        self.send_email(request, user_document)
+        self.generate_doc(request, user_document)
+        self.update_status(user_document)
+        self.send_email(request, user_document) 
         return HttpResponse(status=200)
     
     def update_status(self, user_document):
@@ -123,20 +134,32 @@ class FinishDocumentView(View):
             'header-right': f'{user_document.document.name}',
             'header-spacing': '15',
             'header-font-size': '7',
+            'javascript-delay': 300,
             'no-outline': None
         } 
         output_filename = f'{user_document.identifier}.pdf'
         html_file = user_document.html_file.read().decode('utf-8')
         file = pdfkit.PDFKit(html_file, "string", options=options).to_pdf()
         file = BytesIO(file)
-        user_document.pdf_file.save(f'{output_filename}', file)
+        user_document.pdf_file.save(output_filename, file)
         file.close()
-        
-    def generate_html(self, request, user_document):
+    
+    def generate_doc(self, request, user_document):
+        html_file = user_document.html_file.path
+        output_filename = f'{user_document.identifier}.pdf'
+        output = pypandoc.convert_file(
+            html_file,
+            'odt',
+            format='html',
+            outputfile=output_filename
+        )
+
+    def generate_html(self, request, user_document, TEMPORARY_HTML_FILE):
 
         def get_scripted_html(request, html_string):
-            css_tag = lambda path: f'<link rel="stylesheet" type="text/css" href="{path}" />' 
+            css_tag = lambda path: f'<link rel="stylesheet" type="text/css" href="{path}" />'
             script_tag = lambda path: f'<script src="{path}"></script>'
+            django_temptag_tag = lambda path: '{{% load {path} %}}'.format(path=path)
             iterator = lambda tag, paths: [tag(path) for path in paths]
             css_paths = (
                 get_static_path(
@@ -147,26 +170,26 @@ class FinishDocumentView(View):
             )
             script_paths = (
                 get_static_path(
-                    'https',
-                    'code.jquery.com',
-                    '/jquery-3.3.1.slim.min.js'
-                ),
-                get_static_path(
                     request.scheme,
                     request.get_host(),
                     static("js/pdfRender.js")
-                )
+                ),
+            )
+            django_temptag_paths = (
+                'fieldformatter',
             )
             scripts = '\n'.join(iterator(script_tag, script_paths))
             css = '\n'.join(iterator(css_tag, css_paths))
-            return f'{css} {html_string} {scripts}'
+            django_temptags = '\n'.join(iterator(django_temptag_tag, django_temptag_paths))
+            escape = '\n'
+            return f'{django_temptags} {escape} {css} {html_string} {escape} {scripts}'
 
-        content = get_scripted_html(request, user_document.document.content)
+        """ content = get_scripted_html(request, user_document.document.content)
         template = Template(content)
-        template = template.render(Context(user_document.answers)).encode('ascii', 'xmlcharrefreplace')
-        file = ContentFile(template)
-        user_document.html_file.save(f'{user_document.identifier}.html', file)
-        
+        template = template.render(Context(user_document.answers)).encode('ascii', 'xmlcharrefreplace') """
+
+        file = ContentFile(TEMPORARY_HTML_FILE.encode('ascii', 'xmlcharrefreplace'))
+        user_document.html_file.save(f'{user_document.identifier}.html', file)       
     
     def send_email(self, request, user_document):
         subject = f'Tu {user_document.document.name} de Tratum'
@@ -255,7 +278,6 @@ def category(request, path, instance):
                 document_list = Document.objects.filter(
                     Q(name__icontains=q) | Q(category__name__icontains=q)
                 ).order_by('order')
-                print(document_list)
             else:
                 document_list = Document.objects.all().order_by('order')
 

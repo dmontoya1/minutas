@@ -10,6 +10,11 @@ body {
     position: relative;
 }
 
+main {
+    margin-bottom: 35px;
+    min-height: calc(100% - 220px);
+} 
+
 button:focus,
 button:active {
     outline: none !important;
@@ -17,7 +22,6 @@ button:active {
 }
 
 footer {
-    position: absolute; 
     width: 100%;
     bottom: 0;
     padding: 20px;
@@ -156,7 +160,7 @@ section {
 }
 
 .bundles {
-    padding: 80px 0;
+    padding: 180px 0;
 }   
     .bundles h2 {
         display: inline-block;
@@ -293,15 +297,17 @@ section {
 .contextualMenu {
     height: 100%;
     background-color: #5eccc4;
-    padding-top: 3em;
+    padding-top: 5em;
     display: none;
-    z-index: 999999;
+    z-index: 9998;
     position: fixed;
 }
     .contextualMenu i {
         font-size: 2em;
         color: #FFF;
         cursor: pointer;
+        position: absolute;
+        top: 20px;
     }
     .contextualMenu > div {
         padding-left: 30px !important;
@@ -326,7 +332,7 @@ section {
 
 .contact-form {
     padding-top: 100px;
-    padding-bottom: 250px;
+    padding-bottom: 100px;
     background-color:#002c55;
 }
     .contact-form form {
@@ -483,7 +489,7 @@ section {
     }
 
 .navbar {
-    z-index: 99999;
+    z-index: 999;
 }
     .navbar.scrolled {
         background-color: #FFF !important;
@@ -497,17 +503,19 @@ section {
         transition: all 0.5s ease-in-out;
     }
 
+
 .navbar img.logo {
-    width: 60px;
+    width: 180px;
     margin-left: 15px;
 }
 
 .navbar-toggler {
     color: #fff;
     z-index: 99999;
-    background:transparent;
+    background: transparent;
     font-size: 1.5em;
     outline: 0;
+    vertical-align: sub;
 }
 
 .rotate {
@@ -526,7 +534,7 @@ section {
 .search-landing {
     position: absolute;
     width: 100vw;
-    bottom: 25%;
+    bottom: 22%;
     left: 0;
     z-index: 99999999;
     text-align: center;
@@ -578,6 +586,11 @@ section {
     text-decoration: underline;
 }
 
+.outlined {
+    background-color: transparent;
+    border: none;
+}
+
 #loadingAnimation {
     width: 100%;
     height: 100vh;
@@ -594,36 +607,36 @@ section {
         margin-top: 18%;
     }
 
-#modal-faq .row {
+#faq .row {
     font-size: 1.1em;
 }
 
-#modal-faq .qc {
+#faq .qc {
     background-color: #e8e8e8;
     color: #5eccc4;
     border: none;
     padding: 1em;
 }
 
-#modal-faq .q-title {
+#faq .q-title {
     padding: 1em;
     cursor: pointer;
     border-bottom: 1px solid #a2a2a2;
 }
 
-#modal-faq .row.content.last .q-title {
+#faq .row.content.last .q-title {
     border: none;
 }
-    #modal-faq .q-title.active {
+    #faq .q-title.active {
         color: #5eccc4;
         border: none;
     }
-    #modal-faq .q-title.active + .q-answer {
+    #faq .q-title.active + .q-answer {
         display: block;
         margin-bottom: 1em;
     }
 
-#modal-faq .q-answer {
+#faq .q-answer {
     padding: 1em;
     display: none;
     font-size: .85em;

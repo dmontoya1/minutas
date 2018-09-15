@@ -5,7 +5,6 @@
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'css/preview.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
-
 {% endblock %}
 
 {% block nav_class %}
@@ -20,24 +19,24 @@
       data-csrftoken="{{csrf_token}}"></div>
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <div class="document-preview" id="content-preview" data-name="{{object.document.name}}">
                     {{document_content|safe}}
                 </div>
             </div>
             {% if object.status == object.is_expired %}
-                <div class="col-md-6 mt-4">
+                <div class="col-md-4 mt-4">
                     <span>El tiempo límite para exportar el documento a caducado</span>
                 </div>
             {% else %}
                 {% if object.status == object.FINISHED %}
-                    <div class="col-md-6 mt-4">
+                    <div class="col-md-4 mt-4">
                         <a href="{% url 'webclient:user-documents' %}" class="underline">Ver mis documentos</a></br>
-                        <button class="action-button__primary blue link-button" data-href="{{object.pdf_file.url}}">Descargar PDF</button>
-                        <button class="action-button__primary blue doc-gen">Descargar DOC</button>
+                        <button class="action-button__primary blue link-button" data-href="{{object.pdf_file.url}}">Descargar PDF</button></br>
+                        <button class="action-button__primary blue link-button" data-href="{{object.pdf_file.url}}">Descargar DOC</button>
                     </div>
                 {% else %}
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <button class="action-button__primary blue finish">Finalizar</button>
                         <button class="action-button__primary blank link-button" data-href="{{object.get_absolute_url}}">Editar</button>
                     </div>
@@ -53,5 +52,6 @@
     <script type="text/javascript" src="{% static 'js/html-docx.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/preview.js' %}"></script>    
     <script type="text/javascript" src="{% static 'js/pdfRender.js' %}"></script>    
+    <script src="https://fastcdn.org/FileSaver.js/1.1.20151003/FileSaver.min.js"></script>
     <script type="text/javascript" src="{% static 'js/docRender.js' %}"></script> 
 {% endblock %}

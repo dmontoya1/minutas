@@ -16,7 +16,7 @@ body {
 }
 
 .modal {
-    z-index: 999999999;
+    z-index: 9999999;
 }
 
 .modal-dialog form input[type="submit"] {
@@ -216,14 +216,13 @@ body {
 }
 
 .doc-content .doc-info {
-    height: 9.3em;
+    height: 11.5em;
 }
 
 .doc-content .doc-title {
-    font-size: 1.5em;
+    font-size: 1.1em;
     font-weight: 500;
     color: #000;
-    -webkit-line-clamp: 2;
     overflow : hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -231,7 +230,7 @@ body {
 }
 
 .doc-content .doc-description {
-    font-size: 0.7em;
+    font-size: 0.9em;
     color: #999;
 }
 

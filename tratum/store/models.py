@@ -77,7 +77,7 @@ class UserDocument(models.Model):
         (EXPIRED, 'Caducado'),
     )
 
-    user = models.ForeignKey(
+    user = models.ForeignKey(   
         User,
         verbose_name='Usuario',
         null=True,
@@ -115,6 +115,12 @@ class UserDocument(models.Model):
         blank=True,
         editable=False,
         upload_to='pdfs'
+    )
+    word_file = models.FileField(
+        null=True,
+        blank=True,
+        editable=False,
+        upload_to='docxs'
     )
 
     class Meta:
@@ -202,10 +208,11 @@ class Invoice(models.Model):
         return 'FAC_{}{}'.format(
             self.pk,
             int(time.mktime(self.payment_date.timetuple()))
-
         )
     
     def get_purchased_element(self):
         if self.document:
             return self.document.name
-        return self.package.name
+        if self.package:
+            return self.package.name
+        return None
