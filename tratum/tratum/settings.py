@@ -12,7 +12,7 @@ ALLOWED_HOSTS = [
     '142.93.182.238'
 ]
 
-API_KEY = '042c97b1f486c5bde044ba5f10dfd11ad26cb81b'
+API_KEY = '03a6f7c84a760517a1c0b31e4acf6c180de90d16'
 
 
 # Application definition
