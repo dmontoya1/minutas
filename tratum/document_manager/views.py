@@ -188,8 +188,6 @@ class FinishDocumentView(View):
         template = template.render(Context(user_document.answers)).encode('ascii', 'xmlcharrefreplace') """
 
         file = ContentFile(TEMPORARY_HTML_FILE.encode('ascii', 'xmlcharrefreplace'))
-        typeof = type(file)
-        raise Exception
         user_document.html_file.save(f'{user_document.identifier}.html', file)       
     
     def send_email(self, request, user_document):
