@@ -1,4 +1,6 @@
 import os
+import raven
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -38,6 +40,7 @@ INSTALLED_APPS = [
     'import_export',
     'mptt_urls',
     'embed_video',
+    'raven.contrib.django.raven_compat',
     'api',
     'ckeditor',
     'mptt',
@@ -301,4 +304,12 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     )
+}
+
+#Raven
+RAVEN_CONFIG = {
+    'dsn': 'https://01d4dd1d2f3e43e9aee6a4831d69a9c7:ddd7c80b621541528f4f41c1a7bac91d@sentry.io/1282705',
+    # If you are using git, you can also automatically configure the
+    # release based on the git info.
+    'release': raven.fetch_git_sha(os.path.abspath(os.pardir)),
 }
