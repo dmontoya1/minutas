@@ -146,11 +146,10 @@ class FinishDocumentView(View):
     
     def generate_doc(self, request, user_document):
         html_file = user_document.html_file.path
-        output_filename = f'{user_document.identifier}.pdf'
+        output_filename = f'{user_document.identifier}.docx'
         output = pypandoc.convert_file(
             html_file,
-            'odt',
-            format='html',
+            'docx',
             outputfile=output_filename
         )
 
