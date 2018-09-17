@@ -77,7 +77,7 @@ class UserDocument(models.Model):
         (EXPIRED, 'Caducado'),
     )
 
-    user = models.ForeignKey(
+    user = models.ForeignKey(   
         User,
         verbose_name='Usuario',
         null=True,
