@@ -84,9 +84,8 @@ iframe {
 
 .logo {
     width: 180px;
-    position: absolute;
-    top: 5%;
-    left: 25%;
+    margin-bottom: 100px;
+    margin-left: 20px;
 }
 
 .main {
@@ -103,7 +102,7 @@ iframe {
 
 .upform {
 	-moz-user-select: none;
-	margin: 200px auto 500px auto;
+	margin: 150px auto 500px auto;
 	max-width: 900px;
 	-ms-user-select: none;
 	padding: 0 150px;

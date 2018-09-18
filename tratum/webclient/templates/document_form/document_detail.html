@@ -30,8 +30,8 @@
     
     <div class="row main">
       <div class="col-lg-7 form-col">
-          <img class="logo" src="{% static 'img/logo-color-placeholder@2x.png' %}">
           <div class="upform">
+            <img class="logo" src="{% static 'img/logo-color-placeholder@2x.png' %}"></br>
             <a href="{% url 'webclient:user-documents' %}" class="col">Regresar</a>
             <form method="POST" action="{% url 'document_manager:process' %}" id="document-form">    
               <input type="hidden" name="identifier" value="{{identifier}}" />
