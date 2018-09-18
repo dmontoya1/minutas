@@ -202,9 +202,15 @@ $('.group-adder').on('click', function(e){
 
 
 $('.preview').on('click', function(e){
+    uuid = $('#doc-info').data('uuid')
     e.preventDefault();
     savePreview();
-    window.location.href = $(this).attr('href');
+    axios.post(`/api/document-manager/form-preview/`, {'identifier': uuid})
+        .then(function (response) {
+            content = response.data.document_content
+            $('#content-preview').empty();
+            $('#content-preview').append(content);
+        })
 })
 
 $('.section-item').on('click', function(e){

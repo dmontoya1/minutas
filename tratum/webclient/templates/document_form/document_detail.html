@@ -74,8 +74,10 @@
       </div>
       <div class="col-lg-5 p-0">
         <div class="info-col">
-            <div class="document-preview" id="content-preview" data-name="{{object.document.name}}">
-                {{object.content|safe}}
+              <div class="document-preview" id="content-preview" data-name="{{object.document.name}}">
+                <h3>
+                  Comienza a completar el formulario y selecciona <strong>'Previsualizar'</strong> para ver el progreso de tu documento.
+                </h3>
               </div>
               <div class="upform-footer">
                 <a href="{% url 'webclient:user-document-process' identifier %}" class="btn btn-primary btn-lg preview">Previsualizar</a>
