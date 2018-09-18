@@ -31,8 +31,9 @@
     <div class="row main">
       <div class="col-lg-7 form-col">
           <div class="upform">
-            <img class="logo" src="{% static 'img/logo-color-placeholder@2x.png' %}"></br>
-            <a href="{% url 'webclient:user-documents' %}" class="col">Regresar</a>
+            <a href="{% url 'webclient:user-documents' %}" class="col">
+              <img class="logo" src="{% static 'img/logo-color-placeholder@2x.png' %}" href="/">
+            </a>
             <form method="POST" action="{% url 'document_manager:process' %}" id="document-form">    
               <input type="hidden" name="identifier" value="{{identifier}}" />
               <div class="upform-header"></div>    
@@ -67,16 +68,20 @@
                   {% endfor %}
                 </div>                
               </div>
-              <div class="upform-footer">
-                <a href="{% url 'webclient:user-document-process' identifier %}" class="btn btn-primary btn-lg preview">Previsualizar</a>
-              </div>    
+                 
             </form>
           </div>
       </div>
       <div class="col-lg-5 p-0">
-        <div class="document-preview" id="content-preview" data-name="{{object.document.name}}">
-          {{object.content|safe}}
+        <div class="info-col">
+            <div class="document-preview" id="content-preview" data-name="{{object.document.name}}">
+                {{object.content|safe}}
+              </div>
+              <div class="upform-footer">
+                <a href="{% url 'webclient:user-document-process' identifier %}" class="btn btn-primary btn-lg preview">Previsualizar</a>
+              </div> 
         </div>
+        
       </div>
     </div>
         
