@@ -11,7 +11,7 @@ from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.core.mail import EmailMultiAlternatives
 from django.core.files.base import ContentFile
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.http import HttpResponse, FileResponse
+from django.http import HttpResponse, FileResponse, JsonResponse
 from django.shortcuts import render
 from django.template import Template, Context, loader
 from django.template.loader import render_to_string, get_template
@@ -103,6 +103,18 @@ class SaveAnswersView(View):
         user_document.save()
         return HttpResponse(status=200)
 
+
+class UserDocumentContentView(View):
+
+    def post(self, request, *args, **kwargs):
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        content = {}
+        obj = UserDocument.objects.get(identifier=body['identifier'])
+        document_content = Template(obj.document.content)
+        document_content = document_content.render(Context(obj.answers))
+        content['document_content'] = document_content
+        return JsonResponse(content) 
 
 class FinishDocumentView(View):
 

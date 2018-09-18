@@ -38,6 +38,8 @@ def retain_comma(value, autoescape=True):
 
 @register.filter(needs_autoescape=True)
 def num_to_text(value, autoescape=True):
-    value = ''.join( c for c in value if c not in '$.' )
-    return num2words(int(value), lang='es')
+    if value:
+        value = ''.join( c for c in value if c not in '$.' )
+        return num2words(int(value), lang='es')
+    return ''
  
