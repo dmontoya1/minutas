@@ -68,7 +68,6 @@ iframe {
     }
 
 .info-col {
-	background-color: #f2f2f2;
     position: fixed;
     height: 100vh;
     overflow-y: scroll;
@@ -85,7 +84,6 @@ iframe {
 .logo {
     width: 180px;
     margin-bottom: 100px;
-    margin-left: 20px;
 }
 
 .main {
@@ -116,17 +114,7 @@ iframe {
     .upform input:focus, select:focus, textarea:focus, button:focus {
         outline: none;
     }
-    .upform .upform-footer {
-        margin-top: 60px;
-    }
-        .upform .upform-footer .btn {
-            font-size: 24px;
-            font-weight: bold;
-            padding: 5px 20px;
-            width: 100%;
-            background-color: #002C55;
-            border: none;
-        }
+    
     .upform .upform-main .input-block {
         cursor: default;
         opacity: 0.25;
@@ -160,6 +148,17 @@ iframe {
         .upform .upform-main .input-block.active {
             opacity: 1;
         }
+        .upform-footer {
+            margin-top: 30px;
+        }
+            .upform-footer .btn {
+                font-size: 24px;
+                font-weight: bold;
+                padding: 5px 20px;
+                width: 400px;
+                background-color: #002C55;
+                border: none;
+            }
 
 @media screen and (max-width: 1024px) {
     .upform {
@@ -227,13 +226,10 @@ iframe {
     height: auto !important;
 }
 
-
-
-
 .document-preview {
     max-width: 400px;
     height: 500px;
-    box-shadow: 0px 0px 1px #777;
+    border: 1px solid #777;
     font-size: .8em;
     padding: 1em;
     overflow-y: scroll;
@@ -243,5 +239,8 @@ iframe {
     .document-preview {
         height: 65vh;
         max-width: 530px;
+    }
+    .upform-footer .btn {
+        width: 530px;
     }
 }
