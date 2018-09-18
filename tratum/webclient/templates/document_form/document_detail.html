@@ -27,8 +27,10 @@
       data-uuid="{{identifier}}"
       data-apikey="{{Api_Key}}"
       data-csrftoken="{{csrf_token}}"></div>
+    
     <div class="row main">
-      <div class="col-lg-8 form-col">
+      <div class="col-lg-7 form-col">
+          <img class="logo" src="{% static 'img/logo-color-placeholder@2x.png' %}">
           <div class="upform">
             <a href="{% url 'webclient:user-documents' %}" class="col">Regresar</a>
             <form method="POST" action="{% url 'document_manager:process' %}" id="document-form">    
@@ -71,19 +73,9 @@
             </form>
           </div>
       </div>
-      <div class="col-lg-4 p-0">
-        <div class="info-col p-3 text-center">
-          <h1 class="mt-5">{{document.name}}</h1>
-          <p class="text-justify mb-4">{{document.long_description|safe}}</p>
-          {% if document.video_url %}
-            {% video document.video_url '100% x 215' %}
-          {% endif %}
-          <h4>Notas importantes: </h4>
-          <ul class="text-left mt-4">
-            <li>Puedes utilizar las teclas <strong>TAB</strong>, <strong>ENTER</strong>,  <i class="fas fa-arrow-circle-up"></i>  y  <i class="fas fa-arrow-circle-down"></i>  para navegar entre preguntas</li>
-            <li>Cada vez que pases de pregunta, se guardará tu progreso automáticamente</li>
-            <li>Una vez completes el formulario, podrás ver una previsualización del documento antes de finalizarlo</li>
-          </ul>
+      <div class="col-lg-5 p-0">
+        <div class="document-preview" id="content-preview" data-name="{{object.document.name}}">
+          {{object.content|safe}}
         </div>
       </div>
     </div>
