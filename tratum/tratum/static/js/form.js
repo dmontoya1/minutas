@@ -28,7 +28,10 @@ function savePreview() {
     form = $('#document-form').serialize();
     form = getGroupFields(form);
     
-    axios.post('/api/document-manager/save-preview/', form);
+    axios.post('/api/document-manager/save-preview/', form)
+        .then(function(){
+            realTimeUpdate();
+        })
 }
 
 function cloneGroupItem(groupAdder, fromGroupAdder){
@@ -77,6 +80,15 @@ function rescroll(e){
     });
 }
 
+function realTimeUpdate(){
+    axios.post(`/api/document-manager/form-preview/`, {'identifier': uuid})
+        .then(function (response) {
+            content = response.data.document_content
+            $('#content-preview').empty();
+            $('#content-preview').append(content);
+        })
+}
+
 $.fn.upform = function() {
     var $this = $(this);
     var container = $this.find(".upform-main");
@@ -92,8 +104,8 @@ $.fn.upform = function() {
             rescroll(this);
         });
 
-    $(container).find(".input-block input").keydown(function(e) {
-        savePreview();
+    $(container).find(".input-block input").keyup(function(e) {
+        savePreview();        
         if (e.which == 13 || e.which == 9) {
             e.preventDefault()            
             if ($(this).hasClass("required") && $(this).val() == "") {
@@ -202,15 +214,9 @@ $('.group-adder').on('click', function(e){
 
 
 $('.preview').on('click', function(e){
-    uuid = $('#doc-info').data('uuid')
     e.preventDefault();
     savePreview();
-    axios.post(`/api/document-manager/form-preview/`, {'identifier': uuid})
-        .then(function (response) {
-            content = response.data.document_content
-            $('#content-preview').empty();
-            $('#content-preview').append(content);
-        })
+    window.location.href = $(this).attr('href');
 })
 
 $('.section-item').on('click', function(e){
@@ -251,4 +257,5 @@ $(function(){
                 });            
             }            
         })
+    realTimeUpdate();
 });
