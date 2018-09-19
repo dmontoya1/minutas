@@ -549,6 +549,13 @@
             axios.defaults.headers.common['X-CSRFToken'] = '{{csrf_token}}'
             axios.defaults.headers.common['Api-Key'] = '{{Api_Key}}'
             
+            $.ajaxSetup({
+                headers: {
+                    "X-CSRFToken": "{{csrf_token}}",
+                    "Api-Key": "{{Api_Key}}"
+                }
+            });
+
             toastr.options = {
                 "closeButton": false,
                 "debug": false,

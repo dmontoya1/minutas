@@ -21,3 +21,4 @@ class UserDocumentAdmin(admin.ModelAdmin):
 class InvoiceAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'user', 'payment_status', 'payu_reference_code')
     search_fields = ['payu_reference_code', 'user']
+    
