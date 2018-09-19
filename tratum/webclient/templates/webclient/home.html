@@ -307,11 +307,8 @@
           'ESTATUTOS SOCIEDAD POR ACCIONES SIMPLIFICADA',
           'MODELO CONTRATO DE APRENDIZAJE'
         ],
-        minLength: 0,
-        appendTo: '#result-list',
-        select: function(event, ui) {
-          window.location.href = ui.title.rendered;
-        }
+        minLength: 1,
+        appendTo: '#result-list'
       });
 
       function cookieChecker() {
@@ -320,7 +317,12 @@
           document.cookie = "cookiePolicyAccepted=true; expires=Fri, 31 Dec 9999 23:59:59 GMT";
         }
       }
-    
+      
+      $(document).on('click', '.ui-menu-item', function(e){
+        e.preventDefault();
+        window.location.href = `/documents?q=${$(this).html()}`
+      })
+
       cookieChecker();
     </script>
 {% endblock %}
