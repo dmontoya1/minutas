@@ -235,6 +235,19 @@ class DocumentList(generics.ListAPIView):
         return Document.objects.filter(category__in=categories).order_by('order')
 
 
+class MainDocumentList(generics.ListAPIView):
+    """Api para obtener la lista de documentos con buscador
+    """
+
+    serializer_class = DocumentSerializer
+
+    def get_queryset(self):
+        q = self.request.GET.get('term', None)
+        if q:
+            return Document.objects.filter(name__contains=q)
+        return Document.objects.all()
+
+
 class CategoryRootList(generics.ListAPIView):
     """Api para listar las categorías padre
     """

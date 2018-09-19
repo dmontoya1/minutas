@@ -49,6 +49,9 @@
     <div class="swiper-pagination"></div>  
     <div class="search-landing">
       <input type="search" placeholder="Buscar documentos..." id="search_documents">
+      <div id="result-list">
+        RESULTADO
+      </div>
     </div>  
   </div>  
 
@@ -240,9 +243,7 @@
     <script>      
       window.onload = function(){ document.getElementById("loadingAnimation").style.display = "none" }   
     </script>
-    
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script
     src="https://code.jquery.com/color/jquery.color-2.1.2.min.js"
     integrity="sha256-H28SdxWrZ387Ldn0qogCzFiUDDxfPiNIyJX7BECQkDE="
@@ -290,6 +291,15 @@
       $('.cookiepolicy-close').on('click', function(){
         $('.cookiepolicy-info').hide();
       })
+      
+      $("#search_documents").autocomplete({
+        source: "{% url 'document_manager:main-document-list' %}",
+        minLength: 0,
+        appendTo: '#result-list',
+        open: function(){
+          console.log('open');
+        }
+      });
 
       function cookieChecker() {
         if (document.cookie.replace(/(?:(?:^|.*;\s*)cookiePolicyAccepted\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
