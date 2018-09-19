@@ -474,8 +474,10 @@
                     $('#result').removeClass()
                     $('#result').addClass('short')
                     $('#reg_submit_signup').attr('disabled', true)
-
+                    $('#password2').attr('disabled', true);
                     return 'Se requiere una contraseña de mínimo 8 caractéres'
+                } else {
+                    $('#password2').attr('disabled', false);
                 }
                 if (password.length > 7) strength += 1
                 // If password contains both lower and uppercase characters, increase strength value.
@@ -529,6 +531,7 @@
                     $('.contextualMenu').fadeToggle();
                     $('.logo').toggle();
                 })
+                $('#password2').attr('disabled', true);
 
                 {% block nav-script%}
                     $(window).scroll(function(){
