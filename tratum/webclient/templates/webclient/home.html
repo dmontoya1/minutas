@@ -318,10 +318,9 @@
         }
       }
       
-      $(document).on('click', '.ui-menu-item', function(e){
-        e.preventDefault();
-        window.location.href = `/documents?q=${$(this).html()}`
-      })
+      $('#search_documents').bind('autocompleteselect', function (event, ui) {
+        window.location.href = `/documents?q=${ui.item.value}`
+      });
 
       cookieChecker();
     </script>
