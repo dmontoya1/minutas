@@ -50,7 +50,7 @@
     <div class="search-landing">
       <input type="search" placeholder="Buscar documentos..." id="search_documents">
       <div id="result-list">
-        RESULTADO
+        
       </div>
     </div>  
   </div>  
@@ -293,11 +293,24 @@
       })
       
       $("#search_documents").autocomplete({
-        source: "{% url 'document_manager:main-document-list' %}",
+        source: 
+        [
+          'Estatutos básicos para S.A.S',
+          'CONTRATO INDIVIDUAL DE TRABAJO TÉRMINO FIJO',
+          'CONTRATO INDIVIDUAL DE TRABAJO TÉRMINO INDEFINIDO',
+          'CONTRATO INDIVIDUAL DE TRABAJO A TÉRMINO FIJO CON SALARIO A DESTAJO',
+          'CONTRATO INDIVIDUAL DE TRABAJO DE DIRECCIÓN, CONFIANZA Y MANEJO A TÉRMINO FIJO',
+          'CONTRATO TÉRMINO INDEFINIDO - TRABAJADOR DE DIRECCION CONFIANZA Y MANEJO',
+          'CONTRATO INDIVIDUAL DE TRABAJO PARA VIGILANTES',
+          'CONTRATO SERVICIOS PROFESIONALES',
+          'NOTIFICACIÓN NO RENOVACIÓN DE CONTRATO',
+          'ESTATUTOS SOCIEDAD POR ACCIONES SIMPLIFICADA',
+          'MODELO CONTRATO DE APRENDIZAJE'
+        ],
         minLength: 0,
         appendTo: '#result-list',
-        open: function(){
-          console.log('open');
+        select: function(event, ui) {
+          window.location.href = ui.title.rendered;
         }
       });
 
