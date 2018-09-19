@@ -175,7 +175,7 @@ class SiteConfig(models.Model):
 
 
 class SliderItem(models.Model):
-    image = models.ImageField('Imagen', upload_to='slides')
+    image = models.ImageField('Imagen', upload_to='slides', help_text='La resolución es 1920 x 1080p')
     text = models.CharField(
         'Texto',
         max_length=255,

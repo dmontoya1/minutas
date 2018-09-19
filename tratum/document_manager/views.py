@@ -11,7 +11,7 @@ from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.core.mail import EmailMultiAlternatives
 from django.core.files.base import ContentFile
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.http import HttpResponse, FileResponse
+from django.http import HttpResponse, FileResponse, JsonResponse
 from django.shortcuts import render
 from django.template import Template, Context, loader
 from django.template.loader import render_to_string, get_template
@@ -104,6 +104,18 @@ class SaveAnswersView(View):
         return HttpResponse(status=200)
 
 
+class UserDocumentContentView(View):
+
+    def post(self, request, *args, **kwargs):
+        body_unicode = request.body.decode('utf-8')
+        body = json.loads(body_unicode)
+        content = {}
+        obj = UserDocument.objects.get(identifier=body['identifier'])
+        document_content = Template(obj.document.content)
+        document_content = document_content.render(Context(obj.answers))
+        content['document_content'] = document_content
+        return JsonResponse(content) 
+
 class FinishDocumentView(View):
 
     def post(self, request, *args, **kwargs):
@@ -188,8 +200,6 @@ class FinishDocumentView(View):
         template = template.render(Context(user_document.answers)).encode('ascii', 'xmlcharrefreplace') """
 
         file = ContentFile(TEMPORARY_HTML_FILE.encode('ascii', 'xmlcharrefreplace'))
-        typeof = type(file)
-        raise Exception
         user_document.html_file.save(f'{user_document.identifier}.html', file)       
     
     def send_email(self, request, user_document):
@@ -223,6 +233,19 @@ class DocumentList(generics.ListAPIView):
         category = Category.objects.get(slug=self.kwargs['slug'])
         categories = category.get_descendants(include_self=True)
         return Document.objects.filter(category__in=categories).order_by('order')
+
+
+class MainDocumentList(generics.ListAPIView):
+    """Api para obtener la lista de documentos con buscador
+    """
+
+    serializer_class = DocumentSerializer
+
+    def get_queryset(self):
+        q = self.request.GET.get('term', None)
+        if q:
+            return Document.objects.filter(name__contains=q)
+        return Document.objects.all()
 
 
 class CategoryRootList(generics.ListAPIView):

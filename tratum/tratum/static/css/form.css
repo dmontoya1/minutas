@@ -68,7 +68,6 @@ iframe {
     }
 
 .info-col {
-	background-color: #f2f2f2;
     position: fixed;
     height: 100vh;
     overflow-y: scroll;
@@ -81,6 +80,12 @@ iframe {
 .loading {
 	font-size: 1.5em;
 }
+
+.logo {
+    width: 180px;
+    margin-bottom: 100px;
+}
+
 .main {
 	transition: all 2s ease;
 }
@@ -95,7 +100,7 @@ iframe {
 
 .upform {
 	-moz-user-select: none;
-	margin: 200px auto 500px auto;
+	margin: 110px auto 500px auto;
 	max-width: 900px;
 	-ms-user-select: none;
 	padding: 0 150px;
@@ -109,17 +114,7 @@ iframe {
     .upform input:focus, select:focus, textarea:focus, button:focus {
         outline: none;
     }
-    .upform .upform-footer {
-        margin-top: 60px;
-    }
-        .upform .upform-footer .btn {
-            font-size: 24px;
-            font-weight: bold;
-            padding: 5px 20px;
-            width: 100%;
-            background-color: #002C55;
-            border: none;
-        }
+    
     .upform .upform-main .input-block {
         cursor: default;
         opacity: 0.25;
@@ -153,6 +148,17 @@ iframe {
         .upform .upform-main .input-block.active {
             opacity: 1;
         }
+        .upform-footer {
+            margin-top: 30px;
+        }
+            .upform-footer .btn {
+                font-size: 24px;
+                font-weight: bold;
+                padding: 5px 20px;
+                width: 400px;
+                background-color: #002C55;
+                border: none;
+            }
 
 @media screen and (max-width: 1024px) {
     .upform {
@@ -220,6 +226,27 @@ iframe {
     height: auto !important;
 }
 
-
-
-
+.document-preview {
+    max-width: 400px;
+    height: 500px;
+    border: 0.1px solid rgb(205, 205, 205);
+    font-size: .8em;
+    padding: 1em;
+    overflow-y: scroll;
+    margin-top: 90px;
+    box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.345),
+    0 10px 0 -5px #eee,
+    0 10px 1px -4px rgba(0,0,0,0.345),
+    0 20px 0 -10px #eee,
+    0 20px 1px -9px rgba(0,0,0,0.345);
+}
+@media screen and (max-width: 1440px) {
+    .document-preview {
+        height: 65vh;
+        max-width: 530px;
+    }
+    .upform-footer .btn {
+        width: 530px;
+    }
+}

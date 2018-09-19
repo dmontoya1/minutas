@@ -27,10 +27,13 @@
       data-uuid="{{identifier}}"
       data-apikey="{{Api_Key}}"
       data-csrftoken="{{csrf_token}}"></div>
+    
     <div class="row main">
-      <div class="col-lg-8 form-col">
+      <div class="col-lg-7 form-col">
           <div class="upform">
-            <a href="{% url 'webclient:user-documents' %}" class="col">Regresar</a>
+            <a href="{% url 'webclient:user-documents' %}" class="col">
+              <img class="logo" src="{% static 'img/logo-color-placeholder@2x.png' %}" href="/">
+            </a>
             <form method="POST" action="{% url 'document_manager:process' %}" id="document-form">    
               <input type="hidden" name="identifier" value="{{identifier}}" />
               <div class="upform-header"></div>    
@@ -65,26 +68,19 @@
                   {% endfor %}
                 </div>                
               </div>
-              <div class="upform-footer">
-                <a href="{% url 'webclient:user-document-process' identifier %}" class="btn btn-primary btn-lg preview">Previsualizar</a>
-              </div>    
+                 
             </form>
           </div>
       </div>
-      <div class="col-lg-4 p-0">
-        <div class="info-col p-3 text-center">
-          <h1 class="mt-5">{{document.name}}</h1>
-          <p class="text-justify mb-4">{{document.long_description|safe}}</p>
-          {% if document.video_url %}
-            {% video document.video_url '100% x 215' %}
-          {% endif %}
-          <h4>Notas importantes: </h4>
-          <ul class="text-left mt-4">
-            <li>Puedes utilizar las teclas <strong>TAB</strong>, <strong>ENTER</strong>,  <i class="fas fa-arrow-circle-up"></i>  y  <i class="fas fa-arrow-circle-down"></i>  para navegar entre preguntas</li>
-            <li>Cada vez que pases de pregunta, se guardará tu progreso automáticamente</li>
-            <li>Una vez completes el formulario, podrás ver una previsualización del documento antes de finalizarlo</li>
-          </ul>
+      <div class="col-lg-5 p-0">
+        <div class="info-col">
+              <div class="document-preview" id="content-preview" data-name="{{object.document.name}}">
+              </div>
+              <div class="upform-footer">
+                <a href="{% url 'webclient:user-document-process' identifier %}" class="btn btn-primary btn-lg preview">Generar documento</a>
+              </div> 
         </div>
+        
       </div>
     </div>
         
@@ -130,6 +126,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/translations/es_ES.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-price-format/2.2.0/jquery.priceformat.min.js"></script>
     <script src="{% static 'js/form.js' %}"></script>
-
+    <script type="text/javascript" src="{% static 'js/pdfRender.js' %}"></script>  
   </body>
 </html>

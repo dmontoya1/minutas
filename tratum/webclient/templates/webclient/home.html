@@ -49,6 +49,9 @@
     <div class="swiper-pagination"></div>  
     <div class="search-landing">
       <input type="search" placeholder="Buscar documentos..." id="search_documents">
+      <div id="result-list">
+        
+      </div>
     </div>  
   </div>  
 
@@ -240,9 +243,7 @@
     <script>      
       window.onload = function(){ document.getElementById("loadingAnimation").style.display = "none" }   
     </script>
-    
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script
     src="https://code.jquery.com/color/jquery.color-2.1.2.min.js"
     integrity="sha256-H28SdxWrZ387Ldn0qogCzFiUDDxfPiNIyJX7BECQkDE="
@@ -290,6 +291,28 @@
       $('.cookiepolicy-close').on('click', function(){
         $('.cookiepolicy-info').hide();
       })
+      
+      $("#search_documents").autocomplete({
+        source: 
+        [
+          'Estatutos básicos para S.A.S',
+          'CONTRATO INDIVIDUAL DE TRABAJO TÉRMINO FIJO',
+          'CONTRATO INDIVIDUAL DE TRABAJO TÉRMINO INDEFINIDO',
+          'CONTRATO INDIVIDUAL DE TRABAJO A TÉRMINO FIJO CON SALARIO A DESTAJO',
+          'CONTRATO INDIVIDUAL DE TRABAJO DE DIRECCIÓN, CONFIANZA Y MANEJO A TÉRMINO FIJO',
+          'CONTRATO TÉRMINO INDEFINIDO - TRABAJADOR DE DIRECCION CONFIANZA Y MANEJO',
+          'CONTRATO INDIVIDUAL DE TRABAJO PARA VIGILANTES',
+          'CONTRATO SERVICIOS PROFESIONALES',
+          'NOTIFICACIÓN NO RENOVACIÓN DE CONTRATO',
+          'ESTATUTOS SOCIEDAD POR ACCIONES SIMPLIFICADA',
+          'MODELO CONTRATO DE APRENDIZAJE'
+        ],
+        minLength: 0,
+        appendTo: '#result-list',
+        select: function(event, ui) {
+          window.location.href = ui.title.rendered;
+        }
+      });
 
       function cookieChecker() {
         if (document.cookie.replace(/(?:(?:^|.*;\s*)cookiePolicyAccepted\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
