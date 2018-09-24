@@ -42,6 +42,7 @@ CKEDITOR.dialog.add( 'fieldDialog', function(editor){
             var field_name = field_name.options[field_name.selectedIndex].innerHTML;
 
             span.setAttribute('title', field_name);
+            span.setAttribute('style', 'color: #0099f5;');
             span.setText(dialog.getValueOf('tab-select-field', 'document-field'));
 
             editor.insertElement(span);
