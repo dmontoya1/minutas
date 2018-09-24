@@ -199,8 +199,12 @@ CKEDITOR_CONFIGS = {
                 'items': ['documentsection']
             },
             {
-                'name': 'forms',
-                'items': ['Button']
+                'name': 'dynamiccounter',
+                'items': ['dynamiccounter']
+            },
+            {
+                'name': 'conditional',
+                'items': ['conditional']
             }
         ],
         'toolbar': 'CustomToolbarConfig', 
@@ -218,7 +222,9 @@ CKEDITOR_CONFIGS = {
             'dialogui',
             'elementspath',
             'documentfield',
-            'documentsection'
+            'documentsection',
+            'dynamiccounter',
+            'conditional'
         ]),
     }
 }

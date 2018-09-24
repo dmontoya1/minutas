@@ -114,13 +114,15 @@ class UserDocument(models.Model):
         null=True,
         blank=True,
         editable=False,
-        upload_to='pdfs'
+        upload_to='pdfs',
+        max_length=500
     )
     word_file = models.FileField(
         null=True,
         blank=True,
         editable=False,
-        upload_to='docxs'
+        upload_to='docxs',
+        max_length=500
     )
 
     class Meta:
