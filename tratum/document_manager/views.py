@@ -170,7 +170,7 @@ class FinishDocumentView(View):
         
         if platform.system() == 'Linux':
             subprocess.call(
-                f'lowriter --invisible ---convert-to odt {html_file} --outdir {media_root}/docxs/',
+                f'soffice --headless --convert-to odt {html_file} --outdir {media_root}/docxs/',
                 shell=True
             )
         elif platform.system() == 'Darwin':
