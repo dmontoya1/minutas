@@ -6,6 +6,7 @@ from document_manager.views import ProcessDocumentView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('chaining/', include('smart_selects.urls')),
     path('accounts/', include('allauth.urls')),
     path('', include('webclient.urls'), name='webclient'),
     path('', include('django.contrib.auth.urls')),
