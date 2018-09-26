@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'import_export',
     'mptt_urls',
     'embed_video',
+    'smart_selects',
     'api',
     'debug_toolbar',
     'ckeditor',
@@ -133,7 +134,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static and files 
 

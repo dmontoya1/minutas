@@ -14,6 +14,7 @@ from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 from ckeditor.fields import RichTextField
 from embed_video.fields import EmbedVideoField
+from smart_selects.db_fields import ChainedForeignKey, ChainedManyToManyField
 
 from utils.models import SoftDeletionModelMixin, SlugIdentifierMixin
 
@@ -376,10 +377,21 @@ class DocumentFieldOption(models.Model):
         null=True,
         blank=True
     )
-    field = models.ForeignKey(
-        DocumentField,
+    document = models.ForeignKey(
+        Document,
         on_delete=models.CASCADE,
-        verbose_name='Campo'
+        verbose_name='Documento',
+        null=True,
+        blank=True
+    )
+    field = ChainedForeignKey(
+        DocumentField,
+        chained_field="document",
+        chained_model_field="document",
+        show_all=False,
+        auto_choose=True,
+        sort=True,
+        verbose_name='Campo al que pertenece la opción'
     )
     linked_fields = models.ManyToManyField(
         DocumentField,
