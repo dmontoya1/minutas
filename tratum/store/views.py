@@ -78,7 +78,7 @@ class Checkout(TemplateView):
             apiKey = 'vIB29Yn5GW0XVv6qVYBV1e92T1'
             merchantId = 740818
             url = "https://checkout.payulatam.com/ppp-web-gateway-payu"
-            host = 'http://tratum.com'
+            host = 'http://tratum.co'
 
         currency = 'COP'
 
