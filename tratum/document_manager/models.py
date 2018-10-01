@@ -339,10 +339,10 @@ class DocumentField(SlugIdentifierMixin):
         null=True,
         blank=True
     )
-
+    
     class Meta:
         verbose_name = 'Campo'
-        unique_together = ('name', 'document')
+        unique_together = ('name', 'document') 
         
     def __str__(self):
         return self.name   
