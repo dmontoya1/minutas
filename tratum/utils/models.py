@@ -61,6 +61,8 @@ class SlugIdentifierMixin(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         self.slug = self._get_unique_slug()
+        if self.__class__.__name__ == 'Document':
+            self.content = self.content.replace('&quot;','""').replace('&nbsp;','').replace('""','"')
         super().save(*args, **kwargs)
     
     def _get_unique_slug(self):
