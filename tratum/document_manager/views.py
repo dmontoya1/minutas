@@ -165,10 +165,6 @@ class FinishDocumentView(View):
     
     def generate_doc(self, request, user_document):
         html_file = user_document.html_file.path
-        print('Manual traceback: ')
-        print(f'The user generating the document is {user_document.user}')
-        print(f'The document the user is trying to generate is {user_document.document.name}')
-        print(f'The path the user`s HTML document is {html_file}')
         name = os.path.basename(user_document.html_file.name.split('.')[0])
         output_filename = f'{name}.odt'
         media_root = settings.MEDIA_ROOT
@@ -236,7 +232,7 @@ class FinishDocumentView(View):
         body = loader.get_template('email/base.html').render(context)
         kwargs = dict(
             to=[user_document.user.email],
-            from_email='no-reply@tratum.com',
+            from_email='no-reply@tratum.co',
             subject=subject,
             body=body
         )
