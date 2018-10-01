@@ -65,20 +65,20 @@ class Checkout(TemplateView):
         taxReturnBase = 0
         description = "Compra realizada desde Tratum"
 
-        if settings.DEBUG:
-            test = 1
-            accountId = 512321
-            apiKey = '4Vj8eK4rloUd272L48hsrarnUA'
-            merchantId = 508029
-            url = "https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu"
-            host = 'http://tratum.apptitud.com.co'
-        else:
-            test = 0
-            accountId = 746396
-            apiKey = 'vIB29Yn5GW0XVv6qVYBV1e92T1'
-            merchantId = 740818
-            url = "https://checkout.payulatam.com/ppp-web-gateway-payu"
-            host = 'http://tratum.co'
+   
+        test = 1
+        accountId = 512321
+        apiKey = '4Vj8eK4rloUd272L48hsrarnUA'
+        merchantId = 508029
+        url = "https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu"
+        host = 'http://tratum.co'
+     
+        """ test = 0
+        accountId = 746396
+        apiKey = 'vIB29Yn5GW0XVv6qVYBV1e92T1'
+        merchantId = 740818
+        url = "https://checkout.payulatam.com/ppp-web-gateway-payu"
+        host = 'http://tratum.co' """
 
         currency = 'COP'
 
