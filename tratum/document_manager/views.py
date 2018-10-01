@@ -232,7 +232,7 @@ class FinishDocumentView(View):
         body = loader.get_template('email/base.html').render(context)
         kwargs = dict(
             to=[user_document.user.email],
-            from_email='no-reply@tratum.com',
+            from_email='no-reply@tratum.co',
             subject=subject,
             body=body
         )

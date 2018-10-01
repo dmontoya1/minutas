@@ -165,7 +165,7 @@ class SignupView(View):
             message = EmailMessage(
                 "Activa tu cuenta en Tratum",
                 body,
-                'no-reply@tratum.com',
+                'no-reply@tratum.co',
                 [user.email]
             )
             message.content_subtype = 'html'
@@ -325,7 +325,7 @@ class ContactFormView(View):
                 email=email,
                 message=message
             ), 
-            'no-reply@tratum.com',
+            'no-reply@tratum.co',
             ['nrodriguez@apptitud.com.co']
         )
         email.send()
