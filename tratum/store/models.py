@@ -114,13 +114,15 @@ class UserDocument(models.Model):
         null=True,
         blank=True,
         editable=False,
-        upload_to='pdfs'
+        upload_to='pdfs',
+        max_length=500
     )
     word_file = models.FileField(
         null=True,
         blank=True,
         editable=False,
-        upload_to='docxs'
+        upload_to='docxs',
+        max_length=500
     )
 
     class Meta:
@@ -205,7 +207,7 @@ class Invoice(models.Model):
         return self.get_identifier()
     
     def get_identifier(self):
-        return 'FAC_{}{}'.format(
+        return 'DO_001_{}{}'.format(
             self.pk,
             int(time.mktime(self.payment_date.timetuple()))
         )

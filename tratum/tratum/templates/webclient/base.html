@@ -470,12 +470,14 @@
         <script type="text/javascript">
             function checkStrength(password) {
                 var strength = 0
-                if (password.length < 6) {
+                if (password.length < 8) {
                     $('#result').removeClass()
                     $('#result').addClass('short')
                     $('#reg_submit_signup').attr('disabled', true)
-
-                    return 'Muy corta'
+                    $('#password2').attr('disabled', true);
+                    return 'Se requiere una contraseña de mínimo 8 caractéres'
+                } else {
+                    $('#password2').attr('disabled', false);
                 }
                 if (password.length > 7) strength += 1
                 // If password contains both lower and uppercase characters, increase strength value.
@@ -501,7 +503,7 @@
                     $('#result').removeClass()
                     $('#result').addClass('strong')
                     return 'Fuerte'
-                    }
+                }
             }
             
             function checkValid(password1, password2){
@@ -511,10 +513,15 @@
                     $('#reg_submit_signup').attr('disabled', true)
                     return 'Las contraseñas no coinciden'
                 }
-                else{
-                    $('#valid').removeClass()
-                    $('#reg_submit_signup').attr('disabled', false)
-                    return ''
+                else {
+                    if(checkStrength(password1) != 'Débil'){
+                        $('#valid').removeClass()
+                        $('#reg_submit_signup').attr('disabled', false)
+                        return ''
+                    } else {
+                        return 'La contraseña debe tener mínimo 8 caractéres y por lo menos un caracter especial o letra en mayúscula'
+                    }
+                    
                 }
             }
             
@@ -524,6 +531,7 @@
                     $('.contextualMenu').fadeToggle();
                     $('.logo').toggle();
                 })
+                $('#password2').attr('disabled', true);
 
                 {% block nav-script%}
                     $(window).scroll(function(){
@@ -595,9 +603,8 @@
 
             $("#signup").on('submit', function(ev){
                 ev.preventDefault()
-                if (!$("#terms").is(':checked') ) {
-                    
-                    toastr.error("Debes aceptar los Términos y Condiciones y las Políticas de tratamiento de datos para terminar el proceso de registro")
+                if (!$("#terms").is(':checked') ) {                    
+                    toastr.error("Debes aceptar los términos y condiciones y las políticas de tratamiento de datos para terminar el proceso de registro")
                     $('#reg_submit_signup').attr('disabled', false);
                     return false;
                 }

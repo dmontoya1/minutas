@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'mptt_urls',
     'embed_video',
     'raven.contrib.django.raven_compat',
+    'smart_selects',
     'api',
     'ckeditor',
     'mptt',
@@ -134,7 +135,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static and files 
 
 STATIC_URL = '/static/'
@@ -199,8 +199,12 @@ CKEDITOR_CONFIGS = {
                 'items': ['documentsection']
             },
             {
-                'name': 'forms',
-                'items': ['Button']
+                'name': 'dynamiccounter',
+                'items': ['dynamiccounter']
+            },
+            {
+                'name': 'conditional',
+                'items': ['conditional']
             }
         ],
         'toolbar': 'CustomToolbarConfig', 
@@ -218,7 +222,9 @@ CKEDITOR_CONFIGS = {
             'dialogui',
             'elementspath',
             'documentfield',
-            'documentsection'
+            'documentsection',
+            'dynamiccounter',
+            'conditional'
         ]),
     }
 }

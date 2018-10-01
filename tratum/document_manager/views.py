@@ -1,7 +1,13 @@
 import json
+import os
+import platform 
+import subprocess
 import uuid
+
+
 import pdfkit
 import pypandoc
+
 
 from io import BytesIO
 
@@ -116,6 +122,7 @@ class UserDocumentContentView(View):
         content['document_content'] = document_content
         return JsonResponse(content) 
 
+
 class FinishDocumentView(View):
 
     def post(self, request, *args, **kwargs):
@@ -158,12 +165,24 @@ class FinishDocumentView(View):
     
     def generate_doc(self, request, user_document):
         html_file = user_document.html_file.path
-        output_filename = f'{user_document.identifier}.docx'
-        output = pypandoc.convert_file(
-            html_file,
-            'docx',
-            outputfile=output_filename
-        )
+        name = os.path.basename(user_document.html_file.name.split('.')[0])
+        output_filename = f'{name}.odt'
+        media_root = settings.MEDIA_ROOT
+        
+        if platform.system() == 'Linux':
+            subprocess.call(
+                f'soffice --headless --convert-to odt {html_file} --outdir {media_root}/docxs/',
+                shell=True
+            )
+        elif platform.system() == 'Darwin':
+            subprocess.call(
+                f'cd /Applications/LibreOffice.app/Contents/MacOS && \
+                ./soffice --headless --convert-to odt {html_file} --outdir {media_root}/docxs/',
+                shell=True
+            )
+
+        user_document.word_file = f'docxs/{output_filename}'
+        user_document.save()
 
     def generate_html(self, request, user_document, TEMPORARY_HTML_FILE):
 

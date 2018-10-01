@@ -18,9 +18,9 @@ const tens = {
 };
 
 (function() {
-    var femaleCounters = document.querySelectorAll('input[value="dynamic_counter"]');
-    var maleCounters = document.querySelectorAll('input[value="dynamic_counter_male"]');
-    var internalCounters = document.querySelectorAll('input[value^="section_dynamic_counter"]');
+    var femaleCounters = document.querySelectorAll('button[value="dynamic_counter"]');
+    var maleCounters = document.querySelectorAll('button[value="dynamic_counter_male"]');
+    var internalCounters = document.querySelectorAll('button[value^="section_dynamic_counter"]');
 
     addCounters(femaleCounters, 'a');
     addCounters(maleCounters, 'o');
