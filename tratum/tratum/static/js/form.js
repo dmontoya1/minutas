@@ -182,8 +182,9 @@ function realTimeUpdate(){
             content = response.data.document_content
             $('#content-preview').fadeOut(1000, function(){
                 $(this).empty().append(content).fadeIn();
+                formatDocument();
             });
-            formatDocument();
+            
         })
 }
 
