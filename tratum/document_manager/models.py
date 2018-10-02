@@ -370,6 +370,24 @@ class DocumentField(SlugIdentifierMixin):
     def get_ordered_group_fields(self):
         return self.field_group.all().order_by('group_order')
 
+    def get_linked_state(self):
+        option = DocumentFieldOption.objects.filter(linked_fields__pk=self.pk)
+        if option.count() > 0:
+            return 'linked'
+        return ''
+    
+    def get_linked_parent(self):
+        option = DocumentFieldOption.objects.filter(linked_fields__pk=self.pk)
+        if option.count() > 0:
+            return option.last().pk
+        return ''
+    
+    def get_linked_question(self):
+        option = DocumentFieldOption.objects.filter(linked_fields__pk=self.pk)
+        if option.count() > 0:
+            return option.last().field.formated_slug()
+        return ''
+
 
 class DocumentFieldOption(models.Model):
     name = models.TextField(

@@ -13,6 +13,7 @@ class FieldGroupSerializer(serializers.ModelSerializer):
         model = DocumentField
         fields = ('formated_slug',)
 
+
 class DocumentFieldSerializer(serializers.ModelSerializer):
     field_group = FieldGroupSerializer(source='get_ordered_group_fields', many=True)
 
