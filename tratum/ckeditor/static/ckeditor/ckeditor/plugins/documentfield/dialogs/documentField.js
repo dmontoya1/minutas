@@ -1,4 +1,4 @@
-axios.defaults.headers.common['Api-Key'] = '042c97b1f486c5bde044ba5f10dfd11ad26cb81b'
+axios.defaults.headers.common['Api-Key'] = 'd492009ed1b5395f64230e13fb71ce33cc855156'
 
 CKEDITOR.dialog.add( 'fieldDialog', function(editor){
     return {
@@ -27,6 +27,7 @@ CKEDITOR.dialog.add( 'fieldDialog', function(editor){
                         label: 'Añadir filtro:',
                         items: [
                             ['Convertir número a texto'],
+                            ['Convertir texto a mayúscula inicial'],
                             ['Convertir texto a mayúscula sostenida'],
                             ['Convertir texto a minúscula sostenida'],
                             ['Agrupar grupo de campos por comas'],
@@ -50,6 +51,7 @@ CKEDITOR.dialog.add( 'fieldDialog', function(editor){
         onOk: function(){
             filter_map = {
                 'Convertir número a texto': 'num_to_text',
+                'Convertir texto a mayúscula inicial': 'capfirst',
                 'Convertir texto a mayúscula sostenida': 'upper',
                 'Convertir texto a minúscula sostenida': 'lower',
                 'Agrupar grupo de campos por comas': 'retain_comma',
