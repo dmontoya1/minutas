@@ -120,6 +120,9 @@ iframe {
         opacity: 0.25;
         padding: 40px 0 0;
     }
+        .upform .upform-main .input-block.linked {
+            padding-left: 2.5em;
+        }
         .upform .upform-main .input-block .input-control {
             margin: 20px 0;
             position: relative;
@@ -249,4 +252,9 @@ iframe {
     .upform-footer .btn {
         width: 530px;
     }
+}
+
+.linked-title {
+    margin: 2em 1em 1em 0.5em;
+    padding-left: 2.5em;
 }

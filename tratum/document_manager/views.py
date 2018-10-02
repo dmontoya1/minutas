@@ -34,6 +34,7 @@ from .models import (
     Document,
     DocumentField,
     DocumentSection,
+    DocumentFieldOption,
     Document,
     Category
 )
@@ -121,6 +122,26 @@ class UserDocumentContentView(View):
         document_content = document_content.render(Context(obj.answers))
         content['document_content'] = document_content
         return JsonResponse(content) 
+
+
+class LinkedFieldView(View):
+    """Api para listar las preguntas linkeadas a una pregunta dinámica.
+    Esta vista devuelve el HTML renderizado de los campos.
+    """
+
+    serializer_class = DocumentFieldSerializer
+
+    def get(self, request, *args, **kwargs):
+        q = DocumentFieldOption.objects.get(pk=kwargs['pk'])
+        fields = q.linked_fields.all()
+        output = []
+        for f in fields:
+            template = loader.get_template('document_form/fields.html')
+            render = template.render({'field': f})
+            output.append(render)
+        content = {}
+        content['fields'] = output
+        return JsonResponse(content)
 
 
 class FinishDocumentView(View):
