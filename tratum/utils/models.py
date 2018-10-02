@@ -1,3 +1,5 @@
+import html
+
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
@@ -62,7 +64,7 @@ class SlugIdentifierMixin(models.Model):
         super().save(*args, **kwargs)
         self.slug = self._get_unique_slug()
         if self.__class__.__name__ == 'Document':
-            self.content = self.content.replace('&quot;','""').replace('&nbsp;','').replace('""','"')
+            self.content = html.unescape(self.content)
         super().save(*args, **kwargs)
     
     def _get_unique_slug(self):
