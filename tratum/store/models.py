@@ -207,7 +207,7 @@ class Invoice(models.Model):
         return self.get_identifier()
     
     def get_identifier(self):
-        return 'DO_001_{}{}'.format(
+        return '{}{}'.format(
             self.pk,
             int(time.mktime(self.payment_date.timetuple()))
         )
