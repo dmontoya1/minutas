@@ -1,26 +1,26 @@
-const units = {
-    1: 'Primer',
-    2: 'Segund',
-    3: 'Tercer',
-    4: 'Cuart',
-    5: 'Quint',
-    6: 'Sext',
-    7: 'Séptim',
-    8: 'Octav',
-    9: 'Noven',
-};
-const tens = {
-    10: 'Décim',
-    20: 'Vigésim',
-    30: 'Trigésim',
-    40: 'Cuadragésim',
-    50: 'Quincuagésim'
-};
-
-(function() {
-    var femaleCounters = document.querySelectorAll('button[value="dynamic_counter"]');
-    var maleCounters = document.querySelectorAll('button[value="dynamic_counter_male"]');
-    var internalCounters = document.querySelectorAll('button[value^="section_dynamic_counter"]');
+function formatDocument(){
+    const units = {
+        1: 'Primer',
+        2: 'Segund',
+        3: 'Tercer',
+        4: 'Cuart',
+        5: 'Quint',
+        6: 'Sext',
+        7: 'Séptim',
+        8: 'Octav',
+        9: 'Noven',
+    };
+    const tens = {
+        10: 'Décim',
+        20: 'Vigésim',
+        30: 'Trigésim',
+        40: 'Cuadragésim',
+        50: 'Quincuagésim'
+    };
+    
+    var femaleCounters = document.querySelectorAll('input[value="dynamic_counter"]');
+    var maleCounters = document.querySelectorAll('input[value="dynamic_counter_male"]');
+    var internalCounters = document.querySelectorAll('input[value^="section_dynamic_counter"]');
 
     addCounters(femaleCounters, 'a');
     addCounters(maleCounters, 'o');
@@ -92,6 +92,7 @@ const tens = {
             }
         }
     }, 500);
+}
 
+formatDocument();
 
-})();

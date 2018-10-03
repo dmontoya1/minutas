@@ -128,8 +128,9 @@ class CompanyUpdate(APIView):
         description = request.POST['description']
         user = User.objects.get(pk=request.POST['pk'])
 
-        company = Company.objects.get(user=user)
+        company = Company.objects.filter(user=user)
         if company:
+            company = company.last()
             company.name = name
             company.employees_number = employees
             company.sector = sector
@@ -140,7 +141,8 @@ class CompanyUpdate(APIView):
                 name=name,
                 employees_number=employees,
                 sector=sector,
-                description=description
+                description=description,
+                user=user
             )
             company.save()
         
