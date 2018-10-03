@@ -284,7 +284,6 @@ class Checkout(TemplateView):
                     user_doc = UserDocument.objects.filter(user=user, document=document).last()
                     identifier = user_doc.identifier
                 except Exception as e:
-                    client.captureException(e)
                     pass
 
             if signature == signature_get:  
