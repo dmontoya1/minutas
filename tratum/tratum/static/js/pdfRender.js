@@ -17,64 +17,66 @@ const tens = {
     50: 'Quincuagésim'
 };
 
-(function() {
-    var femaleCounters = document.querySelectorAll('button[value="dynamic_counter"]');
-    var maleCounters = document.querySelectorAll('button[value="dynamic_counter_male"]');
-    var internalCounters = document.querySelectorAll('button[value^="section_dynamic_counter"]');
 
+var femaleCounters = document.querySelectorAll('input[value="dynamic_counter"]');
+var maleCounters = document.querySelectorAll('input[value="dynamic_counter_male"]');
+var internalCounters = document.querySelectorAll('input[value^="section_dynamic_counter"]');
+
+
+function addInternalCounters(internalCounters){
+    var sections = [];
+    for (i = 0; i < internalCounters.length; i++) {
+        section = internalCounters[i].value.split('section_dynamic_counter_')
+        sections.push(section[1]);
+    }
+
+    sections = Array.from(new Set(sections));
+
+    for (i = 0; i < sections.length; i++) {
+        var internalCounters = document.querySelectorAll(`input[value="section_dynamic_counter_${sections[i]}"]`);
+        addCounters(internalCounters, 'o');
+    } 
+}
+
+function addCounters(dynamic_counters, gender){
+    var i;
+    for (i = 0; i < dynamic_counters.length; i++) {
+        i = i + 1
+        if(i.toString().length == 1){
+            counter = units[i] + gender;
+        } else {
+            ten = i.toString()[0] + 0
+            ten = tens[ten]
+            ten = ten + gender
+            unit = i.toString()[1]
+            if(unit == 0){
+                counter = ten
+            } else {
+                unit = units[unit] + gender
+                counter = ten + ' ' + unit
+            }
+        }
+        var span = document.createElement('span');
+        span.style.color = '#000';
+        span.innerHTML = counter.toUpperCase();
+        if(i != 0){
+            i = i - 1;
+        }
+        dynamic_counters[i].parentNode.replaceChild(span, dynamic_counters[i]);
+    }
+}
+
+(function() {
     addCounters(femaleCounters, 'a');
     addCounters(maleCounters, 'o');
     addInternalCounters(internalCounters);
     
-    function addInternalCounters(internalCounters){
-        var sections = [];
-        for (i = 0; i < internalCounters.length; i++) {
-            section = internalCounters[i].value.split('section_dynamic_counter_')
-            sections.push(section[1]);
-        }
-
-        sections = Array.from(new Set(sections));
-
-        for (i = 0; i < sections.length; i++) {
-            var internalCounters = document.querySelectorAll(`input[value="section_dynamic_counter_${sections[i]}"]`);
-            addCounters(internalCounters, 'o');
-        } 
-    }
-
-    function addCounters(dynamic_counters, gender){
-        var i;
-        for (i = 0; i < dynamic_counters.length; i++) {
-            i = i + 1
-            if(i.toString().length == 1){
-                counter = units[i] + gender;
-            } else {
-                ten = i.toString()[0] + 0
-                ten = tens[ten]
-                ten = ten + gender
-                unit = i.toString()[1]
-                if(unit == 0){
-                    counter = ten
-                } else {
-                    unit = units[unit] + gender
-                    counter = ten + ' ' + unit
-                }
-            }
-            var span = document.createElement('span');
-            span.style.color = '#000';
-            span.innerHTML = counter.toUpperCase();
-            if(i != 0){
-                i = i - 1;
-            }
-            dynamic_counters[i].parentNode.replaceChild(span, dynamic_counters[i]);
-        }
-    }
-
     setTimeout(function(){
         var x = document.querySelectorAll('p:empty');
         for (i = 0; i < x.length; i++) {
             x[i].remove();
         }
-
+    
         var x = document.getElementsByTagName('li');
         for (i = 0; i < x.length; i++) {
             if(x[i].innerText == ""){
@@ -82,8 +84,8 @@ const tens = {
             }
         }
     }, 200);
-
-
+    
+    
     setTimeout(function(){
         var x = document.getElementsByTagName('li');
         for (i = 0; i < x.length; i++) {
@@ -92,6 +94,5 @@ const tens = {
             }
         }
     }, 500);
+});
 
-
-})();
