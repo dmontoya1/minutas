@@ -65,20 +65,21 @@ class Checkout(TemplateView):
         taxReturnBase = 0
         description = "Compra realizada desde Tratum"
 
-   
-        test = 1
-        accountId = 512321
-        apiKey = '4Vj8eK4rloUd272L48hsrarnUA'
-        merchantId = 508029
-        url = "https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu"
-        host = 'http://tratum.co'
-     
-        """ test = 0
-        accountId = 746396
-        apiKey = 'vIB29Yn5GW0XVv6qVYBV1e92T1'
-        merchantId = 740818
-        url = "https://checkout.payulatam.com/ppp-web-gateway-payu"
-        host = 'http://tratum.co' """
+
+        if settings.DEBUG:
+            test = 1
+            accountId = 512321
+            apiKey = '4Vj8eK4rloUd272L48hsrarnUA'
+            merchantId = 508029
+            url = "https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu"
+            host = 'http://tratum.apptitud.com.co'
+        else:
+            test = 0
+            accountId = 746396
+            apiKey = 'vIB29Yn5GW0XVv6qVYBV1e92T1'
+            merchantId = 740818
+            url = "https://checkout.payulatam.com/ppp-web-gateway-payu"
+            host = 'http://tratum.co'
 
         currency = 'COP'
 
@@ -186,7 +187,7 @@ class Checkout(TemplateView):
                 #Aprobada
                 if state_pol == '4':
                     invoice.payment_date = datetime.now()
-                    invoice.payu_reference_code = reference_pol
+                    invoice.payu_reference_code = reference
                     invoice.payment_status = Invoice.APPROVED
                     invoice.save()
 
@@ -202,28 +203,28 @@ class Checkout(TemplateView):
                 #Declinada
                 elif state_pol == '6':
                     invoice.payment_date = datetime.now()
-                    invoice.payu_reference_code = reference_pol
+                    invoice.payu_reference_code = reference
                     invoice.payment_status = Invoice.REJECTED
                     invoice.save()
                     return HttpResponse(status=200)
                 #Error
                 elif state_pol == '104':
                     invoice.payment_date = datetime.now()
-                    invoice.payu_reference_code = reference_pol
+                    invoice.payu_reference_code = reference
                     invoice.payment_status = Invoice.CANCEL
                     invoice.save()
                     return HttpResponse(status=200)
                 #Expirada
                 elif state_pol == '5':
                     invoice.payment_date = datetime.now()
-                    invoice.payu_reference_code = reference_pol
+                    invoice.payu_reference_code = reference
                     invoice.payment_status = Invoice.CANCEL
                     invoice.save()
                     return HttpResponse(status=200)
                 #Pendiente
                 elif state_pol == '7':
                     invoice.payment_date = datetime.now()
-                    invoice.payu_reference_code = reference_pol
+                    invoice.payu_reference_code = reference
                     invoice.payment_status = Invoice.PENDING
                     invoice.save()
                     return HttpResponse(status=200)

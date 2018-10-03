@@ -180,9 +180,11 @@ function realTimeUpdate(){
     axios.post(`/api/document-manager/form-preview/`, {'identifier': uuid})
         .then(function (response) {
             content = response.data.document_content
-            $('#content-preview').empty();
-            $('#content-preview').append(content);
-            formatDocument();
+            $('#content-preview').fadeOut(1000, function(){
+                $(this).empty().append(content).fadeIn();
+                formatDocument();
+            });
+            
         })
 }
 
@@ -203,7 +205,7 @@ $.fn.upform = function() {
             rescroll(this);
         });
 
-    $(container).find(".input-block input").keyup(function(e) {
+    $("input").on('keyup', function(e) {
         savePreview();        
         if (e.which == 13 || e.which == 9) {
             e.preventDefault()            
@@ -320,6 +322,27 @@ $('.preview').on('click', function(e){
 
 $('.section-item').on('click', function(e){
     $(`*[data-section="${$(this).attr('name')}"]`).toggle();
+})
+
+$('select.dynamic').on('change', function(e){   
+    field = $(this).attr('name');
+    parent = $(this).closest('.input-block');
+    value = $(this).find(":selected").text();
+    id = $(this).find(":selected").data('id');
+    
+    $(`[data-question="${field}"]`).remove();
+
+    axios.get(`/api/document-manager/document-options/${id}/linked-fields/`)
+        .then(function(response){
+            
+            fields = response.data.fields
+            title = `<h5 class="linked-title" data-parent="${id}" data-question="${field}">Los siguientes campos aparecen por que seleccionaste <strong>${value}</strong></h5>`
+            Object.keys(fields).forEach(function(key) {
+                parent.after(fields[key]);
+            })
+            parent.after(title);
+        })
+       
 })
 
 $(function(){

@@ -19,6 +19,21 @@ CKEDITOR.dialog.add( 'fieldDialog', function(editor){
                         onLoad: function(e){
                             populateDocumentFields();
                         }
+                    },
+                    {
+                        type: 'select',
+                        id: 'filter-field',
+                        className: 'filter-select',
+                        label: 'Añadir filtro:',
+                        items: [
+                            ['Convertir número a texto'],
+                            ['Convertir texto a mayúscula inicial'],
+                            ['Convertir texto a mayúscula sostenida'],
+                            ['Convertir texto a minúscula sostenida'],
+                            ['Agrupar grupo de campos por comas'],
+                            ['Agrupar grupo de campos por listado'],
+                            ['Añadir item a lista existente'],
+                        ]
                     }
                 ]
             },
@@ -34,17 +49,31 @@ CKEDITOR.dialog.add( 'fieldDialog', function(editor){
             }
         ],
         onOk: function(){
+            filter_map = {
+                'Convertir número a texto': 'num_to_text',
+                'Convertir texto a mayúscula inicial': 'capfirst',
+                'Convertir texto a mayúscula sostenida': 'upper',
+                'Convertir texto a minúscula sostenida': 'lower',
+                'Agrupar grupo de campos por comas': 'retain_comma',
+                'Agrupar grupo de campos por listado': 'comma_sep_to_ul',
+                'Añadir item a lista existente': 'comma_sep_to_li',
+            }
+
             var dialog = this;
 
             var span = editor.document.createElement('span');
 
-            var field_name = document.querySelector('select.document-select')
-            var field_name = field_name.options[field_name.selectedIndex].innerHTML;
+            field_value = dialog.getValueOf('tab-select-field', 'document-field')
+            filter_value = dialog.getValueOf('tab-select-field', 'filter-field')
+        
+            text = `{{${field_value}}}`
 
-            span.setAttribute('title', field_name);
-            span.setAttribute('style', 'color: #0099f5;');
-            span.setText(dialog.getValueOf('tab-select-field', 'document-field'));
+            if(filter_value){
+                text = `{{${field_value}|${filter_map[filter_value]}}}`
+            }
 
+            span.setText(text);          
+            
             editor.insertElement(span);
         },
         onShow: function(){
@@ -101,7 +130,7 @@ function populateDocumentFields(){
             select.options.length = 0;
             response.data.forEach(element => {
                 var opt = document.createElement('option');
-                opt.value = `{{${element.formated_slug}}}`;
+                opt.value = `${element.formated_slug}`;
                 opt.innerHTML = element.name;
                 select.add(opt);
             });

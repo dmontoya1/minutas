@@ -1,6 +1,6 @@
 
 {% if field.is_text_input %}
-    <div class="input-block">
+    <div class="input-block {{field.get_linked_state}}" data-parent="{{field.get_linked_parent}}" data-question="{{field.get_linked_question}}">
         <div class="label col clearfix">
             <span class="float-left">{{forloop.counter}}. {{field.display_name}}</span>
             {% if field.help_text %}
@@ -31,7 +31,7 @@
         {% endif %}    
     </div>        
 {% elif field.field_type == field.SELECT or field.field_type == field.DYNAMIC_SELECT %}
-    <div class="input-block">
+    <div class="input-block {{field.get_linked_state}}" data-parent="{{field.get_linked_parent}}" data-question="{{field.get_linked_question}}">
         <div class="label col clearfix">
             <span class="float-left">{{forloop.counter}}. {{field.display_name}} </span>
             {% if field.help_text %}
@@ -42,13 +42,13 @@
             <select name="{{field.formated_slug}}" class="{% if field.field_type == field.DYNAMIC_SELECT %}dynamic{% endif %}">
                 <option selected disabled>Selecciona un elemento de la lista</option>
                 {% for f in field.documentfieldoption_set.all %}
-                    <option value="{{f.name}}">{{f.name}}</option>
+                    <option value="{{f.name}}" data-id="{{f.pk}}">{{f.name}}</option>
                 {% endfor %}                
             </select>
         </div>
     </div>
 {% elif field.field_type == field.SELECT_MULTIPLE %}
-    <div class="input-block">
+    <div class="input-block {{field.get_linked_state}}" data-parent="{{field.get_linked_parent}}" data-question="{{field.get_linked_question}}">
         <div class="label col clearfix mb-2">
             <span class="float-left">{{forloop.counter}}. {{field.display_name}} </span>
             {% if field.help_text %}
@@ -69,7 +69,7 @@
         {% endfor %}
     </div>
 {% elif field.field_type == field.GROUP  %}
-    <div class="input-block">
+    <div class="input-block {{field.get_linked_state}}" data-parent="{{field.get_linked_parent}}" data-question="{{field.get_linked_question}}">
         <div class="label col clearfix">
             <span class="float-left">{{forloop.counter}}. {{field.display_name}} </span>
             {% if field.help_text %}
@@ -81,7 +81,7 @@
         <div class="group-item mt-2" data-group="{{field.pk}}">
             {% for gf in field.get_ordered_group_fields %}  
                 {% if gf.is_text_input %}
-                    <div class="input-block">
+                    <div class="input-block {{field.get_linked_state}}" data-parent="{{field.get_linked_parent}}" data-question="{{field.get_linked_question}}">
                         <div class="label">{{forloop.counter}}. {{gf.display_name}}</div>
                         <div class="input-control">
                             <input required data-name="{{gf.formated_slug}}" name="{{gf.formated_slug}}" type="{{gf.get_html_input_type}}" id="{{gf.formated_slug}}" 
@@ -102,7 +102,7 @@
                         </div>
                     </div>        
                 {% elif gf.field_type == gf.SELECT %}
-                    <div class="input-block">
+                    <div class="input-block {{field.get_linked_state}}" data-parent="{{field.get_linked_parent}}" data-question="{{field.get_linked_question}}">
                         <div class="label">{{forloop.counter}}. {{gf.display_name}} </div>
                         <div class="input-control">
                             <select data-name="{{gf.formated_slug}}" name="{{gf.formated_slug}}">

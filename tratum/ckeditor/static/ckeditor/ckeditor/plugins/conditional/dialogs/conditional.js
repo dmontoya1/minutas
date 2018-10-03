@@ -1,3 +1,5 @@
+axios.defaults.headers.common['Api-Key'] = '042c97b1f486c5bde044ba5f10dfd11ad26cb81b'
+
 CKEDITOR.dialog.add('conditionalDialog', function(editor){
     return {
         title: 'Agregar condición',
@@ -21,9 +23,14 @@ CKEDITOR.dialog.add('conditionalDialog', function(editor){
                         default: 'Si el campo fue seleccionado, entonces...',
                     },
                     {
-                        type: 'text',
+                        type: 'select',
                         id: 'conditional-field',
-                        label: 'Identificador del campo a validar'
+                        className: 'conditional-select',
+                        label: 'Campos disponibles:',
+                        items: [],
+                        onLoad: function(e){
+                            populateDocumentFields();
+                        }
                     },
                     {
                         type: 'text',
@@ -63,3 +70,30 @@ CKEDITOR.dialog.add('conditionalDialog', function(editor){
         }
     };
 });
+
+function populateDocumentFields(){
+    object_info = document.querySelector('.object-info');
+    filter = '';
+    if(object_info){
+        filter = 'document_id=' + object_info.dataset.id;
+        if(object_info.dataset.model == 'documentsection'){
+            url = `/document-manager/document-sections/${object_info.dataset.slug}/section-fields/`
+        } else if(object_info.dataset.model == 'document'){
+            url = `/api/document-manager/document-fields/?${filter}`
+        }
+    }    
+    axios.get(url)
+        .then(function(response) {
+            select = document.querySelector('select.conditional-select');
+            select.options.length = 0;
+            response.data.forEach(element => {
+                var opt = document.createElement('option');
+                opt.value = `${element.formated_slug}`;
+                opt.innerHTML = element.name;
+                select.add(opt);
+            });
+        })
+        .catch(function (error) {
+            return []
+        });
+}
