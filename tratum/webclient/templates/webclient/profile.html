@@ -242,11 +242,11 @@
                 <input type="hidden" name="pk" value={{request.user.pk}}>
                 <div class="form-group">
                     <label for="company_name">Nombre empresa</label>
-                    <input type="text" class="form-control" id="company_name" name="name" placeholder="Ingresa el nombre de tu empresa" value="{{request.user.company.name}}">
+                    <input required type="text" class="form-control" id="company_name" name="name" placeholder="Ingresa el nombre de tu empresa" value="{{request.user.company.name}}">
                 </div>
                 <div class="form-group">
                     <label for="employees_number">Número de empleados</label>
-                    <select class="form-control" id="employees_number" name="employees_number">
+                    <select class="form-control" id="employees_number" name="employees_number" required>
                         <option disabled selected value="">Selecciona el número de empleados</option>
                         <option value="1">Menos de 10</option>
                         <option value="2">Entre 10 y 20</option>
@@ -256,14 +256,14 @@
                 </div>
                 <div class="form-group">
                     <label for="sector_company">Sector</label>
-                    <select class="form-control" id="sector_company" name="sector">
+                    <select class="form-control" id="sector_company" name="sector" required>
                         <option disabled selected value="">Selecciona un sector</option>
                         
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="company_description">Descripción</label>
-                    <textarea class="form-control" name="description" id="company_description" rows="3" placeholder="Ingresa una descripción de tu empresa"
+                    <textarea required class="form-control" name="description" id="company_description" rows="3" placeholder="Ingresa una descripción de tu empresa"
                      value="{{request.user.company.description}}">{{request.user.company.description}}</textarea>
                 </div>
             
@@ -434,40 +434,44 @@
 
         function get_sector_list(sector_id){
             axios.get("{% url 'api:users:sector_list' %}")
-            .then(function(response){
-                $('#sector_company').empty()
-                $(response.data).each(function(i,v){
-                    if (v.id == sector_id){
-                        $('#sector_company').append(
-                            `
-                                <option value='${v.id}' selected>${v.name}</option>
-                            `
-                        )
-                    }
-                    else {
-                        $('#sector_company').append(
-                            `
-                                <option value='${v.id}'>${v.name}</option>
-                            `
-                        )
-                    }
+                .then(function(response){
+                    $('#sector_company').empty()
+                    $(response.data).each(function(i,v){
+                        if (v.id == sector_id){
+                            $('#sector_company').append(
+                                `
+                                    <option value='${v.id}' selected>${v.name}</option>
+                                `
+                            )
+                        }
+                        else {
+                            $('#sector_company').append(
+                                `
+                                    <option value='${v.id}'>${v.name}</option>
+                                `
+                            )
+                        }
+                    })
                 })
-            })
-            .catch(function(error){
-                console.log("Error")
-                console.log(error.response.data)
-                toastr.error(error.response.data)
-            });
+                .catch(function(error){
+                    console.log("Error")
+                    console.log(error.response.data)
+                    toastr.error(error.response.data)
+                });
         }
 
 
         $(document).ready(function(){
             sector_id = '{{request.user.company.sector.id}}'
-            if (sector_id)
-            get_sector_list(sector_id)
+
+            if (sector_id){
+                get_sector_list(sector_id)
+            }            
+
+            get_sector_list();
 
             employees = '{{request.user.company.employees_number}}'
-            console.log(employees)
+   
             if (employees){
                 $('#employees_number').find(`option[value=${employees}]`).attr('selected', true)
             }
