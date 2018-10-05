@@ -11,18 +11,39 @@ function savePreview() {
             regex = $(this).data('regex');
             name = $(this).data('name');
             pk = $(this).data('pk');
-            items = $(this).find(`.group-item`);
-            $(items).each(function(i2, gi){  
-                fields = $(this).find(`input[data-parentgroup='${name}'], select[data-parentgroup='${name}']`);
+            items = $(this).find(`.group-item`).not('.group-fields .group-fields .group-item');
+            $(items).each(function(i2, gi){ 
+                fields = $(this).find('input, select');
                 regexed_text = regex;
                 $(fields).each(function(i3, git){
-                    console.log(regexed_text);
-                    console.log($(this).data('parentgroup'));
-                    console.log($(this).data('name'));
-                    console.log($(this).val());
-                    regexed_text = regexed_text.replace($(this).data('name'), $(this).val());   
-                    console.log(regexed_text);    
+                    regexed_text = regexed_text.replace($(this).data('name'), $(this).val());
                 });                
+
+                extra_content = null;
+
+                if($(this).children('.group-fields').length > 0){
+                    $(this).children('.group-fields').each(function(i1, gf){     
+                        internal_group_responses = [];  
+                        internal_regex = $(this).data('regex');
+                        internal_name = $(this).data('name');
+                        internal_pk = $(this).data('pk');
+                        internal_items = $(this).find(`.group-item`);
+                        $(internal_items).each(function(i2, gi){                              
+                            internal_fields = $(this).find('input, select');
+                            internal_regexed_text = internal_regex;
+                            $(internal_fields).each(function(i3, git){
+                                internal_regexed_text = internal_regexed_text.replace($(this).data('name'), $(this).val());
+                            });                
+                            internal_group_responses.push(' ' + internal_regexed_text);
+                        });
+                        extra_content = internal_group_responses
+                    });             
+                }
+
+                if(extra_content != null || extra_content != ""){
+                    regexed_text = `${regexed_text}: ${extra_content}` 
+                }
+                
                 group_responses.push(regexed_text);
             });
             quantity['Q_' + $(this).data('name')] = items.length;
@@ -137,14 +158,14 @@ function formatDocument(){
 }
 
 function cloneGroupItem(groupAdder, fromGroupAdder){
-    items = $('.group-fields').find(`.group-item[data-group='${$(groupAdder).data('group')}']`)
+    items = $('.group-fields').find(`.group-item[data-group='${$(groupAdder).data('group')}']`);
     length = items.length + 1
     last = $(items).last();
     clone = last.clone();
     inputs = clone.find('input, select')
     $(inputs).each(function(i, element){
         $(element).val('');
-        name = $(element).data('name')
+        name = $(element).data('name');
         $(element).attr('name', `${name}_${length}`)
         $(element).attr('id', `${name}_${length}`)
     })
