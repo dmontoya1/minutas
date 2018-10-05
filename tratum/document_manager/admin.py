@@ -56,9 +56,15 @@ class DocumentFieldAdmin(admin.ModelAdmin):
     )
     readonly_fields = ('slug',)
     
-    def get_form(self, request, obj=None, **kwargs):
+    def get_form(self, request, obj=None, **kwargs):        
         request.current_object = obj
-        return super(DocumentFieldAdmin, self).get_form(request, obj, **kwargs)
+        form = super(DocumentFieldAdmin, self).get_form(request, obj, **kwargs)
+        print(request.GET)
+        if request.GET.get('document_id', None):
+            form.base_fields['document'].queryset = Document.objects.filter(pk=request.GET['document_id'])
+        if request.GET.get('section_id', None):
+            form.base_fields['section'].queryset = DocumentSection.objects.filter(pk=request.GET['section_id'])
+        return form
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         obj = request.current_object

@@ -39,6 +39,7 @@ function savePreview() {
                         extra_content = internal_group_responses
                     });             
                 }
+                
 
                 if(extra_content != null || extra_content != ""){
                     regexed_text = `${regexed_text}: ${extra_content}` 
