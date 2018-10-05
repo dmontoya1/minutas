@@ -7,20 +7,48 @@ function savePreview() {
         groups = {};
         quantity = {};
         $('.group-fields').each(function(i1, gf){  
-            group_responses = [];          
-            items = $(this).find('.group-item');
+            group_responses = [];        
             regex = $(this).data('regex');
-            $(items).each(function(i2, gi){  
+            name = $(this).data('name');
+            pk = $(this).data('pk');
+            items = $(this).find(`.group-item`).not('.group-fields .group-fields .group-item');
+            $(items).each(function(i2, gi){ 
                 fields = $(this).find('input, select');
                 regexed_text = regex;
                 $(fields).each(function(i3, git){
                     regexed_text = regexed_text.replace($(this).data('name'), $(this).val());
                 });                
+
+                extra_content = null;
+
+                if($(this).children('.group-fields').length > 0){
+                    $(this).children('.group-fields').each(function(i1, gf){     
+                        internal_group_responses = [];  
+                        internal_regex = $(this).data('regex');
+                        internal_name = $(this).data('name');
+                        internal_pk = $(this).data('pk');
+                        internal_items = $(this).find(`.group-item`);
+                        $(internal_items).each(function(i2, gi){                              
+                            internal_fields = $(this).find('input, select');
+                            internal_regexed_text = internal_regex;
+                            $(internal_fields).each(function(i3, git){
+                                internal_regexed_text = internal_regexed_text.replace($(this).data('name'), $(this).val());
+                            });                
+                            internal_group_responses.push(' ' + internal_regexed_text);
+                        });
+                        extra_content = internal_group_responses
+                    });             
+                }
+                
+
+                if(extra_content != null || extra_content != ""){
+                    regexed_text = `${regexed_text}: ${extra_content}` 
+                }
+                
                 group_responses.push(regexed_text);
             });
             quantity['Q_' + $(this).data('name')] = items.length;
             groups[$(this).data('name')] = group_responses.join('¬ ').toString();
-            
         });
         return form + '&' + $.param(groups) + '&' + $.param(quantity)
     }   
@@ -131,14 +159,14 @@ function formatDocument(){
 }
 
 function cloneGroupItem(groupAdder, fromGroupAdder){
-    items = $('.group-fields').find(`.group-item[data-group='${$(groupAdder).data('group')}']`)
+    items = $('.group-fields').find(`.group-item[data-group='${$(groupAdder).data('group')}']`);
     length = items.length + 1
     last = $(items).last();
     clone = last.clone();
     inputs = clone.find('input, select')
     $(inputs).each(function(i, element){
         $(element).val('');
-        name = $(element).data('name')
+        name = $(element).data('name');
         $(element).attr('name', `${name}_${length}`)
         $(element).attr('id', `${name}_${length}`)
     })

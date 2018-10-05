@@ -269,7 +269,8 @@ class DocumentField(SlugIdentifierMixin):
 
     name = models.CharField(
         'Nombre',
-        max_length=255
+        max_length=255,
+        help_text='Corresponde a la nombre interno del campo'
     )
     display_name = models.CharField(
         'Texto a mostrar',
@@ -299,14 +300,16 @@ class DocumentField(SlugIdentifierMixin):
         on_delete=models.CASCADE,
         null=True,
         blank=True,
-        verbose_name='Documento'
+        verbose_name='Documento',
+        help_text='Documento al que pertenece el campo'
     )
     section = models.ForeignKey(
         DocumentSection,
         on_delete=models.CASCADE,
         null=True,
         blank=True,
-        verbose_name='Sección'
+        verbose_name='Sección',
+        help_text='Si es el campo de una sección, indicar la sección'
     )
     order = models.PositiveIntegerField(
         'Orden de campo en el formulario',
@@ -317,7 +320,8 @@ class DocumentField(SlugIdentifierMixin):
     field_group = models.ManyToManyField(
         'self',
         blank=True,
-        verbose_name='Campos del grupo'
+        verbose_name='Campos del grupo',
+        help_text='Para campos agrupados, indica que campos hacen parte del grupo'
     )
     field_group_verbose_name = models.CharField(
         'Nombre singular de la agrupación',
