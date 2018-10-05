@@ -69,7 +69,7 @@ class DocumentFieldAdmin(admin.ModelAdmin):
             else:
                 filters['section__pk'] = obj.section.pk
             if db_field.name == "field_group":
-                kwargs["queryset"] = DocumentField.objects.filter(**filters).exclude(field_type=DocumentField.GROUP)
+                kwargs["queryset"] = DocumentField.objects.filter(**filters)
         return super(DocumentFieldAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
     class Media:

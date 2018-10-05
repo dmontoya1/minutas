@@ -7,20 +7,26 @@ function savePreview() {
         groups = {};
         quantity = {};
         $('.group-fields').each(function(i1, gf){  
-            group_responses = [];          
-            items = $(this).find('.group-item');
+            group_responses = [];        
             regex = $(this).data('regex');
+            name = $(this).data('name');
+            pk = $(this).data('pk');
+            items = $(this).find(`.group-item`);
             $(items).each(function(i2, gi){  
-                fields = $(this).find('input, select');
+                fields = $(this).find(`input[data-parentgroup='${name}'], select[data-parentgroup='${name}']`);
                 regexed_text = regex;
                 $(fields).each(function(i3, git){
-                    regexed_text = regexed_text.replace($(this).data('name'), $(this).val());
+                    console.log(regexed_text);
+                    console.log($(this).data('parentgroup'));
+                    console.log($(this).data('name'));
+                    console.log($(this).val());
+                    regexed_text = regexed_text.replace($(this).data('name'), $(this).val());   
+                    console.log(regexed_text);    
                 });                
                 group_responses.push(regexed_text);
             });
             quantity['Q_' + $(this).data('name')] = items.length;
             groups[$(this).data('name')] = group_responses.join('¬ ').toString();
-            
         });
         return form + '&' + $.param(groups) + '&' + $.param(quantity)
     }   
