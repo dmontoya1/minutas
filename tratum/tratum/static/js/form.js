@@ -19,7 +19,7 @@ function savePreview() {
                     regexed_text = regexed_text.replace($(this).data('name'), $(this).val());
                 });                
 
-                extra_content = null;
+                /* extra_content = null;
 
                 if($(this).children('.group-fields').length > 0){
                     $(this).children('.group-fields').each(function(i1, gf){     
@@ -43,7 +43,7 @@ function savePreview() {
 
                 if(extra_content != null || extra_content != ""){
                     regexed_text = `${regexed_text}: ${extra_content}` 
-                }
+                } */
                 
                 group_responses.push(regexed_text);
             });
