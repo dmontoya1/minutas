@@ -15,8 +15,6 @@
     };
     if(getUrlParameter('_popup') == 1){
         did = getUrlParameter('document_id');
-        opts = $('#id_document').find('option');
-        console.log(opts);
+        opts = $('#id_document').find('option'); 
     }
-    console.log()
 })(django.jQuery);
