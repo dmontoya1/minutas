@@ -62,7 +62,7 @@ function savePreview() {
         })
 }
 
-function formatDocument(){
+function formatDocument(){ 
     const units = {
         1: 'Primer',
         2: 'Segund',
