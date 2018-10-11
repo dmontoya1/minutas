@@ -95,7 +95,12 @@ CKEDITOR.dialog.add( 'fieldDialog', function(editor){
 
             addNewButton.addEventListener("click", function(e){
                 e.preventDefault();
-                addWindow = window.open("/admin/document_manager/documentfield/add/?_to_field=id&_popup=1", 'Agregar campo','height=350,width=650');
+                object_info = document.querySelector('.object-info');
+                filter = ''
+                if(object_info){
+                    filter = 'document_id=' + object_info.dataset.id;
+                }   
+                addWindow = window.open("/admin/document_manager/documentfield/add/?_to_field=id&_popup=1" + `&${filter}`, 'Agregar campo','height=550,width=950');
                 if(window.focus){
                     addWindow.focus();
                 }

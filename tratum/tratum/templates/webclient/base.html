@@ -252,7 +252,7 @@
                                             </div>
                                         </div>
                                         <div class="float-right">
-                                            <span style="font-size: 0.8em;color: red;">Los campos con * son obligatorios</span>
+                                            <span style="font-size: 0.8em;color: rgb(193, 35, 24);">Los campos con * son obligatorios</span>
                                         </div>
         
                                         <div class="terms-conditions mt-5">
@@ -475,7 +475,7 @@
                     $('#result').addClass('short')
                     $('#reg_submit_signup').attr('disabled', true)
                     $('#password2').attr('disabled', true);
-                    return 'Se requiere una contraseña de mínimo 8 caractéres'
+                    return 'La contraseña debe tener mínimo 8 caractéres y por lo menos un caracter especial o letra en mayúscul'
                 } else {
                     $('#password2').attr('disabled', false);
                 }
@@ -545,6 +545,7 @@
                     })
                     $('#password1').keyup(function() {
                         $('#result').html(checkStrength($('#password1').val()))
+                        $('#valid').html(checkValid($('#password1').val(), $('#password2').val()))
                     })
                     $('#password2').keyup(function() {
                         $('#valid').html(checkValid($('#password1').val(), $('#password2').val()))
@@ -640,7 +641,7 @@
                         toastr.error("El correo electrónico no se encuentra registrado")
                         $('#reg_submit_signup').attr('disabled', false)
                     });
-        })
+            })
         </script>
         {% block extra_js %}
         {% endblock %}
