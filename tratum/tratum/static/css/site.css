@@ -435,12 +435,18 @@ section {
 .dropleft,
 .auth-buttons {
     display: inline-block;
+    
+}
+
+.dropleft {
+    margin-bottom: .5em;
 }
 
 .dropdown-menu {
     min-width: 15rem;
     top: 30px !important; 
     left: -155px !important; 
+    right: 0 !important;
 }
 
 .dropleft.subdrop a {
