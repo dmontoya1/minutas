@@ -358,7 +358,7 @@
                             Políticas de tratamiento de datos personales 
                         </a>
                         <a href="{% url 'webclient:policies' 'terms' %}">
-                            Terminos y condiciones 
+                            Términos y condiciones 
                         </a>
                     </div>
                     <div class="col-sm-12 col-md-3 social text-right">
@@ -536,6 +536,11 @@
             
             $(document).ready(function() {
                 $('head').append('<link rel="shortcut icon" href="https://cdn.crunchify.com/favicon.ico">');
+                $.each($('.dropdown-item'), function() {
+                    if ($(this).children().length == 0){
+                        $(this).remove();
+                    }
+                });
                 $('.navbar-toggler').on('click', function(){
                     $('.rotate').toggleClass("down");
                     $('.contextualMenu').fadeToggle();

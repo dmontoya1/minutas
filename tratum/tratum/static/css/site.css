@@ -439,6 +439,8 @@ section {
 
 .dropdown-menu {
     min-width: 15rem;
+    top: 30px !important; 
+    left: -155px !important; 
 }
 
 .dropleft.subdrop a {
