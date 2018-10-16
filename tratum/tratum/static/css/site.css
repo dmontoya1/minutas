@@ -432,12 +432,12 @@ section {
     color: rgb(62, 62, 62);
 }
 
-
+.dropleft,
 .auth-buttons {
     display: inline-block;
 }
 
-.dropleft {
+.dropleft.subdrop {
     margin-bottom: .5em;
     display: block;
 }
