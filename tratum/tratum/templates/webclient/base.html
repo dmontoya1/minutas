@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
+        
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123601727-1"></script>
         <script>
         window.dataLayer = window.dataLayer || [];
@@ -19,7 +20,7 @@
         <meta name="description" content="Tratum, documentos legales online">
         <meta name="author" content="Apptitud">
 
-        <link rel="icon" href="https://cdn.crunchify.com/favicon.ico">
+        
         <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400,600,700" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" 
               integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" 
@@ -534,6 +535,7 @@
             }
             
             $(document).ready(function() {
+                $('head').append('<link rel="shortcut icon" href="https://cdn.crunchify.com/favicon.ico">');
                 $('.navbar-toggler').on('click', function(){
                     $('.rotate').toggleClass("down");
                     $('.contextualMenu').fadeToggle();
