@@ -45,3 +45,9 @@ class SiteConfigAdmin(admin.ModelAdmin):
 class SliderItemAdmin(admin.ModelAdmin):
     form = SliderItemForm
 
+    def has_add_permission(self, request):
+        if self.model.objects.count() > 3:
+            return False
+        else:
+            return True
+
