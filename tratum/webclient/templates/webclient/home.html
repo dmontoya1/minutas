@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/easy-autocomplete.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/css/swiper.min.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <link rel="icon" href="https://cdn.crunchify.com/favicon.ico">
 {% endblock %}
 
 {% block content %}
@@ -218,15 +219,16 @@
         <div class="form-group">
           <textarea required name="message" class="form-control" placeholder="Mensaje"></textarea>
         </div>
+        <div class="g-recaptcha" data-sitekey="6LfIX3UUAAAAAOginHOV0GQhjDO0j9zCNS0d7ZPi"></div>
         <div class="form-group">
-          <button type="submit" class="btn btn-primary">Enviar</button>
+          <button type="submit" class="action-button__primary">Enviar</button>
         </div>
       </form>
     </div>
   </div>
   <div class="row corporate-signature">
     <div class="col text-center">
-      <span>Con el respaldo jurídico de <a><img src="{% static 'img/gonzales-aldana-logos-08.png' %}" width="120px"/></span></a>
+      <span>Con el respaldo jurídico de <a href="https://gonzalezaldana.com/"><img src="{% static 'img/gonzales-aldana-logos-08.png' %}" width="120px"/></span></a>
     </div>
   </div>
 
@@ -244,6 +246,7 @@
     <script>    
       window.onload = function(){ document.getElementById("loadingAnimation").style.display = "none" }   
     </script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
     <script
     src="https://code.jquery.com/color/jquery.color-2.1.2.min.js"
