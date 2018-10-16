@@ -340,9 +340,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12 col-md-3 faq">
-                        <i class="fas fa-question-circle"></i>
-                        <a href="{% url 'webclient:faq' %}">
-                            Preguntas Frecuentes
+                        <small class="mb-2">Con el respaldo jurídico de</small>
+                        <a href="https://gonzalezaldana.com/" target="_blank" class="mt-2">
+                            <img src="{% static 'img/galogo.png' %}" width="100%"/>
                         </a>
                     </div>
                     <div class="col-sm-12 col-md-3 link-col">
@@ -351,6 +351,9 @@
                         </a>
                         <a data-toggle="modal" data-target="#modal-documents" >
                             Dinos que documentos necesitas
+                        </a>
+                        <a href="{% url 'webclient:faq' %}">
+                            Preguntas Frecuentes
                         </a>
                     </div>
                     <div class="col-sm-12 col-md-3 link-col">
