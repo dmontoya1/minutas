@@ -29,6 +29,9 @@ footer {
     background-color: #000;
     color: #e8e8e8;
 }
+    footer .faq {
+        text-align: center;
+    }
     footer .faq i {
         font-size: 1.2em;
         margin-right: .5em;
