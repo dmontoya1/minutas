@@ -226,9 +226,9 @@ class CategoryDocumentsView(TermsAndConditions):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         category = Category.objects.get(slug=self.kwargs['slug'])
-        categories = category.get_descendants(include_self=True)
+        categories = category.get_descendants(include_self=True).alive()
         context['category'] = category
-        context['documents'] = Document.objects.filter(category__in=categories).order_by('order')
+        context['documents'] = Document.objects.alive().filter(category__in=categories).order_by('order')
         return context
 
 
