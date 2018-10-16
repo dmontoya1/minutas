@@ -432,18 +432,18 @@ section {
     color: rgb(62, 62, 62);
 }
 
-.dropleft,
+
 .auth-buttons {
     display: inline-block;
-    
 }
 
 .dropleft {
     margin-bottom: .5em;
+    display: block;
 }
 
 .dropdown-menu {
-    min-width: 15rem;
+    max-width: 320px !important; 
     top: 30px !important; 
     left: -155px !important; 
     right: 0 !important;
