@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
+        
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123601727-1"></script>
         <script>
         window.dataLayer = window.dataLayer || [];
@@ -18,7 +19,8 @@
         <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="description" content="Tratum, documentos legales online">
         <meta name="author" content="Apptitud">
-        <link rel="icon" href="https://getbootstrap.com/assets/img/favicons/favicon-32x32.png">
+
+        
         <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400,600,700" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" 
               integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" 
@@ -67,6 +69,7 @@
                                 </h5>
                             {% else %}
                                 <h5 class="text-white">
+                                    <span>Hola, {{request.user.first_name}}</span>
                                     <a href="/logout/" id="Logout">Cerrar sesión</a>
                                 </h5></br>
                             {% endif %}
@@ -92,9 +95,14 @@
                         </div>  
                         <div class="auth-buttons">
                             {% if request.user.is_anonymous %}
+                                <a href="/">Inicio</a>
+                                <a href="{% url 'webclient:about-us' %}">¿Qué es Tratum?</a>
+                                <a href="{% url 'webclient:faq' %}">Preguntas frecuentes </a>
                                 <a data-toggle="modal" data-target="#modal-signup">Registrarse</a>
                                 <a data-toggle="modal" data-target="#modal-login">Iniciar sesión</a>
+                                
                             {% else %}
+                                <span style="margin-right: 1em;">Hola, {{request.user.first_name}} </span>
                                 <a href="/logout/" id="Logout">Cerrar sesión</a>
                             {% endif %}
                         </div>
@@ -332,9 +340,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12 col-md-3 faq">
-                        <i class="fas fa-question-circle"></i>
-                        <a href="{% url 'webclient:faq' %}">
-                            Preguntas Frecuentes
+                        <small class="mb-2">Con el respaldo jurídico de</small>
+                        <a href="https://gonzalezaldana.com/" target="_blank" class="mt-2">
+                            <img src="{% static 'img/galogo.png' %}" width="100%"/>
                         </a>
                     </div>
                     <div class="col-sm-12 col-md-3 link-col">
@@ -344,23 +352,26 @@
                         <a data-toggle="modal" data-target="#modal-documents" >
                             Dinos que documentos necesitas
                         </a>
+                        <a href="{% url 'webclient:faq' %}">
+                            Preguntas Frecuentes
+                        </a>
                     </div>
                     <div class="col-sm-12 col-md-3 link-col">
                         <a href="{% url 'webclient:policies' 'privacy' %}">
                             Políticas de tratamiento de datos personales 
                         </a>
                         <a href="{% url 'webclient:policies' 'terms' %}">
-                            Terminos y condiciones 
+                            Términos y condiciones 
                         </a>
                     </div>
                     <div class="col-sm-12 col-md-3 social text-right">
-                        <a href="#" class="text-white">
+                        <a href="http://www.facebook.com/" class="text-white" target="_blank">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="#" class="text-white">
+                        <a href="http://www.twitter.com/" class="text-white" target="_blank">
                             <i class="fab fa-twitter"></i>
                         </a>
-                        <a href="#" class="text-white">
+                        <a href="http://www.instagram.com/" class="text-white" target="_blank">
                             <i class="fab fa-instagram"></i>
                         </a>
                         <div class="col mt-3">
@@ -406,8 +417,9 @@
                                         <div class="form-group">
                                             <textarea required name="message" class="form-control" placeholder="¿Qué documentos necesitas?"></textarea>
                                         </div>
+                                        <div class="g-recaptcha" data-sitekey="6LfIX3UUAAAAAOginHOV0GQhjDO0j9zCNS0d7ZPi"></div>
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-primary">Enviar</button>
+                                            <button type="submit" class="action-button__primary">Enviar</button>
                                         </div>
                                     </form>
                                 </div>
@@ -526,6 +538,12 @@
             }
             
             $(document).ready(function() {
+                $('head').append('<link rel="shortcut icon" href="https://cdn.crunchify.com/favicon.ico">');
+                $.each($('.dropdown-item'), function() {
+                    if ($(this).children().length == 0){
+                        $(this).remove();
+                    }
+                });
                 $('.navbar-toggler').on('click', function(){
                     $('.rotate').toggleClass("down");
                     $('.contextualMenu').fadeToggle();

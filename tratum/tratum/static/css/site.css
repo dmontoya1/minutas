@@ -29,6 +29,9 @@ footer {
     background-color: #000;
     color: #e8e8e8;
 }
+    footer .faq {
+        text-align: center;
+    }
     footer .faq i {
         font-size: 1.2em;
         margin-right: .5em;
@@ -347,7 +350,6 @@ section {
     }
     .contact-form form button {
         width: 100%;
-        background-color: #5eccc4;
     }
     .form-group {
         margin-top: 1.2em;
@@ -438,8 +440,16 @@ section {
     display: inline-block;
 }
 
+.dropleft.subdrop {
+    margin-bottom: .5em;
+    display: block;
+}
+
 .dropdown-menu {
-    min-width: 15rem;
+    max-width: 320px !important; 
+    top: 30px !important; 
+    left: -155px !important; 
+    right: 0 !important;
 }
 
 .dropleft.subdrop a {

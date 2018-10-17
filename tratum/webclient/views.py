@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from allauth.socialaccount.models import SocialAccount
 from rest_framework.authtoken.models import Token
 
 from django.contrib import messages 
@@ -133,49 +134,56 @@ class SignupView(View):
         try:
             user = get_user_model()
             user = user()
-            user.email = request.POST['email']
-            user.username = request.POST['email']
-            user.set_password(request.POST['password1'])
-            user.backend = 'django.contrib.auth.backends.ModelBackend'
-            user.is_active = False
-            user.save()
-
-            Token.objects.create(user=user)
-
-            x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-            if x_forwarded_for:
-                ip = x_forwarded_for.split(',')[0]
+            if SocialAccount.objects.filter(user__email=request.POST['email']).count() > 0:
+                messages.add_message(
+                    request,
+                    messages.ERROR, 
+                    "Ya existe una cuenta registrada con éste correo electrónico conectado a una red social."
+                )
             else:
-                ip = request.META.get('REMOTE_ADDR')
-				
-            log = LogTerms(
-                ip=ip,
-                user=user
-            )
-            log.save()
-            current_site = get_current_site(request)
+                user.email = request.POST['email']
+                user.username = request.POST['email']
+                user.set_password(request.POST['password1'])
+                user.backend = 'django.contrib.auth.backends.ModelBackend'
+                user.is_active = False
+                user.save()
 
-            ctx = {
-                'email': user.email,
-                'domain': current_site.domain,
-                'token': account_activation_token.make_token(user),
-                'user_id': user.pk
-            }
-            body = loader.get_template('webclient/email/account_activation_email.html').render(ctx)
-            message = EmailMessage(
-                "Activa tu cuenta en Tratum",
-                body,
-                'no-reply@tratum.co',
-                [user.email]
-            )
-            message.content_subtype = 'html'
-            message.send()
+                Token.objects.create(user=user)
 
-            messages.add_message(
-                request,
-                messages.ERROR, 
-                "Te has registrado correctamente. Revisa tu correo para activar tu cuenta"
-            )
+                x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+                if x_forwarded_for:
+                    ip = x_forwarded_for.split(',')[0]
+                else:
+                    ip = request.META.get('REMOTE_ADDR')
+                    
+                log = LogTerms(
+                    ip=ip,
+                    user=user
+                )
+                log.save()
+                current_site = get_current_site(request)
+
+                ctx = {
+                    'email': user.email,
+                    'domain': current_site.domain,
+                    'token': account_activation_token.make_token(user),
+                    'user_id': user.pk
+                }
+                body = loader.get_template('webclient/email/account_activation_email.html').render(ctx)
+                message = EmailMessage(
+                    "Activa tu cuenta en Tratum",
+                    body,
+                    'no-reply@tratum.co',
+                    [user.email]
+                )
+                message.content_subtype = 'html'
+                message.send()
+
+                messages.add_message(
+                    request,
+                    messages.ERROR, 
+                    "Te has registrado correctamente. Revisa tu correo para activar tu cuenta"
+                )
             url = reverse('webclient:home')
             return JsonResponse(url, safe=False)
         except IntegrityError:
@@ -218,9 +226,9 @@ class CategoryDocumentsView(TermsAndConditions):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         category = Category.objects.get(slug=self.kwargs['slug'])
-        categories = category.get_descendants(include_self=True)
+        categories = category.get_descendants(include_self=True).alive()
         context['category'] = category
-        context['documents'] = Document.objects.filter(category__in=categories).order_by('order')
+        context['documents'] = Document.objects.alive().filter(category__in=categories).order_by('order')
         return context
 
 
@@ -249,9 +257,9 @@ class UserDocumentsView(LoginRequiredMixin, TermsAndConditions, ListView):
             if not docs:
                 messages.add_message(
                     request,
-                        messages.ERROR, 
-                        "No tienes documentos creados. \
-                        Crea o compra tu primer documento desde aquí"
+                    messages.ERROR, 
+                    "No tienes documentos creados. \
+                    Crea o compra tu primer documento desde aquí"
                 )
                 return redirect(reverse('webclient:category_documents', args=("",)))
         self.object_list = self.get_queryset()

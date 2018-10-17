@@ -175,6 +175,12 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
                     fields.append(component)
                 elif isinstance(component, DocumentSection) and component not in sections:
                     sections.append(component)
+        for f in DocumentField.objects.filter(
+            document=self,
+            field_type=DocumentField.DYNAMIC_SELECT,
+            show_on_document=False
+        ):
+            fields.insert(0, f)
         return result
 
     def get_fields(self):
@@ -342,6 +348,11 @@ class DocumentField(SlugIdentifierMixin):
         help_text='Indica el orden de aparición del campo en el grupo corrspondiente (Sólo aplica para campos de una agrupación)',
         null=True,
         blank=True
+    )
+    show_on_document = models.BooleanField(
+        '¿Mostrar en el documento?',
+        help_text='Si desactivas esta opción, la pregunta aparecerá en el formulario, pero no en el documento',
+        default=True
     )
     
     class Meta:
