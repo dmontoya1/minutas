@@ -256,7 +256,7 @@ $.fn.upform = function() {
     });
 
     $(window).on("scroll", function(){
-        if($(window).width() > 1025){
+        if($(window).width() > 1600){
             $(container).find(".input-block").each(function() {
                 var etop = $(this).offset().top;
                 var diff = etop - $(window).scrollTop();
