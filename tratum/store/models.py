@@ -218,3 +218,8 @@ class Invoice(models.Model):
         if self.package:
             return self.package.name
         return None
+    
+
+    def save(self, *args, **kwargs):
+        self.payu_reference_code = 'DO_{}_{}'.format(self.pk, self.get_identifier())
+        super(Invoice, self).save(*args, **kwargs)
