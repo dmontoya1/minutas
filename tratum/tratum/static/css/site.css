@@ -90,6 +90,11 @@ section {
     background-color: transparent;
 }
 
+.bg-dark-blue {
+    color: #007bff;
+}
+
+
 .swiper-container {
     width: 100%;
     height: fit-content;
