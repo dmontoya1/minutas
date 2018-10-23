@@ -274,6 +274,15 @@ class UserDocumentView(LoginRequiredMixin, DetailView):
     login_url = '/'
     redirect_field_name = 'next'
 
+    def get(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.is_file_document():
+            filename = obj.file.name.split('/')[-1]
+            response = HttpResponse(obj.file, content_type='text/plain')
+            response['Content-Disposition'] = 'attachment; filename=%s' % filename
+            return response 
+        return super().get(request, *args, **kwargs)
+
     def get_object(self):
         obj = UserDocument.objects.get(identifier=self.kwargs['identifier'])
         return obj.document
