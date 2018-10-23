@@ -163,14 +163,14 @@ iframe {
                 border: none;
             }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1600px) {
     .upform {
         margin: 20px auto 200px auto;
         overflow-x: hidden;
         padding: 0 10px;
     }
 }
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1600px) {
     .upform .upform-main .input-block {
         opacity: 1;
     }
@@ -257,4 +257,12 @@ iframe {
 .linked-title {
     margin: 2em 1em 1em 0.5em;
     padding-left: 2.5em;
+}
+
+.tooltip {
+    left: 226px !important;
+}
+
+.tooltip.bs-tooltip-auto[x-placement^=left] .arrow, .tooltip.bs-tooltip-left .arrow {
+    display: none;
 }
