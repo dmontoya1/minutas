@@ -56,7 +56,7 @@ class Category(MPTTModel, SoftDeletionModelMixin, SlugIdentifierMixin):
     
     def clean(self):
         if self.parent:
-            if self.parent.get_ancestors().count() == 3:
+            if self.parent.get_children().count() == 3:
                 raise ValidationError('Las categorías sólo pueden tener hasta 4 niveles de profundidad')
         
     def get_absolute_url(self):
