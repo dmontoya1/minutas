@@ -132,8 +132,8 @@
                                                     <div class="col-1">
                                                         <a data-video="{{doc.video_url}}"
                                                         data-name="{{doc.name}}"
-                                                        data-shortdescription="{{doc.short_description}}"
-                                                        data-longdescription="{{doc.long_description}}"
+                                                        data-shortdescription="{{doc.short_description|safe}}"
+                                                        data-longdescription="{{doc.long_description|safe}}"
                                                         class="btn-modal-info">
                                                             <i class="fas fa-info-circle float-right"></i>
                                                         </a>
@@ -707,7 +707,7 @@
                 }
             }
             else {
-                $('#doc__modal_description').text($(this).data('longdescription'))
+                $('#doc__modal_description').text($(this).data('longdescription').replace(/<(?:.|\n)*?>/gm, ''))
             }
 
             if ($(this).data('video') != 'None')
