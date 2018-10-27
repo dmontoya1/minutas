@@ -83,7 +83,7 @@
             </table>
             {% if ref == 'DO'%}
                 <a class="btn btn-action" href="{% url 'webclient:user-documents' %}">Ir mis documentos</a>
-                {% if identifier%}
+                {% if identifier %}
                     <a class="btn btn-action" href="{% url 'webclient:user-document' identifier %}">Editar mi documento</a>
                 {% endif %}
             {% else %}

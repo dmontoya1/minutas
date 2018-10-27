@@ -130,6 +130,13 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
         blank=True,
         null=True
     )
+    file = models.FileField(
+        'Documento de archivo',
+        help_text='Si subes una archivo aquí, indicas que el documento no será un formulario, si no un archivo descargable. Ej: Liquidador de excel',
+        upload_to='filedocuments',
+        null=True,
+        blank=True
+    )
  
     class Meta:
         verbose_name = 'Documento'
@@ -188,6 +195,11 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
     
     def get_sections(self):
         return self.get_components('sections') 
+    
+    def is_file_document(self):
+        if self.file: 
+            return True
+        return False
 
 
 class DocumentSection(SlugIdentifierMixin):
