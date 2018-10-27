@@ -72,9 +72,9 @@
             </form>
           </div>
       </div>
-      <div class="col-lg-5 p-0">
+      <div class="col-lg-5 p-0" style="z-index: -999999;">
         <div class="info-col">
-              <div class="document-preview" id="content-preview" data-name="{{object.document.name}}">
+              <div class="document-preview" style="z-index: -999999;" id="content-preview" data-name="{{object.document.name}}">
               </div>
               <div class="upform-footer">
                 <a href="{% url 'webclient:user-document-process' identifier %}" class="btn btn-primary btn-lg preview">Generar documento</a>
