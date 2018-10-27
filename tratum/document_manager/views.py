@@ -295,7 +295,7 @@ class CategoryRootList(generics.ListAPIView):
     serializer_class = CategorySerializer
 
     def get_queryset(self):
-        return Category.objects.filter(parent=None)
+        return Category.objects.filter(parent=None, deleted_at=None)
 
 
 class CategoryChildrenList(generics.ListAPIView):
@@ -306,7 +306,7 @@ class CategoryChildrenList(generics.ListAPIView):
 
     def get_queryset(self):
         category = Category.objects.get(slug=self.kwargs['slug'])
-        return Category.objects.filter(parent=category)
+        return Category.objects.filter(parent=category, deleted_at=None)
 
 
 def category(request, path, instance):
