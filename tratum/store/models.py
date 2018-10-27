@@ -184,6 +184,7 @@ class Invoice(models.Model):
     )
     payment_date = models.DateTimeField(
         'Fecha de pago',
+        auto_now_add=True,
         null=True,
         blank=True
     )
