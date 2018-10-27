@@ -223,13 +223,5 @@ class Invoice(models.Model):
 
     def save(self, *args, **kwargs):
         if self.payu_reference_code:
-            for r in (
-                ("'", ""),
-                ("[", ""),
-                ("]", ""),
-                ("", ""),
-                (",", ""),
-                (" ", "_"),
-            ):
-                self.payu_reference_code = self.payu_reference_code.replace(*r)
+            self.payu_reference_code = '_'.join(self.payu_reference_code)
         super(Invoice, self).save(*args, **kwargs)
