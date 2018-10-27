@@ -734,7 +734,7 @@
             g_url = "{% provider_login_url 'google' method='oauth2' next='' %}"
             g_url = g_url + '&next=' +  success
             f_url = "{% provider_login_url 'facebook' method='oauth2' next='' %}"
-            f_url = f_url + '&next=' +  success
+            f_url = f_url + '?next=' +  success
             $('.btn-gl').attr('href', g_url)
             $('.btn-fb').attr('href', f_url)
         })
