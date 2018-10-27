@@ -137,10 +137,13 @@ class UserDocument(models.Model):
         return reverse('webclient:user-document', kwargs={'identifier': self.identifier})
     
     def is_expired(self):
-        diff = datetime.datetime.now() - self.created_at.replace(tzinfo=None)
-        if diff.days > 10:
-            return True
         return False
+        created_at = datetime.datetime.strptime(self.created_at, "%Y-%m-%d") 
+        diff = abs((datetime.datetime.now() - created_at).days)
+        print(diff)
+        if diff > 10:
+            return False
+        return True
 
 
 class Invoice(models.Model):
@@ -219,5 +222,6 @@ class Invoice(models.Model):
     
 
     def save(self, *args, **kwargs):
-        self.payu_reference_code = 'DO_{}_{}'.format(self.pk, self.get_identifier())
+        if self.payu_reference_code:
+            self.payu_reference_code = '_'.join(self.payu_reference_code)
         super(Invoice, self).save(*args, **kwargs)
