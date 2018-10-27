@@ -145,9 +145,9 @@
                                                     {%if doc.price is None or doc.price == 0%}
                                                         <div class="col-6">
                                                             {% if user.is_authenticated %}
-                                                                <a href="{% url 'store:create-user-document'  %}?document_id={{doc.pk}}" class="btn btn-buy float-left">Comprar</a>
+                                                                <a class="btn btn-buy float-left" href="{% url 'store:create-user-document'  %}?document_id={{doc.pk}}" class="btn btn-buy float-left">Comprar</a>
                                                             {% else %}
-                                                                <a data-success="{% url 'store:create-user-document'  %}?document_id={{doc.pk}}" data-toggle="modal" data-target="#modal-login" class="btn btn-buy free float-left">Comprar</a>
+                                                                <a data-success="{% url 'store:create-user-document'  %}?document_id={{doc.pk}}" data-toggle="modal" data-target="#modal-login" class="btn btn-buy anon float-left">Comprar</a>
                                                             {% endif %}
                                                         </div>
                                                     
@@ -157,9 +157,9 @@
                                                     {%else%}
                                                         <div class="col-6">
                                                             {% if user.is_authenticated %}
-                                                                <a href="{% url 'store:checkout' %}?doc_id={{doc.id}}">Comprar</a>
+                                                                <a class="btn btn-buy float-left" href="{% url 'store:checkout' %}?doc_id={{doc.id}}">Comprar</a>
                                                             {% else %}
-                                                                <a  data-success="{% url 'store:checkout' %}?doc_id={{doc.id}}" data-toggle="modal" data-target="#modal-login" class="btn btn-buy pay float-left">Comprar</a>
+                                                                <a  data-success="{% url 'store:checkout' %}?doc_id={{doc.id}}" data-toggle="modal" data-target="#modal-login" class="btn btn-buy anon float-left">Comprar</a>
                                                             {% endif %}
                                                         </div>
                                                         <div class="col-6">
@@ -729,7 +729,7 @@
             $('.video-container').empty()
         })
 
-        $('.btn-buy').on('click', function (e) {
+        $('.btn-buy.anon').on('click', function (e) {
             success = $(this).data('success');
             g_url = "{% provider_login_url 'google' method='oauth2' next='' %}"
             g_url = g_url + '&next=' +  success
