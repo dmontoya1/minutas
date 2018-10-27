@@ -59,7 +59,7 @@ class Checkout(TemplateView):
     """
     template_name = 'store/checkout.html'
 
-    def post(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
 
         tax = 0
         taxReturnBase = 0
@@ -85,19 +85,19 @@ class Checkout(TemplateView):
 
         try:
             try:
-                documents = Document.objects.filter(pk=request.POST['doc_id'])
+                documents = Document.objects.filter(pk=request.GET['doc_id'])
                 doc_type = 'doc'
                 ref = 'DO'
                 id_ref = documents.first().pk
             except MultiValueDictKeyError:
-                package = DocumentBundle.objects.get(pk=request.POST['pack_id'])
+                package = DocumentBundle.objects.get(pk=request.GET['pack_id'])
                 documents = package.documents.all()
                 doc_type = package.name
                 ref = 'PA'
                 id_ref = package.pk
         except Exception as e:
             print (e)        
-
+        print(documents)
         amount = 0
         for doc in documents:
             if doc.price:
