@@ -285,7 +285,7 @@ class MainDocumentList(generics.ListAPIView):
         q = self.request.GET.get('term', None)
         if q:
             return Document.objects.filter(name__contains=q)
-        return Document.objects.all()
+        return Document.objects.filter(deleted_at=None)
 
 
 class CategoryRootList(generics.ListAPIView):
@@ -321,29 +321,30 @@ def category(request, path, instance):
         if request.GET.get('free'):
             if instance:
                 categories = instance.get_descendants(include_self=True)
-                document_list = Document.objects.filter(Q(price=0) | Q(price=None), category__in=categories,).order_by('order')
+                document_list = Document.objects.filter(Q(price=0) | Q(price=None, deleted_at=None), category__in=categories,).order_by('order')
             else:
-                document_list = Document.objects.filter(Q(price=0) | Q(price=None)).order_by('order')
+                document_list = Document.objects.filter(Q(price=0) | Q(price=None), deleted_at=None).order_by('order')
         elif request.GET.get('pay'):
             if instance:
                 categories = instance.get_descendants(include_self=True)
-                document_list = Document.objects.filter(category__in=categories, price__gt=0).order_by('order')
+                document_list = Document.objects.filter(category__in=categories, price__gt=0, deleted_at=None).order_by('order')
             else:
-                document_list = Document.objects.filter(price__gt=0).order_by('order')
+                document_list = Document.objects.filter(price__gt=0, deleted_at=None).order_by('order')
         else:
             package_list = DocumentBundle.objects.all().order_by('order')
 
     else:
         if instance:
             categories = instance.get_descendants(include_self=True)
-            document_list = Document.objects.filter(category__in=categories).order_by('order')
+            document_list = Document.objects.filter(category__in=categories, deleted_at=None).order_by('order')
         else:
             if q:
                 document_list = Document.objects.filter(
-                    Q(name__icontains=q) | Q(category__name__icontains=q)
+                    Q(name__icontains=q) | Q(category__name__icontains=q),
+                    deleted_at=None
                 ).order_by('order')
             else:
-                document_list = Document.objects.all().order_by('order')
+                document_list = Document.objects.filter(deleted_at=None).order_by('order')
 
 
     if document_list:

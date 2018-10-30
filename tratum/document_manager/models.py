@@ -372,7 +372,9 @@ class DocumentField(SlugIdentifierMixin):
         unique_together = ('name', 'document') 
         
     def __str__(self):
-        return self.name   
+        if self.document:
+            return '{} [{}]'.format(self.name, self.document.name)
+        return self.name
 
     def clean(self):
         if self.document and self.section:
