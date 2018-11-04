@@ -101,6 +101,9 @@ class LoginView(View):
     def post(self, request, *args, **kwargs):
         email = request.POST['email']
         password = request.POST['password']
+        if SocialAccount.objects.filter(user__email=email).count() > 0:
+            response = {'error': 'La cuenta con la que intentas iniciar está conectada a una red social'}
+            return JsonResponse(response, status=400)
         try:
             user = User.objects.get(username=email)
         except User.DoesNotExist:
