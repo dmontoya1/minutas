@@ -33,7 +33,7 @@
                     <div class="col-md-4 mt-4">
                         <a href="{% url 'webclient:user-documents' %}" class="underline">Ver mis documentos</a></br>
                         <button class="action-button__primary blue link-button" data-href="{{object.pdf_file.url}}">Descargar PDF</button></br>
-                        <button class="action-button__primary blue link-button" data-href="{{object.word_file.url}}">Descargar DOC</button>
+                        <button class="action-button__primary blue link-button" data-href="{% if object.word_file%}{{object.word_file.url}}{% endif %}">Descargar DOC</button>
                     </div>
                 {% else %}
                     <div class="col-md-4">
