@@ -256,16 +256,17 @@ $.fn.upform = function() {
     });
 
     $(window).on("scroll", function(){
-        if($(window).width() > 1600){
-            $(container).find(".input-block").each(function() {
-                var etop = $(this).offset().top;
-                var diff = etop - $(window).scrollTop();
-    
-                if (diff > 100 && diff < 300) {
-                    reinitState(this);
-                }
-            });   
-        }            
+        
+        $(container).find(".input-block").each(function() {
+            var etop = $(this).offset().top;
+            var diff = etop - $(window).scrollTop();
+
+            if (diff > 100 && diff < 300) {
+                reinitState(this);
+            }
+        });   
+       
+                 
     });
 
     function reinitState(e) {
