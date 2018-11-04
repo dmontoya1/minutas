@@ -151,7 +151,6 @@ class FinishDocumentView(View):
         user_document = UserDocument.objects.get(identifier=body['identifier'])
         self.generate_html(request, user_document, body['content'])
         self.generate_pdf(request, user_document)
-        self.generate_doc(request, user_document)
         self.update_status(user_document)
         self.send_email(request, user_document) 
         return HttpResponse(status=200)
