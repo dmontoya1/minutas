@@ -163,20 +163,6 @@ iframe {
                 border: none;
             }
 
-@media screen and (max-width: 1600px) {
-    .upform {
-        margin: 20px auto 200px auto;
-        overflow-x: hidden;
-        padding: 0 100px;
-        opacity: 0.8;
-    }
-}
-@media screen and (max-width: 1600px) {
-    .upform .upform-main .input-block {
-        opacity: 1;
-    }
-}
-
 .tooltip-inner {
     color: #161616;
     background-color: #fff;
