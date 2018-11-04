@@ -353,6 +353,7 @@ $('.section-item').on('click', function(e){
 })
 
 $('select.dynamic').on('change', function(e){   
+    console.log($(this).find(":selected").text());
     field = $(this).attr('name');
     parent = $(this).closest('.input-block');
     value = $(this).find(":selected").text();
@@ -364,7 +365,9 @@ $('select.dynamic').on('change', function(e){
         .then(function(response){
             
             fields = response.data.fields
-            title = `<h5 class="linked-title" data-parent="${id}" data-question="${field}">Los siguientes campos aparecen por que seleccionaste <strong>${value}</strong></h5>`
+            if (fields.length > 0){
+                title = `<h5 class="linked-title" data-parent="${id}" data-question="${field}">Los siguientes campos aparecen por que seleccionaste <strong>${value}</strong></h5>`
+            }
             Object.keys(fields).forEach(function(key) {
                 parent.after(fields[key]);
             })
@@ -408,4 +411,5 @@ $(function(){
             }            
         })
     realTimeUpdate();
+    $('select.dynamic').trigger('change');
 });
