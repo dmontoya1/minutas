@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import format_html
 from mptt.admin import MPTTModelAdmin
 from utils.admin import SoftDeletionModelAdminMixin
 from .models import (
@@ -43,11 +44,9 @@ class CategoryAdmin(SoftDeletionModelAdminMixin, MPTTModelAdmin):
 @admin.register(DocumentField)
 class DocumentFieldAdmin(admin.ModelAdmin):
     list_display = (
-        'name',
-        'document',
-        'section',
+        'display_name',
         'field_type',
-        'slug'
+        'orden'
     )
     list_filter = (
         'document',
@@ -78,10 +77,23 @@ class DocumentFieldAdmin(admin.ModelAdmin):
                 kwargs["queryset"] = DocumentField.objects.filter(**filters)
         return super(DocumentFieldAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
+    def orden(self, obj):
+        return format_html(
+            "<form method='POST' action='/update_order/'> \
+                <input type='number' value='{}' name='order' class='order_number'> \
+                <input type='hidden' value='{}' name='field_pk'> \
+                <input type='button' value='Cambiar' class='changer_submit'> \
+            </form>".format(obj.order, obj.pk)
+        )
+  
+
     class Media:
         js = (
             '/static/js/admin/documentfields.js',
         )
+        css = {
+            'all': ('/static/css/documentfields.css',)
+        }
 
 
 @admin.register(DocumentSection)

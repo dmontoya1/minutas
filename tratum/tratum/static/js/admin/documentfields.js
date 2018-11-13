@@ -1,4 +1,18 @@
 (function($) {
+
+    $(document).ready(function(){
+
+        $('.changer_submit').on('click', function(e){
+            e.preventDefault();
+            pk = $(this).prev()
+            order = $(this).prev().prev()
+            $.post("/api/document-manager/change-admin-order/",{ pk: pk.val(), order: order.val() })
+                .done(function() {
+                    alert("Cambiado exitosamente");
+                })
+        });
+    })
+
     var getUrlParameter = function getUrlParameter(sParam) {
         var sPageURL = decodeURIComponent(window.location.search.substring(1)),
             sURLVariables = sPageURL.split('&'),
@@ -17,4 +31,7 @@
         did = getUrlParameter('document_id');
         opts = $('#id_document').find('option'); 
     }
+    
+    
+
 })(django.jQuery);

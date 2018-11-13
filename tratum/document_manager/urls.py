@@ -13,7 +13,8 @@ from .views import (
     FinishDocumentView,
     UserDocumentContentView,
     MainDocumentList,
-    LinkedFieldView
+    LinkedFieldView,
+    ChangeAdminOrder
 )
 
 app_name = 'document_manager'
@@ -32,5 +33,6 @@ urlpatterns = [
     path('documents/', MainDocumentList.as_view(), name='main-document-list'),
     path('documents/<slug:slug>/', DocumentList.as_view(), name='document-list'),
     path('categories/', CategoryRootList.as_view(), name='categories-root-list'),
+    path('change-admin-order/', ChangeAdminOrder.as_view(), name='change-admin-order'),
     path('categories/<slug:slug>/children/', CategoryChildrenList.as_view(), name='categories-children-list'),
 ]
