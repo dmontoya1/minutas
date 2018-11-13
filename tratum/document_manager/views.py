@@ -21,7 +21,9 @@ from django.http import HttpResponse, FileResponse, JsonResponse
 from django.shortcuts import render
 from django.template import Template, Context, loader
 from django.template.loader import render_to_string, get_template
+from django.utils.decorators import method_decorator
 from django.views import View
+from django.views.decorators.csrf import csrf_exempt
 
 from docx import Document as DocX
 from rest_framework import generics
@@ -365,3 +367,16 @@ def category(request, path, instance):
             'packages': packages
         }
     )
+
+class ChangeAdminOrder(View):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ChangeAdminOrder, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        field = request.POST['pk']
+        order = request.POST['order']
+        field = DocumentField.objects.get(pk=field)
+        field.order = order
+        field.save()
+        return HttpResponse(status=200)

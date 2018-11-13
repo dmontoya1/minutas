@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 import re
 import os 
 import uuid
+import pprint
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -179,7 +180,7 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
             component = self.query_component(f)
             if component is not None:
                 if isinstance(component, DocumentField) and component not in fields:
-                    fields.append(component)
+                    fields.insert(component.order, component)
                 elif isinstance(component, DocumentSection) and component not in sections:
                     sections.append(component)
         for f in DocumentField.objects.filter(
@@ -187,7 +188,7 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
             field_type=DocumentField.DYNAMIC_SELECT,
             show_on_document=False
         ):
-            fields.insert(0, f)
+            fields.insert(f.order, f)
         return result
 
     def get_fields(self):
@@ -332,8 +333,7 @@ class DocumentField(SlugIdentifierMixin):
     order = models.PositiveIntegerField(
         'Orden de campo en el formulario',
         help_text='Indica el orden de aparición del campo en el formulario',
-        null=True,
-        blank=True
+        default=0
     )
     field_group = models.ManyToManyField(
         'self',
