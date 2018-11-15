@@ -48,7 +48,7 @@
         </div>
     </div>
 {% elif field.field_type == field.SELECT_MULTIPLE %}
-    <div class="input-block {{field.get_linked_state}}" data-parent="{{field.get_linked_parent}}" data-question="{{field.get_linked_question}}">
+    <div class="input-block preventForming {{field.get_linked_state}}" data-parent="{{field.get_linked_parent}}" data-question="{{field.get_linked_question}}">
         <div class="label col clearfix mb-2">
             <span class="float-left">{{forloop.counter}}. {{field.display_name}} </span>
             {% if field.help_text %}

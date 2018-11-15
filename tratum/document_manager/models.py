@@ -192,7 +192,13 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
         return result
 
     def get_fields(self):
-        return self.get_components('fields')
+        result = []
+        on_document_fields = self.get_components('fields')
+        fields = self.documentfield_set.filter().order_by('order')
+        for f in fields:
+            if f in on_document_fields:
+                result.append(f)
+        return result
     
     def get_sections(self):
         return self.get_components('sections') 
