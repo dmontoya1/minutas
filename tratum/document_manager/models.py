@@ -194,7 +194,7 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
     def get_fields(self):
         result = []
         on_document_fields = self.get_components('fields')
-        fields = self.documentfield_set.filter().order_by('order')
+        fields = self.documentfield_set.all().order_by('order')
         for f in fields:
             if f in on_document_fields:
                 result.append(f)
@@ -376,7 +376,8 @@ class DocumentField(SlugIdentifierMixin):
     class Meta:
         verbose_name = 'Campo'
         unique_together = ('name', 'document') 
-        
+        ordering = ['order', 'document']
+
     def __str__(self):
         if self.document:
             return '{} [{}]'.format(self.name, self.document.name)
