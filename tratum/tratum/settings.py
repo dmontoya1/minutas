@@ -11,7 +11,7 @@ DEBUG = False
 ALLOWED_HOSTS = [
     'www.tratum.co', 
     'tratum.co', 
-    '142.93.182.238'
+    '206.81.10.147'
 ]
 
 API_KEY = '03a6f7c84a760517a1c0b31e4acf6c180de90d16'
