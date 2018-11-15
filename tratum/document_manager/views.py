@@ -135,7 +135,7 @@ class LinkedFieldView(View):
 
     def get(self, request, *args, **kwargs):
         q = DocumentFieldOption.objects.get(pk=kwargs['pk'])
-        fields = q.linked_fields.all().order_by('-order')
+        fields = q.linked_fields.all()
         output = []
         for f in fields:
             template = loader.get_template('document_form/fields.html')
