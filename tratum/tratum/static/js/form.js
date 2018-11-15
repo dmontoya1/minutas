@@ -227,7 +227,7 @@ $.fn.upform = function() {
     });
 
     $(container)
-        .find(".input-block")
+        .find(".input-block:not(.preventForming)")
         .not(".input-block input")
         .on("click", function() {
             rescroll(this);
@@ -257,16 +257,15 @@ $.fn.upform = function() {
 
     $(window).on("scroll", function(){
         
-        $(container).find(".input-block").each(function() {
+        $(container).find(".input-block:not(.preventForming)").each(function() {
             var etop = $(this).offset().top;
             var diff = etop - $(window).scrollTop();
 
-            if (diff > 100 && diff < 300) {
+            if (diff > 50 && diff < 300) {
                 reinitState(this);
             }
         });   
-       
-                 
+            
     });
 
     function reinitState(e) {

@@ -120,6 +120,9 @@ iframe {
         opacity: 0.25;
         padding: 40px 0 0;
     }
+        .upform .upform-main .input-block.preventForming {
+            opacity: 1;
+        }
         .upform .upform-main .input-block.linked {
             padding-left: 2.5em;
         }
