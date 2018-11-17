@@ -2,12 +2,7 @@ import json
 import os
 import platform
 import subprocess
-import uuid
-
-
 import pdfkit
-import pypandoc
-
 
 from io import BytesIO
 
@@ -16,21 +11,18 @@ from django.conf import settings
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.core.mail import EmailMultiAlternatives
 from django.core.files.base import ContentFile
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.http import HttpResponse, FileResponse, JsonResponse
+from django.core.paginator import Paginator
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.template import Template, Context, loader
-from django.template.loader import render_to_string, get_template
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 
-from docx import Document as DocX
 from rest_framework import generics
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from selenium import webdriver
-from xhtml2pdf import pisa as pisa
+
 
 from store.models import DocumentBundle
 
@@ -39,7 +31,6 @@ from .models import (
     DocumentField,
     DocumentSection,
     DocumentFieldOption,
-    Document,
     Category
 )
 from .serializers import (
