@@ -229,7 +229,7 @@ CKEDITOR_CONFIGS = {
     }
 }
 
-#MPTT Settings
+# MPTT Settings
 
 MPTT_ADMIN_LEVEL_INDENT = 30
 
@@ -238,7 +238,7 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",
 )
 
-#email configuration
+# email configuration
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_USER = 'Tratum <no-reply@tratum.co>'
 EMAIL_HOST_USER = 'apptitud'
@@ -267,7 +267,7 @@ LOGOUT_ON_PASSWORD_CHANGE = True
 OLD_PASSWORD_FIELD_ENABLED = True
 
 
-#Social account settings
+# Social account settings
 SOCIALACCOUNT_PROVIDERS = {
     'facebook': {
         'METHOD': 'oauth2',
@@ -296,9 +296,9 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-#facebook
+# facebook
 SOCIAL_AUTH_FACEBOOK_KEY = '1124600941010990'  # App ID
-SOCIAL_AUTH_FACEBOOK_SECRET ='5072f4a65001e6ac0a272cc17d8fd4eb' #app key
+SOCIAL_AUTH_FACEBOOK_SECRET = '5072f4a65001e6ac0a272cc17d8fd4eb'  # app key
 SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
 SOCIALACCOUNT_ADAPTER = 'users.adapters.SocialAccountAdapter'
 
@@ -313,9 +313,9 @@ REST_FRAMEWORK = {
     )
 }
 
-#Raven
+# Raven
 RAVEN_CONFIG = {
-    'dsn': 'https://01d4dd1d2f3e43e9aee6a4831d69a9c7:ddd7c80b621541528f4f41c1a7bac91d@sentry.io/1282705',
+    'dsn': 'https://c3292ca91b15426799e9b0fbec91a19b:5391d3713265478181c9873ab7fc57aa@sentry.apptitud.com.co/1',
     # If you are using git, you can also automatically configure the
     # release based on the git info.
     'release': raven.fetch_git_sha(os.path.abspath(os.pardir)),
