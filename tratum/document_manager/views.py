@@ -177,13 +177,13 @@ class FinishDocumentView(View):
             'footer-center': '[page]',
             'footer-spacing': '14',
             'footer-font-size': '9',
-            'header-right': f'{user_document.document.name}',
+            'header-right': "{}".format(user_document.document.name),
             'header-spacing': '15',
             'header-font-size': '7',
             'javascript-delay': 300,
             'no-outline': None
         }
-        output_filename = f'{user_document.identifier}.pdf'
+        output_filename = "{}.pdf".format(user_document.identifier)
         html_file = user_document.html_file.read().decode('utf-8')
         file = pdfkit.PDFKit(html_file, "string", options=options).to_pdf()
         file = BytesIO(file)
@@ -193,30 +193,30 @@ class FinishDocumentView(View):
     def generate_doc(self, request, user_document):
         html_file = user_document.html_file.path
         name = os.path.basename(user_document.html_file.name.split('.')[0])
-        output_filename = f'{name}.odt'
+        output_filename = "{}.odt".format(name)
         media_root = settings.MEDIA_ROOT
 
         if platform.system() == 'Linux':
             subprocess.call(
-                f'soffice --headless --convert-to odt {html_file} --outdir {media_root}/docxs/',
+                "soffice --headless --convert-to odt {0} --outdir {1}/docxs/".format(html_file, media_root),
                 shell=True
             )
         elif platform.system() == 'Darwin':
             subprocess.call(
-                f'cd /Applications/LibreOffice.app/Contents/MacOS && \
-                ./soffice --headless --convert-to odt {html_file} --outdir {media_root}/docxs/',
+                "cd /Applications/LibreOffice.app/Contents/MacOS && \
+                ./soffice --headless --convert-to odt {0} --outdir {1}/docxs/".format(html_file, media_root),
                 shell=True
             )
 
-        user_document.word_file = f'docxs/{output_filename}'
+        user_document.word_file = "docxs/{}".format(output_filename)
         user_document.save()
 
     def generate_html(self, request, user_document, TEMPORARY_HTML_FILE):
 
         def get_scripted_html(request, html_string):
-            css_tag = lambda path: f'<link rel="stylesheet" type="text/css" href="{path}" />'
-            script_tag = lambda path: f'<script src="{path}"></script>'
-            django_temptag_tag = lambda path: '{{% load {path} %}}'.format(path=path)
+            css_tag = lambda path: '<link rel="stylesheet" type="text/css" href="{}" />'.format(path)
+            script_tag = lambda path: '<script src="{}"></script>'.format(path)
+            django_temptag_tag = lambda path: '{{% load {} %}}'.format(path)
             iterator = lambda tag, paths: [tag(path) for path in paths]
             css_paths = (
                 get_static_path(
@@ -239,17 +239,17 @@ class FinishDocumentView(View):
             css = '\n'.join(iterator(css_tag, css_paths))
             django_temptags = '\n'.join(iterator(django_temptag_tag, django_temptag_paths))
             escape = '\n'
-            return f'{django_temptags} {escape} {css} {html_string} {escape} {scripts}'
+            return "{0} {1} {2} {3} {4} {5}".format(django_temptags, escape, css, html_string, escape, scripts)
 
         """ content = get_scripted_html(request, user_document.document.content)
         template = Template(content)
         template = template.render(Context(user_document.answers)).encode('ascii', 'xmlcharrefreplace') """
 
         file = ContentFile(TEMPORARY_HTML_FILE.encode('ascii', 'xmlcharrefreplace'))
-        user_document.html_file.save(f'{user_document.identifier}.html', file)
+        user_document.html_file.save('{}.html'.format(user_document.identifier), file)
 
     def send_email(self, request, user_document):
-        subject = f'Tu {user_document.document.name} de Tratum'
+        subject = 'Tu {} de Tratum'.format(user_document.document.name)
         context = {
             'title': subject,
             'username': user_document.user.get_full_name(),
