@@ -1,6 +1,6 @@
 import json
 import os
-import platform 
+import platform
 import subprocess
 import uuid
 
@@ -27,6 +27,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from docx import Document as DocX
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 from selenium import webdriver
 from xhtml2pdf import pisa as pisa
 
@@ -52,6 +53,7 @@ from .utils import get_static_path
 
 class DocumentFieldList(generics.ListAPIView):
     serializer_class = DocumentFieldSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         q = DocumentField.objects.all()
@@ -68,7 +70,7 @@ class DocumentFieldDetail(generics.RetrieveAPIView):
         ins = DocumentField()
         slug = ins.formated_to_raw_slug(self.kwargs['slug'])
         return DocumentField.objects.get(slug=slug)
-        
+
 
 class DocumentSectionList(generics.ListAPIView):
     serializer_class = DocumentSectionSerializer
@@ -82,9 +84,9 @@ class DocumentSectionList(generics.ListAPIView):
 
 class DocumentSectionFieldsList(DocumentFieldList):
 
-    def get_queryset(self): 
+    def get_queryset(self):
         return DocumentField.objects.filter(section__slug=self.kwargs['slug'])
-        
+
 
 class DocumentSectionDetail(generics.RetrieveAPIView):
     serializer_class = DocumentSectionSerializer
@@ -123,7 +125,7 @@ class UserDocumentContentView(View):
         document_content = Template(obj.document.content)
         document_content = document_content.render(Context(obj.answers))
         content['document_content'] = document_content
-        return JsonResponse(content) 
+        return JsonResponse(content)
 
 
 class LinkedFieldView(View):
@@ -155,13 +157,13 @@ class FinishDocumentView(View):
         self.generate_doc(request, user_document)
         self.generate_pdf(request, user_document)
         self.update_status(user_document)
-        self.send_email(request, user_document) 
+        self.send_email(request, user_document)
         return HttpResponse(status=200)
-    
+
     def update_status(self, user_document):
         user_document.status = UserDocument.FINISHED
         user_document.save()
-    
+
     def generate_pdf(self, request, user_document):
         options = {
             'page-size': 'Letter',
@@ -178,20 +180,20 @@ class FinishDocumentView(View):
             'header-font-size': '7',
             'javascript-delay': 300,
             'no-outline': None
-        } 
+        }
         output_filename = f'{user_document.identifier}.pdf'
         html_file = user_document.html_file.read().decode('utf-8')
         file = pdfkit.PDFKit(html_file, "string", options=options).to_pdf()
         file = BytesIO(file)
         user_document.pdf_file.save(output_filename, file)
         file.close()
-    
+
     def generate_doc(self, request, user_document):
         html_file = user_document.html_file.path
         name = os.path.basename(user_document.html_file.name.split('.')[0])
         output_filename = f'{name}.odt'
         media_root = settings.MEDIA_ROOT
-        
+
         if platform.system() == 'Linux':
             subprocess.call(
                 f'soffice --headless --convert-to odt {html_file} --outdir {media_root}/docxs/',
@@ -242,8 +244,8 @@ class FinishDocumentView(View):
         template = template.render(Context(user_document.answers)).encode('ascii', 'xmlcharrefreplace') """
 
         file = ContentFile(TEMPORARY_HTML_FILE.encode('ascii', 'xmlcharrefreplace'))
-        user_document.html_file.save(f'{user_document.identifier}.html', file)       
-    
+        user_document.html_file.save(f'{user_document.identifier}.html', file)
+
     def send_email(self, request, user_document):
         subject = f'Tu {user_document.document.name} de Tratum'
         context = {
@@ -263,7 +265,7 @@ class FinishDocumentView(View):
         message.content_subtype = 'html'
         message.attach_file(user_document.pdf_file.path)
         message.send()
-        
+
 
 class DocumentList(generics.ListAPIView):
     """Api para obtener la lista de documentos de una categoría
@@ -357,7 +359,7 @@ def category(request, path, instance):
         paginator = Paginator(package_list, 8)
         page = request.GET.get('page')
         packages = paginator.get_page(page)
-    
+
     return render(
         request,
         'webclient/documents.html',
