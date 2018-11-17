@@ -9,8 +9,8 @@ SECRET_KEY = 'zbua(=8tqz9(l_wkqapp!j4@c2&qnkgtk+=4-30f+td(_gr_2w'
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    'www.tratum.co', 
-    'tratum.co', 
+    'www.tratum.co',
+    'tratum.co',
     '206.81.10.147'
 ]
 
@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    'django.contrib.staticfiles',   
+    'django.contrib.staticfiles',
     'django.contrib.humanize',
     'rest_framework',
     'rest_framework.authtoken',
@@ -135,7 +135,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Static and files 
+# Static and files
 
 STATIC_URL = '/static/'
 STATIC_ROOT = "/var/www/static/"
@@ -207,7 +207,7 @@ CKEDITOR_CONFIGS = {
                 'items': ['conditional']
             }
         ],
-        'toolbar': 'CustomToolbarConfig', 
+        'toolbar': 'CustomToolbarConfig',
         'tabSpaces': 4,
         'extraPlugins': ','.join([
             'ajax',

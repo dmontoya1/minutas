@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from allauth.socialaccount.models import SocialAccount
-from rest_framework.authtoken.models import Token
-
-from django.contrib import messages 
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -18,28 +15,26 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.template import Template, Context, loader
 from django.utils.decorators import method_decorator
-from django.utils.encoding import force_bytes, force_text
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.generic.base import TemplateView, View
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+
+from allauth.socialaccount.models import SocialAccount
+from rest_framework.authtoken.models import Token
+
 
 from utils.views import account_activation_token
 
 from business_info.models import (
     Policy,
-    FAQCategory,
-    SiteConfig,
-    SliderItem
+    SiteConfig
 )
 from document_manager.models import (
     Document,
     Category
 )
-from store.models import (
-    DocumentBundle,
-    UserDocument
-)
+from store.models import UserDocument
+
 from users.models import LogTerms
 from .mixins import TermsAndConditions
 
@@ -119,7 +114,7 @@ class LoginView(View):
                 login(request, user)
                 messages.add_message(
                     request,
-                    messages.ERROR, 
+                    messages.ERROR,
                     "Bienvenido de vuelta a Tratum"
                 )
             else:
@@ -140,7 +135,7 @@ class SignupView(View):
             if SocialAccount.objects.filter(user__email=request.POST['email']).count() > 0:
                 messages.add_message(
                     request,
-                    messages.ERROR, 
+                    messages.ERROR,
                     "Ya existe una cuenta registrada con éste correo electrónico conectado a una red social."
                 )
             else:
@@ -158,7 +153,7 @@ class SignupView(View):
                     ip = x_forwarded_for.split(',')[0]
                 else:
                     ip = request.META.get('REMOTE_ADDR')
-                    
+
                 log = LogTerms(
                     ip=ip,
                     user=user
@@ -184,7 +179,7 @@ class SignupView(View):
 
                 messages.add_message(
                     request,
-                    messages.ERROR, 
+                    messages.ERROR,
                     "Te has registrado correctamente. Revisa tu correo para activar tu cuenta"
                 )
             url = reverse('webclient:home')
@@ -250,7 +245,7 @@ class UserDocumentsView(LoginRequiredMixin, TermsAndConditions, ListView):
     def get_queryset(self):
         docs = UserDocument.objects.filter(user=self.request.user)
         return docs
-    
+
     def get(self, request, *args, **kwargs):
         if request.user.is_anonymous:
             pass
@@ -260,7 +255,7 @@ class UserDocumentsView(LoginRequiredMixin, TermsAndConditions, ListView):
             if not docs:
                 messages.add_message(
                     request,
-                    messages.ERROR, 
+                    messages.ERROR,
                     "No tienes documentos creados. \
                     Crea o compra tu primer documento desde aquí"
                 )
@@ -283,7 +278,7 @@ class UserDocumentView(LoginRequiredMixin, DetailView):
             filename = obj.file.name.split('/')[-1]
             response = HttpResponse(obj.file, content_type='text/plain')
             response['Content-Disposition'] = 'attachment; filename=%s' % filename
-            return response 
+            return response
         return super().get(request, *args, **kwargs)
 
     def get_object(self):
@@ -304,7 +299,7 @@ class UserDocumentPreviewView(DetailView):
     def get_object(self):
         obj = UserDocument.objects.get(identifier=self.kwargs['identifier'])
         return obj
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         obj = self.get_object()
@@ -344,7 +339,7 @@ class ContactFormView(View):
             '{email} envía esto: {message}'.format(
                 email=email,
                 message=message
-            ), 
+            ),
             'no-reply@tratum.co',
             ['nrodriguez@apptitud.com.co']
         )
@@ -364,15 +359,15 @@ def activate(request, token, pk):
         user.save()
         login(request, user)
         messages.add_message(
-            request,    
-            messages.ERROR, 
+            request,
+            messages.ERROR,
             "Has activado tu cuenta exitosamente."
         )
         return redirect('webclient:home')
     else:
         messages.add_message(
             request,
-                messages.ERROR, 
+                messages.ERROR,
                 "No hemos podido activar tu cuenta, "
         )
         return redirect('webclient:home')
