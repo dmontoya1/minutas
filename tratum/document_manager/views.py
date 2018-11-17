@@ -27,6 +27,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from docx import Document as DocX
 from rest_framework import generics
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from selenium import webdriver
 from xhtml2pdf import pisa as pisa
@@ -52,6 +53,7 @@ from .utils import get_static_path
 
 
 class DocumentFieldList(generics.ListAPIView):
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
     serializer_class = DocumentFieldSerializer
     permission_classes = (IsAuthenticated,)
 
