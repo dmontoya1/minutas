@@ -10,6 +10,7 @@ www.{$DOMAIN_NAME} {
         transparent
         except /static /media
     }
+    mime .css text/css
 
     root /var/www/
     log stdout
