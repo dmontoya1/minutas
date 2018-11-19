@@ -47,6 +47,7 @@ class CategoryAdmin(SoftDeletionModelAdminMixin, MPTTModelAdmin):
 @admin.register(DocumentField)
 class DocumentFieldAdmin(admin.ModelAdmin):
     list_display = (
+        'name',
         'display_name',
         'field_type',
         'orden'

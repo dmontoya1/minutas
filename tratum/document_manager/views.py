@@ -76,6 +76,9 @@ class DocumentSectionList(generics.ListAPIView):
 class DocumentSectionFieldsList(DocumentFieldList):
 
     def get_queryset(self):
+        print("-----------------")
+        print("quersyset")
+        print("-----------------")
         return DocumentField.objects.filter(section__slug=self.kwargs['slug'])
 
 
