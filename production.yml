@@ -42,8 +42,8 @@ services:
       - django
     volumes:
       - production_caddy:/root/.caddy
-      - /var/www/static/:/opt/staticfiles/
-      - /var/www/media/:/opt/mediafiles/
+      - /var/www/static/:/var/www/static/
+      - /var/www/media/:/var/www/media/
     env_file:
       - ./.envs/.production/.caddy
     ports:
