@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
-        
+
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123601727-1"></script>
         <script>
         window.dataLayer = window.dataLayer || [];
@@ -20,26 +20,28 @@
         <meta name="description" content="Tratum, documentos legales online">
         <meta name="author" content="Apptitud">
 
-        
-        <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400,600,700" rel="stylesheet">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" 
-              integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" 
-              crossorigin="anonymous">
-        <link 
+
+        <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400,600,700" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+              integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+              crossorigin="anonymous"
+              type="text/css">
+        <link
             rel="stylesheet"
             href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
             integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
-            crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" >
-        <link rel="stylesheet" href="{% static 'css/shards.min.css' %}">
-        <link rel="stylesheet" href="{% static 'css/site.css' %}">
-        <link rel="stylesheet" href="{% static 'css/tratum.css' %}">
-        <link rel="stylesheet" href="{% static 'css/bootstrap-4-navbar.css' %}">
+            crossorigin="anonymous"
+            type="text/css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" type="text/css">
+        <link rel="stylesheet" href="{% static 'css/shards.min.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'css/site.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'css/tratum.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-4-navbar.css' %}" type="text/css">
         <title>Tratum</title>
         {% block extra_css %}
         {% endblock %}
     </head>
-    <body>     
+    <body>
         <header>
             <div class="pos-f-t">
                 <div class="contextualMenu">
@@ -81,9 +83,9 @@
                         <i class="fas fa-bars rotate navbar-toggler"></i>
                         <a href="/">
                             <img class="logo" src="{% static 'img/logo-color-placeholder@2x.png' %}">
-                        </a>    
-                    </div>   
-                                 
+                        </a>
+                    </div>
+
                     <div class="float-right main-options d-none d-lg-block">
                         <div class="dropleft">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categorías <span class="divider">|</span></a>
@@ -92,7 +94,7 @@
                                     {% include 'webclient/dropdown.html' %}
                                 {% endfor %}
                             </div>
-                        </div>  
+                        </div>
                         <div class="auth-buttons">
                             {% if request.user.is_anonymous %}
                                 <a href="/">Inicio</a>
@@ -100,14 +102,14 @@
                                 <a href="{% url 'webclient:faq' %}">Preguntas frecuentes </a>
                                 <a data-toggle="modal" data-target="#modal-signup">Registrarse</a>
                                 <a data-toggle="modal" data-target="#modal-login">Iniciar sesión</a>
-                                
+
                             {% else %}
                                 <span style="margin-right: 1em;">Hola, {{request.user.first_name}} </span>
                                 <a href="/logout/" id="Logout">Cerrar sesión</a>
                             {% endif %}
                         </div>
                     </div>
-                </nav>  
+                </nav>
             </div>
         </header>
 
@@ -170,15 +172,15 @@
                                                 <input type="password" class="form-control" name="password" required id="id_password"/>
                                             </div>
                                         </div>
-        
+
                                         <p class="text-right">
                                             <a href="#modal-forget" class="forgot-pass" data-toggle="modal" data-dismiss="modal">¿Olvidaste tu contraseña?'</a>
                                         </p>
-        
+
                                         <div class="text-center">
                                             <input type="submit" id="reg_submit" value="Iniciar sesión"/>
                                         </div>
-                                                
+
                                     </form>
                                 </div>
                             </div>
@@ -223,20 +225,20 @@
                                 <div class="col">
                                     <form method="POST" id="signup" class="form-horizontal">
                                         {% csrf_token %}
-        
+
                                         <input type="hidden" name="username">
-                        
+
                                         <div class="form-group">
                                             <div class="col-xs-12">
                                                 <label class="control-label">Correo Electrónico *</label>
                                             </div>
                                             <div class="col-xs-12">
-                                                <input type="text" required class="form-control" name="email" 
+                                                <input type="text" required class="form-control" name="email"
                                                 data-validation="email" data-validation-error-msg="Debes ingresar un email válido"/>
                                             </div>
                                         </div>
                                         <br>
-                        
+
                                         <div class="form-group">
                                             <div class="col-xs-12">
                                                 <label class="control-label">Contraseña *</label>
@@ -245,16 +247,16 @@
                                                 <input required type="password" class="form-control" name="password1" id="password1"/>
                                                 <span id="result"></span>
                                             </div>
-                                            
+
                                         </div>
                                         <br>
-                        
+
                                         <div class="form-group mb-3">
                                             <div class="col-xs-12">
                                                 <label class="control-label"> Repetir Contraseña *</label>
                                             </div>
                                             <div class="col-xs-12">
-                                                <input required type="password" class="form-control"  
+                                                <input required type="password" class="form-control"
                                                 name="password2" id="password2"/>
                                                 <span id="valid"></span>
                                             </div>
@@ -262,16 +264,16 @@
                                         <div class="float-right">
                                             <span style="font-size: 0.8em;color: rgb(193, 35, 24);">Los campos con * son obligatorios</span>
                                         </div>
-        
+
                                         <div class="terms-conditions mt-5">
                                             <input type="checkbox" id="terms" style="display:inline">
                                             <label for="terms" style="color: #929292;display:inline;font-weight: 100;">
-                                            Para continuar debes aceptar las 
+                                            Para continuar debes aceptar las
                                             <a href="{% url 'webclient:policies' 'privacy' %}" target="_blank" class="signup_terms"><strong>Políticas de tratamiento de datos</strong> </a>de <strong>TRATUM S.A.S</strong>
                                         </div>
-        
+
                                         <input type="hidden" name="username" />
-                        
+
                                         <div class="text-center">
                                             <input type="submit" disabled id="reg_submit_signup" value="Registrarse"/>
                                         </div>
@@ -305,7 +307,7 @@
                                 <div class="col">
                                     <form method="POST" id="forget" class="form-horizontal">
                                         {% csrf_token %}
-                                        
+
                                         <div class="form-group">
                                             <div class="col-xs-12">
                                                 <label class="control-label">Correo Electrónico*</label>
@@ -315,7 +317,7 @@
                                                 data-validation="email" data-validation-error-msg="Debes ingresar un email válido"/>
                                             </div>
                                         </div>
-    
+
                                         <p class="text-right">
                                             <a href="#modal-login" class="forgot-pass" data-toggle="modal" data-dismiss="modal">Iniciar sesión</a>
                                         </p>
@@ -323,7 +325,7 @@
                                         <p class="text-center" style="font-size: 0.8em;color: #999">
                                             Ingresa tu correo electrónico y se te enviará un link para la recuperación de tu contraseña,
                                         </p>
-                        
+
                                         <div class="text-center">
                                             <input type="submit" id="reg_submit_forget" value="Enviar"/>
                                         </div>
@@ -347,7 +349,7 @@
                     </div>
                     <div class="col-sm-12 col-md-3 link-col">
                         <a href="{% url 'webclient:about-us' %}">
-                            Quienes somos 
+                            Quienes somos
                         </a>
                         <a data-toggle="modal" data-target="#modal-documents" >
                             Dinos que documentos necesitas
@@ -358,10 +360,10 @@
                     </div>
                     <div class="col-sm-12 col-md-3 link-col">
                         <a href="{% url 'webclient:policies' 'privacy' %}">
-                            Políticas de tratamiento de datos personales 
+                            Políticas de tratamiento de datos personales
                         </a>
                         <a href="{% url 'webclient:policies' 'terms' %}">
-                            Términos y condiciones 
+                            Términos y condiciones
                         </a>
                     </div>
                     <div class="col-sm-12 col-md-3 social text-right">
@@ -377,20 +379,20 @@
                         <div class="col mt-3">
                             <span class="white-text">{{bussiness_info.landing_contact}}</span>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
             <div class="row copyright">
                 <div class="col text-center">
-                    <span>Tratum 2018 - Powered by 
+                    <span>Tratum 2018 - Powered by
                         <a href="http://www.apptitud.co" target="_blank" class="underline">
                             <strong>Apptitud</strong>
                         </a>
                     </span>
                 </div>
             </div>
-        </footer>        
+        </footer>
 
         <div class="modal fade" id="modal-documents" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -423,7 +425,7 @@
                                         </div>
                                     </form>
                                 </div>
-                            </div>                                          
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -478,7 +480,7 @@
                 </script>
             {% endfor %}
         {% endif %}
-        
+
         <script type="text/javascript">
             function checkStrength(password) {
                 var strength = 0
@@ -517,7 +519,7 @@
                     return 'Fuerte'
                 }
             }
-            
+
             function checkValid(password1, password2){
                 if (password1 != password2){
                     $('#valid').removeClass()
@@ -533,10 +535,10 @@
                     } else {
                         return 'La contraseña debe tener mínimo 8 caractéres y por lo menos un caracter especial o letra en mayúscula'
                     }
-                    
+
                 }
             }
-            
+
             $(document).ready(function() {
                 $('head').append('<link rel="shortcut icon" href="https://cdn.crunchify.com/favicon.ico">');
                 $.each($('.dropdown-item'), function() {
@@ -569,13 +571,13 @@
                         $('#valid').html(checkValid($('#password1').val(), $('#password2').val()))
                     })
                 {% endblock %}
-                
-                
+
+
             });
 
             axios.defaults.headers.common['X-CSRFToken'] = '{{csrf_token}}'
             axios.defaults.headers.common['Api-Key'] = '{{Api_Key}}'
-            
+
             $.ajaxSetup({
                 headers: {
                     "X-CSRFToken": "{{csrf_token}}",
@@ -622,7 +624,7 @@
 
             $("#signup").on('submit', function(ev){
                 ev.preventDefault()
-                if (!$("#terms").is(':checked') ) {                    
+                if (!$("#terms").is(':checked') ) {
                     toastr.error("Debes aceptar los términos y condiciones y las políticas de tratamiento de datos para terminar el proceso de registro")
                     $('#reg_submit_signup').attr('disabled', false);
                     return false;
