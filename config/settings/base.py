@@ -86,8 +86,7 @@ LOCAL_APPS = [
     'tratum.users.apps.UsersConfig',
     'tratum.utils.apps.UtilsConfig',
     'tratum.webclient.apps.WebclientConfig',
-    'ckeditor',
-    # 'smart_selects',
+    'tratum.ckeditor.apps.CKEditorInfoConfig',
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -317,3 +316,87 @@ REST_FRAMEWORK = {
 
 
 API_KEY = 'b7b15cc877c0c0c2d8e6aeee4e68296df24656a2'
+
+# CKEditor config
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'skin': 'moono',
+        'toolbar_CustomToolbarConfig': [
+            {
+                'name': 'document',
+                'items': [
+                    'Save'
+                ]
+            },
+            {
+                'name': 'clipboard',
+                'items': [
+                    'Cut',
+                    'Copy',
+                    'Paste',
+                    '-',
+                    'Undo',
+                    'Redo'
+                ]
+            },
+            {
+                'name': 'basicstyles',
+                'items': [
+                    'Bold',
+                    'Italic',
+                    'Underline'
+                ]
+            },
+            {
+                'name': 'paragraph',
+                'items': [
+                    'JustifyLeft',
+                    'JustifyCenter',
+                    'JustifyRight',
+                    'JustifyBlock'
+                ]
+            },
+            {
+                'items': [
+                    'Maximize',
+                ]
+            },
+            {
+                'name': 'documentfield',
+                'items': ['documentfield']
+            },
+            {
+                'name': 'documentsection',
+                'items': ['documentsection']
+            },
+            {
+                'name': 'dynamiccounter',
+                'items': ['dynamiccounter']
+            },
+            {
+                'name': 'conditional',
+                'items': ['conditional']
+            }
+        ],
+        'toolbar': 'CustomToolbarConfig',
+        'tabSpaces': 4,
+        'extraPlugins': ','.join([
+            'ajax',
+            'autolink',
+            'autoembed',
+            'embedsemantic',
+            'autogrow',
+            'widget',
+            'lineutils',
+            'clipboard',
+            'dialog',
+            'dialogui',
+            'elementspath',
+            'documentfield',
+            'documentsection',
+            'dynamiccounter',
+            'conditional'
+        ]),
+    }
+}

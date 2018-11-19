@@ -31,7 +31,7 @@ class DocumentAdmin(SoftDeletionModelAdminMixin):
         js = (
             '//cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js',
             '//unpkg.com/axios/dist/axios.min.js',
-            '/static/js/admin/maskComponent.js'
+            # '/static/js/admin/maskComponent.js'
         )
 
 
