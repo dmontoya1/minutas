@@ -58,7 +58,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = env.bool('DJANGO_SECURE_CONTENT_TYPE_NOSNIFF', def
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
 STATICFILES_LOCATION = 'static'
-STATIC_ROOT = "/var/www/static/"
+STATIC_ROOT = "//home/django/static/"
 STATIC_URL = '/static/'
 
 
@@ -68,7 +68,7 @@ STATIC_URL = '/static/'
 # region http://stackoverflow.com/questions/10390244/
 # Full-fledge class: https://stackoverflow.com/a/18046120/104731
 MEDIA_URL = '/media/'
-MEDIA_ROOT = "/var/www/media/"
+MEDIA_ROOT = "/home/django/media/"
 
 
 # TEMPLATES
