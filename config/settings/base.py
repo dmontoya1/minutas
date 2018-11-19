@@ -85,7 +85,8 @@ LOCAL_APPS = [
     'tratum.smart_selects.apps.SmartSelectsConfig',
     'tratum.users.apps.UsersConfig',
     'tratum.utils.apps.UtilsConfig',
-    'tratum.webclient.apps.WebclientConfig'
+    'tratum.webclient.apps.WebclientConfig',
+    'ckeditor',
     # 'smart_selects',
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
