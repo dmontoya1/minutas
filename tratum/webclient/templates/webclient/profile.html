@@ -11,7 +11,7 @@
 <div class="container profile mt-5">
     <div class="row content-row">
         <div class="col-12 mb-4 text-center">
-            <h1>Perfil</h1>               
+            <h1>Perfil</h1>
         </div>
     </div>
     <div class="row mb-5">
@@ -23,7 +23,7 @@
                             {% if request.user.logo %}
                                 <img class="img-profile mb-3 mx-auto d-block" src="{{request.user.logo}}" alt="Card image cap">
                             {% else %}
-                                <img class="img-profile mb-3 mx-auto d-block" src="{% static '/img/avatar.png' %}" alt="Card image cap">
+                                <img class="img-profile mb-3 mx-auto d-block" src="{% static 'img/avatar.png' %}" alt="Card image cap">
                             {% endif %}
                         </div>
                     </div>
@@ -51,9 +51,9 @@
                                 <input type="password" class="form-control" readonly id="profile_password" placeholder="***********">
                             </div>
                         </div>
-                                
+
                     </div>
-                    
+
                 </div>
             </div>
             <div class="dropdown-divider"></div>
@@ -90,10 +90,10 @@
                                 <textarea class="form-control" readonly id="profile_company_description" placeholder="{{request.user.company.description|default:"Sin descripción"}}" cols="30" rows="5"></textarea>
                             </div>
                         </div>
-                        
-                                
+
+
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -159,7 +159,7 @@
                         id="email2" autocomplete="off"/>
                     <span id="validEmail"></span>
                 </div>
-            
+
         </div>
         <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancaler</button>
@@ -209,13 +209,13 @@
                         <label class="control-label"> Repetir Contraseña</label>
                     </div>
                     <div class="col-xs-12">
-                        <input required type="password" class="form-control"  
+                        <input required type="password" class="form-control"
                         name="password2" id="password_2"/>
                         <span id="valid"></span>
                     </div>
                 </div>
 
-            
+
         </div>
         <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -258,7 +258,7 @@
                     <label for="sector_company">Sector</label>
                     <select class="form-control" id="sector_company" name="sector" required>
                         <option disabled selected value="">Selecciona un sector</option>
-                        
+
                     </select>
                 </div>
                 <div class="form-group">
@@ -266,7 +266,7 @@
                     <textarea required class="form-control" name="description" id="company_description" rows="3" placeholder="Ingresa una descripción de tu empresa"
                      value="{{request.user.company.description}}">{{request.user.company.description}}</textarea>
                 </div>
-            
+
         </div>
         <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -319,7 +319,7 @@
                 return 'Fuerte'
                 }
         }
-        
+
         function checkValid(password1, password2){
             if (password1 != password2){
                 $('#valid').removeClass()
@@ -466,12 +466,12 @@
 
             if (sector_id){
                 get_sector_list(sector_id)
-            }            
+            }
 
             get_sector_list();
 
             employees = '{{request.user.company.employees_number}}'
-   
+
             if (employees){
                 $('#employees_number').find(`option[value=${employees}]`).attr('selected', true)
             }
