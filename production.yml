@@ -18,8 +18,8 @@ services:
       - ./.envs/.production/.django
       - ./.envs/.production/.postgres
     volumes:
-      - /var/www/static/:/var/www/static/
-      - /var/www/media/:/var/www/media/
+      - /var/www/static/:/home/django/static/
+      - /var/www/media/:/home/django/media/
     command: /start
 
   postgres:
