@@ -24,11 +24,11 @@ class Company(models.Model):
     """
 
     EMPLOYEE_CHOICES = (
-		(1, 'Menos de 10'),
-		(2, 'Entre 10 y 20'),
-		(3, 'Entre 20 y 50'),
-		(4, 'Más de 50'),
-	)
+        (1, 'Menos de 10'),
+        (2, 'Entre 10 y 20'),
+        (3, 'Entre 20 y 50'),
+        (4, 'Más de 50'),
+    )
 
     name = models.CharField('Nombre Empresa', max_length=255)
     employees_number = models.IntegerField(
@@ -37,7 +37,7 @@ class Company(models.Model):
         blank=True,
         null=True
     )
-    
+
     description = models.TextField('Descripción')
     sector = models.ForeignKey(
         Sector,
@@ -56,7 +56,7 @@ class Company(models.Model):
         verbose_name = "Compañía"
 
     def __str__(self):
-        return self.name    
+        return self.name
 
 
 class LogTerms(models.Model):
@@ -75,6 +75,5 @@ class LogTerms(models.Model):
         verbose_name = "Log de términos"
         verbose_name_plural = "Logs de Términos"
 
-
     def __str__(self):
-        return "%s" %(self.user)
+        return "%s" % (self.user)

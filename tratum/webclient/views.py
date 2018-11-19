@@ -2,19 +2,15 @@
 from __future__ import unicode_literals
 
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.shortcuts import render, redirect, get_object_or_404, reverse
+from django.shortcuts import redirect, get_object_or_404, reverse
 from django.template import Template, Context, loader
-from django.utils.decorators import method_decorator
 from django.views.generic.base import TemplateView, View
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -23,19 +19,19 @@ from allauth.socialaccount.models import SocialAccount
 from rest_framework.authtoken.models import Token
 
 
-from utils.views import account_activation_token
+from tratum.utils.views import account_activation_token
 
-from business_info.models import (
+from tratum.business_info.models import (
     Policy,
     SiteConfig
 )
-from document_manager.models import (
+from tratum.document_manager.models import (
     Document,
     Category
 )
-from store.models import UserDocument
+from tratum.store.models import UserDocument
 
-from users.models import LogTerms
+from tratum.users.models import LogTerms
 from .mixins import TermsAndConditions
 
 

@@ -1,7 +1,10 @@
 from django.contrib import admin
 from django.utils.html import format_html
+
 from mptt.admin import MPTTModelAdmin
-from utils.admin import SoftDeletionModelAdminMixin
+
+from tratum.utils.admin import SoftDeletionModelAdminMixin
+
 from .models import (
     Document,
     Category,
@@ -18,7 +21,7 @@ class DocumentAdmin(SoftDeletionModelAdminMixin):
         'category',
         'price',
         'order'
-    ) 
+    )
     list_select_related = (
         'category',
     )
@@ -54,8 +57,8 @@ class DocumentFieldAdmin(admin.ModelAdmin):
         'field_type'
     )
     readonly_fields = ('slug',)
-    
-    def get_form(self, request, obj=None, **kwargs):        
+
+    def get_form(self, request, obj=None, **kwargs):
         request.current_object = obj
         form = super(DocumentFieldAdmin, self).get_form(request, obj, **kwargs)
         print(request.GET)
@@ -85,7 +88,6 @@ class DocumentFieldAdmin(admin.ModelAdmin):
                 <input type='button' value='Cambiar' class='changer_submit'> \
             </form>".format(obj.order, obj.pk)
         )
-  
 
     class Media:
         js = (

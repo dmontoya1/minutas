@@ -23,8 +23,7 @@ from rest_framework import generics
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-
-from store.models import DocumentBundle
+from tratum.store.models import UserDocument, DocumentBundle
 
 from .models import (
     Document,
@@ -39,7 +38,6 @@ from .serializers import (
     DocumentSerializer,
     CategorySerializer
 )
-from store.models import UserDocument
 from .utils import get_static_path
 
 
@@ -101,7 +99,6 @@ class ProcessDocumentView(View):
 class SaveAnswersView(View):
 
     def post(self, request, *args, **kwargs):
-        content = request.POST
         user_document = UserDocument.objects.get(identifier=request.POST['identifier'])
         user_document.answers = request.POST
         user_document.save()
@@ -343,7 +340,6 @@ def category(request, path, instance):
             else:
                 document_list = Document.objects.filter(deleted_at=None).order_by('order')
 
-
     if document_list:
         paginator = Paginator(document_list, 8)
         page = request.GET.get('page')
@@ -363,6 +359,7 @@ def category(request, path, instance):
             'packages': packages
         }
     )
+
 
 class ChangeAdminOrder(View):
     @method_decorator(csrf_exempt)

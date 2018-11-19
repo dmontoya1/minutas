@@ -1,5 +1,5 @@
-from business_info.models import SiteConfig, SliderItem
-from store.models import (
+from tratum.business_info.models import SiteConfig, SliderItem
+from tratum.store.models import (
     DocumentBundle
 )
 

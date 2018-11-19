@@ -1,7 +1,7 @@
-from business_info.models import FAQCategory
+from tratum.business_info.models import FAQCategory
 
 
-def faq_processor(request):    
+def faq_processor(request):
     return {
         'faq_categories': FAQCategory.objects.all()
     }

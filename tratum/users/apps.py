@@ -5,6 +5,6 @@ from django.apps import AppConfig
 
 
 class UsersConfig(AppConfig):
-    name = 'users'
+    name = 'tratum.users'
     verbose_name = 'Usuarios'
     icon = '<i class="material-icons">wc</i>'

@@ -37,13 +37,13 @@ class SoftDeletionModelMixin(models.Model):
 
         self.deleted_at = None
         self.save()
-    
+
 
 class SlugIdentifierMixin(models.Model):
     """Clase para brindar identificación por slug a los modelos.
 
     El Slug no entra a ser la llave primaria de la tabla, pero permite que el modelo
-    tenga tanto un campo de Slug como un método que permita generarlo al guardar una 
+    tenga tanto un campo de Slug como un método que permita generarlo al guardar una
     instancia del modelo y otro método para generar un slug para uso en variables de templates.
 
     Campos del modelo:
@@ -66,7 +66,7 @@ class SlugIdentifierMixin(models.Model):
         if self.__class__.__name__ == 'Document':
             self.content = html.unescape(self.content)
         super().save(*args, **kwargs)
-    
+
     def _get_unique_slug(self):
         slug = self.name
         name = str(self.name).replace('_', '-')
@@ -78,11 +78,10 @@ class SlugIdentifierMixin(models.Model):
                 slug = slugify('{}-{}'.format(name, self.section.slug))
         if self.__class__.__name__ == 'Category':
             slug = '{name}-{pk}'.format(name=name, pk=self.pk)
-        return slugify(slug)   
-    
+        return slugify(slug)
+
     def formated_slug(self):
         return str(self.slug).replace('-', '_')
-    
+
     def formated_to_raw_slug(self, formated_slug):
         return formated_slug.replace('_', '-')
-    

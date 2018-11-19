@@ -22,7 +22,7 @@ class SoftDeletionQuerySet(models.QuerySet):
 
     def dead(self):
         """Método para filtrar los objetos que fueron lógicamente borrados"""
-       
+
         return self.exclude(deleted_at=None)
 
 
@@ -35,7 +35,7 @@ class SoftDeletionManager(models.Manager):
 
     def soft_delete(self):
         return self.get_queryset().soft_delete()
-    
+
     def alive(self):
         return self.get_queryset().alive()
 

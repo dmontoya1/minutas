@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import redirect
 from django.views.generic import TemplateView
 
-from users.models import LogTerms
+from tratum.users.models import LogTerms
 
 
 class TermsAndConditions(TemplateView):

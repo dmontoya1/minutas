@@ -6,26 +6,23 @@ import time
 
 from datetime import datetime
 
-from raven.contrib.django.raven_compat.models import client
-from rest_framework import generics, status
+from rest_framework import generics
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import LoginRequiredMixin
+
 from django.contrib.auth.models import User
-from django.contrib.sites.models import Site
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
 from django.shortcuts import render, reverse
 from django.utils.datastructures import MultiValueDictKeyError
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import TemplateView, View, ListView
+from django.views.generic import TemplateView, View
 
-from document_manager.models import Document
+from tratum.document_manager.models import Document
 
 from .models import DocumentBundle, UserDocument, Invoice
 from .serializers import DocumentBundleSerializer, UserDocumentSerializer
-
 
 
 class DocumentBundleList(generics.ListAPIView):
@@ -36,13 +33,13 @@ class DocumentBundleList(generics.ListAPIView):
 class CreateUserDocument(View):
     """CLASE DE PRUEBA PARA EMULAR COMPRA
     """
-    
+
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse('webclient:home'))
         document = UserDocument(
             user=request.user,
-            document=Document.objects.get(pk=request.GET['document_id']) 
+            document=Document.objects.get(pk=request.GET['document_id'])
         )
         document.save()
         return HttpResponseRedirect(reverse('webclient:user-document', kwargs={'identifier': document.identifier}))
@@ -97,7 +94,7 @@ class Checkout(TemplateView):
                 ref = 'PA'
                 id_ref = package.pk
         except Exception as e:
-            print (e)        
+            print (e)
         print(documents)
         amount = 0
         for doc in documents:
@@ -143,7 +140,7 @@ class Checkout(TemplateView):
             apiKey     = '4Vj8eK4rloUd272L48hsrarnUA'
         else:
             apiKey     = 'vIB29Yn5GW0XVv6qVYBV1e92T1'
-        
+
         if request.method == "POST":
             merchand_id = request.POST['merchant_id']
             reference_sale = request.POST['reference_sale']
@@ -234,7 +231,7 @@ class Checkout(TemplateView):
                     return HttpResponse(status=500)
             else:
                 return HttpResponse(status=500)
-        
+
         elif request.method == "GET":
             merchand_id = request.GET.get('merchantId','')
             referenceCode = request.GET.get('referenceCode','')
@@ -250,7 +247,7 @@ class Checkout(TemplateView):
             value_antes, value_despues = value_str.split(".")
 
             value_despues= list(value_despues)
-            
+
             primer_parametro_despues = int(value_despues[0])
             segundo_parametro_despues = int(value_despues[1])
 
@@ -260,13 +257,13 @@ class Checkout(TemplateView):
                     value = round(value_1,1)
                 else:
                     value = round(float(value),1)
-            elif primer_parametro_despues % 2 != 0: 
+            elif primer_parametro_despues % 2 != 0:
                 if segundo_parametro_despues == 5:
                     value_1= value+0.1
                     value = round(float(value_1),1)
                 else:
                     value = round(float(value),1)
-            
+
             signature = '{}~{}~{}~{}~{}~{}'.format(apiKey, merchand_id,referenceCode, value, currency,transactionState)
             signature = signature.encode('utf-8')
             signature = hashlib.md5(signature).hexdigest()
@@ -286,13 +283,13 @@ class Checkout(TemplateView):
                 except Exception as e:
                     pass
 
-            if signature == signature_get:  
+            if signature == signature_get:
 
                 return render(
                     request,
                     'store/payment-resumen.html',
                     {
-                        'merchand_id':merchand_id, 
+                        'merchand_id':merchand_id,
                         'referenceCode':referenceCode,
                         'transactionState':transactionState,
                         'value':value,
@@ -303,7 +300,7 @@ class Checkout(TemplateView):
                         'ref': ref,
                         'identifier': identifier,
                     }
-                    
-                ) 
+
+                )
         else:
             return HttpResponseNotAllowed("Método no permitido")
