@@ -3,15 +3,15 @@ www.{$DOMAIN_NAME} {
 }
 
 {$DOMAIN_NAME} {
-    root /var/www/Application/tratum-live/
     proxy / django:5000 {
         header_upstream Host {host}
         header_upstream X-Real-IP {remote}
         header_upstream X-Forwarded-Proto {scheme}
         transparent
-        except /static
-        except /media
+        except /static /media
     }
+
+    root /var/www/
     log stdout
     errors stdout
     gzip
