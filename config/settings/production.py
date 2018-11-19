@@ -58,7 +58,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = env.bool('DJANGO_SECURE_CONTENT_TYPE_NOSNIFF', def
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
 STATICFILES_LOCATION = 'static'
-STATIC_ROOT = "/opt/staticfiles/"
+STATIC_ROOT = "/var/www/static/"
 STATIC_URL = '/static/'
 
 
