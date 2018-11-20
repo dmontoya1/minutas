@@ -1,8 +1,8 @@
 import json
 import os
-import platform
 import subprocess
 import pdfkit
+import logging
 
 from io import BytesIO
 
@@ -39,6 +39,9 @@ from .serializers import (
     CategorySerializer
 )
 from .utils import get_static_path
+
+
+logger = logging.getLogger(__name__)
 
 
 class DocumentFieldList(generics.ListAPIView):
@@ -186,21 +189,16 @@ class FinishDocumentView(View):
         name = os.path.basename(user_document.html_file.name.split('.')[0])
         output_filename = "{}.odt".format(name)
         media_root = settings.MEDIA_ROOT
-
-        if platform.system() == 'Linux':
+        try:
             subprocess.call(
                 "soffice --headless --convert-to odt {0} --outdir {1}/docxs/".format(html_file, media_root),
                 shell=True
             )
-        elif platform.system() == 'Darwin':
-            subprocess.call(
-                "cd /Applications/LibreOffice.app/Contents/MacOS && \
-                ./soffice --headless --convert-to odt {0} --outdir {1}/docxs/".format(html_file, media_root),
-                shell=True
-            )
 
-        user_document.word_file = "docxs/{}".format(output_filename)
-        user_document.save()
+            user_document.word_file = "docxs/{}".format(output_filename)
+            user_document.save()
+        except Exception as e:
+            logger.exception(str(e))
 
     def generate_html(self, request, user_document, TEMPORARY_HTML_FILE):
 

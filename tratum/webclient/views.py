@@ -363,7 +363,7 @@ def activate(request, token, pk):
     else:
         messages.add_message(
             request,
-                messages.ERROR,
-                "No hemos podido activar tu cuenta, "
+            messages.ERROR,
+            "No hemos podido activar tu cuenta, "
         )
         return redirect('webclient:home')
