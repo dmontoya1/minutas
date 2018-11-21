@@ -6,7 +6,6 @@ from .views import (
     InvoiceExport
 )
 
-
 app_name = 'reports'
 
 urlpatterns = [

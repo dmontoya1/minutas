@@ -5,16 +5,16 @@ from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
 
-from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
-from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
-from allauth.socialaccount.providers.oauth2.client import OAuth2Client
-from rest_auth.registration.views import SocialLoginView
-
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_auth.registration.views import SocialLoginView
 
-from api.helpers import get_api_user
+from tratum.allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
+from tratum.allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from tratum.allauth.socialaccount.providers.oauth2.client import OAuth2Client
+from tratum.api.helpers import get_api_user
+
 from .serializers import UserSerializer, ChangePasswordSerializer, SectorSerializer
 from .models import User, LogTerms, Sector, Company
 
@@ -67,7 +67,7 @@ class UserDetail(generics.RetrieveUpdateAPIView):
 
     def get_queryset(self):
         return get_user_model().objects.none()
-    
+
 
 class UserNameUpdate(generics.UpdateAPIView):
     """ Api para actualizar el nombre
@@ -100,7 +100,6 @@ class UserChangePassword(generics.UpdateAPIView):
 
     serializer_class = ChangePasswordSerializer
     queryset = get_user_model().objects.all()
-
 
     def get_object(self):
         email = self.request.data.get('email')
@@ -145,7 +144,7 @@ class CompanyUpdate(APIView):
                 user=user
             )
             company.save()
-        
+
         response = {'detail': "Compañía actualizada exitosamente"}
         status_e = status.HTTP_201_CREATED
         return Response(response, status=status_e)

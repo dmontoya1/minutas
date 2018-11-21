@@ -9,7 +9,7 @@ from django.core.files.base import ContentFile
 from django.db import models
 from django.test import TestCase
 
-from allauth.compat import base36_to_int, int_to_base36
+from .compat import base36_to_int, int_to_base36
 
 from . import utils
 

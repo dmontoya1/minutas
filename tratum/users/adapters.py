@@ -1,25 +1,20 @@
-from django.conf import settings
-from django.contrib import messages
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from django.urls import reverse
 
-from allauth.account.adapter import DefaultAccountAdapter, get_adapter
-from allauth.account.utils import perform_login
-from allauth.socialaccount import app_settings
-from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
-from allauth.socialaccount.helpers import complete_social_login
+from tratum.allauth.account.adapter import DefaultAccountAdapter, get_adapter
+from tratum.allauth.account.utils import perform_login
+from tratum.allauth.socialaccount import app_settings
+from tratum.allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 
 from .models import LogTerms
- 
+
 
 class AccountAdapter(DefaultAccountAdapter):
 
     def get_email_confirmation_redirect_url(self, request):
         return reverse('webclient:confirm-email')
 
-    
     def save_user(self, request, user, form, commit=False):
         data = form.cleaned_data
 
@@ -73,6 +68,6 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
             if not sociallogin.is_existing:
                 sociallogin.connect(request, user)
             return perform_login(request, user, app_settings.EMAIL_VERIFICATION)
-        
+
         pass
-        
+

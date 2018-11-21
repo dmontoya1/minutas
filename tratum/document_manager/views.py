@@ -191,7 +191,7 @@ class FinishDocumentView(View):
         media_root = settings.MEDIA_ROOT
         try:
             subprocess.call(
-                "soffice --headless --convert-to odt {0} --outdir {1}/docxs/".format(html_file, media_root),
+                "soffice --headless --convert-to odt {0} --outdir {1}docxs/".format(html_file, media_root),
                 shell=True
             )
 
@@ -312,17 +312,21 @@ def category(request, path, instance):
     package_list = None
     q = request.GET.get('q', None)
 
-    if request.GET.get('free') is not None or request.GET.get('pay') is not None or request.GET.get('package') is not None:
+    if request.GET.get('free') is not None or \
+       request.GET.get('pay') is not None or \
+       request.GET.get('package') is not None:
         if request.GET.get('free'):
             if instance:
                 categories = instance.get_descendants(include_self=True)
-                document_list = Document.objects.filter(Q(price=0) | Q(price=None, deleted_at=None), category__in=categories,).order_by('order')
+                document_list = Document.objects.filter(Q(price=0) | Q(price=None, deleted_at=None),
+                                                        category__in=categories,).order_by('order')
             else:
                 document_list = Document.objects.filter(Q(price=0) | Q(price=None), deleted_at=None).order_by('order')
         elif request.GET.get('pay'):
             if instance:
                 categories = instance.get_descendants(include_self=True)
-                document_list = Document.objects.filter(category__in=categories, price__gt=0, deleted_at=None).order_by('order')
+                document_list = Document.objects.filter(category__in=categories,
+                                                        price__gt=0, deleted_at=None).order_by('order')
             else:
                 document_list = Document.objects.filter(price__gt=0, deleted_at=None).order_by('order')
         else:

@@ -63,7 +63,6 @@ class Checkout(TemplateView):
         taxReturnBase = 0
         description = "Compra realizada desde Tratum"
 
-
         if settings.DEBUG:
             test = 1
             accountId = 512321
@@ -103,28 +102,28 @@ class Checkout(TemplateView):
         referenceCode = '{}_{}_{}_{}'.format(ref, request.user.pk, id_ref, int(time.mktime(datetime.now().timetuple())))
         responseUrl = '{}/store/confirmation/'.format(host)
         confirmationUrl = '{}/store/confirmation/'.format(host)
-        signature = '{}~{}~{}~{}~{}'.format(apiKey, merchantId,\
-                    referenceCode, amount, currency)
+        signature = '{}~{}~{}~{}~{}'.format(apiKey, merchantId,
+                                            referenceCode, amount, currency)
         signature = signature.encode('utf-8')
         signature = hashlib.md5(signature).hexdigest()
 
         ctx = {
             'type': doc_type,
             'documents': documents,
-            'merchantId' : merchantId,
+            'merchantId': merchantId,
             'description': description,
             'referenceCode': referenceCode,
-            'amount' : amount,
-            'tax' : tax,
+            'amount': amount,
+            'tax': tax,
             'taxReturnBase': taxReturnBase,
-            'currency' : currency,
-            'signature' : signature,
-            'test' : test,
-            'buyerEmail' : request.user.email,
-            'responseUrl' : responseUrl,
-            'accountId' : accountId,
-            'confirmationUrl' : confirmationUrl,
-            'url' : url,
+            'currency': currency,
+            'signature': signature,
+            'test': test,
+            'buyerEmail': request.user.email,
+            'responseUrl': responseUrl,
+            'accountId': accountId,
+            'confirmationUrl': confirmationUrl,
+            'url': url,
         }
 
         return render(
@@ -137,27 +136,27 @@ class Checkout(TemplateView):
     @method_decorator(csrf_exempt)
     def confirmation(self, request):
         if settings.DEBUG:
-            apiKey     = '4Vj8eK4rloUd272L48hsrarnUA'
+            apiKey = '4Vj8eK4rloUd272L48hsrarnUA'
         else:
-            apiKey     = 'vIB29Yn5GW0XVv6qVYBV1e92T1'
+            apiKey = 'vIB29Yn5GW0XVv6qVYBV1e92T1'
 
         if request.method == "POST":
             merchand_id = request.POST['merchant_id']
             reference_sale = request.POST['reference_sale']
             reference_pol = request.POST['reference_pol']
             state_pol = request.POST['state_pol']
-            value  = request.POST['value']
+            value = request.POST['value']
             currency = request.POST['currency']
             sign = request.POST['sign']
-            date = request.POST['date']
+            # date = request.POST['date']
 
             value_str = str(value)
 
             value_antes, value_despues = value_str.split(".")
             value_despues = list(value_despues)
             if value_despues[1] == '0':
-                value= round(float(value),1)
-            signature = '{}~{}~{}~{}~{}~{}'.format(apiKey, merchand_id,reference_sale, value, currency,state_pol)
+                value = round(float(value), 1)
+            signature = '{}~{}~{}~{}~{}~{}'.format(apiKey, merchand_id, reference_sale, value, currency, state_pol)
             signature = signature.encode('utf-8')
             signature = hashlib.md5(signature).hexdigest()
 
@@ -166,12 +165,9 @@ class Checkout(TemplateView):
             user_id = reference[1]
             ref_id = reference[2]
 
-
             if signature == sign:
                 user = User.objects.get(pk=user_id)
-                invoice = Invoice(
-                    user = user,
-                )
+                invoice = Invoice(user=user)
                 invoice.save()
                 if ref == 'DO':
                     documents = Document.objects.filter(pk=ref_id)
@@ -182,7 +178,7 @@ class Checkout(TemplateView):
                     invoice.package = package
                 invoice.save()
 
-                #Aprobada
+                # Aprobada
                 if state_pol == '4':
                     invoice.payment_date = datetime.now()
                     invoice.payu_reference_code = reference
@@ -198,47 +194,47 @@ class Checkout(TemplateView):
                         d.save()
 
                     return HttpResponse(status=200)
-                #Declinada
+                # Declinada
                 elif state_pol == '6':
                     invoice.payment_date = datetime.now()
                     invoice.payu_reference_code = reference
                     invoice.payment_status = Invoice.REJECTED
                     invoice.save()
                     return HttpResponse(status=200)
-                #Error
+                # Error
                 elif state_pol == '104':
                     invoice.payment_date = datetime.now()
                     invoice.payu_reference_code = reference
                     invoice.payment_status = Invoice.CANCEL
                     invoice.save()
                     return HttpResponse(status=200)
-                #Expirada
+                # Expirada
                 elif state_pol == '5':
                     invoice.payment_date = datetime.now()
                     invoice.payu_reference_code = reference
                     invoice.payment_status = Invoice.CANCEL
                     invoice.save()
                     return HttpResponse(status=200)
-                #Pendiente
+                # Pendiente
                 elif state_pol == '7':
                     invoice.payment_date = datetime.now()
                     invoice.payu_reference_code = reference
                     invoice.payment_status = Invoice.PENDING
                     invoice.save()
                     return HttpResponse(status=200)
-                #ninguno de los state_pol
+                # ninguno de los state_pol
                 else:
                     return HttpResponse(status=500)
             else:
                 return HttpResponse(status=500)
 
         elif request.method == "GET":
-            merchand_id = request.GET.get('merchantId','')
-            referenceCode = request.GET.get('referenceCode','')
-            transactionState = request.GET.get('transactionState','')
-            value = request.GET.get('TX_VALUE','')
-            currency = request.GET.get('currency','')
-            signature_get = request.GET.get('signature','')
+            merchand_id = request.GET.get('merchantId', '')
+            referenceCode = request.GET.get('referenceCode', '')
+            transactionState = request.GET.get('transactionState', '')
+            value = request.GET.get('TX_VALUE', '')
+            currency = request.GET.get('currency', '')
+            signature_get = request.GET.get('signature', '')
             reference_pol = request.GET.get('reference_pol')
             polPaymentMethodType = request.GET.get('polPaymentMethodType')
 
@@ -246,25 +242,26 @@ class Checkout(TemplateView):
 
             value_antes, value_despues = value_str.split(".")
 
-            value_despues= list(value_despues)
+            value_despues = list(value_despues)
 
             primer_parametro_despues = int(value_despues[0])
             segundo_parametro_despues = int(value_despues[1])
 
             if primer_parametro_despues % 2 == 0:
                 if segundo_parametro_despues == 5:
-                    value_1= value-0.1
-                    value = round(value_1,1)
+                    value_1 = value - 0.1
+                    value = round(value_1, 1)
                 else:
-                    value = round(float(value),1)
+                    value = round(float(value), 1)
             elif primer_parametro_despues % 2 != 0:
                 if segundo_parametro_despues == 5:
-                    value_1= value+0.1
-                    value = round(float(value_1),1)
+                    value_1 = value + 0.1
+                    value = round(float(value_1), 1)
                 else:
-                    value = round(float(value),1)
+                    value = round(float(value), 1)
 
-            signature = '{}~{}~{}~{}~{}~{}'.format(apiKey, merchand_id,referenceCode, value, currency,transactionState)
+            signature = '{}~{}~{}~{}~{}~{}'.format(apiKey, merchand_id, referenceCode, value,
+                                                   currency, transactionState)
             signature = signature.encode('utf-8')
             signature = hashlib.md5(signature).hexdigest()
 
@@ -289,12 +286,12 @@ class Checkout(TemplateView):
                     request,
                     'store/payment-resumen.html',
                     {
-                        'merchand_id':merchand_id,
-                        'referenceCode':referenceCode,
-                        'transactionState':transactionState,
-                        'value':value,
-                        'currency':currency,
-                        'id_compra':referenceCode,
+                        'merchand_id': merchand_id,
+                        'referenceCode': referenceCode,
+                        'transactionState': transactionState,
+                        'value': value,
+                        'currency': currency,
+                        'id_compra': referenceCode,
                         'reference_pol': reference_pol,
                         'polPaymentMethodType': polPaymentMethodType,
                         'ref': ref,

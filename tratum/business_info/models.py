@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 
-from ckeditor.fields import RichTextField
+from tratum.ckeditor.fields import RichTextField
 
 
 class Policy(models.Model):
@@ -162,7 +162,7 @@ class SiteConfig(models.Model):
 
     def __str__(self):
         return 'Registro de configuración de sitio'
-    
+
     def clean(self):
         """Retorna ValidationError si se intenta crear más de una instancia
         """

@@ -9,7 +9,7 @@ RUN apk update \
   # Pillow dependencies
   && apk add jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev git \
   # CFFI dependencies
-  && apk add libffi-dev py-cffi libxml2-dev libxslt-dev zlib-dev libreoffice
+  && apk add libffi-dev py-cffi libxml2-dev libxslt-dev zlib-dev libreoffice-writer libreoffice-base libreoffice openjdk8-jre-base
 
 RUN addgroup -S django \
     && adduser -S -G django django
