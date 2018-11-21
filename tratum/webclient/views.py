@@ -89,9 +89,14 @@ class LoginView(View):
     """Iniciar Sesión
     """
 
+    def get(self, request, *args, **kwargs):
+        return HttpResponseRedirect('/')
+
     def post(self, request, *args, **kwargs):
         email = request.POST['email']
         password = request.POST['password']
+        print("LOGIN VIEW")
+
         if SocialAccount.objects.filter(user__email=email).count() > 0:
             response = {'error': 'La cuenta con la que intentas iniciar está conectada a una red social'}
             return JsonResponse(response, status=400)
