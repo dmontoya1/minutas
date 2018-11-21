@@ -447,7 +447,8 @@ class DocumentFieldOption(models.Model):
         DocumentField,
         chained_field="document",
         chained_model_field="document",
-        horizontal=True,
+        auto_choose=False,
+        horizontal=False,
         blank=True,
         related_name='linkedfields_set',
         verbose_name='Campos de la opción (si aplica)'
