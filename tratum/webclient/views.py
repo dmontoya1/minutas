@@ -15,10 +15,8 @@ from django.views.generic.base import TemplateView, View
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 
+from allauth.socialaccount.models import SocialAccount
 from rest_framework.authtoken.models import Token
-
-
-from tratum.allauth.socialaccount.models import SocialAccount
 
 from tratum.utils.views import account_activation_token
 

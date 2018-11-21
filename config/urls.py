@@ -8,8 +8,8 @@ from django.views import defaults as default_views
 urlpatterns = [
 
     path(settings.ADMIN_URL, admin.site.urls),
-    #path("users/", include("tratum.users.urls", namespace="users")),
-    path("accounts/", include("tratum.allauth.urls")),
+
+    path("accounts/", include("allauth.urls")),
     path('chaining/', include('tratum.smart_selects.urls')),
     path('', include('tratum.webclient.urls'), name='webclient'),
     path('', include('django.contrib.auth.urls')),

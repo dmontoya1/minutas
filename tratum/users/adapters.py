@@ -2,10 +2,10 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import redirect
 from django.urls import reverse
 
-from tratum.allauth.account.adapter import DefaultAccountAdapter, get_adapter
-from tratum.allauth.account.utils import perform_login
-from tratum.allauth.socialaccount import app_settings
-from tratum.allauth.socialaccount.adapter import DefaultSocialAccountAdapter
+from allauth.account.adapter import DefaultAccountAdapter, get_adapter
+from allauth.account.utils import perform_login
+from allauth.socialaccount import app_settings
+from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 
 from .models import LogTerms
 

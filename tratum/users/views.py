@@ -10,9 +10,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_auth.registration.views import SocialLoginView
 
-from tratum.allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
-from tratum.allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
-from tratum.allauth.socialaccount.providers.oauth2.client import OAuth2Client
+from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from tratum.api.helpers import get_api_user
 
 from .serializers import UserSerializer, ChangePasswordSerializer, SectorSerializer
