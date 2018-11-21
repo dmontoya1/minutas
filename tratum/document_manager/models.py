@@ -11,8 +11,8 @@ from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 from ckeditor.fields import RichTextField
 from embed_video.fields import EmbedVideoField
+from smart_selects.db_fields import ChainedForeignKey, ChainedManyToManyField
 
-from tratum.smart_selects.db_fields import ChainedForeignKey
 from tratum.utils.models import SoftDeletionModelMixin, SlugIdentifierMixin
 
 
@@ -335,8 +335,10 @@ class DocumentField(SlugIdentifierMixin):
         help_text='Indica el orden de aparición del campo en el formulario',
         default=0
     )
-    field_group = models.ManyToManyField(
+    field_group = ChainedManyToManyField(
         'self',
+        chained_field="document",
+        chained_model_field="document",
         blank=True,
         verbose_name='Campos del grupo',
         help_text='Para campos agrupados, indica que campos hacen parte del grupo'
@@ -441,8 +443,11 @@ class DocumentFieldOption(models.Model):
         sort=True,
         verbose_name='Campo al que pertenece la opción'
     )
-    linked_fields = models.ManyToManyField(
+    linked_fields = ChainedManyToManyField(
         DocumentField,
+        chained_field="document",
+        chained_model_field="document",
+        horizontal=True,
         blank=True,
         related_name='linkedfields_set',
         verbose_name='Campos de la opción (si aplica)'

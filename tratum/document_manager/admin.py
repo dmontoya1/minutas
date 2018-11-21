@@ -65,9 +65,6 @@ class DocumentFieldAdmin(admin.ModelAdmin):
         form = super(DocumentFieldAdmin, self).get_form(request, obj, **kwargs)
         if request.GET.get('document_id', None):
             form.base_fields['document'].queryset = Document.objects.filter(pk=request.GET['document_id'])
-            form.base_fields['field_group'].queryset = DocumentField.objects.filter(
-                document__id=request.GET['document_id']
-            )
         if request.GET.get('section_id', None):
             form.base_fields['section'].queryset = DocumentSection.objects.filter(pk=request.GET['section_id'])
         return form

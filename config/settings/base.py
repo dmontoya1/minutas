@@ -74,6 +74,7 @@ THIRD_PARTY_APPS = [
     'import_export',
     'mptt_urls',
     'embed_video',
+    'smart_selects',
 ]
 
 LOCAL_APPS = [
@@ -82,7 +83,6 @@ LOCAL_APPS = [
     'tratum.document_manager.apps.DocumentManagerConfig',
     'tratum.reports.apps.ReportsConfig',
     'tratum.store.apps.StoreConfig',
-    'tratum.smart_selects.apps.SmartSelectsConfig',
     'tratum.users.apps.UsersConfig',
     'tratum.utils.apps.UtilsConfig',
     'tratum.webclient.apps.WebclientConfig',

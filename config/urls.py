@@ -16,7 +16,7 @@ urlpatterns = [
     path('', include('tratum.webclient.urls'), name='webclient'),
     path('api/', include('tratum.api.urls'), name="api"),
     path('business-info/', include('tratum.business_info.urls'), name='business_info'),
-    path('chaining/', include('tratum.smart_selects.urls')),
+    path('chaining/', include('smart_selects.urls')),
     path('document-manager/', include('tratum.document_manager.urls'), name='document_manager'),
     path('reports/', include('tratum.reports.urls', namespace='reports')),
     path('store/', include('tratum.store.urls'), name='store'),
