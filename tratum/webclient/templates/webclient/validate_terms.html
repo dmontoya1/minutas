@@ -21,7 +21,6 @@
                         Para continuar usted debe aceptar los Términos y condiciones y la Politica de tratamientode datos de <strong>Tratum</strong>
                     </div>
                     <br>
-                    <a class="btn" href="{% url 'webclient:logout' %}">Cerrar Sesión</a>
                     <button class="btn btn-accept accept_terms">Aceptar y continuar</button>
                 </div>
             </div>
@@ -55,7 +54,7 @@
 {% endblock content %}
 
 {% block extra_js %}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.26.10/dist/sweetalert2.all.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.26.10/dist/sweetalert2.all.min.js"></script>
 
     <script type="text/javascript">
 
@@ -93,8 +92,8 @@
                         swal("Atención", json[0].detail, "error");
                     }
                 });
-                
+
             });
         })(jQuery);
     </script>
-{% endblock %}  
+{% endblock %}
