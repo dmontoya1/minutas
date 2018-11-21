@@ -9,18 +9,19 @@ urlpatterns = [
 
     path(settings.ADMIN_URL, admin.site.urls),
 
-    path("accounts/", include("allauth.urls")),
-    path('chaining/', include('tratum.smart_selects.urls')),
-    path('', include('tratum.webclient.urls'), name='webclient'),
     path('', include('django.contrib.auth.urls')),
+    path("accounts/", include("allauth.urls")),
+    path('auth/', include('rest_auth.urls')),
+    path('auth/registration/', include('rest_auth.registration.urls')),
+
+    path('', include('tratum.webclient.urls'), name='webclient'),
     path('api/', include('tratum.api.urls'), name="api"),
     path('business-info/', include('tratum.business_info.urls'), name='business_info'),
-    path('store/', include('tratum.store.urls'), name='store'),
+    path('chaining/', include('tratum.smart_selects.urls')),
     path('document-manager/', include('tratum.document_manager.urls'), name='document_manager'),
-    path('users/', include('tratum.users.urls'), name='users'),
-    path('auth/', include('rest_auth.urls')),
     path('reports/', include('tratum.reports.urls', namespace='reports')),
-    path('auth/registration/', include('rest_auth.registration.urls')),
+    path('store/', include('tratum.store.urls'), name='store'),
+    path('users/', include('tratum.users.urls'), name='users'),
 
 ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT

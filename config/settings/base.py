@@ -264,7 +264,7 @@ ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/'
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
-ACCOUNT_ADAPTER = 'users.adapters.AccountAdapter'
+ACCOUNT_ADAPTER = 'tratum.users.adapters.AccountAdapter'
 
 
 # Social account settings
