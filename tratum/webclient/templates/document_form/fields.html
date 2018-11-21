@@ -6,7 +6,7 @@
             {% if field.help_text %}
                 <i class="fas fa-question-circle float-right" data-toggle="tooltip" data-placement="left" title="{{field.help_text}}"></i>
             {% endif %}
-        </div>        
+        </div>
         <div class="input-control col">
             <input required name="{{field.formated_slug}}" type="{{field.get_html_input_type}}" id="{{field.formated_slug}}"
             class="{% spaceless %}
@@ -19,17 +19,17 @@
                     {% endif %}
                 {% else %}
                     {% if field.field_type == field.PRICE %}
-                        pricetag 
+                        pricetag
                     {% endif %}
-                {% endif %}            
+                {% endif %}
             required{% endspaceless %}" autocomplete="off">
-        </div>             
+        </div>
         {% if field.youtube_help_video_link %}
             <div class="col">
                 <a href="#" data-toggle="modal" data-target="#videoModal" data-url="{{field.youtube_help_video_link}}">Ver video</a>
             </div>
-        {% endif %}    
-    </div>        
+        {% endif %}
+    </div>
 {% elif field.field_type == field.SELECT or field.field_type == field.DYNAMIC_SELECT %}
     <div class="input-block {{field.get_linked_state}}" data-parent="{{field.get_linked_parent}}" data-question="{{field.get_linked_question}}">
         <div class="label col clearfix">
@@ -37,13 +37,13 @@
             {% if field.help_text %}
                 <i class="fas fa-question-circle float-right" data-toggle="tooltip" data-placement="left" title="{{field.help_text}}"></i>
             {% endif %}
-        </div>   
+        </div>
         <div class="input-control col">
             <select name="{{field.formated_slug}}" class="{% if field.field_type == field.DYNAMIC_SELECT %}dynamic{% endif %}">
                 <option selected disabled>Selecciona un elemento de la lista</option>
                 {% for f in field.documentfieldoption_set.all %}
                     <option value="{{f.name}}" data-id="{{f.pk}}">{{f.name}}</option>
-                {% endfor %}                
+                {% endfor %}
             </select>
         </div>
     </div>
@@ -54,7 +54,7 @@
             {% if field.help_text %}
                 <i class="fas fa-question-circle float-right " data-toggle="tooltip" data-placement="left" title="{{field.help_text}}"></i>
             {% endif %}
-        </div>   
+        </div>
         {% for f in field.documentfieldoption_set.all %}
             <div class="col mb-2">
                 <div class="row">
@@ -64,7 +64,7 @@
                     <div class="col-sm-11 pl-0">
                         <label for="{{field.name}}__{{f.pk}}">{{f.name}}</label>
                     </div>
-                </div>              
+                </div>
             </div>
         {% endfor %}
     </div>
@@ -75,13 +75,13 @@
             {% if field.help_text %}
                 <i class="fas fa-question-circle float-right" data-toggle="tooltip" data-placement="left" title="{{field.help_text}}"></i>
             {% endif %}
-        </div>   
-    </div>     
-    <div class="group-fields mt-3 mb-3" data-name="{{field.formated_slug}}" data-pk="{{field.pk}}" data-regex="{{field.group_expression}}">        
+        </div>
+    </div>
+    <div class="group-fields mt-3 mb-3" data-name="{{field.formated_slug}}" data-pk="{{field.pk}}" data-regex="{{field.group_expression}}">
         <div class="group-item mt-2" data-group="{{field.pk}}">
-            {% for gf in field.get_ordered_group_fields %}  
-                {% include 'document_form/fields_fgroup.html' %}                 
-            {% endfor %}                   
+            {% for gf in field.get_ordered_group_fields %}
+                {% include 'document_form/fields_fgroup.html' %}
+            {% endfor %}
         </div>
         <a class="float-right group-adder" href="#" id="" data-group="{{field.pk}}">
             <i class="fas fa-plus-circle"></i>
@@ -93,4 +93,3 @@
 
 
 
-   
