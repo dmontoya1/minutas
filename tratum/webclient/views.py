@@ -93,7 +93,7 @@ class LoginView(View):
     def post(self, request, *args, **kwargs):
         email = request.POST['email']
         password = request.POST['password']
-        print("LOGIN VIEW")
+        next = request.POST.get('email_login_next', False)
 
         if SocialAccount.objects.filter(user__email=email).count() > 0:
             response = {'error': 'La cuenta con la que intentas iniciar está conectada a una red social'}
@@ -109,7 +109,7 @@ class LoginView(View):
         else:
             user = authenticate(email=email, password=password)
             if user is not None:
-                url = reverse('webclient:profile')
+                url = next if next else reverse('webclient:profile')
                 login(request, user)
                 messages.add_message(
                     request,

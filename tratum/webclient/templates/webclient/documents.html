@@ -58,17 +58,17 @@
                                 <div class="form-group">
                                     <label for="subcategory"><i class="fa fa-file-sound-o" aria-hidden="true"></i></label>
                                     <select class="custom-select" id="level1-categories">
-                                        <option selected disabled>Seleccione primero una categoría</option>     
+                                        <option selected disabled>Seleccione primero una categoría</option>
                                     </select>
                                 </div>
                             </form>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <div class="row docs">
             <div class="container">
                 <div class="row justify-content-between">
@@ -124,7 +124,7 @@
                                                 <div class="row row-category">
                                                     <div class="col">
                                                         <p class="category">{{doc.category.name}}</p>
-                                                    </div> 
+                                                    </div>
                                                 </div>
                                                 <div class="row justify-content-between">
                                                     <div class="col-10 doc-info">
@@ -150,7 +150,7 @@
                                                                 <a data-success="{% url 'store:create-user-document'  %}?document_id={{doc.pk}}" data-toggle="modal" data-target="#modal-login" class="btn btn-buy anon float-left">Comprar</a>
                                                             {% endif %}
                                                         </div>
-                                                    
+
                                                         <div class="col-6">
                                                             <span class="float-right price-free">GRATIS</span>
                                                         </div>
@@ -205,7 +205,7 @@
                                                                 <a data-toggle="modal" data-target="#modal-login" class="btn btn-buy float-left">Comprar</a>
                                                             {% endif %}
                                                         </div>
-                                                    
+
                                                         <div class="col-6">
                                                             <span class="float-right price-free">GRATIS</span>
                                                         </div>
@@ -287,7 +287,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
                 <nav aria-label="Page navigation example">
                     <div class="pagination justify-content-center">
@@ -297,11 +297,11 @@
                                     <a href="?page=1">&laquo; primera</a>
                                     <a href="?page={{ documents.previous_page_number }}">anterior</a>
                                 {% endif %}
-                        
+
                                 <span class="current">
                                     Página {{ documents.number }} de {{ documents.paginator.num_pages }}.
                                 </span>
-                        
+
                                 {% if documents.has_next %}
                                     <a href="?page={{ documents.next_page_number }}">siguiente</a>
                                     <a href="?page={{ documents.paginator.num_pages }}">última &raquo;</a>
@@ -313,11 +313,11 @@
                                     <a href="?page=1">&laquo; primera</a>
                                     <a href="?page={{ packages.previous_page_number }}">anterior</a>
                                 {% endif %}
-                        
+
                                 <span class="current">
                                     Página {{ packages.number }} de {{ packages.paginator.num_pages }}.
                                 </span>
-                        
+
                                 {% if packages.has_next %}
                                     <a href="?page={{ packages.next_page_number }}">siguiente</a>
                                     <a href="?page={{ packages.paginator.num_pages }}">última &raquo;</a>
@@ -344,14 +344,14 @@
                             <div class="row ">
                                 <div class="col-12">
                                     <p class="text-justify" id="doc__modal_description">
-                                        
-                                    </p> 
+
+                                    </p>
                                 </div>
                                 <div class="col-12 video-container">
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -368,7 +368,7 @@
 
 {% block extra_js %}
     <script>
-        window.onload = function(){ document.getElementById("loadingAnimation").style.display = "none" }   
+        window.onload = function(){ document.getElementById("loadingAnimation").style.display = "none" }
     </script>
     <script>
 
@@ -391,14 +391,14 @@
                         $('.filters').addClass('margin-top')
                     }
                     else {
-                        sticky.removeClass("fixed"); 
+                        sticky.removeClass("fixed");
                         $('.filters').removeClass('margin-top')
                     }
-                    // win.scrollTop() >= pos ? sticky.addClass("fixed") : sticky.removeClass("fixed");      
-                });			
+                    // win.scrollTop() >= pos ? sticky.addClass("fixed") : sticky.removeClass("fixed");
+                });
             }
         }
-    
+
         toastr.options = {
             "closeButton": false,
             "debug": false,
@@ -443,7 +443,7 @@
                                     `
                                 )
                             }
-                            
+
                         })
                         if (child3 === null || child3 === undefined){
                         }
@@ -467,7 +467,7 @@
                                 }.bind(this), 100);
                             });
                         });
-                        
+
                     }
                 })
                 .catch(function(error){
@@ -530,7 +530,7 @@
                                     heightStyle: "content"
                                 });
                         });
-                        
+
                     }
                 })
                 .catch(function(error){
@@ -540,7 +540,7 @@
         }
 
         function get_child_1_categories(category_slug, child1, child2, child3){
-            
+
             axios.get(`/api/document-manager/categories/${category_slug}/children/`)
                 .then(function(response){
                     if (response.data.length > 0){
@@ -561,7 +561,7 @@
                                 )
 
                             }
-                            
+
                         })
                         if (child1 === null || child1 === undefined){
                             $('#level1-categories').prepend(
@@ -574,7 +574,7 @@
                             )
                             get_child_2_categories($('#level1-categories option:selected').data('slug'), child2, child3)
                         }
-                        
+
                     }
                 })
                 .catch(function(error){
@@ -610,17 +610,17 @@
                         }else{
                             $('#root-categories').prepend(
                                 `<option value="" >Seleccione una categoría</option>`
-                                
+
                             )
                             get_child_1_categories($('#root-categories option:selected').data('slug'), child1, child2, child3)
                         }
-                        
+
 
                     }
                     else {
                         $('#root-categories').append(
                             `<option value="" >No hay categorías</option>`
-                        ) 
+                        )
                     }
                 })
                 .catch(function(error){
@@ -730,13 +730,14 @@
         })
 
         $('.btn-buy.anon').on('click', function (e) {
-            success = $(this).data('success');
-            g_url = "{% provider_login_url 'google' method='oauth2' next='' %}"
+            var success = $(this).data('success');
+            var g_url = "{% provider_login_url 'google' method='oauth2' next='' %}"
             g_url = g_url + '&next=' +  success
-            f_url = "{% provider_login_url 'facebook' method='oauth2' next='' %}"
+            var f_url = "{% provider_login_url 'facebook' method='oauth2' next='' %}"
             f_url = f_url + '?next=' +  success
             $('.btn-gl').attr('href', g_url)
             $('.btn-fb').attr('href', f_url)
+            $('#email_login_next').val(success);
         })
 
     </script>

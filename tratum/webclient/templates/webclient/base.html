@@ -173,6 +173,8 @@
                                             </div>
                                         </div>
 
+                                        <input type="hidden" id="email_login_next" name="email_login_next" value="/">
+
                                         <p class="text-right">
                                             <a href="#modal-forget" class="forgot-pass" data-toggle="modal" data-dismiss="modal">¿Olvidaste tu contraseña?'</a>
                                         </p>
@@ -480,6 +482,8 @@
                 </script>
             {% endfor %}
         {% endif %}
+
+        {% block login_extra %}{% endblock login_extra %}
 
         <script type="text/javascript">
             function checkStrength(password) {
