@@ -73,6 +73,7 @@ THIRD_PARTY_APPS = [
     'rest_auth.registration',
     'import_export',
     'mptt_urls',
+    'mptt',
     'embed_video',
     'smart_selects',
 ]
