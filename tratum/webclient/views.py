@@ -32,10 +32,8 @@ from tratum.store.models import UserDocument
 
 from tratum.users.models import LogTerms
 
-from .mixins import TermsAndConditions
 
-
-class HomePageView(TermsAndConditions):
+class HomePageView(TemplateView):
 
     template_name = "webclient/home.html"
 
@@ -218,7 +216,7 @@ class ValidateTerms(LoginRequiredMixin, TemplateView):
         return context
 
 
-class CategoryDocumentsView(TermsAndConditions):
+class CategoryDocumentsView(TemplateView):
 
     template_name = "webclient/documents.html"
 
@@ -231,13 +229,13 @@ class CategoryDocumentsView(TermsAndConditions):
         return context
 
 
-class ProfileView(LoginRequiredMixin, TermsAndConditions):
+class ProfileView(LoginRequiredMixin, TemplateView):
 
     template_name = "webclient/profile.html"
     login_url = '/'
 
 
-class UserDocumentsView(LoginRequiredMixin, TermsAndConditions, ListView):
+class UserDocumentsView(LoginRequiredMixin, ListView):
     model = UserDocument
     template_name = "webclient/user_documents.html"
     login_url = '/'
