@@ -2,11 +2,14 @@ from django.conf import settings
 from django.urls import include, path
 from django.conf.urls.static import static
 from django.contrib import admin
-
 from django.views import defaults as default_views
+
 
 urlpatterns = [
 
+    # Admin
+    path('jet/', include('jet.urls', 'jet')),
+    path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     path(settings.ADMIN_URL, admin.site.urls),
 
     path("accounts/", include("allauth.urls")),

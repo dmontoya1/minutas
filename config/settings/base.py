@@ -59,6 +59,8 @@ DJANGO_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'jet.dashboard',
+    'jet',
     'django.contrib.admin',
 ]
 THIRD_PARTY_APPS = [

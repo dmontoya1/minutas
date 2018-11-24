@@ -1,6 +1,7 @@
 import json
 import os
 import subprocess
+import pypandoc
 import pdfkit
 import logging
 
@@ -187,14 +188,12 @@ class FinishDocumentView(View):
     def generate_doc(self, request, user_document):
         html_file = user_document.html_file.path
         name = os.path.basename(user_document.html_file.name.split('.')[0])
-        output_filename = "{}.odt".format(name)
+        output_filename = "{}.docx".format(name)
         media_root = settings.MEDIA_ROOT
+        args = ["--page_numbers"]
         try:
-            subprocess.call(
-                "soffice --headless --convert-to odt {0} --outdir {1}docxs/".format(html_file, media_root),
-                shell=True
-            )
-
+            outdir = '{0}docxs/{1}'.format(media_root, output_filename)
+            output_filename = pypandoc.convert_file(html_file, 'docx', outputfile=outdir, extra_args=args)
             user_document.word_file = "docxs/{}".format(output_filename)
             user_document.save()
         except Exception as e:

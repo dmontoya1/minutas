@@ -84,12 +84,7 @@ class DocumentDetailView(DetailView):
 
 
 class LoginView(View):
-    """Iniciar Sesión
-    """
-
-    def get(self, request, *args, **kwargs):
-        return HttpResponseRedirect('/')
-
+    """Iniciar Sesión"""
     def post(self, request, *args, **kwargs):
         email = request.POST['email']
         password = request.POST['password']
