@@ -120,3 +120,8 @@ class DocumentFieldOptionAdmin(admin.ModelAdmin):
         'name',
         'field'
     )
+
+    list_filter = (
+        'document',
+        'field',
+    )
