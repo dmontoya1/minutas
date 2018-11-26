@@ -451,18 +451,31 @@ section {
 }
 
 .dropdown-menu {
-    max-width: 320px !important;
     top: 30px !important;
-    left: -155px !important;
+    left: 55px !important;
     right: 0 !important;
+    width: 300px;
+}
+
+.droprigth.subdrop a {
+    padding-left: 1em;
+}
+
+.droprigth.subdrop .dropdown-menu.show {
+    left: 200px !important;
+}
+
+.dropleft.subdrop .dropdown-menu.show {
+    left: -160px !important;
 }
 
 .dropleft.subdrop a {
     padding-left: 1em;
 }
-    .dropleft.subdrop .dropdown-menu.show {
-        left: -160px !important;
-    }
+
+.dropleft.subdrop .dropdown-menu.show {
+    left: -160px !important;
+}
 
 .main-options {
     color: #FFF;
