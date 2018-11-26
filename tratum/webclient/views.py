@@ -355,7 +355,7 @@ class ContactFormView(View):
             email.send()
             messages.success(request, 'Mensaje envíado correctamente')
         else:
-            message.error(request, 'No se completó correctamente el captcha')
+            messages.error(request, 'No se completó correctamente el captcha')
 
         return redirect('webclient:home')
 
