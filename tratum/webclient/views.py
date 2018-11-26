@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import requests
+
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -326,19 +329,34 @@ class ContactFormView(View):
         email = request.POST['email']
         message = request.POST['message']
         topic = 'Mensaje de {name} desde el formulario de Tratum'.format(name=name)
-        if request.POST.get('is_document', None):
-            topic = 'Solicitud de nuevo documento de {name} desde Tratum'.format(name=name)
-        email = EmailMessage(
-            topic,
-            '{email} envía esto: {message}'.format(
-                email=email,
-                message=message
-            ),
-            'no-reply@tratum.co',
-            ['nrodriguez@apptitud.com.co']
-        )
-        email.send()
-        messages.success(request, 'Mensaje envíado correctamente')
+
+        ''' Begin reCAPTCHA validation '''
+        recaptcha_response = request.POST.get('g-recaptcha-response')
+        data = {
+            'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+            'response': recaptcha_response
+        }
+        r = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+        result = r.json()
+        ''' End reCAPTCHA validation '''
+
+        if result['success']:
+            if request.POST.get('is_document', None):
+                topic = 'Solicitud de nuevo documento de {name} desde Tratum'.format(name=name)
+            email = EmailMessage(
+                topic,
+                '{email} envía esto: {message}'.format(
+                    email=email,
+                    message=message
+                ),
+                'no-reply@tratum.co',
+                ['nrodriguez@apptitud.com.co']
+            )
+            email.send()
+            messages.success(request, 'Mensaje envíado correctamente')
+        else:
+            message.error(request, 'No se completó correctamente el captcha')
+
         return redirect('webclient:home')
 
 
