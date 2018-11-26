@@ -13,7 +13,7 @@ body {
 main {
     margin-bottom: 35px;
     min-height: calc(100% - 220px);
-} 
+}
 
 button:focus,
 button:active {
@@ -111,13 +111,13 @@ section {
         position: absolute;
         left: 50%;
         top: 35%;
-        transform: translate(-50%,-45%);     
-        color: #fff;   
+        transform: translate(-50%,-45%);
+        color: #fff;
         z-index: 99999;
     }
         .swiper-container .swiper-slide .description h1 {
-            font-weight: 800;    
-            color: #fff !important;   
+            font-weight: 800;
+            color: #fff !important;
         }
             @media screen and (max-width: 414px) {
                 .swiper-container .swiper-slide .description h1 {
@@ -126,11 +126,11 @@ section {
             }
         .swiper-container .swiper-slide .description p {
             font-size: 1.5em;
-            font-weight: 300;    
+            font-weight: 300;
         }
             @media screen and (max-width: 414px) {
                 .swiper-container .swiper-slide .description p {
-                    display: none;  
+                    display: none;
                 }
             }
         .swiper-container .swiper-slide .description i {
@@ -148,7 +148,7 @@ section {
         .swiper-container .swiper-mask-left:hover {
             cursor: url(/static/img/cursor-left.png), auto;
         }
-        
+
     .swiper-container .swiper-mask-right {
         position: absolute;
         width: 50%;
@@ -162,14 +162,14 @@ section {
         }
 
 @media screen and (max-width: 414px) {
-    .row.categories {    
+    .row.categories {
         margin-bottom: 2em;
     }
 }
 
 .bundles {
     padding: 180px 0;
-}   
+}
     .bundles h2 {
         display: inline-block;
         vertical-align: middle;
@@ -230,11 +230,11 @@ section {
             overflow-x: hidden;
         }
             .bundles .bundle .documents span.title {
-                font-weight: 800;                
+                font-weight: 800;
                 border-bottom: 1px solid #686868;
                 display: inline-block;
                 line-height: 1.8em;
-            }                
+            }
             .bundles .bundle .documents span {
                 margin: 1.2em auto;
                 font-size: .9em;
@@ -247,7 +247,7 @@ section {
                 padding: .5em 2em;
                 margin-top: 1em;
                 font-weight: 600;
-                box-shadow: 0 5px 15px rgba(0,0,0,.05), 0 4px 10px rgba(0,123,255,.25);            
+                box-shadow: 0 5px 15px rgba(0,0,0,.05), 0 4px 10px rgba(0,123,255,.25);
             }
                 .bundles .bundle.dark-blue button {
                     background-color: #002856;
@@ -276,28 +276,28 @@ section {
     font-size: 1em;
     font-weight: 300;
     color: #000;
-    opacity: 0.74;    
+    opacity: 0.74;
     padding-right: 15%;
     text-align: justify;
 }
-.categories .category-description.left {   
+.categories .category-description.left {
     padding-left: 12%;
 }
 
 @media screen and (max-width: 414px) {
-    .categories .category-description {   
+    .categories .category-description {
         padding-left: 12%;
     }
 }
 
-.categories .category-parallax {    
+.categories .category-parallax {
     height: 70vh;
     background-size: cover !important;
     background-repeat: no-repeat !important;
 }
 
 @media screen and (max-width: 414px) {
-    .categories .category-parallax {    
+    .categories .category-parallax {
         height: 180px;
     }
 }
@@ -369,7 +369,7 @@ section {
     width: 5em;
 }
 @media screen and (max-width: 414px) {
-    .contract-info h2 {   
+    .contract-info h2 {
         font-size: 2.3em;
     }
 }
@@ -385,7 +385,7 @@ section {
         color: #727272;
     }
     @media screen and (max-width: 414px) {
-        .corporate-signature span {   
+        .corporate-signature span {
             margin-top: 10px;
         }
     }
@@ -397,7 +397,7 @@ section {
         border-radius: 15px;
     }
     @media screen and (max-width: 414px) {
-        .corporate-signature span img {   
+        .corporate-signature span img {
             margin-left: 0px;
             width: 100%;
             width: 90%;
@@ -451,9 +451,9 @@ section {
 }
 
 .dropdown-menu {
-    max-width: 320px !important; 
-    top: 30px !important; 
-    left: -155px !important; 
+    max-width: 320px !important;
+    top: 30px !important;
+    left: -155px !important;
     right: 0 !important;
 }
 
@@ -491,11 +491,15 @@ section {
         margin-left: 2em;
     }
 
+.modal {
+    z-index: 99999 !important;
+}
+
 .modal-dialog.large {
     max-width: 50% !important;
 }
     @media screen and (max-width: 818px) {
-        .modal-dialog.large {   
+        .modal-dialog.large {
             max-width: 100% !important;
         }
     }
@@ -596,7 +600,7 @@ section {
                 font-weight: 800;
                 margin-right: 10px;
             }
-        
+
 .underline {
     text-decoration: underline;
 }
