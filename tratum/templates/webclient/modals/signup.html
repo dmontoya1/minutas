@@ -1,0 +1,97 @@
+{% load static %}
+{% load socialaccount %}
+<!-- Modal Signup -->
+<div class="modal fade" id="modal-signup" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="container">
+                    <div id="triangle"></div>
+                    <div class="row justify-content-around">
+                        <div class="col-10">
+                            <h4 class="modal-title" id="modal-label">Registro</h4>
+                        </div>
+                        <div class="col-1">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-bottom: 30px;">
+                        <div class="col-md-6 clear-fix">
+                            <a href="{% provider_login_url 'facebook' method='oauth2' next='/profile' %}" class="btn-fb float-left">
+                                <i class="fab fa-facebook-square"></i>
+                                Continuar con Facebook
+                            </a>
+                        </div>
+                        <div class="col-md-6 clear-fix">
+                            <a href="{% provider_login_url 'google' method='oauth2' next='/profile' %}" class="btn-gl float-right">
+                                <i class="fab fa-google"></i>
+                                Continuar con Google
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col">
+                            <form method="POST" id="signup" class="form-horizontal">
+                                {% csrf_token %}
+
+                                <input type="hidden" name="username">
+
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <label class="control-label">Correo Electrónico *</label>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <input type="text" required class="form-control" name="email"
+                                        data-validation="email" data-validation-error-msg="Debes ingresar un email válido"/>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <label class="control-label">Contraseña *</label>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <input required type="password" class="form-control" name="password1" id="password1"/>
+                                        <span id="result"></span>
+                                    </div>
+
+                                </div>
+                                <br>
+
+                                <div class="form-group mb-3">
+                                    <div class="col-xs-12">
+                                        <label class="control-label"> Repetir Contraseña *</label>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <input required type="password" class="form-control"
+                                        name="password2" id="password2"/>
+                                        <span id="valid"></span>
+                                    </div>
+                                </div>
+                                <div class="float-right">
+                                    <span style="font-size: 0.8em;color: rgb(193, 35, 24);">Los campos con * son obligatorios</span>
+                                </div>
+
+                                <div class="terms-conditions mt-5">
+                                    <input type="checkbox" id="terms" style="display:inline">
+                                    <label for="terms" style="color: #929292;display:inline;font-weight: 100;">
+                                    Para continuar debes aceptar las
+                                    <a href="{% url 'webclient:policies' 'privacy' %}" target="_blank" class="signup_terms"><strong>Políticas de tratamiento de datos</strong> </a>de <strong>TRATUM S.A.S</strong>
+                                </div>
+
+                                <input type="hidden" name="username" />
+
+                                <div class="text-center">
+                                    <input type="submit" disabled id="reg_submit_signup" value="Registrarse"/>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

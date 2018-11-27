@@ -1,5 +1,3 @@
-from re import sub
-from decimal import Decimal
 from num2words import num2words
 from django import template
 from django.template.defaultfilters import stringfilter
@@ -13,8 +11,8 @@ register = template.Library()
 @stringfilter
 def comma_sep_to_ul(value, autoescape=True):
     items = value.split('¬')
-    lis = lambda items: ['<li><p style="text-align:justify">{}</p></li>'.format(item) for item in items]
-    items = '\n'.join(lis(items))
+    lis = ['<li><p style="text-align:justify">{}</p></li>'.format(item) for item in items]
+    items = '\n'.join(lis)
     items = '<ol>{}</ol>'.format(items)
     return mark_safe(items)
 
@@ -23,8 +21,8 @@ def comma_sep_to_ul(value, autoescape=True):
 @stringfilter
 def comma_sep_to_li(value, autoescape=True):
     items = value.split('¬')
-    lis = lambda items: ['<li><p style="text-align:justify">{}</p></li>'.format(item) for item in items]
-    items = '\n'.join(lis(items))
+    lis = ['<li><p style="text-align:justify">{}</p></li>'.format(item) for item in items]
+    items = '\n'.join(lis)
     return mark_safe(items)
 
 
@@ -32,8 +30,8 @@ def comma_sep_to_li(value, autoescape=True):
 @stringfilter
 def retain_comma(value, autoescape=True):
     items = value.split('¬')
-    lis = lambda items: ['{};'.format(item) for item in items]
-    items = '\n'.join(lis(items))
+    lis = ['{};'.format(item) for item in items]
+    items = '\n'.join(lis)
     return mark_safe(items)
 
 

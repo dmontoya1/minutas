@@ -1,0 +1,37 @@
+<div class="modal fade" id="modal-documents" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>Cuéntanos, ¿que documentos necesitas?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col text-center">
+                            <form action="{% url 'webclient:contact-form' %}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="is_document" value="true"/>
+                                <div class="form-group">
+                                    <input required name="name" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Nombre">
+                                </div>
+                                <div class="form-group">
+                                    <input required name="email" type="email" class="form-control"  placeholder="Correo electrónico">
+                                </div>
+                                <div class="form-group">
+                                    <textarea required name="message" class="form-control" placeholder="¿Qué documentos necesitas?"></textarea>
+                                </div>
+                                <div class="g-recaptcha" data-sitekey="6LdqLn0UAAAAAKildIXZzJZicplDzL7RJLOomOSr"></div>
+                                <div class="form-group">
+                                    <button type="submit" class="action-button__primary">Enviar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -23,7 +23,7 @@
 {% block result_list %}
 <div class=”results”>
     <table>
-        
+
     <thead>
       <tr>
         <th>
@@ -47,7 +47,7 @@
     {% for row in summary %}
       <tr>
         <td> {{ row.name }} </td>
-        <td> 
+        <td>
         {% for d in row.documents.all %}
             <a>{{d.name}}</a>{% if not forloop.last %},{% endif %}
         {% endfor %}</td>
@@ -55,7 +55,7 @@
       </tr>
     {% endfor %}
     </tbody>
-    
+
   </table>
 </div>
 {% endblock %}
