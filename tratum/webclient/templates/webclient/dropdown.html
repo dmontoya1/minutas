@@ -8,7 +8,11 @@
                 aria-expanded="false"
             {% else %}
                 href="{{c.get_absolute_url}}"
-            {% endif %}>{{c.name}}</a>
+            {% endif %}>{{c.name}}
+        {% if c.get_children %}
+        <span class="toright"></span>
+        {% endif %}
+        </a>
             {% if c.get_children %}
                 <div class="dropdown-menu">
                     {% for c in c.get_children %}

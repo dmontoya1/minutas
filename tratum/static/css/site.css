@@ -452,7 +452,7 @@ section {
 
 .dropdown-menu {
     top: 30px !important;
-    left: 55px !important;
+    left: 0px !important;
     right: 0 !important;
     width: 300px;
 }
@@ -462,7 +462,7 @@ section {
 }
 
 .droprigth.subdrop .dropdown-menu.show {
-    left: 200px !important;
+    left: 297px !important;
 }
 
 .dropleft.subdrop .dropdown-menu.show {

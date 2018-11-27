@@ -15,6 +15,21 @@
     outline: 0;
 }
 
+.noleftbar :before{
+    display: none !important;
+}
+
+.toright{
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 0.15em;
+    content: "";
+    border-top: .3em solid transparent;
+    border-left: .3em solid;
+    border-bottom: .3em solid transparent;
+}
+
 
 .dropdown-menu .show > .dropdown-toggle::after{
     transform: rotate(-90deg);
