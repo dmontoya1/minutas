@@ -62,18 +62,19 @@ CKEDITOR.dialog.add( 'fieldDialog', function(editor){
             var dialog = this;
 
             var span = editor.document.createElement('span');
+            span.setAttribute('class', 'variable_tag');
 
             field_value = dialog.getValueOf('tab-select-field', 'document-field')
             filter_value = dialog.getValueOf('tab-select-field', 'filter-field')
-        
+
             text = `{{${field_value}}}`
 
             if(filter_value){
                 text = `{{${field_value}|${filter_map[filter_value]}}}`
             }
 
-            span.setText(text);          
-            
+            span.setText(text);
+
             editor.insertElement(span);
         },
         onShow: function(){
@@ -89,7 +90,7 @@ CKEDITOR.dialog.add( 'fieldDialog', function(editor){
             updateDocumentsLinkText = document.createTextNode("Recargar");
             updateDocumentsLink.appendChild(updateDocumentsLinkText);
             updateDocumentsLink.title = 'Recargar';
-            updateDocumentsLink.className += "link"; 
+            updateDocumentsLink.className += "link";
 
             document.querySelector('.cke_dialog_ui_labeled_label').append(updateDocumentsLink);
 
@@ -99,7 +100,7 @@ CKEDITOR.dialog.add( 'fieldDialog', function(editor){
                 filter = ''
                 if(object_info){
                     filter = 'document_id=' + object_info.dataset.id;
-                }   
+                }
                 addWindow = window.open("/admin/document_manager/documentfield/add/?_to_field=id&_popup=1" + `&${filter}`, 'Agregar campo','height=550,width=950');
                 if(window.focus){
                     addWindow.focus();
@@ -128,7 +129,7 @@ function populateDocumentFields(){
         } else if(object_info.dataset.model == 'document'){
             url = `/api/document-manager/document-fields/?${filter}`
         }
-    }    
+    }
     axios.get(url)
         .then(function(response) {
             select = document.querySelector('select.document-select');
