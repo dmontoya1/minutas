@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 
-from tratum.ckeditor.fields import RichTextField
+from ckeditor.fields import RichTextField
 
 
 class Policy(models.Model):

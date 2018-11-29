@@ -78,6 +78,7 @@ THIRD_PARTY_APPS = [
     'mptt',
     'embed_video',
     'smart_selects',
+    'ckeditor',
 ]
 
 LOCAL_APPS = [
@@ -89,7 +90,6 @@ LOCAL_APPS = [
     'tratum.users.apps.UsersConfig',
     'tratum.utils.apps.UtilsConfig',
     'tratum.webclient.apps.WebclientConfig',
-    'tratum.ckeditor.apps.CKEditorInfoConfig',
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -400,7 +400,7 @@ CKEDITOR_CONFIGS = {
             'documentfield',
             'documentsection',
             'dynamiccounter',
-            'conditional'
+            'conditional',
         ]),
     }
 }

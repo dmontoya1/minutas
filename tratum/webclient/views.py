@@ -353,11 +353,10 @@ class ContactFormView(View):
                 ['nrodriguez@apptitud.com.co']
             )
             email.send()
-            messages.success(request, 'Mensaje envíado correctamente')
+            messages.add_message(request, messages.SUCCESS, "Mensaje envíado correctamente")
+            return JsonResponse(dict(message="Mensaje envíado correctament"))
         else:
-            messages.error(request, 'No se completó correctamente el captcha')
-
-        return redirect('webclient:home')
+            return JsonResponse(dict(error="No se completó correctamente el captcha"), status=400)
 
 
 def activate(request, token, pk):

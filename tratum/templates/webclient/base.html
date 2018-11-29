@@ -308,11 +308,11 @@
                     .catch(function(error){
                         toastr.error(error.response.data.error);
                     });
-            })
+            });
 
             $('.q-title').on('click', function(){
                 $(this).toggleClass('active');
-            })
+            });
 
             $("#signup").on('submit', function(ev){
                 ev.preventDefault()
@@ -334,7 +334,7 @@
                         $('#reg_submit_signup').attr('disabled', false)
                     });
 
-            })
+            });
 
             $("#forget").on('submit', function(ev){
                 ev.preventDefault()
@@ -351,7 +351,46 @@
                         toastr.error("El correo electrónico no se encuentra registrado")
                         $('#reg_submit_signup').attr('disabled', false)
                     });
-            })
+            });
+
+
+            $("#contact_form").on('submit', function(ev){
+                ev.preventDefault()
+                $("#contact_form_submit").attr("disabled", "disabled");
+                $("#contact_form_submit").text('Enviando...');
+                data = new FormData($(this)[0])
+                var form = $(this);
+                axios.post("{% url 'webclient:contact-form' %}", data)
+                    .then(function(response){
+                        form[0].reset();
+                        $("#contact_form_submit").text('Enviado');
+                        window.location.replace('/');
+                    })
+                    .catch(function(error){
+                        $("#contact_form_submit").removeAttr("disabled");
+                        $("#contact_form_submit").text('Enviar');
+                        toastr.error(error.response.data.error);
+                    });
+            });
+
+            $("#new_doc_request_form").on('submit', function(ev){
+                ev.preventDefault()
+                $("#new_doc_request_form_submit").attr("disabled", "disabled");
+                $("#new_doc_request_form_submit").text('Enviando...');
+                data = new FormData($(this)[0])
+                var form = $(this);
+                axios.post("{% url 'webclient:contact-form' %}", data)
+                    .then(function(response){
+                        form[0].reset();
+                        $("#new_doc_request_form_submit").text('Enviado');
+                        window.location.reload();
+                    })
+                    .catch(function(error){
+                        $("#new_doc_request_form_submit").removeAttr("disabled");
+                        $("#new_doc_request_form_submit").text('Enviar');
+                        toastr.error(error.response.data.error);
+                    });
+            });
         </script>
 
         {% block extra_js %}

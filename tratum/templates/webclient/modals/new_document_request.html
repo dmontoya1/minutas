@@ -11,7 +11,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col text-center">
-                            <form action="{% url 'webclient:contact-form' %}" method="POST">
+                            <form id="new_doc_request_form" method="POST">
                                 {% csrf_token %}
                                 <input type="hidden" name="is_document" value="true"/>
                                 <div class="form-group">
@@ -25,7 +25,7 @@
                                 </div>
                                 <div class="g-recaptcha" data-sitekey="6LdqLn0UAAAAAKildIXZzJZicplDzL7RJLOomOSr"></div>
                                 <div class="form-group">
-                                    <button type="submit" class="action-button__primary">Enviar</button>
+                                    <button id="new_doc_request_form_submit" type="submit" class="action-button__primary">Enviar</button>
                                 </div>
                             </form>
                         </div>
