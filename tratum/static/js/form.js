@@ -3,59 +3,59 @@ axios.defaults.headers.common['X-CSRFToken'] = document.getElementById('doc-info
 
 
 function savePreview() {
-    function getGroupFields(form){      
+    function getGroupFields(form){
         groups = {};
         quantity = {};
-        $('.group-fields').each(function(i1, gf){  
-            group_responses = [];        
+        $('.group-fields').each(function(i1, gf){
+            group_responses = [];
             regex = $(this).data('regex');
             name = $(this).data('name');
             pk = $(this).data('pk');
             items = $(this).find(`.group-item`).not('.group-fields .group-fields .group-item');
-            $(items).each(function(i2, gi){ 
+            $(items).each(function(i2, gi){
                 fields = $(this).find('input, select');
                 regexed_text = regex;
                 $(fields).each(function(i3, git){
                     regexed_text = regexed_text.replace($(this).data('name'), $(this).val());
-                });                
+                });
 
                 /* extra_content = null;
 
                 if($(this).children('.group-fields').length > 0){
-                    $(this).children('.group-fields').each(function(i1, gf){     
-                        internal_group_responses = [];  
+                    $(this).children('.group-fields').each(function(i1, gf){
+                        internal_group_responses = [];
                         internal_regex = $(this).data('regex');
                         internal_name = $(this).data('name');
                         internal_pk = $(this).data('pk');
                         internal_items = $(this).find(`.group-item`);
-                        $(internal_items).each(function(i2, gi){                              
+                        $(internal_items).each(function(i2, gi){
                             internal_fields = $(this).find('input, select');
                             internal_regexed_text = internal_regex;
                             $(internal_fields).each(function(i3, git){
                                 internal_regexed_text = internal_regexed_text.replace($(this).data('name'), $(this).val());
-                            });                
+                            });
                             internal_group_responses.push(' ' + internal_regexed_text);
                         });
                         extra_content = internal_group_responses
-                    });             
+                    });
                 }
-                
+
 
                 if(extra_content != null || extra_content != ""){
-                    regexed_text = `${regexed_text}: ${extra_content}` 
+                    regexed_text = `${regexed_text}: ${extra_content}`
                 } */
-                
+
                 group_responses.push(regexed_text);
             });
             quantity['Q_' + $(this).data('name')] = items.length;
             groups[$(this).data('name')] = group_responses.join('¬ ').toString();
         });
         return form + '&' + $.param(groups) + '&' + $.param(quantity)
-    }   
-    
+    }
+
     form = $('#document-form').serialize();
     form = getGroupFields(form);
-    
+
     axios.post('/api/document-manager/save-preview/', form)
         .then(function(){
             realTimeUpdate();
@@ -81,7 +81,7 @@ function formatDocument(){
         40: 'Cuadragésim',
         50: 'Quincuagésim'
     };
-    
+
     var femaleCounters = document.querySelectorAll('input[value="dynamic_counter"]');
     var maleCounters = document.querySelectorAll('input[value="dynamic_counter_male"]');
     var internalCounters = document.querySelectorAll('input[value^="section_dynamic_counter"]');
@@ -89,7 +89,7 @@ function formatDocument(){
     addCounters(femaleCounters, 'a');
     addCounters(maleCounters, 'o');
     addInternalCounters(internalCounters);
-    
+
     function addInternalCounters(internalCounters){
         var sections = [];
         for (i = 0; i < internalCounters.length; i++) {
@@ -102,7 +102,7 @@ function formatDocument(){
         for (i = 0; i < sections.length; i++) {
             var internalCounters = document.querySelectorAll(`input[value="section_dynamic_counter_${sections[i]}"]`);
             addCounters(internalCounters, 'o');
-        } 
+        }
     }
 
     function addCounters(dynamic_counters, gender){
@@ -187,11 +187,11 @@ function cloneGroupItem(groupAdder, fromGroupAdder){
 
     $('a.deleter').on('click', function(e){
         e.preventDefault();
-        prev = $(this).parent().prev();        
+        prev = $(this).parent().prev();
         $(this).parent().remove();
         rescroll(prev);
-    })  
-    
+    })
+
 }
 
 function rescroll(e){
@@ -212,7 +212,7 @@ function realTimeUpdate(){
                 $(this).empty().append(content).fadeIn();
                 formatDocument();
             });
-            
+
         })
 }
 
@@ -234,29 +234,29 @@ $.fn.upform = function() {
         });
 
     $("input").on('keyup', function(e) {
-        savePreview();        
+        savePreview();
         if (e.which == 13 || e.which == 9) {
-            e.preventDefault()            
+            e.preventDefault()
             if ($(this).hasClass("required") && $(this).val() == "") {
-            } else {                
+            } else {
                 moveNext(this);
-            } 
+            }
         }
         if (e.which == 40) {
             moveNext(this);
         } else if (e.which == 38) {
             movePrev(this);
-        } 
+        }
     });
-    
 
-    $(container).find('.input-block select').change(function(e) {
-        savePreview();
-        moveNext(this);
-    });
+
+    // $(container).find('.input-block select').change(function(e) {
+    //     savePreview();
+    //     moveNext(this);
+    // });
 
     $(window).on("scroll", function(){
-        
+
         $(container).find(".input-block:not(.preventForming)").each(function() {
             var etop = $(this).offset().top;
             var diff = etop - $(window).scrollTop();
@@ -264,8 +264,8 @@ $.fn.upform = function() {
             if (diff > 50 && diff < 300) {
                 reinitState(this);
             }
-        });   
-            
+        });
+
     });
 
     function reinitState(e) {
@@ -274,8 +274,8 @@ $.fn.upform = function() {
             $(this).blur();
         });
         $(e).addClass("active");
-        $('[data-toggle="tooltip"]').tooltip('hide'); 
-        $(e).find('[data-toggle="tooltip"]').tooltip('show'); 
+        $('[data-toggle="tooltip"]').tooltip('hide');
+        $(e).find('[data-toggle="tooltip"]').tooltip('show');
         $(e).find('input:not(.date)').focus();
     }
 
@@ -307,7 +307,7 @@ $('.modal-trigger').on('click', function() {
     $('#videoModal').modal();
 });
 
-$('[data-toggle="tooltip"]').tooltip(); 
+$('[data-toggle="tooltip"]').tooltip();
 
 $('.date').attr('placeholder', 'Seleccione una fecha...');
 
@@ -338,7 +338,7 @@ $('.pricetag').priceFormat({
 
 $('.group-adder').on('click', function(e){
     e.preventDefault();
-    cloneGroupItem($(this), true);    
+    cloneGroupItem($(this), true);
 })
 
 
@@ -352,28 +352,35 @@ $('.section-item').on('click', function(e){
     $(`*[data-section="${$(this).attr('name')}"]`).toggle();
 })
 
-$('select.dynamic').on('change', function(e){   
-    console.log($(this).find(":selected").text());
+$('select.dynamic').on('change', function(e){
+
     field = $(this).attr('name');
     parent = $(this).closest('.input-block');
     value = $(this).find(":selected").text();
     id = $(this).find(":selected").data('id');
-    
-    $(`[data-question="${field}"]`).remove();
 
-    axios.get(`/api/document-manager/document-options/${id}/linked-fields/`)
-        .then(function(response){
-            
-            fields = response.data.fields
-            if (fields.length > 0){
-                title = `<h5 class="linked-title" data-parent="${id}" data-question="${field}">Los siguientes campos aparecen por que seleccionaste <strong>${value}</strong></h5>`
-            }
-            Object.keys(fields).forEach(function(key) {
-                parent.after(fields[key]);
+    $('[data-question="'+field+'"]').remove();
+    if(id){
+        axios.get('/api/document-manager/document-options/'+id+'/linked-fields/')
+            .then(function(response){
+                var element = undefined;
+                fields = response.data.fields
+                if (fields.length > 0){
+                    title = `<h5 class="linked-title" data-parent="${id}" data-question="${field}">Los siguientes campos aparecen por que seleccionaste <strong>${value}</strong></h5>`
+                }
+                Object.keys(fields).forEach(function(key) {
+                    parent.after($(fields[key]));
+                    element = $(fields[key]);
+                })
+                parent.after(title);
+                savePreview();
+
+                var y = $(window).scrollTop();  //your current y position on the page
+                $(window).scrollTop(y+150);
+
             })
-            parent.after(title);
-        })
-       
+    }
+
 })
 
 $(function(){
@@ -382,23 +389,23 @@ $(function(){
         .then(function (response) {
             answers = response.data.answers
             if(answers){
-                Object.keys(answers).forEach(function(key) {                    
+                Object.keys(answers).forEach(function(key) {
                     if(key.startsWith('Q_')){
                         length = answers[key];
                         key = key.substring(2);
                         group = $(`.group-fields[data-name="${key}"]`);
-                        adder = group.find('.group-adder'); 
+                        adder = group.find('.group-adder');
                         if(length > 1){
                             c = length - 1;
                             for (i = 0; i < c; i++) {
                                 cloneGroupItem(adder, false);
                             }
-                        }                        
-                        
+                        }
+
                     }
-                }); 
-                Object.keys(answers).forEach(function(key) {                    
-                    input = $('#document-form').find(`input[name='${key}']`) 
+                });
+                Object.keys(answers).forEach(function(key) {
+                    input = $('#document-form').find(`input[name='${key}']`)
                     if(input.length > 0){
                         input.val(answers[key]);
                         input.prop("checked", true);
@@ -407,8 +414,11 @@ $(function(){
                         input = $('#document-form').find(`select[name='${key}']`)
                         input.find(`option[value='${answers[key]}']`).prop("selected", true);
                     }
-                });            
-            }            
+                });
+
+                // var y = $(window).scrollTop();  //your current y position on the page
+                // $(window).scrollTop(y+50);
+            }
         })
     realTimeUpdate();
     $('select.dynamic').trigger('change');

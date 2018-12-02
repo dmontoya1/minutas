@@ -38,6 +38,7 @@
               <input type="hidden" name="identifier" value="{{identifier}}" />
               <div class="upform-header"></div>
               <div class="upform-main">
+
                 {% for field in object.get_fields %}
                   {% include 'document_form/fields.html' %}
                   {% if field.field_type == field.LIST %}
@@ -48,6 +49,7 @@
                     </div>
                   {% endif %}
                 {% endfor %}
+
                 <div class="sections col mt-5">
                   <h3 class="mb-3">Secciones opcionales disponibles: </h3>
                   {% for s in object.get_sections %}
