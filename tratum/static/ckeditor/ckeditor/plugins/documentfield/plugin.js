@@ -5,7 +5,7 @@ CKEDITOR.plugins.add('documentfield', {
         editor.ui.addButton('documentfield', {
             label: 'Agregar campo dinámico',
             command: 'addDocumentField',
-            icon: 'https://www.orsgroup.com/wp-content/uploads/2014/05/quality-control-icon.png'
+            icon: 'https://cdn3.iconfinder.com/data/icons/box-and-shipping-supplies-icons/436/Compliance_Clipboard-512.png'
         });
 
         CKEDITOR.dialog.add('fieldDialog', this.path + 'dialogs/documentField.js');

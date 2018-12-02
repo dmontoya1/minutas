@@ -402,7 +402,6 @@ CKEDITOR_CONFIGS = {
             'dynamiccounter',
             'conditional',
         ]),
-        'contentsCss': '/static/css/custom_ckeditor.css',
     }
 }
 
