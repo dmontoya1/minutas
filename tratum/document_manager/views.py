@@ -119,7 +119,8 @@ class UserDocumentContentView(View):
         body = json.loads(body_unicode)
         content = {}
         obj = UserDocument.objects.get(identifier=body['identifier'])
-        document_content = Template(obj.document.content)
+        doc_content = "{% load fieldformatter %}" + obj.document.content
+        document_content = Template(doc_content)
         document_content = document_content.render(Context(obj.answers))
         content['document_content'] = document_content
         return JsonResponse(content)
