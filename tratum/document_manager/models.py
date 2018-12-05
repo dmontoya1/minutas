@@ -193,6 +193,7 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
         fields = self.documentfield_set.all().order_by('order')
         for f in fields:
             if f in on_document_fields:
+                print(f)
                 result.append(f)
         return result
 

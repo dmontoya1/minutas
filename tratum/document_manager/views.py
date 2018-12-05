@@ -53,7 +53,7 @@ class DocumentFieldList(generics.ListAPIView):
     def get_queryset(self):
         q = DocumentField.objects.all()
         if self.request.GET.get('document_id', None):
-            q = q.filter(document__id=self.request.GET['document_id'])
+            q = q.filter(document__id=self.request.GET['document_id']).order_by('-order')
         return q
 
 
