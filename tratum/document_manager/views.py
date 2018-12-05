@@ -53,7 +53,7 @@ class DocumentFieldList(generics.ListAPIView):
     def get_queryset(self):
         q = DocumentField.objects.all()
         if self.request.GET.get('document_id', None):
-            q = q.filter(document__id=self.request.GET['document_id']).order_by('-order')
+            q = q.filter(document__id=self.request.GET['document_id'])
         return q
 
 
@@ -135,7 +135,7 @@ class LinkedFieldView(View):
 
     def get(self, request, *args, **kwargs):
         q = DocumentFieldOption.objects.get(pk=kwargs['pk'])
-        fields = q.linked_fields.all()
+        fields = q.linked_fields.all().order_by('-order')
         output = []
         for f in fields:
             template = loader.get_template('document_form/fields.html')
