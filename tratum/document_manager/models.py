@@ -9,7 +9,7 @@ from django.db.models import Q
 from django.urls import reverse
 
 from mptt.models import MPTTModel, TreeForeignKey
-from ckeditor.fields import RichTextField
+from tratum.ckeditor.fields import RichTextField
 from embed_video.fields import EmbedVideoField
 from smart_selects.db_fields import ChainedForeignKey, ChainedManyToManyField
 
