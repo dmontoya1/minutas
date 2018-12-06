@@ -300,7 +300,8 @@ class UserDocumentPreviewView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         obj = self.get_object()
-        document_content = Template(obj.document.content)
+        doc_content = "{% load fieldformatter %}" + obj.document.content
+        document_content = Template(doc_content)
         document_content = document_content.render(Context(obj.answers))
         context['document_content'] = document_content
         return context
