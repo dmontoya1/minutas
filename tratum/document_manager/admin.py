@@ -125,3 +125,5 @@ class DocumentFieldOptionAdmin(admin.ModelAdmin):
         'document',
         'field',
     )
+
+    filter_horizontal = ['linked_fields']

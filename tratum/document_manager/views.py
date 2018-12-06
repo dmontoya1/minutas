@@ -1,6 +1,5 @@
 import json
 import os
-import subprocess
 import pypandoc
 import pdfkit
 import logging
