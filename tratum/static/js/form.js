@@ -303,6 +303,25 @@ $.fn.upform = function() {
 
 form = $(".upform").upform();
 
+$(".multiple-checkbox-fields").change(function() {
+    var parentName = $(this).data('parent');
+    var parent = $("input[name='"+parentName+"']")
+    $(parent).val("");
+    $(".multiple-checkbox-fields[data-parent='"+parentName+"']").each(function(i, element){
+        var ischecked= $(element).is(':checked');
+        if(ischecked){
+            before = $(parent).val() ;
+            if(before==""){
+                $(parent).val($(element).val());
+            }else{
+                $(parent).val( before + "¬" + $(element).val() );
+            }
+        }
+    }).promise().done(function(){
+        savePreview();
+    });
+});
+
 $('.modal-trigger').on('click', function() {
     $('#videoModal').modal();
 });
@@ -415,9 +434,6 @@ $(function(){
                         input.find(`option[value='${answers[key]}']`).prop("selected", true);
                     }
                 });
-
-                // var y = $(window).scrollTop();  //your current y position on the page
-                // $(window).scrollTop(y+50);
             }
         })
     realTimeUpdate();

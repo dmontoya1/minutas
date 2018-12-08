@@ -129,7 +129,8 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
     )
     file = models.FileField(
         'Documento de archivo',
-        help_text='Si subes una archivo aquí, indicas que el documento no será un formulario, si no un archivo descargable. Ej: Liquidador de excel',
+        help_text='''Si subes una archivo aquí, indicas que el documento no será un formulario,
+                     si no un archivo descargable. Ej: Liquidador de excel''',
         upload_to='filedocuments',
         null=True,
         blank=True
