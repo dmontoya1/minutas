@@ -84,4 +84,4 @@ class SlugIdentifierMixin(models.Model):
         return str(self.slug).replace('-', '_')
 
     def formated_to_raw_slug(self, formated_slug):
-        return formated_slug.replace('_', '-')
+        return formated_slug.strip().replace('_', '-')

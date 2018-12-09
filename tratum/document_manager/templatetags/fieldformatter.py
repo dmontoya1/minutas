@@ -7,8 +7,8 @@ from django.utils.safestring import mark_safe
 register = template.Library()
 
 
-@stringfilter
-def hidden(value):
+@register.filter()
+def set_hidden(value):
     return ""
 
 

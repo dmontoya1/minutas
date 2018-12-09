@@ -147,9 +147,10 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
         return reverse('webclient:document', kwargs={'slug': self.slug})
 
     def query_component(self, slug):
-        slug = self.formated_to_raw_slug(slug.strip())
+        slug = self.formated_to_raw_slug(slug)
         try:
             component = self.documentfield_set.get(slug=slug)
+            print(component)
         except:
             try:
                 component = self.documentsection_set.get(slug=slug)
