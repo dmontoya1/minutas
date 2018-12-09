@@ -377,7 +377,7 @@ section {
     }
 
 .navbar-toggler {
-   display: block;
+   display: inline-block;
 }
 .navbar-toggler-mobile {
     display: none;
@@ -394,7 +394,7 @@ section {
        display: none;
     }
     .navbar-toggler-mobile {
-       display: block;
+       display: inline-block;
     }
 }
 
