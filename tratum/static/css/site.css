@@ -338,6 +338,66 @@ section {
         border: 1px solid #fff;
     }
 
+
+
+.contextualMenuMobile {
+    height: 100%;
+    background-color: #5eccc4;
+    padding-top: 5em;
+    display: none;
+    z-index: 9998;
+    position: fixed;
+}
+    .contextualMenuMobile i {
+        font-size: 2em;
+        color: #FFF;
+        cursor: pointer;
+        position: absolute;
+        top: 20px;
+    }
+    .contextualMenuMobile > div {
+        padding-left: 30px !important;
+    }
+    .contextualMenuMobile h4 {
+        font-weight: 600;
+        font-size: 2em;
+        margin-bottom: .8em;
+    }
+    .contextualMenuMobile h5 {
+        padding: .1em 1em;
+        border-radius: 20px;
+        display: inline-block;
+        font-size: 1em;
+    }
+    .contextualMenuMobile h5:first-child {
+        background-color: #002c55;
+    }
+    .contextualMenuMobile h5:last-child {
+        border: 1px solid #fff;
+    }
+
+.navbar-toggler {
+   display: block;
+}
+.navbar-toggler-mobile {
+    display: none;
+    color: #fff;
+    z-index: 99999;
+    background: transparent;
+    font-size: 1.5em;
+    outline: 0;
+    vertical-align: sub;
+}
+
+@media only screen and (max-width: 500px) {
+    .navbar-toggler {
+       display: none;
+    }
+    .navbar-toggler-mobile {
+       display: block;
+    }
+}
+
 .contact-form {
     padding-top: 100px;
     padding-bottom: 100px;

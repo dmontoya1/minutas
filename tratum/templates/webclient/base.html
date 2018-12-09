@@ -71,9 +71,54 @@
                         </div>
                     </div>
                 </div>
+                <div class="contextualMenuMobile">
+                    <div class="p-4-mobile">
+                        <i class="fas fa-times navbar-toggler-mobile"></i>
+                        <h4 class="text-white">
+                            <a href="/">Inicio</a>
+                        </h4>
+                        <h4 class="text-white">
+                            <a href="{% url 'webclient:category_documents' path='' %}">Categorías</a>
+                        </h4>
+                        <h4 class="text-white">
+                            <a href="{% url 'webclient:about-us' %}">¿Qué es Tratum?</a>
+                        </h4>
+                        <h4 class="text-white">
+                            <a href="{% url 'webclient:faq' %}">Preguntas frecuentes </a>
+                        </h4>
+                        <h4 class="text-white">
+                            <a href="{% url 'webclient:category_documents' path='' %}">Tienda de documentos</a>
+                        </h4>
+                        {% if request.user.is_authenticated %}
+                            <h4 class="text-white">
+                                <a href="{% url 'webclient:user-documents' %}">Mis documentos</a>
+                            </h4>
+                            <h4 class="text-white">
+                                <a href="{% url 'webclient:profile' %}">Mi cuenta</a>
+                            </h4>
+                        {% endif %}
+                        <div class="mt-5">
+                            {% if request.user.is_anonymous %}
+                                <h5 class="text-white">
+                                    <a data-toggle="modal" data-target="#modal-login">Iniciar sesión</a>
+                                </h5></br>
+                                <h5 class="text-white">
+                                    <a data-toggle="modal" data-target="#modal-signup">Registrarse</a>
+                                </h5>
+                            {% else %}
+                                <h5 class="text-white">
+                                    <span>Hola, {{request.user.first_name}}</span>
+                                    <a href="/logout/" id="Logout">Cerrar sesión</a>
+                                </h5></br>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
                 <nav {% block nav_class %}class="navbar fixed-top bg-transparent" {% endblock %}>
                     <div>
                         <i class="fas fa-bars rotate navbar-toggler"></i>
+                        <i class="fas fa-bars rotate navbar-toggler-mobile"></i>
                         <a href="/">
                             <img class="logo" src="{% static 'img/logo/tratum.png' %}">
                         </a>
@@ -310,11 +355,19 @@
                         $(this).remove();
                     }
                 });
+
                 $('.navbar-toggler').on('click', function(){
                     $('.rotate').toggleClass("down");
                     $('.contextualMenu').fadeToggle();
                     $('.logo').toggle();
-                })
+                });
+
+                $('.navbar-toggler-mobile').on('click', function(){
+                    $('.rotate').toggleClass("down");
+                    $('.contextualMenuMobile').fadeToggle();
+                    $('.logo').toggle();
+                });
+
                 $('#password2').attr('disabled', true);
 
                 {% block nav-script%}
