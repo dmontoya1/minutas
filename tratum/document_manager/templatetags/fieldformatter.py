@@ -7,7 +7,6 @@ from django.utils.safestring import mark_safe
 register = template.Library()
 
 
-@register.filter(needs_autoescape=True)
 @stringfilter
 def hidden(value):
     return ""
