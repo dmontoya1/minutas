@@ -8,7 +8,7 @@ register = template.Library()
 
 
 @register.filter()
-def set_hidden(value):
+def hidden(value):
     return ""
 
 
