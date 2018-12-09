@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="https://cdn.crunchify.com/favicon.ico">
+    <link rel="shortcut icon" href="{% static 'img/logo/favicon.png' %}">
     <title>Tratum</title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
     crossorigin="anonymous">
@@ -32,7 +32,7 @@
       <div class="col-lg-7 form-col" style="z-index: 9999999;">
           <div class="upform">
             <a href="{% url 'webclient:user-documents' %}" class="col">
-              <img class="logo" src="{% static 'img/logo-color-placeholder@2x.png' %}" href="/">
+              <img class="logo" src="{% static 'img/logo/tratum.png' %}" href="/">
             </a>
             <form method="POST" action="{% url 'document_manager:process' %}" id="document-form">
               <input type="hidden" name="identifier" value="{{identifier}}" />
