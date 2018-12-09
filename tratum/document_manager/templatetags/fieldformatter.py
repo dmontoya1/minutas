@@ -9,6 +9,12 @@ register = template.Library()
 
 @register.filter(needs_autoescape=True)
 @stringfilter
+def hidden(value):
+    return ""
+
+
+@register.filter(needs_autoescape=True)
+@stringfilter
 def comma_sep_to_ul(value, autoescape=True):
     items = value.split('¬')
     lis = ['<li><p style="text-align:justify">{}</p></li>'.format(item) for item in items]
