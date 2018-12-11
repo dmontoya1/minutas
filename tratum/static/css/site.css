@@ -394,7 +394,8 @@ section {
        display: none;
     }
     .navbar-toggler-mobile {
-       display: inline-block;
+        color: #161616;
+        display: inline-block;
     }
 }
 
