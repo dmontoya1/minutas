@@ -29,7 +29,6 @@ def comma_sep_to_li(value, autoescape=True):
     items = value.split('¬')
     lis = ['<li><p style="text-align:justify">{}</p></li>'.format(item) for item in items]
     items = '\n'.join(lis)
-    print(items)
     return mark_safe(items)
 
 
@@ -48,3 +47,29 @@ def num_to_text(value, autoescape=True):
         value = ''.join(c for c in value if c not in '$.')
         return num2words(int(value), lang='es')
     return ''
+
+
+@register.filter(needs_autoescape=True)
+@stringfilter
+def vars_to_list(content, var_list, autoescape=True):
+    items = content.split('¬')
+    var_list = [item.strip() for item in var_list.split(",")]
+    doc_types = ["C.C.", "C.E.", "T.I.", "P.S.", "N.I.T."]
+    lis = []
+    for item in items:
+        tag = '<p style="text-align:justify">'
+        for element in item.split("|"):
+            obj = element.split(":")
+            if len(obj) > 1:
+                key = obj[0].strip()
+                value = obj[1]
+                if key in var_list:
+                    if value in doc_types:
+                        tag += '{} '.format(value)
+                    else:
+                        tag += '{}<br>'.format(value)
+        tag += '<br>'
+        tag += '</p>'
+        lis.append(tag)
+    response = '\n'.join(lis)
+    return mark_safe(response)

@@ -150,7 +150,6 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
         slug = self.formated_to_raw_slug(slug)
         try:
             component = self.documentfield_set.get(slug=slug)
-            print(component)
         except:
             try:
                 component = self.documentsection_set.get(slug=slug)

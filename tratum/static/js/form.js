@@ -6,51 +6,36 @@ function savePreview() {
     function getGroupFields(form){
         groups = {};
         quantity = {};
+        name = "";
         $('.group-fields').each(function(i1, gf){
             group_responses = [];
+            group_objects = []
             regex = $(this).data('regex');
             name = $(this).data('name');
             pk = $(this).data('pk');
             items = $(this).find(`.group-item`).not('.group-fields .group-fields .group-item');
             $(items).each(function(i2, gi){
+                new_object = {};
                 fields = $(this).find('input, select');
                 regexed_text = regex;
+
+                new_object = []
                 $(fields).each(function(i3, git){
                     regexed_text = regexed_text.replace($(this).data('name'), $(this).val());
+                    //new_object[$(this).data('name')] = $(this).val();
+                    new_object += $(this).data('name') + ":" + $(this).val() + "|";
                 });
-
-                /* extra_content = null;
-
-                if($(this).children('.group-fields').length > 0){
-                    $(this).children('.group-fields').each(function(i1, gf){
-                        internal_group_responses = [];
-                        internal_regex = $(this).data('regex');
-                        internal_name = $(this).data('name');
-                        internal_pk = $(this).data('pk');
-                        internal_items = $(this).find(`.group-item`);
-                        $(internal_items).each(function(i2, gi){
-                            internal_fields = $(this).find('input, select');
-                            internal_regexed_text = internal_regex;
-                            $(internal_fields).each(function(i3, git){
-                                internal_regexed_text = internal_regexed_text.replace($(this).data('name'), $(this).val());
-                            });
-                            internal_group_responses.push(' ' + internal_regexed_text);
-                        });
-                        extra_content = internal_group_responses
-                    });
-                }
-
-
-                if(extra_content != null || extra_content != ""){
-                    regexed_text = `${regexed_text}: ${extra_content}`
-                } */
-
+                group_objects.push(new_object);
                 group_responses.push(regexed_text);
             });
+
+            groups[name] = group_responses.join('¬ ').toString();
+            groups[name+"_vars"] = group_objects.join('¬ ').toString();
             quantity['Q_' + $(this).data('name')] = items.length;
-            groups[$(this).data('name')] = group_responses.join('¬ ').toString();
         });
-        return form + '&' + $.param(groups) + '&' + $.param(quantity)
+
+        data = $.param(groups);
+        return form + '&' + data + '&' + $.param(quantity)
     }
 
     form = $('#document-form').serialize();
