@@ -33,6 +33,7 @@ CKEDITOR.dialog.add( 'fieldDialog', function(editor){
                             ['Agrupar grupo de campos por comas'],
                             ['Agrupar grupo de campos por listado'],
                             ['Añadir item a lista existente'],
+                            ['Ocultar variable en el documento'],
                         ]
                     }
                 ]
@@ -57,6 +58,7 @@ CKEDITOR.dialog.add( 'fieldDialog', function(editor){
                 'Agrupar grupo de campos por comas': 'retain_comma',
                 'Agrupar grupo de campos por listado': 'comma_sep_to_ul',
                 'Añadir item a lista existente': 'comma_sep_to_li',
+                'Ocultar variable en el documento': 'hidden',
             }
 
             var dialog = this;
