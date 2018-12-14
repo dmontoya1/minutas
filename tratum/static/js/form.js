@@ -356,7 +356,7 @@ $('.section-item').on('click', function(e){
     $(`*[data-section="${$(this).attr('name')}"]`).toggle();
 })
 
-$('select.dynamic').on('change', function(e){
+$('select.dynamic').on('change', function(e, answers=undefined){
 
     field = $(this).attr('name');
     parent = $(this).closest('.input-block');
@@ -377,10 +377,26 @@ $('select.dynamic').on('change', function(e){
                     element = $(fields[key]);
                 })
                 parent.after(title);
-                savePreview();
 
-                var y = $(window).scrollTop();  //your current y position on the page
-                $(window).scrollTop(y+150);
+                if(answers){
+                    Object.keys(answers).forEach(function(key) {
+                        input = $('#document-form').find(`input[name='${key}']`)
+                        if(input.length > 0){
+                            input.val(answers[key]);
+                            input.prop("checked", true);
+                            $(`*[data-section="${$(input).attr('name')}"]`).toggle();
+                        } else {
+                            input = $('#document-form').find(`select[name='${key}']`)
+                            input.find(`option[value='${answers[key]}']`).attr("selected", true);
+                        }
+                    });
+                }else{
+                    savePreview();
+
+                    var y = $(window).scrollTop();  //your current y position on the page
+                    $(window).scrollTop(y+150);
+                }
+
 
             })
     }
@@ -416,11 +432,12 @@ $(function(){
                         $(`*[data-section="${$(input).attr('name')}"]`).toggle();
                     } else {
                         input = $('#document-form').find(`select[name='${key}']`)
-                        input.find(`option[value='${answers[key]}']`).prop("selected", true);
+                        input.find(`option[value='${answers[key]}']`).attr("selected", true);
                     }
                 });
             }
+
+            realTimeUpdate();
+            $('select.dynamic').trigger('change', answers);
         })
-    realTimeUpdate();
-    $('select.dynamic').trigger('change');
 });
