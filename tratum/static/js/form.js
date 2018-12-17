@@ -376,7 +376,9 @@ $('select.dynamic').on('change', function(e, answers=undefined){
                     parent.after($(fields[key]));
                     element = $(fields[key]);
                 })
-                parent.after(title);
+                if (fields.length > 0){
+                    parent.after(title);
+                }
 
                 if(answers){
                     Object.keys(answers).forEach(function(key) {
