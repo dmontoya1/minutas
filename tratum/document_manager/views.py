@@ -137,10 +137,12 @@ class LinkedFieldView(View):
         q = DocumentFieldOption.objects.get(pk=kwargs['pk'])
         fields = q.linked_fields.all().order_by('-order')
         output = []
+        counter = len(fields)
         for f in fields:
             template = loader.get_template('document_form/fields.html')
-            render = template.render({'field': f})
+            render = template.render({'field': f, 'counter': counter})
             output.append(render)
+            counter -= 1
         content = {}
         content['fields'] = output
         return JsonResponse(content)
