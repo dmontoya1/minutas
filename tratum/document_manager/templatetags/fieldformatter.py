@@ -50,6 +50,12 @@ def num_to_text(value, autoescape=True):
 
 @register.filter(needs_autoescape=True)
 @stringfilter
+def capfirst(value, autoescape=True):
+    return value.lower().title()
+
+
+@register.filter(needs_autoescape=True)
+@stringfilter
 def vars_to_list(content, var_list, autoescape=True):
     items = content.split('¬')
     var_list = [item.strip() for item in var_list.split(",")]
