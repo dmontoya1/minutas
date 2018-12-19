@@ -356,10 +356,10 @@ $('#document-form .section-item').on('click', function(e){
 
 $('#document-form select.dynamic').on('change', function(e, answers=undefined){
 
-    field = $(this).attr('name');
-    parent = $(this).closest('.input-block');
-    value = $(this).find(":selected").text();
-    id = $(this).find(":selected").data('id');
+    var field = $(this).attr('name');
+    var parent = $(this).closest('.input-block');
+    var value = $(this).find(":selected").text();
+    var id = $(this).find(":selected").data('id');
 
     $('[data-question="'+field+'"]').remove();
     if(id){
@@ -369,17 +369,13 @@ $('#document-form select.dynamic').on('change', function(e, answers=undefined){
                 fields = response.data.fields
                 console.log("#document-form select.dynamic");
                 console.log(id);
-                console.log(answers);
-                console.log(fields);
+                console.log(parent);
 
                 Object.keys(fields).forEach(function(key) {
-                    console.log("pushing field")
-                    console.log(fields[key])
                     parent.after($(fields[key]));
                     element = $(fields[key]);
                 })
                 if (fields.length > 0){
-                    console.log("pushing title")
                     title = `<h5 class="linked-title" data-parent="${id}" data-question="${field}">Los siguientes campos aparecen por que seleccionaste <strong>${value}</strong></h5>`
                     parent.after(title);
                 }
@@ -388,12 +384,10 @@ $('#document-form select.dynamic').on('change', function(e, answers=undefined){
                     Object.keys(answers).forEach(function(key) {
                         input = $('#document-form').find(`input[name='${key}']`)
                         if(input.length > 0){
-                            console.log("input")
                             input.val(answers[key]);
                             input.prop("checked", true);
                             $(`*[data-section="${$(input).attr('name')}"]`).toggle();
                         } else {
-                            console.log("select")
                             input = $('#document-form').find(`select[name='${key}']`)
                             input.find(`option[value='${answers[key]}']`).attr("selected", true);
                         }
