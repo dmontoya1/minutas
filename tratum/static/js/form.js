@@ -416,6 +416,7 @@ $('#document-form select.dynamic').on('change', function(e, answers=undefined){
                 }
 
                 $('#document-form .date').attr('placeholder', 'Seleccione una fecha...');
+
                 $('#document-form .pickadate').pickadate({
                     format: 'dd/mm/yyyy',
                     formatSubmit: 'dd/mm/yyyy',
@@ -448,6 +449,10 @@ $('#document-form select.dynamic').on('change', function(e, answers=undefined){
                     },
                 });
 
+                $('#document-form select').on('change', function(e){
+                    e.preventDefault();
+                    savePreview();
+                });
 
             })
     }
