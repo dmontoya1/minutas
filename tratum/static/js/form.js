@@ -367,9 +367,6 @@ $('#document-form select.dynamic').on('change', function(e, answers=undefined){
             .then(function(response){
                 var element = undefined;
                 fields = response.data.fields
-                console.log("#document-form select.dynamic");
-                console.log(id);
-                console.log(parent);
 
                 Object.keys(fields).forEach(function(key) {
                     parent.after($(fields[key]));
