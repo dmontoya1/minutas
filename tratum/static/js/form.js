@@ -361,6 +361,8 @@ $('#document-form select.dynamic').on('change', function(e, answers=undefined){
     value = $(this).find(":selected").text();
     id = $(this).find(":selected").data('id');
 
+    console.log("#document-form select.dynamic");
+    console.log(id);
     $('[data-question="'+field+'"]').remove();
     if(id){
         axios.get('/api/document-manager/document-options/'+id+'/linked-fields/')
@@ -377,7 +379,8 @@ $('#document-form select.dynamic').on('change', function(e, answers=undefined){
                 if (fields.length > 0){
                     parent.after(title);
                 }
-
+                console.log(fields);
+                console.log(answers);
                 if(answers){
                     Object.keys(answers).forEach(function(key) {
                         input = $('#document-form').find(`input[name='${key}']`)
