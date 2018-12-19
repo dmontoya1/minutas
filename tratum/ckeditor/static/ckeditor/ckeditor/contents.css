@@ -207,7 +207,7 @@ a > img {
 	margin:0 auto;
 }
 
-.document-field-oneditor 
+.document-field-oneditor
 {
 	padding: 1px;
 	background-color: rgb(227, 227, 227);
@@ -218,3 +218,7 @@ a > img {
 		cursor: pointer;
 	}
 
+.variable_tag{
+    padding: 0px;
+    background-color: #fef1aa;
+}

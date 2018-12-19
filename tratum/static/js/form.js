@@ -354,6 +354,12 @@ $('#document-form .section-item').on('click', function(e){
     $(`*[data-section="${$(this).attr('name')}"]`).toggle();
 })
 
+
+$('#document-form select').on('change', function(e){
+    e.preventDefault();
+    savePreview();
+})
+
 $('#document-form select.dynamic').on('change', function(e, answers=undefined){
 
     var field = $(this).attr('name');
