@@ -311,9 +311,9 @@ $('.modal-trigger').on('click', function() {
 
 $('[data-toggle="tooltip"]').tooltip();
 
-$('.date').attr('placeholder', 'Seleccione una fecha...');
+$('#document-form .date').attr('placeholder', 'Seleccione una fecha...');
 
-$('.pickadate').pickadate({
+$('#document-form .pickadate').pickadate({
     format: 'dd/mm/yyyy',
     formatSubmit: 'dd/mm/yyyy',
     selectYears: 100,
@@ -321,7 +321,7 @@ $('.pickadate').pickadate({
     max: new Date(2050,7,14)
 });
 
-$('.natural').pickadate({
+$('#document-form .natural').pickadate({
     format: 'dddd, dd mmmm !d!e!l yyyy',
     formatSubmit: 'dddd, dd mmmm !d!e yyyy',
     selectYears: 100,
@@ -329,7 +329,7 @@ $('.natural').pickadate({
     max: new Date(2050,7,14)
 });
 
-$('.pricetag').priceFormat({
+$('#document-form .pricetag').priceFormat({
     prefix: '$',
     centsSeparator: ',',
     thousandsSeparator: '.',
