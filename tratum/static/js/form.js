@@ -211,34 +211,9 @@ $.fn.upform = function() {
         $(container).find(".input-block").first().click();
     });
 
-    $(container)
-        .find(".input-block:not(.preventForming)")
-        .not(".input-block input")
-        .on("click", function() {
-            rescroll(this);
-        });
-
-    $("input").on('keyup', function(e) {
-        savePreview();
-        if (e.which == 13 || e.which == 9) {
-            e.preventDefault()
-            if ($(this).hasClass("required") && $(this).val() == "") {
-            } else {
-                moveNext(this);
-            }
-        }
-        if (e.which == 40) {
-            moveNext(this);
-        } else if (e.which == 38) {
-            movePrev(this);
-        }
-    });
-
-
-    // $(container).find('.input-block select').change(function(e) {
-    //     savePreview();
-    //     moveNext(this);
-    // });
+    $(container).on('click', '.input-block:not(.preventForming)', function(){
+        rescroll(this);
+    })
 
     $(window).on("scroll", function(){
 
@@ -276,19 +251,42 @@ $.fn.upform = function() {
         rescroll(e);
     }
 
-    function moveNext(e) {
-        $(e).parent().parent().next().click();
-    }
-
-    function movePrev(e) {
-        $(e).parent().parent().prev().click();
-    }
 
 };
 
 form = $(".upform").upform();
 
-$(".multiple-checkbox-fields").change(function() {
+function rescroll(e) {
+    $(window).scrollTo($(e), 200, {
+        offset: { left: 100, top: -200 },
+        queue: false
+    });
+}
+
+function moveNext(e) {
+    $(e).parent().parent().next().click();
+}
+
+function movePrev(e) {
+    $(e).parent().parent().prev().click();
+}
+
+$("#document-form").on('keyup', 'input', function(e) {
+    savePreview();
+    if (e.which == 13 || e.which == 9) {
+        e.preventDefault()
+        if (!($(this).hasClass("required") && $(this).val() == "")){
+            moveNext(this);
+        }
+    }
+    if (e.which == 40) {
+        moveNext(this);
+    } else if (e.which == 38) {
+        movePrev(this);
+    }
+});
+
+$("#document-form .multiple-checkbox-fields").change(function() {
     var parentName = $(this).data('parent');
     var parent = $("input[name='"+parentName+"']")
     $(parent).val("");
@@ -340,7 +338,7 @@ $('.pricetag').priceFormat({
 });
 
 
-$('.group-adder').on('click', function(e){
+$('#document-form .group-adder').on('click', function(e){
     e.preventDefault();
     cloneGroupItem($(this), true);
 })
@@ -352,11 +350,11 @@ $('.preview').on('click', function(e){
     window.location.href = $(this).attr('href');
 })
 
-$('.section-item').on('click', function(e){
+$('#document-form .section-item').on('click', function(e){
     $(`*[data-section="${$(this).attr('name')}"]`).toggle();
 })
 
-$('select.dynamic').on('change', function(e, answers=undefined){
+$('#document-form select.dynamic').on('change', function(e, answers=undefined){
 
     field = $(this).attr('name');
     parent = $(this).closest('.input-block');

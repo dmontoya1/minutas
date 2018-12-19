@@ -25,7 +25,6 @@ def comma_sep_to_ul(value, autoescape=True):
 @register.filter(needs_autoescape=True)
 @stringfilter
 def comma_sep_to_li(value, autoescape=True):
-    print(value)
     items = value.split('¬')
     lis = ['<li><p style="text-align:justify">{}</p></li>'.format(item) for item in items]
     items = '\n'.join(lis)

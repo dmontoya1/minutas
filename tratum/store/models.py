@@ -139,7 +139,6 @@ class UserDocument(models.Model):
         return False
         created_at = datetime.datetime.strptime(self.created_at, "%Y-%m-%d")
         diff = abs((datetime.datetime.now() - created_at).days)
-        print(diff)
         if diff > 10:
             return False
         return True

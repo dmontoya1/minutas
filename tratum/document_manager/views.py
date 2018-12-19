@@ -79,9 +79,6 @@ class DocumentSectionList(generics.ListAPIView):
 class DocumentSectionFieldsList(DocumentFieldList):
 
     def get_queryset(self):
-        print("-----------------")
-        print("quersyset")
-        print("-----------------")
         return DocumentField.objects.filter(section__slug=self.kwargs['slug'])
 
 
@@ -106,7 +103,6 @@ class SaveAnswersView(View):
 
     def post(self, request, *args, **kwargs):
         user_document = UserDocument.objects.get(identifier=request.POST['identifier'])
-        print(request.POST)
         user_document.answers = request.POST
         user_document.save()
         return HttpResponse(status=200)

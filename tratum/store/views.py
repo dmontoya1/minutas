@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 import hashlib
 import time
+import logging
 
 from datetime import datetime
 
@@ -23,6 +24,9 @@ from tratum.document_manager.models import Document
 
 from .models import DocumentBundle, UserDocument, Invoice
 from .serializers import DocumentBundleSerializer, UserDocumentSerializer
+
+
+logger = logging.getLogger(__name__)
 
 
 class DocumentBundleList(generics.ListAPIView):
@@ -93,8 +97,8 @@ class Checkout(TemplateView):
                 ref = 'PA'
                 id_ref = package.pk
         except Exception as e:
-            print (e)
-        print(documents)
+            logger.exception(str(e))
+
         amount = 0
         for doc in documents:
             if doc.price:
