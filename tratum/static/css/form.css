@@ -114,7 +114,7 @@ iframe {
     .upform input:focus, select:focus, textarea:focus, button:focus {
         outline: none;
     }
-    
+
     .upform .upform-main .input-block {
         cursor: default;
         opacity: 0.25;
@@ -255,4 +255,9 @@ iframe {
 
 .tooltip.bs-tooltip-auto[x-placement^=left] .arrow, .tooltip.bs-tooltip-left .arrow {
     display: none;
+}
+
+.variable_tag{
+    padding: .2em;
+    background-color: #fef1aa;
 }
