@@ -261,3 +261,22 @@ iframe {
     padding: 0px;
     background-color: #fef1aa;
 }
+
+#mobile-generate-doc{
+    display: none;
+}
+    #mobile-generate-doc a{
+         margin: 0px 5%;
+        max-width: 500px;
+        width: 100%;
+    }
+
+@media screen and (max-width: 991px) {
+    .upform{
+        padding: 0px;
+        margin: 0px 4%;
+    }
+    #mobile-generate-doc{
+        display: block;
+    }
+}
