@@ -148,6 +148,9 @@ function cloneGroupItem(groupAdder, fromGroupAdder){
     length = items.length + 1
     last = $(items).last();
     clone = last.clone();
+    title = clone.find('span')
+    new_text = length + title.text().substring(1)
+    title.text(new_text)
     inputs = clone.find('input, select')
     $(inputs).each(function(i, element){
         $(element).val('');
@@ -171,10 +174,12 @@ function cloneGroupItem(groupAdder, fromGroupAdder){
     }
 
     $('a.deleter').on('click', function(e){
-        e.preventDefault();
-        prev = $(this).parent().prev();
-        $(this).parent().remove();
-        rescroll(prev);
+        if( e.which == 1 ){
+            e.preventDefault();
+            prev = $(this).parent().prev();
+            $(this).parent().remove();
+            rescroll(prev);
+        }
     })
 
 }
@@ -418,6 +423,27 @@ $('#document-form select.dynamic').on('change', function(e, answers=undefined){
                     selectMonths: true,
                     max: new Date(2050,7,14),
                     onClose: function() {
+                        savePreview();
+                    },
+                });
+                $('#document-form .natural').pickadate({
+                    format: 'dddd, dd mmmm !d!e!l yyyy',
+                    formatSubmit: 'dddd, dd mmmm !d!e yyyy',
+                    selectYears: 100,
+                    selectMonths: true,
+                    max: new Date(2050,7,14),
+                    onClose: function() {
+                        savePreview();
+                    },
+                });
+
+                $('#document-form .pricetag').priceFormat({
+                    prefix: '$',
+                    centsSeparator: ',',
+                    thousandsSeparator: '.',
+                    centsLimit: 0,
+                    clearOnEmpty: true,
+                     onClose: function() {
                         savePreview();
                     },
                 });
