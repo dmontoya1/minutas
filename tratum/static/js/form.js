@@ -363,12 +363,14 @@ $('#document-form select.dynamic').on('change', function(e, answers=undefined){
 
     console.log("#document-form select.dynamic");
     console.log(id);
+    console.log(answers);
     $('[data-question="'+field+'"]').remove();
     if(id){
         axios.get('/api/document-manager/document-options/'+id+'/linked-fields/')
             .then(function(response){
                 var element = undefined;
                 fields = response.data.fields
+                console.log(fields);
                 if (fields.length > 0){
                     title = `<h5 class="linked-title" data-parent="${id}" data-question="${field}">Los siguientes campos aparecen por que seleccionaste <strong>${value}</strong></h5>`
                 }
@@ -379,8 +381,7 @@ $('#document-form select.dynamic').on('change', function(e, answers=undefined){
                 if (fields.length > 0){
                     parent.after(title);
                 }
-                console.log(fields);
-                console.log(answers);
+
                 if(answers){
                     Object.keys(answers).forEach(function(key) {
                         input = $('#document-form').find(`input[name='${key}']`)
