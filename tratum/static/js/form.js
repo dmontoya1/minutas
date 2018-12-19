@@ -397,10 +397,18 @@ $('#document-form select.dynamic').on('change', function(e, answers=undefined){
                     });
                 }else{
                     savePreview();
-
                     var y = $(window).scrollTop();  //your current y position on the page
                     $(window).scrollTop(y+150);
                 }
+
+                $('#document-form .date').attr('placeholder', 'Seleccione una fecha...');
+                $('#document-form .pickadate').pickadate({
+                    format: 'dd/mm/yyyy',
+                    formatSubmit: 'dd/mm/yyyy',
+                    selectYears: 100,
+                    selectMonths: true,
+                    max: new Date(2050,7,14)
+                });
 
 
             })
