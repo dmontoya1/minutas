@@ -59,7 +59,6 @@ def capfirst(value, autoescape=True):
 def vars_to_list(content, var_list, autoescape=True):
     items = content.split('¬')
     var_list = [item.strip() for item in var_list.split(",")]
-    doc_types = ["C.C.", "C.E.", "T.I.", "P.S.", "N.I.T."]
     lis = []
     for item in items:
         tag = '<p style="text-align:justify">'
@@ -69,10 +68,7 @@ def vars_to_list(content, var_list, autoescape=True):
                 key = obj[0].strip()
                 value = obj[1]
                 if key in var_list:
-                    if value in doc_types:
-                        tag += '{} '.format(value)
-                    else:
-                        tag += '{}<br>'.format(value)
+                    tag += '{}<br>'.format(value)
         tag += '<br>'
         tag += '</p>'
         lis.append(tag)
