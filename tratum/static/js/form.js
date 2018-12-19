@@ -438,6 +438,6 @@ $(function(){
             }
 
             realTimeUpdate();
-            $('select.dynamic').trigger('change', answers);
+            $('#document-form select.dynamic').trigger('change', answers);
         })
 });
