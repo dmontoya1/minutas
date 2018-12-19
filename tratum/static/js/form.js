@@ -416,7 +416,10 @@ $('#document-form select.dynamic').on('change', function(e, answers=undefined){
                     formatSubmit: 'dd/mm/yyyy',
                     selectYears: 100,
                     selectMonths: true,
-                    max: new Date(2050,7,14)
+                    max: new Date(2050,7,14),
+                    onClose: function() {
+                        savePreview();
+                    },
                 });
 
 
