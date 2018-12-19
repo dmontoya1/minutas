@@ -318,7 +318,10 @@ $('#document-form .pickadate').pickadate({
     formatSubmit: 'dd/mm/yyyy',
     selectYears: 100,
     selectMonths: true,
-    max: new Date(2050,7,14)
+    max: new Date(2050,7,14),
+    onClose: function() {
+        savePreview();
+    },
 });
 
 $('#document-form .natural').pickadate({
@@ -326,7 +329,10 @@ $('#document-form .natural').pickadate({
     formatSubmit: 'dddd, dd mmmm !d!e yyyy',
     selectYears: 100,
     selectMonths: true,
-    max: new Date(2050,7,14)
+    max: new Date(2050,7,14),
+    onClose: function() {
+        savePreview();
+    },
 });
 
 $('#document-form .pricetag').priceFormat({
@@ -334,7 +340,10 @@ $('#document-form .pricetag').priceFormat({
     centsSeparator: ',',
     thousandsSeparator: '.',
     centsLimit: 0,
-    clearOnEmpty: true
+    clearOnEmpty: true,
+     onClose: function() {
+        savePreview();
+    },
 });
 
 
