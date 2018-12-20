@@ -223,7 +223,7 @@ iframe {
 
 .document-preview {
     width: 95%;
-    height: 500px;
+    height: 80vh;
     border: 0.1px solid rgb(205, 205, 205);
     font-size: .8em;
     padding: 1em;
@@ -238,7 +238,7 @@ iframe {
 }
 @media screen and (max-width: 1440px) {
     .document-preview {
-        height: 65vh;
+        height: 80vh;
     }
     .upform-footer .btn {
         width: 90%;
