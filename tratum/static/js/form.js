@@ -149,9 +149,13 @@ function cloneGroupItem(groupAdder, fromGroupAdder){
     last = $(items).last();
     clone = last.clone();
     title = clone.find('span')
-    new_text = length + title.text().substring(1)
-    title.text(new_text)
     inputs = clone.find('input, select')
+
+    if( inputs.length == 1){
+        new_text = length + title.text().substring(1)
+        title.text(new_text)
+    }
+
     $(inputs).each(function(i, element){
         $(element).val('');
         name = $(element).data('name');
@@ -495,7 +499,6 @@ $(function(){
                     }
                 });
                 Object.keys(answers).forEach(function(key) {
-                    console.log(key);
                     input = $('#document-form').find(`input[name='${key}']`)
                     if(input.length > 0){
                         input.attr('value', answers[key])
