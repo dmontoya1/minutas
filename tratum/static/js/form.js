@@ -448,13 +448,17 @@ function loadDynamicFields(element, e, answers=undefined){
                         savePreview();
                     },
                 });
-
+                $('#document-form select').off('change');
+                 $('#document-form select.dynamic').off('change');
                 $('#document-form select').on('change', function(e){
                     e.preventDefault();
                     savePreview();
                 });
+                $('#document-form select.dynamic').on('change', function(e, answers=undefined){
+                    loadDynamicFields($(this), e, answers);
+                });
 
-            })
+            });
     }
 }
 
