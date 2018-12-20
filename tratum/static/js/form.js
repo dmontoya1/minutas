@@ -473,7 +473,6 @@ $(function(){
         .then(function (response) {
             answers = response.data.answers
             if(answers){
-                $('#document-form select.dynamic').trigger('change', answers);
                 Object.keys(answers).forEach(function(key) {
                     if(key.startsWith('Q_')){
                         length = answers[key];
@@ -501,6 +500,7 @@ $(function(){
                     }
                 });
             }
+            $('#document-form select.dynamic').trigger('change', answers);
             realTimeUpdate();
         })
 });
