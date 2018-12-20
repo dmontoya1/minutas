@@ -68,7 +68,7 @@ STATIC_URL = '/static/'
 # region http://stackoverflow.com/questions/10390244/
 # Full-fledge class: https://stackoverflow.com/a/18046120/104731
 MEDIA_URL = '/media/'
-MEDIA_ROOT = "/home/django/app/media/"
+MEDIA_ROOT = "/app/media/"
 
 
 # TEMPLATES
