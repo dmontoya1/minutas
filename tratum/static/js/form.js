@@ -374,8 +374,8 @@ $('#document-form select').on('change', function(e){
     savePreview();
 })
 
-$('#document-form select.dynamic').on('change', function(e, answers=undefined){
 
+function loadDynamicFields(e, answers=undefined){
     var field = $(this).attr('name');
     var parent = $(this).closest('.input-block');
     var value = $(this).find(":selected").text();
@@ -454,10 +454,17 @@ $('#document-form select.dynamic').on('change', function(e, answers=undefined){
                     savePreview();
                 });
 
+                $('#document-form select.dynamic').on('change', function(e, answers=undefined){
+                    loadDynamicFields(e, answers);
+                });
+
             })
     }
+}
 
-})
+$('#document-form select.dynamic').on('change', function(e, answers=undefined){
+    loadDynamicFields(e, answers);
+});
 
 $(function(){
     uuid = $('#doc-info').data('uuid')
