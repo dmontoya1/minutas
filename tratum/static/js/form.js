@@ -500,7 +500,7 @@ $(function(){
                     }
                 });
             }
-            $('#document-form select.dynamic').trigger('change', answers);
             realTimeUpdate();
+            $('#document-form select.dynamic').trigger('change', answers);
         })
 });
