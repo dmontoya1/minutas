@@ -29,7 +29,7 @@
       data-csrftoken="{{csrf_token}}"></div>
 
     <div class="row main">
-      <div class="col-lg-7 form-col" style="z-index: 9999999;">
+      <div class="col-lg-5 form-col" style="z-index: 9999999;">
           <div class="upform">
             <a href="{% url 'webclient:user-documents' %}" class="col">
               <img class="logo" src="{% static 'img/logo/tratum.png' %}" href="/">
@@ -77,7 +77,7 @@
              <a href="{% url 'webclient:user-document-process' identifier %}" class="btn btn-primary btn-lg preview">Generar documento</a>
           </div>
       </div>
-      <div class="col-lg-5 p-0">
+      <div class="col-lg-7 p-0">
         <div class="info-col">
               <div class="document-preview" id="content-preview" data-name="{{object.document.name}}">
               </div>

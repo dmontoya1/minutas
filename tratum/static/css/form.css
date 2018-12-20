@@ -83,7 +83,7 @@ iframe {
 
 .logo {
     width: 180px;
-    margin-bottom: 100px;
+    margin-bottom: 0px;
 }
 
 .main {
@@ -100,10 +100,10 @@ iframe {
 
 .upform {
 	-moz-user-select: none;
-	margin: 110px auto 500px auto;
-	max-width: 900px;
+	margin: 50px auto 50px auto;
+	max-width: 1000px;
 	-ms-user-select: none;
-	padding: 0 150px;
+	padding: 0 40px;
 	user-select: none;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
@@ -164,6 +164,8 @@ iframe {
                 width: 400px;
                 background-color: #002C55;
                 border: none;
+                display: block;
+                margin: 0 auto;
             }
 
 .tooltip-inner {
@@ -220,7 +222,7 @@ iframe {
 }
 
 .document-preview {
-    max-width: 400px;
+    width: 95%;
     height: 500px;
     border: 0.1px solid rgb(205, 205, 205);
     font-size: .8em;
@@ -237,10 +239,9 @@ iframe {
 @media screen and (max-width: 1440px) {
     .document-preview {
         height: 65vh;
-        max-width: 530px;
     }
     .upform-footer .btn {
-        width: 530px;
+        width: 90%;
     }
 }
 
