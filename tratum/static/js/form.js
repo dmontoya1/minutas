@@ -375,11 +375,11 @@ $('#document-form select').on('change', function(e){
 })
 
 
-function loadDynamicFields(e, answers=undefined){
-    var field = $(this).attr('name');
-    var parent = $(this).closest('.input-block');
-    var value = $(this).find(":selected").text();
-    var id = $(this).find(":selected").data('id');
+function loadDynamicFields(element, e, answers=undefined){
+    var field = element.attr('name');
+    var parent = element.closest('.input-block');
+    var value = element.find(":selected").text();
+    var id = element.find(":selected").data('id');
 
     $('[data-question="'+field+'"]').remove();
     if(id){
@@ -455,7 +455,7 @@ function loadDynamicFields(e, answers=undefined){
                 });
 
                 $('#document-form select.dynamic').on('change', function(e, answers=undefined){
-                    loadDynamicFields(e, answers);
+                    loadDynamicFields($(this), e, answers);
                 });
 
             })
@@ -463,7 +463,7 @@ function loadDynamicFields(e, answers=undefined){
 }
 
 $('#document-form select.dynamic').on('change', function(e, answers=undefined){
-    loadDynamicFields(e, answers);
+    loadDynamicFields($(this), e, answers);
 });
 
 $(function(){
