@@ -449,7 +449,8 @@ function loadDynamicFields(element, e, answers=undefined){
                     },
                 });
                 $('#document-form select').off('change');
-                 $('#document-form select.dynamic').off('change');
+                $('#document-form select.dynamic').off('change');
+
                 $('#document-form select').on('change', function(e){
                     e.preventDefault();
                     savePreview();
@@ -472,6 +473,7 @@ $(function(){
         .then(function (response) {
             answers = response.data.answers
             if(answers){
+                $('#document-form select.dynamic').trigger('change', answers);
                 Object.keys(answers).forEach(function(key) {
                     if(key.startsWith('Q_')){
                         length = answers[key];
@@ -499,8 +501,6 @@ $(function(){
                     }
                 });
             }
-
             realTimeUpdate();
-            $('#document-form select.dynamic').trigger('change', answers);
         })
 });
