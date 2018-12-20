@@ -454,10 +454,6 @@ function loadDynamicFields(element, e, answers=undefined){
                     savePreview();
                 });
 
-                $('#document-form select.dynamic').on('change', function(e, answers=undefined){
-                    loadDynamicFields($(this), e, answers);
-                });
-
             })
     }
 }
