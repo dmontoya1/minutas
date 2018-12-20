@@ -809,3 +809,7 @@ body {
     box-shadow: none;
     border-radius: 10px;
 }
+
+.hidden{
+    display: none;
+}

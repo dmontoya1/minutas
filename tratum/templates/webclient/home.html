@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 {% endblock %}
 
+{% block menu_custom_class %}hidden{% endblock menu_custom_class %}
+
 {% block content %}
   <div class="modal fade" id="homeVideoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog large" role="document">
@@ -153,7 +155,7 @@
       <div class="container-flex flex-column justify-content-center" style="margin-top: 25px;">
         <h2>¿Por qué construir un contrato responsablemente?</h2>
         <p>{{landing_contract_info}}</p>
-        <a class="action-button__primary" href="/documents/">Ver documentos</a>
+        <a class="action-button__primary" href="/documents/">Ir a Tienda de documentos</a>
       </div>
     </div>
   </div>

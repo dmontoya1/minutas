@@ -114,7 +114,7 @@
 
                 <nav {% block nav_class %}class="navbar fixed-top bg-transparent" {% endblock %}>
                     <div>
-                        <i class="fas fa-bars rotate navbar-toggler"></i>
+                        <i class="fas fa-bars rotate navbar-toggler {% block menu_custom_class %}{% endblock menu_custom_class %}"></i>
                         <i class="fas fa-bars rotate navbar-toggler-mobile"></i>
                         <a href="/">
                             <img class="logo" src="{% static 'img/logo/tratum.png' %}">
