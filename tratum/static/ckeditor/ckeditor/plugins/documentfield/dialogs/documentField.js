@@ -26,6 +26,7 @@ CKEDITOR.dialog.add( 'fieldDialog', function(editor){
                         className: 'filter-select',
                         label: 'Añadir filtro:',
                         items: [
+                            ['Ninguno'],
                             ['Convertir número a texto'],
                             ['Convertir texto a mayúscula inicial'],
                             ['Convertir texto a mayúscula sostenida'],

@@ -22,6 +22,10 @@ class DocumentAdmin(SoftDeletionModelAdminMixin):
         'price',
         'order'
     )
+    list_filter = (
+        'name',
+        'category',
+    )
     list_select_related = (
         'category',
     )
@@ -125,5 +129,3 @@ class DocumentFieldOptionAdmin(admin.ModelAdmin):
         'document',
         'field',
     )
-
-    #filter_horizontal = ['linked_fields']
