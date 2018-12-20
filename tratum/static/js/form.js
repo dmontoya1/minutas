@@ -278,7 +278,6 @@ function movePrev(e) {
 
 $("#document-form").on('keydown', 'input', function(e){
     if(e.which === 9){
-        console.log("preventDefault");
         e.preventDefault();
     }
 });
@@ -286,11 +285,8 @@ $("#document-form").on('keydown', 'input', function(e){
 $("#document-form").on('keyup', 'input', function(e) {
     savePreview();
     e.preventDefault();
-    console.log(e.which);
     if (e.which === 13 || e.which === 9) {
-        console.log("block");
         if (!($(this).hasClass("required") && $(this).val() == "")){
-            console.log("moveNext");
             moveNext(this);
         }
         return
@@ -415,7 +411,7 @@ function loadDynamicFields(element, e, answers=undefined){
                             $(`*[data-section="${$(input).attr('name')}"]`).toggle();
                         } else {
                             input = $('#document-form').find(`select[name='${key}']`)
-                            input.find(`option[value='${answers[key]}']`).attr("selected", true);
+                            input.find(`option[value='${answers[key]}']`).prop("selected", true);
                         }
                     });
                 }else{
@@ -499,14 +495,15 @@ $(function(){
                     }
                 });
                 Object.keys(answers).forEach(function(key) {
+                    console.log(key);
                     input = $('#document-form').find(`input[name='${key}']`)
                     if(input.length > 0){
-                        input.val(answers[key]);
+                        input.attr('value', answers[key])
                         input.prop("checked", true);
                         $(`*[data-section="${$(input).attr('name')}"]`).toggle();
                     } else {
                         input = $('#document-form').find(`select[name='${key}']`)
-                        input.find(`option[value='${answers[key]}']`).attr("selected", true);
+                        input.find(`option[value='${answers[key]}']`).prop("selected", true);
                     }
                 });
             }
