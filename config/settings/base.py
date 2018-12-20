@@ -353,6 +353,13 @@ CKEDITOR_CONFIGS = {
                 ]
             },
             {
+                'name': 'styles',
+                'items': [
+                    'FontSize',
+                    'Font',
+                ]
+            },
+            {
                 'name': 'paragraph',
                 'items': [
                     'JustifyLeft',
