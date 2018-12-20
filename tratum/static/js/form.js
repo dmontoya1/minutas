@@ -397,90 +397,81 @@ function loadDynamicFields(element, e, answers=undefined){
                 var element = undefined;
                 fields = response.data.fields
 
-
+                Object.keys(fields).forEach(function(key) {
+                    parent.after($(fields[key]));
+                    element = $(fields[key]);
+                })
                 if (fields.length > 0){
-
-                    // Adding fields
-                    Object.keys(fields).forEach(function(key) {
-                        parent.after($(fields[key]));
-                        element = $(fields[key]);
-                    })
-
-                    // Adding title
                     title = `<h5 class="linked-title" data-parent="${id}" data-question="${field}">Los siguientes campos aparecen por que seleccionaste <strong>${value}</strong></h5>`
                     parent.after(title);
-
-                    // set answers into fields if it's exists
-                    if(answers){
-                        Object.keys(answers).forEach(function(key) {
-                            input = $('#document-form').find(`input[name='${key}']`)
-                            if(input.length > 0){
-                                input.val(answers[key]);
-                                input.prop("checked", true);
-                                $(`*[data-section="${$(input).attr('name')}"]`).toggle();
-                            } else {
-                                input = $('#document-form').find(`select[name='${key}']`)
-                                input.find(`option[value='${answers[key]}']`).attr("selected", true);
-                            }
-                        });
-
-
-                        $('#document-form .date').attr('placeholder', 'Seleccione una fecha...');
-
-                        $('#document-form .pickadate').pickadate({
-                            format: 'dd/mm/yyyy',
-                            formatSubmit: 'dd/mm/yyyy',
-                            selectYears: 100,
-                            selectMonths: true,
-                            max: new Date(2050,7,14),
-                            onClose: function() {
-                                savePreview();
-                            },
-                        });
-                        $('#document-form .natural').pickadate({
-                            format: 'dddd, dd mmmm !d!e!l yyyy',
-                            formatSubmit: 'dddd, dd mmmm !d!e yyyy',
-                            selectYears: 100,
-                            selectMonths: true,
-                            max: new Date(2050,7,14),
-                            onClose: function() {
-                                savePreview();
-                            },
-                        });
-
-                        $('#document-form .pricetag').priceFormat({
-                            prefix: '$',
-                            centsSeparator: ',',
-                            thousandsSeparator: '.',
-                            centsLimit: 0,
-                            clearOnEmpty: true,
-                             onClose: function() {
-                                savePreview();
-                            },
-                        });
-                        $('#document-form select').off('change');
-                        $('#document-form select.dynamic').off('change');
-
-                        $('#document-form select:not(.dynamic)').on('change', function(e){
-                            e.preventDefault();
-                            savePreview();
-                        });
-
-                        $('#document-form select.dynamic').on('change', function(e, answers=undefined){
-                            loadDynamicFields($(this), e, answers);
-                        });
-
-                        $('#document-form select.dynamic').trigger('change', answers);
                 }
+
+                if(answers){
+                    Object.keys(answers).forEach(function(key) {
+                        input = $('#document-form').find(`input[name='${key}']`)
+                        if(input.length > 0){
+                            input.val(answers[key]);
+                            input.prop("checked", true);
+                            $(`*[data-section="${$(input).attr('name')}"]`).toggle();
+                        } else {
+                            input = $('#document-form').find(`select[name='${key}']`)
+                            input.find(`option[value='${answers[key]}']`).attr("selected", true);
+                        }
+                    });
                 }else{
                     savePreview();
                     var y = $(window).scrollTop();  //your current y position on the page
                     $(window).scrollTop(y+150);
                 }
 
+                $('#document-form .date').attr('placeholder', 'Seleccione una fecha...');
+
+                $('#document-form .pickadate').pickadate({
+                    format: 'dd/mm/yyyy',
+                    formatSubmit: 'dd/mm/yyyy',
+                    selectYears: 100,
+                    selectMonths: true,
+                    max: new Date(2050,7,14),
+                    onClose: function() {
+                        savePreview();
+                    },
+                });
+                $('#document-form .natural').pickadate({
+                    format: 'dddd, dd mmmm !d!e!l yyyy',
+                    formatSubmit: 'dddd, dd mmmm !d!e yyyy',
+                    selectYears: 100,
+                    selectMonths: true,
+                    max: new Date(2050,7,14),
+                    onClose: function() {
+                        savePreview();
+                    },
+                });
+
+                $('#document-form .pricetag').priceFormat({
+                    prefix: '$',
+                    centsSeparator: ',',
+                    thousandsSeparator: '.',
+                    centsLimit: 0,
+                    clearOnEmpty: true,
+                     onClose: function() {
+                        savePreview();
+                    },
+                });
+                $('#document-form select').off('change');
+                $('#document-form select.dynamic').off('change');
+
+                $('#document-form select').on('change', function(e){
+                    e.preventDefault();
+                    savePreview();
+                });
+                $('#document-form select.dynamic').on('change', function(e, answers=undefined){
+                    loadDynamicFields($(this), e, answers);
+                });
+
             });
     }
 }
+
 
 $('#document-form select.dynamic').on('change', function(e, answers=undefined){
     loadDynamicFields($(this), e, answers);
