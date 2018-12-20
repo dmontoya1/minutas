@@ -459,6 +459,10 @@ function loadDynamicFields(element, e, answers=undefined){
                     loadDynamicFields($(this), e, answers);
                 });
 
+                if(answers){
+                    $('#document-form select.dynamic').trigger('change');
+                }
+
             });
     }
 }
