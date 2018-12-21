@@ -68,7 +68,7 @@ class Category(MPTTModel, SoftDeletionModelMixin, SlugIdentifierMixin):
         return i
 
 
-class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
+class Document(SlugIdentifierMixin, models.Model):
     """Guarda las documentos.
 
     Campos del modelo:
@@ -135,6 +135,8 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
         null=True,
         blank=True
     )
+
+    is_active = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Documento'

@@ -15,12 +15,13 @@ from .models import (
 
 
 @admin.register(Document)
-class DocumentAdmin(SoftDeletionModelAdminMixin):
-    extra_list_display = (
+class DocumentAdmin(admin.ModelAdmin):
+    list_display = (
         'name',
         'category',
         'price',
-        'order'
+        'order',
+        'is_active'
     )
     list_filter = (
         'name',
