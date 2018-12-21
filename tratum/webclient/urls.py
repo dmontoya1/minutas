@@ -1,5 +1,6 @@
 import mptt_urls
 
+from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 from django.urls import path
 from . import views
@@ -85,8 +86,8 @@ urlpatterns = [
         views.ContactFormView.as_view(),
         name='contact-form'
     ),
-    path(
-        'documents/(?P<path>.*)',
+    url(
+        r'^documents/(?P<path>.*)',
         mptt_urls.view(model=Category, view=category, slug_field='slug'),
         name='category_documents'
     ),
