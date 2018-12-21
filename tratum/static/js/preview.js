@@ -19,14 +19,17 @@ $(function(){
                         backgroundDismiss: false,
                         closeIcon: false
                     });
-                    axios.post(`/api/document-manager/finish/`, 
+                    axios.post(`/api/document-manager/finish/`,
                         {
                             identifier: identifier,
                             content: $('#content-preview').html()
                         })
-                            .then(function (response) {
-                                location.reload(true);
-                            })
+                        .then(function (response) {
+                            location.reload(true);
+                        })
+                        .catch(function(error){
+                            console.log(error.response)
+                        });
                 },
                 Cancelar: function () {
                 }

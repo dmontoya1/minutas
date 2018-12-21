@@ -149,91 +149,73 @@ class FinishDocumentView(View):
     def post(self, request, *args, **kwargs):
         body = json.loads(request.body.decode('utf-8'))
         user_document = UserDocument.objects.get(identifier=body['identifier'])
-        self.generate_html(request, user_document, body['content'])
-        self.generate_doc(request, user_document)
-        self.generate_pdf(request, user_document)
-        self.update_status(user_document)
-        self.send_email(request, user_document)
-        return HttpResponse(status=200)
+        try:
+            self.generate_html(request, user_document, body['content'])
+            self.generate_doc(request, user_document)
+            self.generate_pdf(request, user_document)
+            self.update_status(user_document)
+            self.send_email(request, user_document)
+            return HttpResponse(status=200)
+        except Exception as e:
+            logger.exception(str(e))
+            return HttpResponse(status=500)
 
     def update_status(self, user_document):
         user_document.status = UserDocument.FINISHED
         user_document.save()
 
     def generate_pdf(self, request, user_document):
-        options = {
-            'page-size': 'Letter',
-            'margin-top': '1.20in',
-            'margin-right': '1.20in',
-            'margin-bottom': '1.20in',
-            'margin-left': '1.00in',
-            'encoding': "UTF-8",
-            'footer-center': '[page]',
-            'footer-spacing': '14',
-            'footer-font-size': '9',
-            'header-right': "{}".format(user_document.document.name),
-            'header-spacing': '15',
-            'header-font-size': '7',
-            'javascript-delay': 300,
-            'no-outline': None
-        }
-        output_filename = "{}.pdf".format(user_document.identifier)
-        html_file = user_document.html_file.read().decode('utf-8')
-        file = pdfkit.PDFKit(html_file, "string", options=options).to_pdf()
-        file = BytesIO(file)
-        user_document.pdf_file.save(output_filename, file)
-        file.close()
+        try:
+            options = {
+                'page-size': 'Letter',
+                'margin-top': '1.20in',
+                'margin-right': '1.20in',
+                'margin-bottom': '1.20in',
+                'margin-left': '1.00in',
+                'encoding': "UTF-8",
+                'footer-center': '[page]',
+                'footer-spacing': '14',
+                'footer-font-size': '9',
+                'header-right': "{}".format(user_document.document.name),
+                'header-spacing': '15',
+                'header-font-size': '7',
+                'javascript-delay': 300,
+                'no-outline': None
+            }
+            output_filename = "{}.pdf".format(user_document.identifier)
+            html_file = user_document.html_file.read().decode('utf-8')
+            file = pdfkit.PDFKit(html_file, "string", options=options).to_pdf()
+            file = BytesIO(file)
+            user_document.pdf_file.save(output_filename, file)
+            file.close()
+        except Exception as e:
+            raise e
 
     def generate_doc(self, request, user_document):
-        html_file = user_document.html_file.path
-        name = os.path.basename(user_document.html_file.name.split('.')[0])
-        output_filename = "{}.docx".format(name)
-        media_root = settings.MEDIA_ROOT
-        args = ["--page_numbers"]
         try:
-            outdir = '{0}docxs/{1}'.format(media_root, output_filename)
-            output_filename = pypandoc.convert_file(html_file, 'docx', outputfile=outdir, extra_args=args)
-            user_document.word_file = "docxs/{}".format(output_filename)
+            html_file = user_document.html_file.path
+            name = os.path.basename(user_document.html_file.name.split('.')[0])
+            output_filename = "{}.docx".format(name)
+            media_root = settings.MEDIA_ROOT
+            outdir = '{0}/docxs/{1}'.format(media_root, output_filename)
+            pypandoc.convert(
+                source=html_file,
+                format='html',
+                to='docx',
+                outputfile=outdir,
+                extra_args=["-M2GB", "+RTS", "-K64m", "-RTS"]
+            )
+            user_document.word_file = "docxs/{0}".format(output_filename)
             user_document.save()
         except Exception as e:
-            logger.exception(str(e))
+            raise e
 
     def generate_html(self, request, user_document, TEMPORARY_HTML_FILE):
-
-        def get_scripted_html(request, html_string):
-            css_tag = lambda path: '<link rel="stylesheet" type="text/css" href="{}" />'.format(path)
-            script_tag = lambda path: '<script src="{}"></script>'.format(path)
-            django_temptag_tag = lambda path: '{{% load {} %}}'.format(path)
-            iterator = lambda tag, paths: [tag(path) for path in paths]
-            css_paths = (
-                get_static_path(
-                    request.scheme,
-                    request.get_host(),
-                    static("css/pdf_formatter.css")
-                ),
-            )
-            script_paths = (
-                get_static_path(
-                    request.scheme,
-                    request.get_host(),
-                    static("js/pdfRender.js")
-                ),
-            )
-            django_temptag_paths = (
-                'fieldformatter',
-            )
-            scripts = '\n'.join(iterator(script_tag, script_paths))
-            css = '\n'.join(iterator(css_tag, css_paths))
-            django_temptags = '\n'.join(iterator(django_temptag_tag, django_temptag_paths))
-            escape = '\n'
-            return "{0} {1} {2} {3} {4} {5}".format(django_temptags, escape, css, html_string, escape, scripts)
-
-        """ content = get_scripted_html(request, user_document.document.content)
-        template = Template(content)
-        template = template.render(Context(user_document.answers)).encode('ascii', 'xmlcharrefreplace') """
-
-        file = ContentFile(TEMPORARY_HTML_FILE.encode('ascii', 'xmlcharrefreplace'))
-        user_document.html_file.save('{}.html'.format(user_document.identifier), file)
+        try:
+            file = ContentFile(TEMPORARY_HTML_FILE.encode('ascii', 'xmlcharrefreplace'))
+            user_document.html_file.save('{}.html'.format(user_document.identifier), file)
+        except Exception as e:
+            raise e
 
     def send_email(self, request, user_document):
         subject = 'Tu {} de Tratum'.format(user_document.document.name)
