@@ -77,20 +77,22 @@
                             {% endif %}
                         </td>
                     </tr>
-                    
-                    
+
+
                 </tbody>
             </table>
             {% if ref == 'DO'%}
                 <a class="btn btn-action" href="{% url 'webclient:user-documents' %}">Ir mis documentos</a>
                 {% if identifier %}
+                    {% if transactionState == "4" %}
                     <a class="btn btn-action" href="{% url 'webclient:user-document' identifier %}">Editar mi documento</a>
+                    {% endif %}
                 {% endif %}
             {% else %}
                 <a class="btn btn-action" href="{% url 'webclient:user-documents' %}">Ir mis documentos</a>
             {% endif %}
             </form>
-            
+
         </div>
     </div>
 </main>

@@ -60,6 +60,12 @@ class Checkout(TemplateView):
     que se va a comprar
     """
     template_name = 'store/checkout.html'
+    APPROVED = 4
+    CANCEL = 5
+    REJECTED = 6
+    PENDING = 7
+    ERROR = 104
+    KNOW_STATUS = [APPROVED, CANCEL, REJECTED, PENDING, ERROR]
 
     def get(self, request, *args, **kwargs):
 
@@ -171,8 +177,8 @@ class Checkout(TemplateView):
 
             if signature == sign:
                 user = User.objects.get(pk=user_id)
-                invoice = Invoice(user=user)
-                invoice.save()
+                invoice = Invoice.objects.create(user=user)
+
                 if ref == 'DO':
                     documents = Document.objects.filter(pk=ref_id)
                     invoice.document = documents.first()
@@ -180,56 +186,45 @@ class Checkout(TemplateView):
                     package = DocumentBundle.objects.get(pk=ref_id)
                     documents = package.documents.all()
                     invoice.package = package
-                invoice.save()
 
-                # Aprobada
-                if state_pol == '4':
-                    invoice.payment_date = datetime.now()
-                    invoice.payu_reference_code = reference
-                    invoice.payment_status = Invoice.APPROVED
-                    invoice.save()
+                if state_pol in self.KNOW_STATUS:
+                    # Aprobada
+                    if state_pol == self.APPROVED:
+                        for doc in documents:
+                            d = UserDocument(
+                                user=user,
+                                document=doc,
+                                status=UserDocument.CREATED,
+                            )
+                            d.save()
+                        invoice.payment_status = Invoice.APPROVED
 
-                    for doc in documents:
-                        d = UserDocument(
-                            user=user,
-                            document=doc,
-                            status=UserDocument.CREATED,
-                        )
-                        d.save()
+                    # Expirada
+                    elif state_pol == '5':
+                        invoice.payment_status = Invoice.CANCEL
 
-                    return HttpResponse(status=200)
-                # Declinada
-                elif state_pol == '6':
+                    # Declinada
+                    elif state_pol == '6':
+                        invoice.payment_status = Invoice.REJECTED
+
+                    # Error
+                    elif state_pol == '104':
+                        invoice.payment_status = Invoice.CANCEL
+
+                    # Pendiente
+                    elif state_pol == '7':
+                        invoice.payment_status = Invoice.PENDING
+
                     invoice.payment_date = datetime.now()
                     invoice.payu_reference_code = reference
-                    invoice.payment_status = Invoice.REJECTED
-                    invoice.save()
-                    return HttpResponse(status=200)
-                # Error
-                elif state_pol == '104':
-                    invoice.payment_date = datetime.now()
-                    invoice.payu_reference_code = reference
-                    invoice.payment_status = Invoice.CANCEL
-                    invoice.save()
-                    return HttpResponse(status=200)
-                # Expirada
-                elif state_pol == '5':
-                    invoice.payment_date = datetime.now()
-                    invoice.payu_reference_code = reference
-                    invoice.payment_status = Invoice.CANCEL
-                    invoice.save()
-                    return HttpResponse(status=200)
-                # Pendiente
-                elif state_pol == '7':
-                    invoice.payment_date = datetime.now()
-                    invoice.payu_reference_code = reference
-                    invoice.payment_status = Invoice.PENDING
                     invoice.save()
                     return HttpResponse(status=200)
                 # ninguno de los state_pol
                 else:
+                    logger.exception("state_pol status unkown -> {}".format(state_pol))
                     return HttpResponse(status=500)
             else:
+                logger.exception("signature != sign.  {0} != {1}".format(signature, sign))
                 return HttpResponse(status=500)
 
         elif request.method == "GET":
@@ -282,7 +277,7 @@ class Checkout(TemplateView):
                     user_doc = UserDocument.objects.filter(user=user, document=document).last()
                     identifier = user_doc.identifier
                 except Exception as e:
-                    pass
+                    logger.exception(str(e))
 
             if signature == signature_get:
 
