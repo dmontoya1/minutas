@@ -79,6 +79,7 @@ THIRD_PARTY_APPS = [
     'embed_video',
     'smart_selects',
     'ckeditor',
+    'crispy_forms',
 ]
 
 LOCAL_APPS = [
