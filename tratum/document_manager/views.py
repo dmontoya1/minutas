@@ -102,8 +102,13 @@ class ProcessDocumentView(View):
 class SaveAnswersView(View):
 
     def post(self, request, *args, **kwargs):
-        user_document = UserDocument.objects.get(identifier=request.POST['identifier'])
-        user_document.answers = request.POST
+        user_document = UserDocument.objects.get(
+            identifier=request.POST['identifier'].strip(),
+            user=request.user
+        )
+        answers = request.POST.copy()
+        answers.pop('identifier')
+        user_document.answers = answers
         user_document.save()
         return HttpResponse(status=200)
 

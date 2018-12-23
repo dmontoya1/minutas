@@ -18,7 +18,8 @@ class DocumentBundleAdmin(SoftDeletionModelAdminMixin):
 
 @admin.register(UserDocument)
 class UserDocumentAdmin(admin.ModelAdmin):
-    list_display = ('user', 'document', 'created_at')
+    list_filter = ('user', 'document')
+    list_display = ('user', 'document', 'created_at', 'identifier')
 
 
 @admin.register(Invoice)

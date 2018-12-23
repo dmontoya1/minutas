@@ -38,7 +38,6 @@
               <input type="hidden" name="identifier" value="{{identifier}}" />
               <div class="upform-header"></div>
               <div class="upform-main">
-
                 {% for field in object.get_fields %}
                   {% include 'document_form/fields.html' %}
                   {% if field.field_type == field.LIST %}

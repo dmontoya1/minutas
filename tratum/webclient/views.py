@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect, Http404, JsonResponse
 from django.shortcuts import redirect, get_object_or_404, reverse
 from django.template import Template, Context, loader
 from django.views.generic.base import TemplateView, View
@@ -279,12 +279,16 @@ class UserDocumentView(LoginRequiredMixin, DetailView):
         return super().get(request, *args, **kwargs)
 
     def get_object(self):
-        obj = UserDocument.objects.get(identifier=self.kwargs['identifier'])
-        return obj.document
+        user_document = get_object_or_404(
+            UserDocument,
+            identifier=self.kwargs['identifier'],
+            user=self.request.user
+        )
+        return user_document.document
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['identifier'] = UserDocument.objects.get(identifier=self.kwargs['identifier']).identifier
+        context['identifier'] = self.kwargs['identifier']
         return context
 
 
@@ -294,8 +298,11 @@ class UserDocumentPreviewView(DetailView):
     slug_field = "identifier"
 
     def get_object(self):
-        obj = UserDocument.objects.get(identifier=self.kwargs['identifier'])
-        return obj
+        return get_object_or_404(
+            UserDocument,
+            identifier=self.kwargs['identifier'],
+            user=self.request.user
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -312,8 +319,11 @@ class UserDocumentProcessPreviewView(View):
     slug_field = "identifier"
 
     def get_object(self):
-        obj = UserDocument.objects.get(identifier=self.kwargs['identifier'])
-        return obj
+        return get_object_or_404(
+            UserDocument,
+            identifier=self.kwargs['identifier'],
+            user=self.request.user
+        )
 
     def get(self, request, *args, **kwargs):
         obj = self.get_object()

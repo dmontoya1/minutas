@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import uuid
 import datetime
 import time
 
@@ -10,6 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.postgres.fields import JSONField
 from django.core.exceptions import ValidationError
 from django.urls import reverse
+from django_extensions.db.fields import AutoSlugField
 
 from tratum.utils.models import SoftDeletionModelMixin
 from tratum.document_manager.models import Document
@@ -98,8 +98,10 @@ class UserDocument(models.Model):
         choices=STATUS_CHOICES,
         default=PURCHASED
     )
-    identifier = models.UUIDField(
-        default=uuid.uuid4,
+    identifier = AutoSlugField(
+        populate_from=['document__name'],
+        overwrite=False,
+        unique=True,
         editable=False
     )
     created_at = models.DateTimeField(auto_now_add=True)
