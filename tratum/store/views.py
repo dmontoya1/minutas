@@ -91,17 +91,16 @@ class Checkout(TemplateView):
         currency = 'COP'
 
         try:
-            try:
-                documents = Document.objects.filter(pk=request.GET['doc_id'])
-                doc_type = 'doc'
-                ref = 'DO'
-                id_ref = documents.first().pk
-            except MultiValueDictKeyError:
-                package = DocumentBundle.objects.get(pk=request.GET['pack_id'])
-                documents = package.documents.all()
-                doc_type = package.name
-                ref = 'PA'
-                id_ref = package.pk
+            documents = Document.objects.filter(pk=request.GET['doc_id'])
+            doc_type = 'doc'
+            ref = 'DO'
+            id_ref = documents.first().pk
+        except MultiValueDictKeyError:
+            package = DocumentBundle.objects.get(pk=request.GET['pack_id'])
+            documents = package.documents.all()
+            doc_type = package.name
+            ref = 'PA'
+            id_ref = package.pk
         except Exception as e:
             logger.exception(str(e))
 

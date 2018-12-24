@@ -32,10 +32,14 @@
                                     <a href="{% url 'webclient:user-document-preview' object.identifier %}">
                                         Descargar
                                     </a>
-                                {% endif %}    
+                                {% endif %}
                             {% else %}
                                 <a href="{% url 'webclient:user-document' object.identifier %}">
+                                {% if obj.is_file_document %}
+                                    Descargar
+                                {% else %}
                                     Editar
+                                {% endif %}
                                 </a>
                             {% endif %}
                         </th>
