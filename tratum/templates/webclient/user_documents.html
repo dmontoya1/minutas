@@ -25,6 +25,7 @@
                         <td>{{object.created_at}}</td>
                         <td>{{object.get_status_display}}</td>
                         <th scope="row">
+
                             {% if object.status == object.FINISHED %}
                                 {% if object.is_expired %}
                                     <span>El documento ya ha expirado</span>
@@ -35,7 +36,7 @@
                                 {% endif %}
                             {% else %}
                                 <a href="{% url 'webclient:user-document' object.identifier %}">
-                                {% if obj.is_file_document %}
+                                {% if object.document.is_file_document %}
                                     Descargar
                                 {% else %}
                                     Editar
