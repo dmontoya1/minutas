@@ -300,25 +300,6 @@ $("#document-form").on('keyup', 'input', function(e) {
     }
 });
 
-$("#document-form .multiple-checkbox-fields").change(function() {
-    var parentName = $(this).data('parent');
-    var parent = $("input[name='"+parentName+"']")
-    $(parent).val("");
-    $(".multiple-checkbox-fields[data-parent='"+parentName+"']").each(function(i, element){
-        var ischecked= $(element).is(':checked');
-        if(ischecked){
-            before = $(parent).val() ;
-            if(before==""){
-                $(parent).val($(element).val());
-            }else{
-                $(parent).val( before + "¬" + $(element).val() );
-            }
-        }
-    }).promise().done(function(){
-        savePreview();
-    });
-});
-
 $('[data-toggle="tooltip"]').tooltip();
 
 $('.modal-trigger').on('click', function() {
@@ -342,6 +323,25 @@ $('#document-form .section-item').on('click', function(e){
 
 
 function setListeners(){
+
+    $("#document-form .multiple-checkbox-fields").change(function() {
+        var parentName = $(this).data('parent');
+        var parent = $("input[name='"+parentName+"']")
+        $(parent).val("");
+        $(".multiple-checkbox-fields[data-parent='"+parentName+"']").each(function(i, element){
+            var ischecked= $(element).is(':checked');
+            if(ischecked){
+                before = $(parent).val() ;
+                if(before==""){
+                    $(parent).val($(element).val());
+                }else{
+                    $(parent).val( before + "¬" + $(element).val() );
+                }
+            }
+        }).promise().done(function(){
+            savePreview();
+        });
+    });
 
     $('#document-form .date').attr('placeholder', 'Seleccione una fecha...');
 
