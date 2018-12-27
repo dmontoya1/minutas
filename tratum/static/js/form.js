@@ -319,70 +319,78 @@ $("#document-form .multiple-checkbox-fields").change(function() {
     });
 });
 
+$('[data-toggle="tooltip"]').tooltip();
+
 $('.modal-trigger').on('click', function() {
     $('#videoModal').modal();
 });
 
-$('[data-toggle="tooltip"]').tooltip();
-
-$('#document-form .date').attr('placeholder', 'Seleccione una fecha...');
-
-$('#document-form .pickadate').pickadate({
-    format: 'dd/mm/yyyy',
-    formatSubmit: 'dd/mm/yyyy',
-    selectYears: 100,
-    selectMonths: true,
-    max: new Date(2050,7,14),
-    onClose: function() {
-        savePreview();
-    },
-});
-
-$('#document-form .natural').pickadate({
-    format: 'dddd, dd mmmm !d!e!l yyyy',
-    formatSubmit: 'dddd, dd mmmm !d!e yyyy',
-    selectYears: 100,
-    selectMonths: true,
-    max: new Date(2050,7,14),
-    onClose: function() {
-        savePreview();
-    },
-});
-
-$('#document-form .pricetag').priceFormat({
-    prefix: '$',
-    centsSeparator: ',',
-    thousandsSeparator: '.',
-    centsLimit: 0,
-    clearOnEmpty: true,
-     onClose: function() {
-        savePreview();
-    },
-});
-
-
 $('#document-form .group-adder').on('click', function(e){
     e.preventDefault();
     cloneGroupItem($(this), true);
-})
-
+});
 
 $('.preview').on('click', function(e){
     e.preventDefault();
     savePreview();
     window.location.href = $(this).attr('href');
-})
+});
 
 $('#document-form .section-item').on('click', function(e){
     $(`*[data-section="${$(this).attr('name')}"]`).toggle();
 })
 
 
-$('#document-form select:not(.dynamic)').on('change', function(e){
-    e.preventDefault();
-    savePreview();
-})
+function setListeners(){
 
+    $('#document-form .date').attr('placeholder', 'Seleccione una fecha...');
+
+    $('#document-form .pickadate').pickadate({
+        format: 'dd/mm/yyyy',
+        formatSubmit: 'dd/mm/yyyy',
+        selectYears: 100,
+        selectMonths: true,
+        max: new Date(2050,7,14),
+        onClose: function() {
+            savePreview();
+        },
+    });
+    $('#document-form .natural').pickadate({
+        format: 'dddd, dd mmmm !d!e!l yyyy',
+        formatSubmit: 'dddd, dd mmmm !d!e yyyy',
+        selectYears: 100,
+        selectMonths: true,
+        max: new Date(2050,7,14),
+        onClose: function() {
+            savePreview();
+        },
+    });
+
+    $('#document-form .pricetag').priceFormat({
+        prefix: '$',
+        centsSeparator: ',',
+        thousandsSeparator: '.',
+        centsLimit: 0,
+        clearOnEmpty: true,
+         onClose: function() {
+            savePreview();
+        },
+    });
+
+    $('#document-form select:not(.dynamic)').off('change');
+    $('#document-form select.dynamic').off('change');
+
+    $('#document-form select:not(.dynamic)').on('change', function(e){
+        e.preventDefault();
+        savePreview();
+    });
+    $('#document-form select.dynamic').on('change', function(e, answers=undefined){
+        loadDynamicFields($(this), e, answers);
+    });
+
+}
+
+setListeners();
 
 function loadDynamicFields(element, e, answers=undefined){
     var field = element.attr('name');
@@ -390,18 +398,27 @@ function loadDynamicFields(element, e, answers=undefined){
     var value = element.find(":selected").text();
     var id = element.find(":selected").data('id');
 
+    var parentField = element;
+    var moreDynamics = [];
     $('[data-question="'+field+'"]').remove();
     if(id){
         axios.get('/api/document-manager/document-options/'+id+'/linked-fields/')
             .then(function(response){
-                var element = undefined;
+                var newBlock = undefined;
                 fields = response.data.fields
 
-                Object.keys(fields).forEach(function(key) {
-                    parent.after($(fields[key]));
-                    element = $(fields[key]);
-                })
                 if (fields.length > 0){
+                    // all elements are added in inverse mode (first add last to first)
+                    // create questions elements
+                    Object.keys(fields).forEach(function(key) {
+                        newBlock = $(fields[key]);
+                        parent.after(newBlock);
+                        var newField = newBlock.find('select');
+                        if( newField.hasClass('dynamic') ){
+                            moreDynamics.push(newField);
+                        }
+                    });
+                    // create title
                     title = `<h5 class="linked-title" data-parent="${id}" data-question="${field}">Los siguientes campos aparecen por que seleccionaste <strong>${value}</strong></h5>`
                     parent.after(title);
                 }
@@ -418,64 +435,22 @@ function loadDynamicFields(element, e, answers=undefined){
                             input.find(`option[value='${answers[key]}']`).prop("selected", true);
                         }
                     });
+                    setListeners();
+                    if(moreDynamics.length > 0){
+                        moreDynamics.forEach(function(element){
+                            element.trigger('change', answers);
+                        });
+                    }
                 }else{
+                    setListeners();
                     savePreview();
                     var y = $(window).scrollTop();  //your current y position on the page
                     $(window).scrollTop(y+150);
                 }
 
-                $('#document-form .date').attr('placeholder', 'Seleccione una fecha...');
-
-                $('#document-form .pickadate').pickadate({
-                    format: 'dd/mm/yyyy',
-                    formatSubmit: 'dd/mm/yyyy',
-                    selectYears: 100,
-                    selectMonths: true,
-                    max: new Date(2050,7,14),
-                    onClose: function() {
-                        savePreview();
-                    },
-                });
-                $('#document-form .natural').pickadate({
-                    format: 'dddd, dd mmmm !d!e!l yyyy',
-                    formatSubmit: 'dddd, dd mmmm !d!e yyyy',
-                    selectYears: 100,
-                    selectMonths: true,
-                    max: new Date(2050,7,14),
-                    onClose: function() {
-                        savePreview();
-                    },
-                });
-
-                $('#document-form .pricetag').priceFormat({
-                    prefix: '$',
-                    centsSeparator: ',',
-                    thousandsSeparator: '.',
-                    centsLimit: 0,
-                    clearOnEmpty: true,
-                     onClose: function() {
-                        savePreview();
-                    },
-                });
-                $('#document-form select').off('change');
-                $('#document-form select.dynamic').off('change');
-
-                $('#document-form select').on('change', function(e){
-                    e.preventDefault();
-                    savePreview();
-                });
-                $('#document-form select.dynamic').on('change', function(e, answers=undefined){
-                    loadDynamicFields($(this), e, answers);
-                });
-
             });
     }
 }
-
-
-$('#document-form select.dynamic').on('change', function(e, answers=undefined){
-    loadDynamicFields($(this), e, answers);
-});
 
 $(function(){
     uuid = $('#doc-info').data('uuid')
