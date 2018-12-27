@@ -60,11 +60,11 @@ class Checkout(TemplateView):
     que se va a comprar
     """
     template_name = 'store/checkout.html'
-    APPROVED = 4
-    CANCEL = 5
-    REJECTED = 6
-    PENDING = 7
-    ERROR = 104
+    APPROVED = '4'
+    CANCEL = '5'
+    REJECTED = '6'
+    PENDING = '7'
+    ERROR = '104'
     KNOW_STATUS = [APPROVED, CANCEL, REJECTED, PENDING, ERROR]
 
     def get(self, request, *args, **kwargs):
@@ -73,7 +73,7 @@ class Checkout(TemplateView):
         taxReturnBase = 0
         description = "Compra realizada desde Tratum"
 
-        if settings.DEBUG:
+        if settings.PAYMENTS_DEBUG:
             test = 1
             accountId = 512321
             apiKey = '4Vj8eK4rloUd272L48hsrarnUA'
@@ -144,7 +144,7 @@ class Checkout(TemplateView):
     @classmethod
     @method_decorator(csrf_exempt)
     def confirmation(self, request):
-        if settings.DEBUG:
+        if settings.PAYMENTS_DEBUG:
             apiKey = '4Vj8eK4rloUd272L48hsrarnUA'
         else:
             apiKey = 'vIB29Yn5GW0XVv6qVYBV1e92T1'
@@ -199,19 +199,19 @@ class Checkout(TemplateView):
                         invoice.payment_status = Invoice.APPROVED
 
                     # Expirada
-                    elif state_pol == '5':
+                    elif state_pol == self.CANCEL:
                         invoice.payment_status = Invoice.CANCEL
 
                     # Declinada
-                    elif state_pol == '6':
+                    elif state_pol == self.REJECTED:
                         invoice.payment_status = Invoice.REJECTED
 
                     # Error
-                    elif state_pol == '104':
-                        invoice.payment_status = Invoice.CANCEL
+                    elif state_pol == self.ERROR:
+                        invoice.payment_status = Invoice.ERROR
 
                     # Pendiente
-                    elif state_pol == '7':
+                    elif state_pol == self.PENDING:
                         invoice.payment_status = Invoice.PENDING
 
                     invoice.payment_date = datetime.now()

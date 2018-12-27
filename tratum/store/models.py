@@ -153,12 +153,14 @@ class Invoice(models.Model):
     PENDING = 'PE'
     CANCEL = 'CA'
     REJECTED = 'RE'
+    ERROR = 'ER'
 
     STATUS = (
         (APPROVED, 'Aprobada'),
         (PENDING, 'Pendiente'),
         (CANCEL, 'Cancelada'),
         (REJECTED, 'Rechazada'),
+        (ERROR, 'Error')
     )
 
     user = models.ForeignKey(
