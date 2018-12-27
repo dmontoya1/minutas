@@ -12,6 +12,15 @@ def hidden(value):
     return ""
 
 
+@register.filter()
+def has_item(value, element):
+    items = value.split('¬')
+    for item in items:
+        if element == item:
+            return True
+    return False
+
+
 @register.filter(needs_autoescape=True)
 @stringfilter
 def comma_sep_to_ul(value, autoescape=True):
