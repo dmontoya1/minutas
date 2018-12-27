@@ -60,7 +60,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <form method="POST" action="{{url}}">
                         {% csrf_token %}
                         <input name="merchantId" type="hidden" value="{{merchantId}}" >
@@ -76,7 +76,7 @@
                         <input name="buyerEmail" type="hidden" value="{{buyerEmail}}">
                         <input name="responseUrl" type="hidden"  value="{{responseUrl}}" >
                         <input name="confirmationUrl" type="hidden" value="{{confirmationUrl}}">
-                        
+
                         <button class="btn btn-pay" type="submit">Continuar <i class="fas fa-greater-than"></i></button>
                     </form>
                 </div>

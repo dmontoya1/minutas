@@ -281,3 +281,8 @@ iframe {
         display: block;
     }
 }
+
+.img-responsive{
+    width: 70px !important;
+    height: auto !important;
+}
