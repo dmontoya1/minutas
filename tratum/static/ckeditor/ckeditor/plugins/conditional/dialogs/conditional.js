@@ -18,7 +18,8 @@ CKEDITOR.dialog.add('conditionalDialog', function(editor){
                         items: [
                             ['Si el campo fue seleccionado, entonces...'],
                             ['Si el valor del campo es .., entonces...'],
-                            ['Si el campo no fue seleccionado, entonces...']
+                            ['Si el campo no fue seleccionado, entonces...'],
+                            ['Si el valor del campo contiene .., entonces...']
                         ],
                         default: 'Si el campo fue seleccionado, entonces...',
                     },
@@ -47,23 +48,29 @@ CKEDITOR.dialog.add('conditionalDialog', function(editor){
             var type = dialog.getValueOf('tab-create-conditional', 'conditional-type');
             var field = dialog.getValueOf('tab-create-conditional', 'conditional-field');
             var valueif = dialog.getValueOf('tab-create-conditional', 'conditional-valueif');
-            
+
             if(type == 'Si el campo fue seleccionado, entonces...'){
                 editor.insertHtml(
                     `{% if ${field} %}` +
-                        
+
                     `{% endif %}`
                 );
             } else if (type == 'Si el valor del campo es .., entonces...'){
                 editor.insertHtml(
                     `{% if ${field} == "${valueif}" %}` +
-                        
+
                     `{% endif %}`
                 );
-            } else {
+            }else if (type == 'Si el valor del campo contiene .., entonces...'){
+                editor.insertHtml(
+                    `{% if ${field}|has_item:"${valueif}" %}` +
+
+                    `{% endif %}`
+                );
+            }else {
                 editor.insertHtml(
                     `{% if not ${field} %}` +
-                        
+
                     `{% endif %}`
                 );
             }
@@ -81,7 +88,7 @@ function populateDocumentFields(){
         } else if(object_info.dataset.model == 'document'){
             url = `/api/document-manager/document-fields/?${filter}`
         }
-    }    
+    }
     axios.get(url)
         .then(function(response) {
             select = document.querySelector('select.conditional-select');
