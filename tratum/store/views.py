@@ -157,7 +157,6 @@ class Checkout(TemplateView):
             value = request.POST['value']
             currency = request.POST['currency']
             sign = request.POST['sign']
-            # date = request.POST['date']
 
             value_str = str(value)
 
@@ -176,7 +175,11 @@ class Checkout(TemplateView):
 
             if signature == sign:
                 user = User.objects.get(pk=user_id)
-                invoice = Invoice.objects.create(user=user)
+
+                if Invoice.objects.filter(user=user, payu_reference_code=reference).exists():
+                    invoice = Invoice.objects.get(user=user, payu_reference_code=reference)
+                else:
+                    invoice = Invoice.objects.create(user=user)
 
                 if ref == 'DO':
                     documents = Document.objects.filter(pk=ref_id)
