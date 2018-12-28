@@ -1,11 +1,11 @@
 
 {% if field.is_text_input %}
-    <div class="input-block {{field.get_linked_state}}" data-parent="{{field.get_linked_parent}}" data-question="{{field.get_linked_question}}">
+    <div class="input-block {{field.get_linked_state}}" data-parent="{{field.get_linked_parent}}" data-question="{{field.get_linked_question}}" data-number="{% if forloop.counter %}{{forloop.counter}}{% else %}{{counter}}{% endif %}" data-parent-number="{% if number%}{{number}}{% endif %}">
         <div class="label col clearfix">
             {% if forloop.counter %}
                 <span class="float-left">{{forloop.counter}}. {{field.display_name}}</span>
             {% else %}
-                <span class="float-left">{{counter}}. {{field.display_name}}</span>
+                <span class="float-left">{% if number%}{{number}}.{% endif %}{{counter}}. {{field.display_name}}</span>
             {% endif %}
             {% if field.help_text %}
                 <i class="fas fa-question-circle float-right" data-toggle="tooltip" data-placement="left" title="{{field.help_text}}"></i>
@@ -35,12 +35,12 @@
         {% endif %}
     </div>
 {% elif field.field_type == field.SELECT or field.field_type == field.DYNAMIC_SELECT %}
-    <div class="input-block {{field.get_linked_state}}" data-parent="{{field.get_linked_parent}}" data-question="{{field.get_linked_question}}">
+    <div class="input-block {{field.get_linked_state}}" data-parent="{{field.get_linked_parent}}" data-question="{{field.get_linked_question}}" data-number="{% if forloop.counter %}{{forloop.counter}}{% else %}{{counter}}{% endif %}" data-parent-number="{% if number%}{{number}}{% endif %}">
         <div class="label col clearfix">
             {% if forloop.counter %}
                 <span class="float-left">{{forloop.counter}}. {{field.display_name}} </span>
             {% else %}
-                <span class="float-left">{{counter}}. {{field.display_name}} </span>
+                <span class="float-left">{% if number%}{{number}}.{% endif %}{{counter}}. {{field.display_name}} </span>
             {% endif %}
             {% if field.help_text %}
                 <i class="fas fa-question-circle float-right" data-toggle="tooltip" data-placement="left" title="{{field.help_text}}"></i>
@@ -56,12 +56,12 @@
         </div>
     </div>
 {% elif field.field_type == field.SELECT_MULTIPLE %}
-    <div class="input-block preventForming {{field.get_linked_state}}" data-parent="{{field.get_linked_parent}}" data-question="{{field.get_linked_question}}">
+    <div class="input-block preventForming {{field.get_linked_state}}" data-parent="{{field.get_linked_parent}}" data-question="{{field.get_linked_question}}" data-number="{% if forloop.counter %}{{forloop.counter}}{% else %}{{counter}}{% endif %}" data-parent-number="{% if number%}{{number}}{% endif %}">
         <div class="label col clearfix mb-2">
             {% if forloop.counter %}
                 <span class="float-left">{{forloop.counter}}. {{field.display_name}} </span>
             {% else %}
-                <span class="float-left">{{counter}}. {{field.display_name}} </span>
+                <span class="float-left">{% if number%}{{number}}.{% endif %}{{counter}}. {{field.display_name}} </span>
             {% endif %}
             {% if field.help_text %}
                 <i class="fas fa-question-circle float-right " data-toggle="tooltip" data-placement="left" title="{{field.help_text}}"></i>
@@ -82,12 +82,12 @@
         {% endfor %}
     </div>
 {% elif field.field_type == field.GROUP  %}
-    <div class="input-block {{field.get_linked_state}}" data-parent="{{field.get_linked_parent}}" data-question="{{field.get_linked_question}}">
+    <div class="input-block {{field.get_linked_state}}" data-parent="{{field.get_linked_parent}}" data-question="{{field.get_linked_question}}" data-number="{% if forloop.counter %}{{forloop.counter}}{% else %}{{counter}}{% endif %}" data-parent-number="{% if number%}{{number}}{% endif %}">
         <div class="label col clearfix">
             {% if forloop.counter %}
                 <span class="float-left">{{forloop.counter}}. {{field.display_name}} </span>
             {% else %}
-                <span class="float-left">{{counter}}. {{field.display_name}} </span>
+                <span class="float-left">{% if number%}{{number}}.{% endif %}{{counter}}. {{field.display_name}} </span>
             {% endif %}
             {% if field.help_text %}
                 <i class="fas fa-question-circle float-right" data-toggle="tooltip" data-placement="left" title="{{field.help_text}}"></i>

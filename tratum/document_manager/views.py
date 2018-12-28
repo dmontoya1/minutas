@@ -135,13 +135,14 @@ class LinkedFieldView(View):
     serializer_class = DocumentFieldSerializer
 
     def get(self, request, *args, **kwargs):
+        number = request.GET.get('number', None)
         q = DocumentFieldOption.objects.get(pk=kwargs['pk'])
         fields = q.linked_fields.all().order_by('-order')
         output = []
         counter = len(fields)
         for f in fields:
             template = loader.get_template('document_form/fields.html')
-            render = template.render({'field': f, 'counter': counter})
+            render = template.render({'field': f, 'counter': counter, 'number': number})
             output.append(render)
             counter -= 1
         content = {}

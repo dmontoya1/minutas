@@ -397,12 +397,17 @@ function loadDynamicFields(element, e, answers=undefined){
     var parent = element.closest('.input-block');
     var value = element.find(":selected").text();
     var id = element.find(":selected").data('id');
+    var number = parent.data('number');
+    var parentNumber = parent.data('parent-number');
+    if( parentNumber != 0 && parentNumber != undefined ){
+        number = parentNumber.toString() + "." + number.toString();
+    }
 
     var parentField = element;
     var moreDynamics = [];
 
     if(id){
-        axios.get('/api/document-manager/document-options/'+id+'/linked-fields/')
+        axios.get('/api/document-manager/document-options/'+id+'/linked-fields/?number='+number)
             .then(function(response){
                 var newBlock = undefined;
                 fields = response.data.fields
