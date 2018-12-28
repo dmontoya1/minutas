@@ -12,7 +12,7 @@
             {% endif %}
         </div>
         <div class="input-control col">
-            <input required name="{{field.formated_slug}}" type="{{field.get_html_input_type}}" id="{{field.formated_slug}}"
+            <input required name="{{field.formated_slug}}" type="{% if field.get_html_input_type == 'number' %}text{% else %}{{field.get_html_input_type}}{% endif %}" id="{{field.formated_slug}}"
             class="{% spaceless %}
                 {% if field.is_date_input %}
                     date
@@ -24,6 +24,8 @@
                 {% else %}
                     {% if field.field_type == field.PRICE %}
                         pricetag
+                    {% elif field.field_type == field.NUMBER %}
+                        number
                     {% endif %}
                 {% endif %}
             required{% endspaceless %}" autocomplete="off">
