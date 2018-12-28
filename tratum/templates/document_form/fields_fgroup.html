@@ -11,7 +11,7 @@
         data-name="{{gf.formated_slug}}"
         data-parentgroup="{{field.formated_slug}}"
         name="{{gf.formated_slug}}"
-        type="{{gf.get_html_input_type}}"
+        type="{% if gf.get_html_input_type == 'number' %}text{% else %}{{gf.get_html_input_type}}{% endif %}"
         id="{{gf.formated_slug}}"
         class="{% spaceless %}
             {% if gf.is_date_input %}
@@ -24,6 +24,8 @@
             {% else %}
                 {% if gf.field_type == gf.PRICE %}
                     pricetag
+                {% elif gf.field_type == field.NUMBER %}
+                    number
                 {% endif %}
             {% endif %}
         required{% endspaceless %}"
