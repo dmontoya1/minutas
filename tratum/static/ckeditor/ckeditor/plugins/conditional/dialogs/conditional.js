@@ -51,27 +51,27 @@ CKEDITOR.dialog.add('conditionalDialog', function(editor){
 
             if(type == 'Si el campo fue seleccionado, entonces...'){
                 editor.insertHtml(
-                    `{% if ${field} %}` +
+                    `<span class='if_tag'>{% if ${field} %}</span><br><br>` +
 
-                    `{% endif %}`
+                    `<span class='if_tag'>{% endif %}</span>`
                 );
             } else if (type == 'Si el valor del campo es .., entonces...'){
                 editor.insertHtml(
-                    `{% if ${field} == "${valueif}" %}` +
+                    `<span class='if_tag'>{% if ${field} == "${valueif}" %}</span><br><br>` +
 
-                    `{% endif %}`
+                    `<span class='if_tag'>{% endif %}</span>`
                 );
             }else if (type == 'Si el valor del campo contiene .., entonces...'){
                 editor.insertHtml(
-                    `{% if ${field}|has_item:"${valueif}" %}` +
+                    `<span class='if_tag'>{% if ${field}|has_item:"${valueif}" %}</span><br><br>` +
 
-                    `{% endif %}`
+                    `<span class='if_tag'>{% endif %}</span>`
                 );
             }else {
                 editor.insertHtml(
-                    `{% if not ${field} %}` +
+                    `<span class='if_tag'>{% if not ${field} %}</span><br><br>` +
 
-                    `{% endif %}`
+                    `<span class='if_tag'>{% endif %}</span>`
                 );
             }
         }

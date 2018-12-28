@@ -222,3 +222,8 @@ a > img {
     padding: 0px;
     background-color: #fef1aa;
 }
+
+.if_tag{
+    padding: 0px;
+    background-color: #00cc00;
+}
