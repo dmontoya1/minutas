@@ -291,6 +291,9 @@ $("#document-form").on('keydown', 'input', function(e){
 $("#document-form").on('keyup', 'input', function(e) {
     savePreview();
     e.preventDefault();
+    if($(this).hasClass('pickadate')){
+        return;
+    }
     if (e.which === 13 || e.which === 9) {
         if (!($(this).hasClass("required") && $(this).val() == "")){
             moveNext(this);
