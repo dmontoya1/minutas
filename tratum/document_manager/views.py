@@ -241,6 +241,7 @@ class FinishDocumentView(View):
         message = EmailMultiAlternatives(**kwargs)
         message.content_subtype = 'html'
         message.attach_file(user_document.pdf_file.path)
+        message.attach_file(user_document.word_file.path)
         message.send()
 
 

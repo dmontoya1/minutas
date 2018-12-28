@@ -184,7 +184,9 @@ function cloneGroupItem(groupAdder, fromGroupAdder){
             $(this).parent().remove();
             rescroll(prev);
         }
-    })
+    });
+
+    setListeners();
 
 }
 
@@ -323,7 +325,7 @@ $('#document-form .section-item').on('click', function(e){
 
 
 function setListeners(){
-
+    $("#document-form .multiple-checkbox-fields").off('change');
     $("#document-form .multiple-checkbox-fields").change(function() {
         var parentName = $(this).data('parent');
         var parent = $("input[name='"+parentName+"']")
