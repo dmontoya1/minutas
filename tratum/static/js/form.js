@@ -400,7 +400,7 @@ function loadDynamicFields(element, e, answers=undefined){
 
     var parentField = element;
     var moreDynamics = [];
-    $('[data-question="'+field+'"]').remove();
+
     if(id){
         axios.get('/api/document-manager/document-options/'+id+'/linked-fields/')
             .then(function(response){
@@ -421,6 +421,12 @@ function loadDynamicFields(element, e, answers=undefined){
                     // create title
                     title = `<h5 class="linked-title" data-parent="${id}" data-question="${field}">Los siguientes campos aparecen por que seleccionaste <strong>${value}</strong></h5>`
                     parent.after(title);
+                }else{
+                    var select = $('[data-question="'+field+'"]').find('select');
+                    if (select.hasClass('dynamic') ){
+                        $('[data-question="'+select.attr('name')+'"]').remove();
+                    }
+                    $('[data-question="'+field+'"]').remove();
                 }
 
                 if(answers){
