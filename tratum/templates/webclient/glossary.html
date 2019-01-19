@@ -1,0 +1,39 @@
+{% extends 'webclient/base.html' %}
+{% load static %}
+
+{% block nav_class %}
+    class="navbar scrolled"
+{% endblock %}
+
+{% block title %}
+  <title>Tratum, {{name}}</title>
+{% endblock %}
+
+{% block nav-script%}
+{% endblock %}
+
+{% block content %}
+  <div class="container" id="faq">
+    {% for f in glossary_categories %}
+        <div class="row qc-title">
+            <div class="col-sm-12 text-center qc mt-2">
+                {{f.name}}
+            </div>
+        </div>
+        {% for i in f.glossaryitem_set.all %}
+            <div class="row content {% if forloop.last %}last{% endif %}">
+                <div class="col-sm-12 q-title" data-id="{{i.pk}}">
+                    {{i.word}}
+                    <i class="fas fa-caret-down float-right"></i>
+                </div>
+                <div class="col-sm-12 q-answer" data-question="{{i.pk}}">
+                    {{i.meaning}}
+                </div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+  </div>
+{% endblock content %}
+
+{% block scripts %}
+{% endblock scripts %}

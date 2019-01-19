@@ -91,6 +91,55 @@ class FAQItem(models.Model):
         return self.question
 
 
+class GlossaryCategory(models.Model):
+    """Guarda las categorías del Glosario
+
+    Campos del modelo:
+        name: Nombre de la categoría
+
+    """
+
+    name = models.CharField(
+        'Nombre',
+        max_length=30,
+        unique=True
+    )
+
+    class Meta:
+        verbose_name = 'Glosario'
+
+    def __str__(self):
+        return self.name
+
+
+class GlossaryItem(models.Model):
+    """Guardas las entradas del glosario, por categoria
+
+    Campos del modelo:
+        category: Llave foránea nula a categoría
+        word: Palabra
+        meaning: Texto del significado
+
+    """
+
+    category = models.ForeignKey(
+        GlossaryCategory,
+        models.SET_NULL,
+        null=True,
+        blank=True
+    )
+    word = models.CharField('Palabra', max_length=100, unique=True)
+    meaning = models.TextField('Significado')
+
+    class Meta:
+        verbose_name = 'Item de glosario'
+        verbose_name_plural = 'Items de glosario'
+        ordering = ['word',]
+
+    def __str__(self):
+        return self.word
+
+
 class SiteConfig(models.Model):
     """Guarda la información del sitio estático (Landing page y quienes sómos)
 

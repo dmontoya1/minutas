@@ -81,6 +81,11 @@ class FAQView(TemplateView):
     template_name = "webclient/faq.html"
 
 
+class GlossaryView(TemplateView):
+
+    template_name = "webclient/glossary.html"
+
+
 class DocumentDetailView(DetailView):
 
     model = Document

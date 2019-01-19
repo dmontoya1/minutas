@@ -47,6 +47,11 @@ urlpatterns = [
         name="faq"
     ),
     path(
+        'glosario/',
+        views.GlossaryView.as_view(),
+        name="glossary"
+    ),
+    path(
         'about-us/',
         views.AboutUsView.as_view(),
         name='about-us'

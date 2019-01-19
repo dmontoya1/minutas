@@ -210,6 +210,7 @@ TEMPLATES = [
                 'tratum.webclient.context_processors.api-key.api_key_processor',
                 'tratum.webclient.context_processors.faq.faq_processor',
                 'tratum.webclient.context_processors.bussiness_info.bussiness_info_processor',
+                'tratum.webclient.context_processors.glossary.glossary_processor',
             ],
         },
     },

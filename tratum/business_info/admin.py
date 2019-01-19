@@ -6,7 +6,9 @@ from .models import (
     FAQCategory,
     FAQItem,
     SiteConfig,
-    SliderItem
+    SliderItem,
+    GlossaryCategory,
+    GlossaryItem
 )
 
 
@@ -27,6 +29,18 @@ class FAQItemInline(admin.StackedInline):
 class FAQCategoryAdmin(admin.ModelAdmin):
     inlines = [
         FAQItemInline
+    ]
+
+
+class GlossaryItemInline(admin.StackedInline):
+    model = GlossaryItem
+    extra = 0
+
+
+@admin.register(GlossaryCategory)
+class GlossaryCategoryAdmin(admin.ModelAdmin):
+    inlines = [
+        GlossaryItemInline
     ]
 
 
