@@ -20,6 +20,10 @@
                 {{f.name}}
             </div>
         </div>
+        <div class="row">
+            <input style="margin: 10px auto;" type="text" class="form-control" name="" id="searcher" aria-describedby="helpId" placeholder="Buscar">
+        </div>
+        <div class="faq-content">
         {% for i in f.faqitem_set.all %}
             <div class="row content {% if forloop.last %}last{% endif %}">
                 <div class="col-sm-12 q-title" data-id="{{i.pk}}">
@@ -30,10 +34,23 @@
                     {{i.answer}}
                 </div>
             </div>
-        {% endfor %}    
-    {% endfor %}  
+        {% endfor %}
+        </div>
+    {% endfor %}
   </div>
 {% endblock content %}
 
-{% block scripts %}
-{% endblock scripts %}
+{% block extra_js %}
+    <script>
+        $(document).ready(function(){
+            $("#searcher").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $(".faq-content .row.content").filter(function() {
+                    var title = $(this).find('.q-title').text().toLowerCase();
+                    var content = $(this).find('.q-answer').text().toLowerCase();
+                    $(this).toggle(title.indexOf(value) > -1 || content.indexOf(value) > -1);
+                });
+            });
+        });
+    </script>
+{% endblock extra_js %}
