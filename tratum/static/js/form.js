@@ -246,7 +246,7 @@ $.fn.upform = function() {
         });
         $(e).addClass("active");
         $('[data-toggle="tooltip"]').tooltip('hide');
-        $(e).find('[data-toggle="tooltip"]').tooltip('show');
+        //$(e).find('[data-toggle="tooltip"]').tooltip('show');
         $(e).find('input:not(.date)').focus();
     }
 
@@ -297,6 +297,10 @@ $('.preview').on('click', function(e){
 
 
 function setListeners(){
+
+    $('select:not(.picker__select--year):not(.picker__select--month)').niceSelect();
+
+
     $("#document-form").off('keydown');
     $("#document-form").on('keydown', 'input', function(e){
         if(e.which === 9){
@@ -413,6 +417,17 @@ function setListeners(){
 
 setListeners();
 
+function removeHtmlFieldsRelatedToParent(parent){
+    var select = $('[data-question="'+parent+'"]').find('select');
+    select.each(function(index) {
+        if( $(this).hasClass('dynamic') ){
+            removeHtmlFieldsRelatedToParent( $(this).attr('name') );
+        }
+    });
+    $('[data-question="'+select.attr('name')+'"]').remove();
+    $('[data-question="'+parent+'"]').remove();
+}
+
 function loadDynamicFields(element, e, answers=undefined){
     var field = element.attr('name');
     var parent = element.closest('.input-block');
@@ -433,6 +448,9 @@ function loadDynamicFields(element, e, answers=undefined){
                 var newBlock = undefined;
                 fields = response.data.fields
 
+                // remove related fields
+                removeHtmlFieldsRelatedToParent(field);
+
                 if (fields.length > 0){
                     // all elements are added in inverse mode (first add last to first)
                     // create questions elements
@@ -447,12 +465,6 @@ function loadDynamicFields(element, e, answers=undefined){
                     // create title
                     title = `<h5 class="linked-title" data-parent="${id}" data-question="${field}">Los siguientes campos aparecen por que seleccionaste <strong>${value}</strong></h5>`
                     parent.after(title);
-                }else{
-                    var select = $('[data-question="'+field+'"]').find('select');
-                    if (select.hasClass('dynamic') ){
-                        $('[data-question="'+select.attr('name')+'"]').remove();
-                    }
-                    $('[data-question="'+field+'"]').remove();
                 }
 
                 if(answers){
@@ -465,6 +477,7 @@ function loadDynamicFields(element, e, answers=undefined){
                         } else {
                             input = $('#document-form').find(`select[name='${key}']`)
                             input.find(`option[value='${answers[key]}']`).prop("selected", true);
+                            input.niceSelect('update');
                         }
                     });
                     setListeners();

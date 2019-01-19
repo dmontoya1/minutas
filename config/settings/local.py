@@ -65,3 +65,4 @@ INSTALLED_APPS += ['django_extensions']  # noqa F405
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+STATIC_ROOT = str(ROOT_DIR('static'))

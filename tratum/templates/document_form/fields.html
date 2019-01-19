@@ -49,7 +49,7 @@
             {% endif %}
         </div>
         <div class="input-control col">
-            <select name="{{field.formated_slug}}" class="{% if field.field_type == field.DYNAMIC_SELECT %}dynamic{% endif %}" required="required">
+            <select name="{{field.formated_slug}}" class="wide {% if field.field_type == field.DYNAMIC_SELECT %}dynamic{% endif %}" required="required">
                 <option selected disabled>Selecciona un elemento de la lista</option>
                 {% for f in field.documentfieldoption_set.all %}
                     <option value="{{f.name}}" data-id="{{f.pk}}">{{f.name}}</option>

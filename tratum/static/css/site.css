@@ -8,11 +8,14 @@ html,
 body {
     overflow-x: hidden !important;
     position: relative;
+    height: -webkit-fill-available;
+    height: 100%;
 }
 
 main {
-    margin-bottom: 35px;
-    min-height: calc(100% - 220px);
+    min-height: calc(100% - 320px);
+    min-height: -webkit-calc(100% - 320px);
+    min-height: -moz-calc(100% - 320px);
 }
 
 button:focus,
@@ -24,8 +27,7 @@ button:active {
 footer {
     width: 100%;
     bottom: 0;
-    padding: 20px;
-    padding-bottom: 40px;
+    padding: 20px 0 0;
     background-color: #000;
     color: #e8e8e8;
 }
@@ -53,6 +55,10 @@ footer {
         padding-top: .25em;
         text-align: center;
         display: inline-block;
+    }
+
+    footer .container{
+        padding-bottom: 30px;
     }
 
 section {
@@ -490,12 +496,11 @@ section {
 
 .copyright {
     background-color: #c2c1c1;
-    position: absolute;
+    position: relative;
     bottom: 0;
     left: 0;
     width: 100%;
     margin: 0;
-    padding: 0;
     padding: 1px;
     font-size: .8em;
     color: rgb(62, 62, 62);

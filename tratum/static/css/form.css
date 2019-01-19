@@ -223,6 +223,7 @@ iframe {
 
 .document-preview {
     width: 95%;
+    min-width: 90%;
     height: 80vh;
     border: 0.1px solid rgb(205, 205, 205);
     font-size: .8em;

@@ -51,7 +51,7 @@
         data-name="{{gf.formated_slug}}"
         data-parentgroup="{{field.formated_slug}}"
         name="{{gf.formated_slug}}"
-        class="{% if gf.field_type == gf.DYNAMIC_SELECT %}dynamic{% endif %}">
+        class="wide {% if gf.field_type == gf.DYNAMIC_SELECT %}dynamic{% endif %}">
             <option selected disabled>Selecciona un elemento de la lista</option>
             {% for f in gf.documentfieldoption_set.all %}
                 <option value="{{f.name}}" data-id="{{f.pk}}">{{f.name}}</option>
