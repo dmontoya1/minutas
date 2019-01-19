@@ -123,10 +123,28 @@ class DocumentSectionAdmin(admin.ModelAdmin):
 class DocumentFieldOptionAdmin(admin.ModelAdmin):
     list_display = (
         'name',
-        'field'
+        'field',
+        'orden',
     )
 
     list_filter = (
         'document',
         'field',
     )
+
+    def orden(self, obj):
+        return format_html(
+            "<form method='POST' action='/update-option-order/'> \
+                <input type='number' value='{}' name='order' class='order_number'> \
+                <input type='hidden' value='{}' name='field_pk'> \
+                <input type='button' value='Cambiar' class='changer_option_submit'> \
+            </form>".format(obj.order, obj.pk)
+        )
+
+    class Media:
+        js = (
+            '/static/js/admin/documentfields.js',
+        )
+        css = {
+            'all': ('/static/css/documentfields.css',)
+        }

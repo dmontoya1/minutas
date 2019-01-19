@@ -15,7 +15,8 @@ from .views import (
     UserDocumentContentView,
     MainDocumentList,
     LinkedFieldView,
-    ChangeAdminOrder
+    ChangeAdminOrder,
+    ChangeAdminOptionOrder
 )
 
 app_name = 'document_manager'
@@ -95,6 +96,11 @@ urlpatterns = [
         'change-admin-order/',
         ChangeAdminOrder.as_view(),
         name='change-admin-order'
+    ),
+    path(
+        'change-admin-option-order/',
+        ChangeAdminOptionOrder.as_view(),
+        name='change-admin-option-order'
     ),
     path(
         'categories/<slug:slug>/children/',

@@ -457,9 +457,16 @@ class DocumentFieldOption(models.Model):
         verbose_name='Campos de la opción (si aplica)'
     )
 
+    order = models.PositiveIntegerField(
+        'Orden de campo en el formulario',
+        help_text='Indica el orden de aparición del campo en el formulario',
+        default=0
+    )
+
     class Meta:
         verbose_name = 'Opción'
         verbose_name_plural = 'Opciones'
+        ordering = ['order']
 
     def __str__(self):
         return self.name

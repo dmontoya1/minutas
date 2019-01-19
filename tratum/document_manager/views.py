@@ -365,3 +365,17 @@ class ChangeAdminOrder(View):
         field.order = order
         field.save()
         return HttpResponse(status=200)
+
+
+class ChangeAdminOptionOrder(View):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ChangeAdminOptionOrder, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        field = request.POST['pk']
+        order = request.POST['order']
+        field = DocumentFieldOption.objects.get(pk=field)
+        field.order = order
+        field.save()
+        return HttpResponse(status=200)
