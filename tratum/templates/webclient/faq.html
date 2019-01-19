@@ -13,15 +13,17 @@
 {% endblock %}
 
 {% block content %}
+    <div class="container"
+        <div class="row">
+            <input style="margin: 10px auto;" type="text" class="form-control" name="" id="searcher" aria-describedby="helpId" placeholder="Buscar">
+        </div>
+    </div>
   <div class="container" id="faq">
     {% for f in faq_categories %}
         <div class="row qc-title">
             <div class="col-sm-12 text-center qc mt-2">
                 {{f.name}}
             </div>
-        </div>
-        <div class="row">
-            <input style="margin: 10px auto;" type="text" class="form-control" name="" id="searcher" aria-describedby="helpId" placeholder="Buscar">
         </div>
         <div class="faq-content">
         {% for i in f.faqitem_set.all %}
