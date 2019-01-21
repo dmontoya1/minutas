@@ -298,9 +298,6 @@ $('.preview').on('click', function(e){
 
 function setListeners(){
 
-    $('select:not(.picker__select--year):not(.picker__select--month)').niceSelect();
-
-
     $("#document-form").off('keydown');
     $("#document-form").on('keydown', 'input', function(e){
         if(e.which === 9){
@@ -477,7 +474,6 @@ function loadDynamicFields(element, e, answers=undefined){
                         } else {
                             input = $('#document-form').find(`select[name='${key}']`)
                             input.find(`option[value='${answers[key]}']`).prop("selected", true);
-                            input.niceSelect('update');
                         }
                     });
                     setListeners();
