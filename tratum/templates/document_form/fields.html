@@ -96,7 +96,7 @@
             {% endif %}
         </div>
     </div>
-    <div class="group-fields mt-3 mb-3" data-name="{{field.formated_slug}}" data-pk="{{field.pk}}" data-regex="{{field.group_expression}}">
+    <div class="group-fields mt-3 mb-3" data-name="{{field.formated_slug}}" data-pk="{{field.pk}}" data-regex="{{field.group_expression}}" data-question="{{field.get_linked_question}}">
         <div class="group-item mt-2" data-group="{{field.pk}}">
             {% for gf in field.get_ordered_group_fields %}
                 {% include 'document_form/fields_fgroup.html' %}
