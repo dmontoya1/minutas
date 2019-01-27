@@ -465,6 +465,9 @@ function loadDynamicFields(element, e, answers=undefined){
                 }
 
                 if(answers){
+
+                    loadGroupFields(answers);
+
                     Object.keys(answers).forEach(function(key) {
                         input = $('#document-form').find(`input[name='${key}']`)
                         if(input.length > 0){
@@ -493,27 +496,34 @@ function loadDynamicFields(element, e, answers=undefined){
     }
 }
 
+function loadGroupFields(answers){
+    Object.keys(answers).forEach(function(key) {
+        if(key.startsWith('Q_')){
+            length = answers[key];
+            key = key.substring(2);
+            group = $(`.group-fields[data-name="${key}"]`);
+            adder = group.find('.group-adder');
+            items = $('.group-fields').find(`.group-item[data-group='${$(adder).data('group')}']`);
+            if(length > 1 && items.length < length){
+                c = length - 1;
+                for (i = 0; i < c; i++) {
+                    cloneGroupItem(adder, false);
+                }
+            }
+
+        }
+    });
+}
+
 $(function(){
     uuid = $('#doc-info').data('uuid')
     axios.get(`/api/store/user-document/${uuid}/`)
         .then(function (response) {
             answers = response.data.answers
             if(answers){
-                Object.keys(answers).forEach(function(key) {
-                    if(key.startsWith('Q_')){
-                        length = answers[key];
-                        key = key.substring(2);
-                        group = $(`.group-fields[data-name="${key}"]`);
-                        adder = group.find('.group-adder');
-                        if(length > 1){
-                            c = length - 1;
-                            for (i = 0; i < c; i++) {
-                                cloneGroupItem(adder, false);
-                            }
-                        }
 
-                    }
-                });
+                loadGroupFields(answers);
+
                 Object.keys(answers).forEach(function(key) {
                     input = $('#document-form').find(`input[name='${key}']`)
                     if(input.length > 0){

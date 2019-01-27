@@ -77,6 +77,10 @@ iframe {
         line-height: 1.6em;
     }
 
+.doc-preview-col{
+    min-width: 60%;
+}
+
 .loading {
 	font-size: 1.5em;
 }

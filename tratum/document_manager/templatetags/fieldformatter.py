@@ -14,10 +14,11 @@ def hidden(value):
 
 @register.filter()
 def has_item(value, element):
-    items = value.split('¬')
-    for item in items:
-        if element == item:
-            return True
+    if value is not None:
+        items = value.split('¬')
+        for item in items:
+            if element == item:
+                return True
     return False
 
 
