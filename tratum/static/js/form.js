@@ -453,6 +453,7 @@ function loadDynamicFields(element, e, answers=undefined){
                     // create questions elements
                     Object.keys(fields).forEach(function(key) {
                         newBlock = $(fields[key]);
+                        $(newBlock).attr('data-question', field);
                         parent.after(newBlock);
                         var newField = newBlock.find('select');
                         if( newField.hasClass('dynamic') ){
