@@ -1,6 +1,8 @@
 {% load humanize %}
 {% load static %}
 {% load socialaccount %}
+{% load cookielaw_tags %}
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -28,6 +30,7 @@
         <link rel="stylesheet" href="{% static 'css/site.css' %}" type="text/css">
         <link rel="stylesheet" href="{% static 'css/tratum.css' %}" type="text/css">
         <link rel="stylesheet" href="{% static 'css/bootstrap-4-navbar.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'cookielaw/css/cookielaw.css' %}" type="text/css">
         <title>Tratum</title>
         {% block extra_css %}
         {% endblock %}
@@ -159,6 +162,8 @@
         </main>
         <!-- END CONTENT -->
 
+        {% cookielaw_banner %}
+
         <!-- FOOTER -->
         <footer>
             <div class="container">
@@ -261,6 +266,7 @@
         <script src="{% static 'js/jquery-validator.js' %}"></script>
         <script src="{% static 'js/shards.min.js' %}"></script>
         <script src="{% static 'js/bootstrap-4-navbar.js' %}"></script>
+        <script src="{% static 'cookielaw/js/cookielaw.js' %}"></script>
 
         <script>
             $.validate({

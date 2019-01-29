@@ -49,7 +49,7 @@ ENV PATH $PATH:$PANDOC_ROOT/bin
 
 # Requirements are installed here to ensure they will be cached.
 COPY ./requirements /requirements
-RUN pip install --upgrade pip
+RUN pip install --upgrade pip==18.1
 RUN pip install -r /requirements/local.txt
 
 COPY ./docker/production/django/entrypoint /entrypoint

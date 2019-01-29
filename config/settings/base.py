@@ -81,6 +81,7 @@ THIRD_PARTY_APPS = [
     'smart_selects',
     'ckeditor',
     'crispy_forms',
+    'cookielaw',
 ]
 
 LOCAL_APPS = [

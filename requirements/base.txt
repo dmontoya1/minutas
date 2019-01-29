@@ -19,6 +19,7 @@ django-rest-auth==0.9.3
 coreapi==2.3.3  # https://github.com/core-api/python-client
 
 # tratum
+django-cookie-law==2.0.1
 django-embed-video==1.1.2
 django-import-export==1.0.1
 django-mptt==0.9.0
@@ -30,7 +31,7 @@ num2words==0.5.7
 raven==6.9.0  # https://github.com/getsentry/raven-python
 
 astroid==1.6.4
-cairocffi==0.8.1
+cairocffi==0.9.0
 CairoSVG==2.1.3
 certifi==2018.4.16
 cffi==1.11.5
