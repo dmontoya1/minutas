@@ -117,9 +117,6 @@
 
                 <nav {% block nav_class %}class="navbar fixed-top bg-transparent" {% endblock %}>
                     <div>
-                        {% if request.user.is_authenticated %}
-                        <i class="fas fa-bars rotate navbar-toggler"></i>
-                        {% endif %}
                         <i class="fas fa-bars rotate navbar-toggler-mobile"></i>
                         <a href="/">
                             <img class="logo" src="{% static 'img/logo/tratum.png' %}">
@@ -137,15 +134,28 @@
                         </div>
                         <div class="auth-buttons">
                                 <a href="{% url 'webclient:category_documents' path='' %}">Tienda</a>
-                            {% if request.user.is_anonymous %}
                                 <a href="/">Inicio</a>
                                 <a href="{% url 'webclient:about-us' %}">¿Qué es Tratum?</a>
                                 <a href="{% url 'webclient:faq' %}">Preguntas frecuentes </a>
+                            {% if request.user.is_anonymous %}
                                 <a data-toggle="modal" data-target="#modal-signup">Registrarse</a>
                                 <a data-toggle="modal" data-target="#modal-login">Iniciar sesión</a>
-
                             {% else %}
-                                <span style="margin-right: 1em;">Hola, {{request.user.first_name}} </span>
+                                <div class="dropleft noleftbar">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hola, {{request.user.first_name}} <span class="toright"></span></a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">
+                                            <div class="droprigth subdrop">
+                                                 <a href="{% url 'webclient:profile' %}">Mi cuenta</a>
+                                            </div>
+                                        </a>
+                                        <a class="dropdown-item" href="#">
+                                            <div class="droprigth subdrop">
+                                                 <a href="{% url 'webclient:user-documents' %}">Mis documentos</a>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
                                 <a href="/logout/" id="Logout">Cerrar sesión</a>
                             {% endif %}
                         </div>

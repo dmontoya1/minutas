@@ -28,7 +28,7 @@ CKEDITOR.dialog.add('counterDialog', function(editor){
 
             var button = editor.document.createElement('input');
             var value = dialog.getValueOf('tab-select-counter', 'dynamic-counter');
-            
+
             if(value == 'Contador dinámico (masculino)'){
                 v = 'dynamic_counter_male'
             } else if (value == 'Contador dinámico (femenino)'){

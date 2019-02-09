@@ -5,7 +5,7 @@ $(function(){
             "class": "dynamic_counter"
         }).insertAfter(this);
         $(this).remove();
-    })    
+    });
     $('body').append('<button id="generatePDF">Generar PDF</button>')
     $('#generatePDF').on('click', function(){
         var doc = new jsPDF();
