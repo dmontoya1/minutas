@@ -393,7 +393,7 @@ function setListeners(){
         centsSeparator: ',',
         thousandsSeparator: '.',
         centsLimit: 0,
-        clearOnEmpty: true,
+        clearOnEmpty: false,
          onClose: function() {
             savePreview();
         },
