@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block nav_class %}
-    class="navbar scrolled"
+    class="navbar scrolled fixed-top"
 {% endblock %}
 
 {% block title %}
@@ -15,29 +15,30 @@
 {% block content %}
   <div class="container about-us">
     <div class="row categories mt-5">
-      <div class="col-md-6 category-description left" data-aos="slide-right">      
+      <div class="col-md-6 category-description left" data-aos="slide-right">
           <div class="container">
               <h2>{{title}}</h2>
               <p>{{content}}</p>
-          </div>      
+          </div>
         </div>
-      <div class="col-md-6 order-1 order-md-2 category-parallax" data-stellar-background-ratio="0.1" 
+      <div class="col-md-6 order-1 order-md-2 category-parallax" data-stellar-background-ratio="0.1"
       style="background-image: url('{% if image %}{{image.url}}{% endif %}'); background-position: center; background-size: cover;" >
-      </div>      
-    </div>   
+      </div>
+    </div>
   </div>
   <div class="row contact-form mt-5">
     <div class="col text-center">
       <form>
         <div class="form-group">
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nombre">
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nombre" autocomplete="off" >
         </div>
         <div class="form-group">
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Correo electrónico">
+          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Correo electrónico" autocomplete="off" >
         </div>
         <div class="form-group">
           <textarea class="form-control" placeholder="Mensaje"></textarea>
         </div>
+        <div class="g-recaptcha" data-sitekey="6LdqLn0UAAAAAKildIXZzJZicplDzL7RJLOomOSr"></div>
         <div class="form-group">
           <button type="submit" class="action-button__primary">Enviar</button>
         </div>
