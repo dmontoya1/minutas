@@ -67,6 +67,10 @@ section {
     padding-bottom: 5px;
 }
 
+.pt-20{
+    padding-top:20px;
+}
+
 .about-us .categories .category-description.left{
     padding-left: 0;
 }
@@ -416,7 +420,7 @@ section {
         margin: 0 auto;
     }
     .contact-form form input {
-        border-radius: 0;
+        border-radius: 20px;
     }
     .contact-form form textarea {
         height: 150px;
