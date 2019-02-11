@@ -394,6 +394,7 @@ CKEDITOR_CONFIGS = {
                 'items': ['conditional']
             }
         ],
+        'forcePasteAsPlainText': True,
         'toolbar': 'CustomToolbarConfig',
         'tabSpaces': 4,
         'extraPlugins': ','.join([
