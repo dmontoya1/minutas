@@ -395,7 +395,7 @@ CKEDITOR_CONFIGS = {
             {
                 'name': 'conditional',
                 'items': ['conditional']
-            }
+            },
         ],
         'forcePasteAsPlainText': True,
         'toolbar': 'CustomToolbarConfig',
