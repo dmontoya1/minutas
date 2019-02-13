@@ -366,6 +366,9 @@ CKEDITOR_CONFIGS = {
             {
                 'name': 'paragraph',
                 'items': [
+                    'NumberedList',
+                    'BulletedList',
+                    '-'
                     'JustifyLeft',
                     'JustifyCenter',
                     'JustifyRight',
@@ -397,6 +400,7 @@ CKEDITOR_CONFIGS = {
         'forcePasteAsPlainText': True,
         'toolbar': 'CustomToolbarConfig',
         'tabSpaces': 4,
+        'enterMode': 2,
         'extraPlugins': ','.join([
             'ajax',
             'autolink',
