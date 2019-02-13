@@ -81,7 +81,7 @@
                             <a href="/">Inicio</a>
                         </h4>
                         <h4 class="text-white">
-                            <a href="{% url 'webclient:about-us' %}">¿Qué es Tratum?</a>
+                            <a href="{% url 'webclient:about-us' %}">¿Quiénes somos?</a>
                         </h4>
                         <h4 class="text-white">
                             <a href="{% url 'webclient:faq' %}">Preguntas frecuentes </a>
@@ -135,7 +135,7 @@
                         <div class="auth-buttons">
                                 <a href="{% url 'webclient:category_documents' path='' %}">Tienda</a>
                                 <a href="/">Inicio</a>
-                                <a href="{% url 'webclient:about-us' %}">¿Qué es Tratum?</a>
+                                <a href="{% url 'webclient:about-us' %}">¿Quiénes somos?</a>
                                 <a href="{% url 'webclient:faq' %}">Preguntas frecuentes </a>
                             {% if request.user.is_anonymous %}
                                 <a data-toggle="modal" data-target="#modal-signup">Registrarse</a>

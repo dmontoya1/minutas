@@ -367,8 +367,8 @@ function setListeners(){
         },
     });
     $('#document-form .natural').pickadate({
-        format: 'dddd, dd mmmm !d!e!l yyyy',
-        formatSubmit: 'dddd, dd mmmm !d!e yyyy',
+        format: 'dd mmmm !d!e!l yyyy',
+        formatSubmit: 'dd mmmm !d!e yyyy',
         selectYears: 100,
         selectMonths: true,
         max: new Date(2050,7,14),

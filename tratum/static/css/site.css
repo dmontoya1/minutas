@@ -400,13 +400,16 @@ section {
     vertical-align: sub;
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 1122px) {
     .navbar-toggler {
        display: none;
     }
     .navbar-toggler-mobile {
         color: #161616;
         display: inline-block;
+    }
+    .d-lg-block {
+        display: none!important;
     }
 }
 
