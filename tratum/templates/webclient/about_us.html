@@ -48,4 +48,8 @@
 {% endblock content %}
 
 {% block scripts %}
+    <script src="{% static 'js/jquery.disableAutoFill.min.js' %}"></script>
+    <script>
+      $("#contact_form").disableAutoFill();
+    </script>
 {% endblock scripts %}
