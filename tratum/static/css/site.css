@@ -595,7 +595,8 @@ section {
     }
 
 .navbar {
-    z-index: 999;
+  z-index: 999;
+  flex-wrap: nowrap;
 }
     .navbar.scrolled {
         background-color: #FFF !important;

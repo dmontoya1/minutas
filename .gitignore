@@ -279,3 +279,5 @@ test/media/
 
 tratum/media
 tratum/media/*
+
+.idea/
