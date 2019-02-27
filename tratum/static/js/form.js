@@ -283,8 +283,6 @@ function movePrev(e) {
 }
 
 
-$('[data-toggle="tooltip"]').tooltip();
-
 $('.modal-trigger').on('click', function() {
     $('#videoModal').modal();
 });
@@ -297,6 +295,8 @@ $('.preview').on('click', function(e){
 
 
 function setListeners(){
+
+    $('[data-toggle="tooltip"]').tooltip();
 
     $("#document-form").off('keydown');
     $("#document-form").on('keydown', 'input', function(e){
