@@ -70,10 +70,12 @@ function formatDocument(){
     var femaleCounters = document.querySelectorAll('input[value="dynamic_counter"]');
     var maleCounters = document.querySelectorAll('input[value="dynamic_counter_male"]');
     var internalCounters = document.querySelectorAll('input[value^="section_dynamic_counter"]');
+    var numberCounters = document.querySelectorAll('input[value="dynamic_number_counter"]');
 
     addCounters(femaleCounters, 'a');
     addCounters(maleCounters, 'o');
     addInternalCounters(internalCounters);
+    addNumberCounters(numberCounters);
 
     function addInternalCounters(internalCounters){
         var sections = [];
@@ -87,6 +89,16 @@ function formatDocument(){
         for (i = 0; i < sections.length; i++) {
             var internalCounters = document.querySelectorAll(`input[value="section_dynamic_counter_${sections[i]}"]`);
             addCounters(internalCounters, 'o');
+        }
+    }
+
+    function addNumberCounters(numberCounters) {
+        for (var i=0; i < numberCounters.length; i++){
+            var span = document.createElement('span');
+            var counter = i + 1;
+            span.style.color = '#000';
+            span.innerHTML = counter.toString();
+            numberCounters[i].parentNode.replaceChild(span, numberCounters[i]);
         }
     }
 
