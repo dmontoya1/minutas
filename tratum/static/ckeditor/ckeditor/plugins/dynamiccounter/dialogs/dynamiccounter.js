@@ -16,6 +16,7 @@ CKEDITOR.dialog.add('counterDialog', function(editor){
                         items: [
                             ['Contador dinámico (masculino)'],
                             ['Contador dinámico (femenino)'],
+                            ['Contador dinámico numérico'],
                             ['Contador dinámico para secciones internas (numérico)']
                         ],
                         default: 'Contador dinámico (masculino)',
@@ -28,13 +29,13 @@ CKEDITOR.dialog.add('counterDialog', function(editor){
 
             var button = editor.document.createElement('input');
             var value = dialog.getValueOf('tab-select-counter', 'dynamic-counter');
-
-            if(value == 'Contador dinámico (masculino)'){
+            var v = 'section_dynamic_counter'
+            if(value === 'Contador dinámico (masculino)'){
                 v = 'dynamic_counter_male'
-            } else if (value == 'Contador dinámico (femenino)'){
+            } else if (value === 'Contador dinámico (femenino)'){
                 v = 'dynamic_counter'
-            } else {
-                v = 'section_dynamic_counter'
+            } else if (value === 'Contador dinámico numérico') {
+                v = 'dynamic_number_counter'
             }
 
             button.setAttribute('type', 'button');

@@ -20,32 +20,44 @@ function formatDocument(){
     
     var femaleCounters = document.querySelectorAll('input[value="dynamic_counter"]');
     var maleCounters = document.querySelectorAll('input[value="dynamic_counter_male"]');
+    var numberCounters = document.querySelectorAll('input[value="dynamic_number_counter"]');
     var internalCounters = document.querySelectorAll('input[value^="section_dynamic_counter"]');
 
     addCounters(femaleCounters, 'a');
     addCounters(maleCounters, 'o');
     addInternalCounters(internalCounters);
+    addNumberCounters(numberCounters);
     
     function addInternalCounters(internalCounters){
         var sections = [];
         for (i = 0; i < internalCounters.length; i++) {
-            section = internalCounters[i].value.split('section_dynamic_counter_')
+            var section = internalCounters[i].value.split('section_dynamic_counter_')
             sections.push(section[1]);
         }
 
         sections = Array.from(new Set(sections));
 
         for (i = 0; i < sections.length; i++) {
-            var internalCounters = document.querySelectorAll(`input[value="section_dynamic_counter_${sections[i]}"]`);
-            addCounters(internalCounters, 'o');
+            var internalCounters2 = document.querySelectorAll(`input[value="section_dynamic_counter_${sections[i]}"]`);
+            addCounters(internalCounters2, 'o');
         } 
+    }
+
+    function addNumberCounters(numberCounters) {
+        for (var i=0; i < numberCounters.length; i++){
+            var span = document.createElement('span');
+            var counter = i + 1;
+            span.style.color = '#000';
+            span.innerHTML = counter.toString();
+            numberCounters[i].parentNode.replaceChild(span, numberCounters[i]);
+        }
     }
 
     function addCounters(dynamic_counters, gender){
         var i;
         for (i = 0; i < dynamic_counters.length; i++) {
-            i = i + 1
-            if(i.toString().length == 1){
+            i = i + 1;
+            if(i.toString().length === 1){
                 counter = units[i] + gender;
             } else {
                 ten = i.toString()[0] + 0

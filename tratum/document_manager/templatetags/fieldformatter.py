@@ -34,6 +34,16 @@ def comma_sep_to_ul(value, autoescape=True):
 
 @register.filter(needs_autoescape=True)
 @stringfilter
+def comma_sep_to_ul_number_dymamic(value, autoescape=True):
+    items = value.split('¬')
+    button = '<input type="button" value="dynamic_number_counter" data-cke-editable="1" contenteditable="false"> {}'
+    to_list = [button.format(item) for item in items]
+    to_render = '<br>'.join(to_list)
+    return mark_safe(to_render)
+
+
+@register.filter(needs_autoescape=True)
+@stringfilter
 def comma_sep_to_li(value, autoescape=True):
     items = value.split('¬')
     lis = ['<li>{}</li>'.format(item) for item in items]

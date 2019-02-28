@@ -35,6 +35,7 @@ CKEDITOR.dialog.add( 'fieldDialog', function(editor){
                             ['Agrupar grupo de campos por listado'],
                             ['Añadir item a lista existente'],
                             ['Ocultar variable en el documento'],
+                            ['Crear lista con contador numérico dinámico'],
                         ]
                     }
                 ]
@@ -60,6 +61,7 @@ CKEDITOR.dialog.add( 'fieldDialog', function(editor){
                 'Agrupar grupo de campos por listado': 'comma_sep_to_ul',
                 'Añadir item a lista existente': 'comma_sep_to_li',
                 'Ocultar variable en el documento': 'hidden',
+                'Crear lista con contador numérico dinámico': 'comma_sep_to_ul_number_dymamic',
             }
 
             var dialog = this;
