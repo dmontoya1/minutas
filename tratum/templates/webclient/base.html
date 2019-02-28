@@ -60,10 +60,10 @@
                         <div class="mt-5">
                             {% if request.user.is_anonymous %}
                                 <h5 class="text-white">
-                                    <a data-toggle="modal" data-target="#modal-login">Iniciar sesión</a>
+                                    <a data-toggle="modal" data-target="#modal-login">Inicia sesión</a>
                                 </h5></br>
                                 <h5 class="text-white">
-                                    <a data-toggle="modal" data-target="#modal-signup">Registrarse</a>
+                                    <a data-toggle="modal" data-target="#modal-signup">Regístrate</a>
                                 </h5>
                             {% else %}
                                 <h5 class="text-white">
@@ -100,10 +100,10 @@
                         <div class="mt-5">
                             {% if request.user.is_anonymous %}
                                 <h5 class="text-white">
-                                    <a data-toggle="modal" data-target="#modal-login">Iniciar sesión</a>
+                                    <a data-toggle="modal" data-target="#modal-login">Inicia sesión</a>
                                 </h5></br>
                                 <h5 class="text-white">
-                                    <a data-toggle="modal" data-target="#modal-signup">Registrarse</a>
+                                    <a data-toggle="modal" data-target="#modal-signup">Regístrate</a>
                                 </h5>
                             {% else %}
                                 <h5 class="text-white">
@@ -133,13 +133,13 @@
                             </div>
                         </div>
                         <div class="auth-buttons">
-                                <a href="{% url 'webclient:category_documents' path='' %}">Tienda</a>
                                 <a href="/">Inicio</a>
                                 <a href="{% url 'webclient:about-us' %}">¿Quiénes somos?</a>
+                                <a href="{% url 'webclient:category_documents' path='' %}">Tienda</a>
                                 <a href="{% url 'webclient:faq' %}">Preguntas frecuentes </a>
                             {% if request.user.is_anonymous %}
-                                <a data-toggle="modal" data-target="#modal-signup">Registrarse</a>
-                                <a data-toggle="modal" data-target="#modal-login">Iniciar sesión</a>
+                                <a data-toggle="modal" data-target="#modal-signup">Regístrate</a>
+                                <a data-toggle="modal" data-target="#modal-login">Inicia sesión</a>
                             {% else %}
                                 <div class="dropleft noleftbar">
                                     <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hola, {{request.user.first_name}} <span class="toright"></span></a>
