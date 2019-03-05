@@ -1,6 +1,7 @@
 {% extends 'webclient/base.html' %}
 {% load humanize %}
 {% load static %}
+{% load fieldformatter %}
 
 {% block extra_css %}
   <link rel="stylesheet" href="{% static 'css/preview.css' %}">
@@ -21,7 +22,7 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="document-preview" id="content-preview" data-name="{{object.document.name}}">
-                    {{document_content|safe}}
+                    {{document_content}}
                 </div>
             </div>
             {% if object.status == object.is_expired %}

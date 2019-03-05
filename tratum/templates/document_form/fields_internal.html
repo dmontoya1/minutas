@@ -8,6 +8,10 @@
             {% endif %}
         </div>
         <div class="input-control col">
+         {% if field.is_open_text %}
+          <textarea name="{{field.formated_slug}}" id="{{field.formated_slug}}" required rows="1" data-min-rows="1"
+     data-max-rows="5" data-regex="/\r\n|\r|\n/g,'<br />'"></textarea>
+        {% else %}
             <input required
             data-name="{{ifield.formated_slug}}"
             data-parentgroup="{{gf.formated_slug}}"
@@ -30,6 +34,7 @@
                     {% endif %}
                 {% endif %}
             required{% endspaceless %}" autocomplete="off">
+         {% endif %}
         </div>
         {% if ifield.youtube_help_video_link %}
             <div class="col">

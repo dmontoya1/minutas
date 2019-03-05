@@ -391,6 +391,9 @@ class DocumentField(SlugIdentifierMixin):
     def is_text_input(self):
         return self.field_type in (self.TEXT, self.DATE, self.NUMBER, self.NATURAL_DATE, self.PRICE)
 
+    def is_open_text(self):
+        return self.field_type == self.TEXT
+
     def is_date_input(self):
         return self.field_type in (self.DATE, self.NATURAL_DATE)
 

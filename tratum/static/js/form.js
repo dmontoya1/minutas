@@ -16,12 +16,15 @@ function savePreview() {
             items = $(this).find(`.group-item`).not('.group-fields .group-fields .group-item');
             $(items).each(function(i2, gi){
                 new_object = {};
-                fields = $(this).find('input, select');
+                fields = $(this).find('input, select, textarea');
                 regexed_text = regex;
 
                 new_object = []
                 $(fields).each(function(i3, git){
                     regexed_text = regexed_text.replace($(this).data('name'), $(this).val());
+                    if($(this).is("textarea")){
+                        regexed_text = $(this).val().replace(regex);
+                    }
                     //new_object[$(this).data('name')] = $(this).val();
                     new_object += $(this).data('name') + ":" + $(this).val() + "|";
                 });
@@ -38,8 +41,18 @@ function savePreview() {
         return form + '&' + data + '&' + $.param(quantity)
     }
 
+    function applyRegexInTextAreas(form){
+        var groups = {};
+        var textareas = $('#document-form').find(`textarea`);
+        $(textareas).each(function(i2, gi){
+            groups[$(this).attr('name')] = $(this).val().replace(/\r\n|\r|\n/g,"<br />");
+        });
+        var data = $.param(groups);
+        return form + '&' + data
+    }
     form = $('#document-form').serialize();
     form = getGroupFields(form);
+    form = applyRegexInTextAreas(form);
 
     axios.post('/api/document-manager/save-preview/', form)
         .then(function(){
@@ -422,6 +435,13 @@ function setListeners(){
         loadDynamicFields($(this), e, answers);
     });
 
+    $("#document-form").off('keyup');
+    $("#document-form").on('keyup', 'textarea',function (e) {
+        savePreview();
+    });
+
+    $('textarea').textAdjust();
+
 }
 
 setListeners();
@@ -490,6 +510,9 @@ function loadDynamicFields(element, e, answers=undefined){
                         } else {
                             input = $('#document-form').find(`select[name='${key}']`)
                             input.find(`option[value='${answers[key]}']`).prop("selected", true);
+
+                            textarea = $('#document-form').find(`textarea[name='${key}']`);
+                            textarea.val(answers[key].replace(/<br\s?\/?>/g,"\n"));
                         }
                     });
                     setListeners();
@@ -538,7 +561,7 @@ $(function(){
                 loadGroupFields(answers);
 
                 Object.keys(answers).forEach(function(key) {
-                    input = $('#document-form').find(`input[name='${key}']`)
+                    input = $('#document-form').find(`input[name='${key}']`);
                     if(input.length > 0){
                         input.attr('value', answers[key])
                         input.prop("checked", true);
@@ -546,7 +569,12 @@ $(function(){
                     } else {
                         input = $('#document-form').find(`select[name='${key}']`)
                         input.find(`option[value='${answers[key]}']`).prop("selected", true);
+
+                        textarea = $('#document-form').find(`textarea[name='${key}']`);
+                        textarea.value = answers[key];
                     }
+
+
                 });
             }
             realTimeUpdate();

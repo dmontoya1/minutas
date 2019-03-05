@@ -12,7 +12,13 @@
             {% endif %}
         </div>
         <div class="input-control col">
-            <input required name="{{field.formated_slug}}" type="{% if field.get_html_input_type == 'number' %}text{% else %}{{field.get_html_input_type}}{% endif %}" id="{{field.formated_slug}}"
+
+
+            {% if field.is_open_text %}
+              <textarea name="{{field.formated_slug}}" id="{{field.formated_slug}}" required rows="1" data-min-rows="1"
+ data-max-rows="5" data-regex='/\r\n|\r|\n/g,"<br>"'></textarea>
+            {% else %}
+              <input required name="{{field.formated_slug}}" type="{% if field.get_html_input_type == 'number' %}text{% else %}{{field.get_html_input_type}}{% endif %}" id="{{field.formated_slug}}"
             class="{% spaceless %}
                 {% if field.is_date_input %}
                     date
@@ -29,6 +35,8 @@
                     {% endif %}
                 {% endif %}
             required{% endspaceless %}" autocomplete="off">
+
+            {% endif %}
         </div>
         {% if field.youtube_help_video_link %}
             <div class="col">
