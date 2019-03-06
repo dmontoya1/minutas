@@ -342,9 +342,9 @@
                         <div class="container">
                             <div class="row ">
                                 <div class="col-12">
-                                    <p class="text-justify" id="doc__modal_description">
+                                    <div class="text-justify" id="doc__modal_description">
 
-                                    </p>
+                                    </div>
                                 </div>
                                 <div class="col-12 video-container">
                                 </div>
@@ -704,7 +704,7 @@
                 }
             }
             else {
-                $('#doc__modal_description').text($(this).data('longdescription').replace(/<(?:.|\n)*?>/gm, ''))
+                $('#doc__modal_description').html($(this).data('longdescription'));
             }
 
             if ($(this).data('video') != 'None')
