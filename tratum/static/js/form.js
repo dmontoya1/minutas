@@ -249,7 +249,7 @@ $.fn.upform = function() {
 
     $(container).on('click', '.input-block:not(.preventForming)', function(){
         rescroll(this);
-    })
+    });
 
     $(window).on("scroll", function(){
 
