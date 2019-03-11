@@ -170,25 +170,25 @@ function formatDocument(){
 
 function cloneGroupItem(groupAdder, fromGroupAdder){
     items = $('.group-fields').find(`.group-item[data-group='${$(groupAdder).data('group')}']`);
-    length = items.length + 1
+    length = items.length + 1;
     last = $(items).last();
     clone = last.clone();
-    title = clone.find('span')
-    inputs = clone.find('input, select')
+    title = clone.find('span');
+    inputs = clone.find('input, select, textarea');
 
-    if( inputs.length == 1){
-        new_text = length + title.text().substring(1)
-        title.text(new_text)
+    if( inputs.length === 1){
+        new_text = length + title.text().substring(1);
+        title.text(new_text);
     }
 
     $(inputs).each(function(i, element){
         $(element).val('');
         name = $(element).data('name');
-        $(element).attr('name', `${name}_${length}`)
-        $(element).attr('id', `${name}_${length}`)
-    })
+        $(element).attr('name', `${name}_${length}`);
+        $(element).attr('id', `${name}_${length}`);
+    });
 
-    if(clone.find('.deleter').length == 0){
+    if(clone.find('.deleter').length === 0){
         clone.append(
             '<a class="deleter" href="#">' +
                 'Eliminar' +
