@@ -208,6 +208,7 @@ function cloneGroupItem(groupAdder, fromGroupAdder){
             prev = $(this).parent().prev();
             $(this).parent().remove();
             rescroll(prev);
+            savePreview();
         }
     });
 
