@@ -390,7 +390,7 @@ function setListeners(){
         },
     });
     $('#document-form .natural').pickadate({
-        format: 'dd mmmm !d!e!l yyyy',
+        format: 'dd mmmm !d!e yyyy',
         formatSubmit: 'dd mmmm !d!e yyyy',
         selectYears: 100,
         selectMonths: true,
@@ -561,7 +561,7 @@ $(function(){
                 Object.keys(answers).forEach(function(key) {
                     input = $('#document-form').find(`input[name='${key}']`);
                     if(input.length > 0){
-                        input.attr('value', answers[key])
+                        input.val(answers[key]);
                         input.prop("checked", true);
                         $(`*[data-section="${$(input).attr('name')}"]`).toggle();
                     } else {
