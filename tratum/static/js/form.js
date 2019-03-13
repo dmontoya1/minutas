@@ -22,14 +22,11 @@ function savePreview() {
                 new_object = []
                 $(fields).each(function(i3, git){
                     regexed_text = regexed_text.replace($(this).data('name'), $(this).val());
-                    if($(this).is("textarea")){
-                        regexed_text = $(this).val().replace(regex);
-                    }
                     //new_object[$(this).data('name')] = $(this).val();
                     new_object += $(this).data('name') + ":" + $(this).val() + "|";
-                    group_responses.push(regexed_text);
                 });
                 group_objects.push(new_object);
+                group_responses.push(regexed_text);
             });
 
             groups[name] = group_responses.join('¬ ').toString();
