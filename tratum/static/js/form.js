@@ -9,7 +9,7 @@ function savePreview() {
         name = "";
         $('.group-fields').each(function(i1, gf){
             group_responses = [];
-            group_objects = []
+            group_objects = [];
             regex = $(this).data('regex');
             name = $(this).data('name');
             pk = $(this).data('pk');

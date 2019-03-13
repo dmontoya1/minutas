@@ -9,7 +9,7 @@
     <div class="input-control col">
     {% if gf.is_open_text %}
       <textarea name="{{gf.formated_slug}}" id="{{gf.formated_slug}}" required rows="1" data-min-rows="1"
- data-max-rows="5" data-regex="/\r\n|\r|\n/g,'<br />'"></textarea>
+ data-max-rows="5" data-regex="/\r\n|\r|\n/g,'<br />'" data-name="{{gf.formated_slug}}" data-parentgroup="{{field.formated_slug}}"></textarea>
     {% else %}
         <input required
         data-name="{{gf.formated_slug}}"

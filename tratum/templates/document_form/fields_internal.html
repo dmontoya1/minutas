@@ -10,7 +10,7 @@
         <div class="input-control col">
          {% if ifield.is_open_text %}
           <textarea name="{{ifield.formated_slug}}" id="{{ifield.formated_slug}}" required rows="1" data-min-rows="1"
-     data-max-rows="5" data-regex="/\r\n|\r|\n/g,'<br />'"></textarea>
+     data-max-rows="5" data-regex="/\r\n|\r|\n/g,'<br />'" data-name="{{ifield.formated_slug}}" data-parentgroup="{{gf.formated_slug}}"></textarea>
         {% else %}
             <input required
             data-name="{{ifield.formated_slug}}"
