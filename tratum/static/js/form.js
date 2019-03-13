@@ -569,7 +569,7 @@ $(function(){
                         input.find(`option[value='${answers[key]}']`).prop("selected", true);
 
                         textarea = $('#document-form').find(`textarea[name='${key}']`);
-                        textarea.value = answers[key];
+                        textarea.val(answers[key]);
                     }
 
 
