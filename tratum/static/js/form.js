@@ -27,9 +27,9 @@ function savePreview() {
                     }
                     //new_object[$(this).data('name')] = $(this).val();
                     new_object += $(this).data('name') + ":" + $(this).val() + "|";
+                    group_responses.push(regexed_text);
                 });
                 group_objects.push(new_object);
-                group_responses.push(regexed_text);
             });
 
             groups[name] = group_responses.join('¬ ').toString();
