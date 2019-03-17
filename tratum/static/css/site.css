@@ -303,7 +303,7 @@ section {
 
 .categories .category-parallax {
     height: 70vh;
-    background-size: cover !important;
+    background-size: contain !important;
     background-repeat: no-repeat !important;
 }
 
