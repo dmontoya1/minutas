@@ -25,11 +25,11 @@ strong {
 }
 @media screen and (max-width: 1440px) {
     main {
-        padding-bottom: 165px;
+        padding-bottom: 65px;
     }
     .document-preview {
         height: 65vh;
-        max-width: 530px;
+        width: 100%;
     }
 }
 
