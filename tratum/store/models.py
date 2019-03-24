@@ -10,6 +10,7 @@ from django.contrib.postgres.fields import JSONField
 from django.core.exceptions import ValidationError
 from django.urls import reverse
 from django_extensions.db.fields import AutoSlugField
+from django.utils import timezone
 
 from tratum.utils.models import SoftDeletionModelMixin
 from tratum.document_manager.models import Document
@@ -138,12 +139,11 @@ class UserDocument(models.Model):
         return reverse('webclient:user-document', kwargs={'identifier': self.identifier})
 
     def is_expired(self):
-        return False
-        created_at = datetime.datetime.strptime(self.created_at, "%Y-%m-%d")
-        diff = abs((datetime.datetime.now() - created_at).days)
+        diff = abs((timezone.now() - self.created_at).days)
+        print(diff)
         if diff > 10:
-            return False
-        return True
+            return True
+        return False
 
 
 class Invoice(models.Model):

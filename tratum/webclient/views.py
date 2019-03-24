@@ -246,23 +246,24 @@ class UserDocumentsView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         docs = UserDocument.objects.filter(user=self.request.user)
-        return docs
+        docs_list = []
+        for doc in docs:
+            if not doc.is_expired():
+                docs_list.append(doc)
+        return docs_list
 
     def get(self, request, *args, **kwargs):
-        if request.user.is_anonymous:
-            pass
-        else:
-            user = request.user
-            docs = UserDocument.objects.filter(user=user)
-            if not docs:
-                messages.add_message(
-                    request,
-                    messages.ERROR,
-                    "No tienes documentos creados. \
-                    Crea o compra tu primer documento desde aquí"
-                )
-                return redirect(reverse('webclient:category_documents', args=("",)))
         self.object_list = self.get_queryset()
+        user = request.user
+        if not self.object_list:
+            messages.add_message(
+                request,
+                messages.ERROR,
+                "No tienes documentos creados. \
+                Crea o compra tu primer documento desde aquí"
+            )
+            return redirect(reverse('webclient:category_documents', args=("",)))
+
         context = self.get_context_data(**kwargs)
         return self.render_to_response(context)
 
