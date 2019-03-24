@@ -303,8 +303,14 @@ section {
 
 .categories .category-parallax {
     height: 70vh;
-    background-size: contain !important;
+    background-size: cover !important;
     background-repeat: no-repeat !important;
+}
+
+.categories .contain-bg{
+  height: 70vh;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
 }
 
 @media screen and (max-width: 414px) {

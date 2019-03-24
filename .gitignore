@@ -281,3 +281,5 @@ tratum/media
 tratum/media/*
 
 .idea/
+
+db.json
