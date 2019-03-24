@@ -148,6 +148,8 @@ class SignupView(View):
                 user.is_active = False
                 user.save()
 
+                next = request.POST.get('email_signup_next', False)
+
                 Token.objects.create(user=user)
 
                 x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -184,7 +186,7 @@ class SignupView(View):
                     messages.ERROR,
                     "Te has registrado correctamente. Revisa tu correo para activar tu cuenta"
                 )
-            url = reverse('webclient:home')
+            url = next if next else reverse('webclient:home')
             return JsonResponse(url, safe=False)
         except IntegrityError:
             msg = 'Tu correo ya está registrado. Por favor inicia sesión'
