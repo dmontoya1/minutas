@@ -205,6 +205,26 @@ class SiteConfig(models.Model):
         blank=True
     )
 
+    terms_file = models.FileField(
+        upload_to='legal',
+        blank=True,
+        null=True
+    )
+
+    terms_file = models.FileField(
+        'Documento de términos y condiciones',
+        upload_to='legal',
+        blank=True,
+        null=True
+    )
+
+    data_policy_file = models.FileField(
+        'Documento de política de tratamiento de datos',
+        upload_to='legal',
+        blank=True,
+        null=True
+    )
+
     class Meta:
         verbose_name = 'Configuración de sitio'
         verbose_name_plural = verbose_name

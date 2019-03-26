@@ -72,11 +72,12 @@
             <i class="fas fa-question-circle float-right " data-toggle="tooltip" data-placement="left" title="{{gf.help_text}}"></i>
         {% endif %}
     </div>
+   <input type="hidden" name="{{gf.formated_slug}}" data-name="{{gf.formated_slug}}">
     {% for f in gf.documentfieldoption_set.all %}
         <div class="col mb-2">
             <div class="row">
                 <div class="col-sm-1">
-                    <input type="checkbox" id="{{gf.name}}__{{f.pk}}" data-parent="{{gf.formated_slug}}" name="{{f.formated_slug}}__{{f.pk}}" value="{{f.name}}" class="multiple-checkbox-fields">
+                    <input type="checkbox" data-grouped="1" data-name="{{gf.formated_slug}}" data-parent="{{gf.formated_slug}}" data-pk="{{f.pk}}" id="{{gf.formated_slug}}__{{f.pk}}" name="{{gf.formated_slug}}__{{ f.pk }}" value="{{f.name}}" class="multiple-checkbox-fields">
                 </div>
                 <div class="col-sm-11 pl-0">
                     <label for="{{gf.name}}__{{f.pk}}">{{f.name}}</label>

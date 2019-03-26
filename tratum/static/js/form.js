@@ -18,10 +18,11 @@ function savePreview() {
                 new_object = {};
                 fields = $(this).find('input, select, textarea');
                 regexed_text = regex;
-
                 new_object = []
                 $(fields).each(function(i3, git){
-                    regexed_text = regexed_text.replace($(this).data('name'), $(this).val());
+                    if(!$(this).is(':checkbox')){
+                        regexed_text = regexed_text.replace($(this).data('name'), $(this).val());
+                    }
                     //new_object[$(this).data('name')] = $(this).val();
                     new_object += $(this).data('name') + ":" + $(this).val() + "|";
                 });
@@ -179,10 +180,20 @@ function cloneGroupItem(groupAdder, fromGroupAdder){
     }
 
     $(inputs).each(function(i, element){
-        $(element).val('');
-        name = $(element).data('name');
-        $(element).attr('name', `${name}_${length}`);
-        $(element).attr('id', `${name}_${length}`);
+
+        var name = $(element).data('name');
+
+        if($(element).is(':checkbox')){
+            $(element).prop("checked", false);
+            $(element).attr('data-parent', `${name}_${length}`);
+            var pk =  $(element).data('pk');
+            $(element).attr('id', `${name}_${length}_${pk}`);
+            $(element).attr('name', `${name}_${length}_${pk}`);
+        }else{
+            $(element).val('');
+            $(element).attr('id', `${name}_${length}`);
+            $(element).attr('name', `${name}_${length}`);
+        }
     });
 
     if(clone.find('.deleter').length === 0){
@@ -370,7 +381,6 @@ function setListeners(){
 
     $("#document-form").off('keyup');
     $("#document-form").on('keyup', 'input', function(e) {
-        console.log("keyup");
         savePreview();
         e.preventDefault();
         if($(this).hasClass('pickadate')){
@@ -400,9 +410,8 @@ function setListeners(){
 
     $("#document-form .multiple-checkbox-fields").off('change');
     $("#document-form .multiple-checkbox-fields").change(function() {
-        console.log("check");
         var parentName = $(this).data('parent');
-        var parent = $("input[name='"+parentName+"']")
+        var parent = $("input[name='"+parentName+"']");
         $(parent).val("");
         $(".multiple-checkbox-fields[data-parent='"+parentName+"']").each(function(i, element){
             var ischecked= $(element).is(':checked');
@@ -411,7 +420,10 @@ function setListeners(){
                 if(before==""){
                     $(parent).val($(element).val());
                 }else{
-                    $(parent).val( before + "¬" + $(element).val() );
+                    if ($(element).data('grouped') == 1)
+                        $(parent).val( before + ", " + $(element).val() );
+                    else
+                        $(parent).val( before + "¬" + $(element).val() );
                 }
             }
         }).promise().done(function(){

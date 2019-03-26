@@ -71,11 +71,12 @@
                 <i class="fas fa-question-circle float-right " data-toggle="tooltip" data-placement="left" title="{{ifield.help_text}}"></i>
             {% endif %}
         </div>
+        <input type="hidden" name="{{ifield.formated_slug}}">
         {% for f in ifield.documentfieldoption_set.all %}
             <div class="col mb-2">
                 <div class="row">
                     <div class="col-sm-1">
-                        <input type="checkbox" id="{{ifield.name}}__{{f.pk}}" data-parent="{{ifield.formated_slug}}" name="{{f.formated_slug}}__{{f.pk}}" value="{{f.name}}" class="multiple-checkbox-fields">
+                        <input type="checkbox" id="{{ifield.name}}__{{f.pk}}" data-name="{{ifield.formated_slug}}__{{f.pk}}" data-parent="{{ifield.formated_slug}}" name="{{f.formated_slug}}__{{f.pk}}" value="{{f.name}}" class="multiple-checkbox-fields">
                     </div>
                     <div class="col-sm-11 pl-0">
                         <label for="{{ifield.name}}__{{f.pk}}">{{f.name}}</label>
