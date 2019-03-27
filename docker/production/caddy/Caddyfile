@@ -1,4 +1,4 @@
-www.{$DOMAIN_NAME} {
+www.{$DOMAIN_NAME} {$DOMAIN_NAME2} {
     redir https://{$DOMAIN_NAME}
 }
 
