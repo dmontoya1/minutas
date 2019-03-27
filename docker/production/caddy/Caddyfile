@@ -3,7 +3,7 @@ www.{$DOMAIN_NAME} {
 }
 
 tratum.com.co {
-    redir https:/{$DOMAIN_NAME}
+    redir https://{$DOMAIN_NAME}
 }
 
 {$DOMAIN_NAME} {
