@@ -2,7 +2,7 @@ www.{$DOMAIN_NAME} {
     redir https://{$DOMAIN_NAME}{uri}
 }
 
-{$DOMAIN_NAME2} {
+tratum.com.co {
     redir https:/{$DOMAIN_NAME}{uri}
 }
 
