@@ -1,5 +1,9 @@
-www.{$DOMAIN_NAME} {$DOMAIN_NAME2} {
-    redir https://{$DOMAIN_NAME}
+www.{$DOMAIN_NAME} {
+    redir https://{$DOMAIN_NAME}{uri}
+}
+
+{$DOMAIN_NAME2} {
+    redir https:/{$DOMAIN_NAME}{uri}
 }
 
 {$DOMAIN_NAME} {
