@@ -1,5 +1,10 @@
+import logging
+import mimetypes
+
 from django.contrib.auth import get_user_model
+from django.core.mail import EmailMessage
 from django.shortcuts import redirect
+from django.template import loader
 from django.urls import reverse
 
 from allauth.account.adapter import DefaultAccountAdapter, get_adapter
@@ -8,6 +13,11 @@ from allauth.socialaccount import app_settings
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 
 from .models import LogTerms
+
+from tratum.business_info.models import SiteConfig
+
+
+logger = logging.getLogger(__name__)
 
 
 class AccountAdapter(DefaultAccountAdapter):
@@ -55,6 +65,7 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
         else:
             get_adapter().populate_username(request, u)
         sociallogin.save(request)
+
         return redirect(reverse('webclient:profile'))
 
     def pre_social_login(self, request, sociallogin):
@@ -68,3 +79,30 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
             if not sociallogin.is_existing:
                 sociallogin.connect(request, user)
             return perform_login(request, user, app_settings.EMAIL_VERIFICATION)
+        else:
+            try:
+                ctx = dict(
+                    name=sociallogin.user.first_name
+                )
+                body = loader.get_template('webclient/email/welcome_email.html').render(ctx)
+                email = EmailMessage(
+                    "Bienvenido a Tratum",
+                    body,
+                    'no-reply@tratum.co',
+                    [sociallogin.user.email]
+                )
+                email.content_subtype = 'html'
+
+                site_config = SiteConfig.objects.last()
+
+                if site_config:
+                    content_type = mimetypes.guess_type(site_config.terms_file.name)[0]
+                    email.attach(site_config.terms_file.name, site_config.terms_file.read(), content_type)
+
+                    content_type2 = mimetypes.guess_type(site_config.data_policy_file.name)[0]
+                    email.attach(site_config.data_policy_file.name, site_config.data_policy_file.read(), content_type2)
+
+                email.send()
+
+            except Exception as e:
+                logger.exception(str(e))

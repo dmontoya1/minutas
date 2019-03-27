@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import logging
 import requests
+import mimetypes
 
 from django.conf import settings
 from django.contrib import messages
@@ -34,6 +36,9 @@ from tratum.document_manager.models import (
 from tratum.store.models import UserDocument
 
 from tratum.users.models import LogTerms
+
+
+logger = logging.getLogger(__name__)
 
 
 class HomePageView(TemplateView):
@@ -392,6 +397,34 @@ def activate(request, token, pk):
             messages.ERROR,
             "Has activado tu cuenta exitosamente."
         )
+
+        try:
+            ctx = dict(
+                name=user.first_name
+            )
+            body = loader.get_template('webclient/email/welcome_email.html').render(ctx)
+            email = EmailMessage(
+                "Bienvenido a Tratum",
+                body,
+                'no-reply@tratum.co',
+                [user.email]
+            )
+            email.content_subtype = 'html'
+
+            site_config = SiteConfig.objects.last()
+
+            if site_config:
+                content_type = mimetypes.guess_type(site_config.terms_file.name)[0]
+                email.attach(site_config.terms_file.name, site_config.terms_file.read(), content_type)
+
+                content_type2 = mimetypes.guess_type(site_config.data_policy_file.name)[0]
+                email.attach(site_config.data_policy_file.name, site_config.data_policy_file.read(), content_type2)
+
+            email.send()
+
+        except Exception as e:
+            logger.exception(str(e))
+
         return redirect('webclient:home')
     else:
         messages.add_message(
