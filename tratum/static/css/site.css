@@ -46,7 +46,7 @@ footer {
         footer .link-col a:not(:first-child) {
             margin-top: 1em;
         }
-    footer .social a {
+    footer .social .social-icon {
         font-size: 1.2em;
         margin-right: 1.2em;
         background-color: #002c55;

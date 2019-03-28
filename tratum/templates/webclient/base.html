@@ -214,20 +214,26 @@
                         </a>
                     </div>
                     <div class="col-sm-12 col-md-3 social text-right">
-                        <a href="{{bussiness_info.facebook_url|default_if_none:''}}" class="text-white" target="_blank">
+                        <a href="{{bussiness_info.facebook_url|default_if_none:''}}" class="text-white social-icon" target="_blank">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="{{bussiness_info.twitter_url|default_if_none:''}}" class="text-white" target="_blank">
+                        <a href="{{bussiness_info.twitter_url|default_if_none:''}}" class="text-white social-icon" target="_blank">
                             <i class="fab fa-twitter"></i>
                         </a>
-                        <a href="{{bussiness_info.instagram_url|default_if_none:''}}" class="text-white" target="_blank">
+                        <a href="{{bussiness_info.instagram_url|default_if_none:''}}" class="text-white social-icon" target="_blank">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="{{bussiness_info.youtube_url|default_if_none:''}}" class="text-white" target="_blank">
+                        <a href="{{bussiness_info.youtube_url|default_if_none:''}}" class="text-white social-icon" target="_blank">
                             <i class="fab fa-youtube"></i>
                         </a>
                         <div class="col mt-3">
                             <span class="white-text">{{bussiness_info.landing_contact}}</span>
+                        </div>
+
+                        <div class="col mt-3">
+                          <a href="http://www.sic.gov.co/" target="_blank" class="mt-2">
+                              <img src="{% static 'img/sic.png' %}" width="100%"/>
+                          </a>
                         </div>
 
                     </div>
@@ -254,6 +260,23 @@
 
 
         <!-- JS Files -->
+        {% block whatsapp %}
+        <!-- WhatsHelp.io widget -->
+        <script type="text/javascript">
+            (function () {
+                var options = {
+                    whatsapp: "3104650527", // WhatsApp number
+                    call_to_action: "", // Call to action
+                    position: "right", // Position may be 'right' or 'left'
+                };
+                var proto = document.location.protocol, host = "whatshelp.io", url = proto + "//static." + host;
+                var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = url + '/widget-send-button/js/init.js';
+                s.onload = function () { WhWidgetSendButton.init(host, proto, options); };
+                var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+            })();
+        </script>
+        <!-- /WhatsHelp.io widget -->
+        {% endblock %}
         {% providers_media_js %}
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123601727-1"></script>
         <script>
