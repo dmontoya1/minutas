@@ -84,6 +84,11 @@ class UserProfessionUpdate(generics.UpdateAPIView):
     serializer_class = CompanySerializer
     queryset = Company.objects.all()
 
+    def get_object(self):
+        user = get_user_model().objects.get(id=self.request.data.get("user_id"))
+        company, created = Company.objects.get_or_create(user=user)
+        return company
+
 
 class UserChangeEmail(generics.UpdateAPIView):
     """Api para actualizar el email de un usuario

@@ -247,6 +247,7 @@
         </div>
         <div class="modal-body">
             <form id="profession_form" class="form-horizontal" >
+              <input type="hidden" name="user_id" value="{{ request.user.id }}">
                 <div class="form-group">
                     <label for="first_name">Nombre</label>
                     <input type="text" class="form-control" id="user_profession" name="user_profession" placeholder="{{request.user.company.user_profession}}">
@@ -451,7 +452,7 @@
         $("#profession_form").on('submit', function(ev){
             ev.preventDefault()
             data = new FormData($(this)[0]);
-            axios.patch("{% url 'api:users:user_profession_update' pk=request.user.id %}", data)
+            axios.patch("{% url 'api:users:user_profession_update' %}", data)
                 .then(function(response){
                     toastr.success("Se ha actualizado la información exitosamente")
                     setTimeout(function(){
