@@ -451,7 +451,7 @@
         $("#profession_form").on('submit', function(ev){
             ev.preventDefault()
             data = new FormData($(this)[0]);
-            axios.patch("{% url 'api:users:user_profession_update' pk=request.user.company.id %}", data)
+            axios.patch("{% url 'api:users:user_profession_update' pk=request.user.id %}", data)
                 .then(function(response){
                     toastr.success("Se ha actualizado la información exitosamente")
                     setTimeout(function(){
