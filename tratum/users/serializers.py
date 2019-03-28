@@ -5,7 +5,7 @@ from django.contrib.auth.hashers import check_password
 
 from rest_framework import serializers
 
-from .models import User, Sector
+from .models import User, Sector, Company
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -15,6 +15,15 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'first_name', 'email',)
+
+
+class CompanySerializer(serializers.ModelSerializer):
+    """Serializador para la empresa relacionada al usuario
+    """
+
+    class Meta:
+        model = Company
+        fields = ('id', 'user_profession',)
 
 
 class ChangePasswordSerializer(serializers.ModelSerializer):

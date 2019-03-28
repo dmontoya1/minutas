@@ -8,7 +8,8 @@ from .views import (
     UserChangeEmail,
     UserChangePassword,
     SectorList,
-    CompanyUpdate
+    CompanyUpdate,
+    UserProfessionUpdate
 )
 
 app_name = 'users'
@@ -18,6 +19,7 @@ urlpatterns = [
     path('auth/google/', GoogleAuth.as_view(), name='gl_login'),
     path('auth/user/', UserDetail.as_view(), name='user-detail'),
     path('profile/<int:pk>/', UserNameUpdate.as_view(), name='user_name_update'),
+    path('profile/profession/<int:pk>', UserProfessionUpdate.as_view(), name='user_profession_update'),
     path('change-email/', UserChangeEmail.as_view(), name='user_change_email'),
     path('change-password/', UserChangePassword.as_view(), name='user_change_password'),
     path('sectors/', SectorList.as_view(), name='sector_list'),

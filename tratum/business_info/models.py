@@ -199,6 +199,13 @@ class SiteConfig(models.Model):
         null=True,
         blank=True
     )
+
+    youtube_url = models.URLField(
+        'URL Youtube (landing)',
+        null=True,
+        blank=True
+    )
+
     meta_tags = models.TextField(
 		'Tags de SEO y SEM',
         null=True,

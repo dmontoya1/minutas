@@ -52,6 +52,13 @@ class Company(models.Model):
         on_delete=models.CASCADE
     )
 
+    user_profession = models.CharField(
+        'Profesión del usuario',
+        max_length=100,
+        null=True,
+        blank=True
+    )
+
     class Meta:
         verbose_name = "Compañía"
 

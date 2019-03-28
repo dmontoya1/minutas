@@ -15,7 +15,7 @@ from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from tratum.api.helpers import get_api_user
 
-from .serializers import UserSerializer, ChangePasswordSerializer, SectorSerializer
+from .serializers import UserSerializer, ChangePasswordSerializer, SectorSerializer, CompanySerializer
 from .models import User, LogTerms, Sector, Company
 
 
@@ -75,6 +75,14 @@ class UserNameUpdate(generics.UpdateAPIView):
 
     serializer_class = UserSerializer
     queryset = get_user_model().objects.all()
+
+
+class UserProfessionUpdate(generics.UpdateAPIView):
+    """ Api para actualizar el nombre
+    """
+
+    serializer_class = CompanySerializer
+    queryset = Company.objects.all()
 
 
 class UserChangeEmail(generics.UpdateAPIView):
