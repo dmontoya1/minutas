@@ -53,17 +53,24 @@ class PoliciesView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         _type = self.kwargs.get('type', 'PP')
+        pdf_url = None
+        site_conf = SiteConfig.objects.last()
         if _type:
             if self.kwargs['type'] == 'privacy':
                 _type = 'PP'
+                if site_conf:
+                    pdf_url = site_conf.data_policy_file.url
             elif self.kwargs['type'] == 'terms':
                 _type = 'TCP'
+                if site_conf:
+                    pdf_url = site_conf.terms_file.url
             elif self.kwargs['type'] == 'cookies':
                 _type = 'CMP'
         police = get_object_or_404(Policy, policy_type=_type)
         context = super(PoliciesView, self).get_context_data(**kwargs)
         context['name'] = police.get_policy_type_display()
         context['content'] = police.content
+        context['pdf_url'] = pdf_url
         return context
 
 
