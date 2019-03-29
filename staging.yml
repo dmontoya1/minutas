@@ -18,8 +18,8 @@ services:
       - ./.envs/.production/.django
       - ./.envs/.production/.postgres
     volumes:
-      - /home/django/app/static/:/home/django/app/static/
-      - /home/django/app/media/:/app/media/
+      - /home/stage/app/static/:/home/django/app/static/
+      - /home/stage/app/media/:/app/media/
     command: /start
 
   postgres:
@@ -42,8 +42,8 @@ services:
       - django
     volumes:
       - production_caddy:/root/.caddy
-      - /home/django/app/static/:/var/www/static/
-      - /home/django/app/media/:/var/www/media/
+      - /home/stage/app/static/:/var/www/static/
+      - /home/stage/app/media/:/var/www/media/
     env_file:
       - ./.envs/.production/.caddy
     ports:
