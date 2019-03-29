@@ -2,14 +2,12 @@ from io import BytesIO
 import json
 
 from django.http import HttpResponse
-from django.shortcuts import render
-from django.template import Context, RequestContext
+
 from django.template.loader import get_template
 from django.views.generic.base import View
 
 from xhtml2pdf import pisa
 
-from document_manager.models import Document
 from .resources import (
     DocumentResource,
     CategoryResource,
@@ -37,15 +35,16 @@ class DocumentExport(View):
             context = {
                 'summary': json.loads(dataset.json)
             }
-            
+
             template = get_template(template_path)
             html = template.render(context)
 
             result = BytesIO()
-            pdf = pisa.pisaDocument(BytesIO(html.encode("utf-8")), dest=result) 
-            if not pdf.err: 
-                return HttpResponse(result.getvalue(), content_type='application/pdf') 
-            else: return HttpResponse('Errors') 
+            pdf = pisa.pisaDocument(BytesIO(html.encode("utf-8")), dest=result)
+            if not pdf.err:
+                return HttpResponse(result.getvalue(), content_type='application/pdf')
+            else:
+                return HttpResponse('Errors')
 
         response = HttpResponse(export_type, content_type=content_type)
         response['Content-Disposition'] = 'attachment; filename="report.{}"'.format(format)
@@ -71,15 +70,16 @@ class CategoryExport(View):
             context = {
                 'summary': json.loads(dataset.json)
             }
-            
+
             template = get_template(template_path)
             html = template.render(context)
 
             result = BytesIO()
-            pdf = pisa.pisaDocument(BytesIO(html.encode("utf-8")), dest=result) 
-            if not pdf.err: 
-                return HttpResponse(result.getvalue(), content_type='application/pdf') 
-            else: return HttpResponse('Errors') 
+            pdf = pisa.pisaDocument(BytesIO(html.encode("utf-8")), dest=result)
+            if not pdf.err:
+                return HttpResponse(result.getvalue(), content_type='application/pdf')
+            else:
+                return HttpResponse('Errors')
 
         response = HttpResponse(export_type, content_type=content_type)
         response['Content-Disposition'] = 'attachment; filename="report.{}"'.format(format)
@@ -105,15 +105,16 @@ class DocumentBundleExport(View):
             context = {
                 'summary': json.loads(dataset.json)
             }
-            
+
             template = get_template(template_path)
             html = template.render(context)
 
             result = BytesIO()
-            pdf = pisa.pisaDocument(BytesIO(html.encode("utf-8")), dest=result) 
-            if not pdf.err: 
-                return HttpResponse(result.getvalue(), content_type='application/pdf') 
-            else: return HttpResponse('Errors') 
+            pdf = pisa.pisaDocument(BytesIO(html.encode("utf-8")), dest=result)
+            if not pdf.err:
+                return HttpResponse(result.getvalue(), content_type='application/pdf')
+            else:
+                return HttpResponse('Errors')
 
         response = HttpResponse(export_type, content_type=content_type)
         response['Content-Disposition'] = 'attachment; filename="report.{}"'.format(format)
@@ -139,15 +140,16 @@ class InvoiceExport(View):
             context = {
                 'summary': json.loads(dataset.json)
             }
-            
+
             template = get_template(template_path)
             html = template.render(context)
 
             result = BytesIO()
-            pdf = pisa.pisaDocument(BytesIO(html.encode("utf-8")), dest=result) 
-            if not pdf.err: 
-                return HttpResponse(result.getvalue(), content_type='application/pdf') 
-            else: return HttpResponse('Errors') 
+            pdf = pisa.pisaDocument(BytesIO(html.encode("utf-8")), dest=result)
+            if not pdf.err:
+                return HttpResponse(result.getvalue(), content_type='application/pdf')
+            else:
+                return HttpResponse('Errors')
 
         response = HttpResponse(export_type, content_type=content_type)
         response['Content-Disposition'] = 'attachment; filename="report.{}"'.format(format)

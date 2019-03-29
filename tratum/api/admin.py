@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
 from django.contrib import admin
 from django.contrib import messages
+
 from .helpers import generate_key
 from .models import APIKey
+
 
 class ApiKeyAdmin(admin.ModelAdmin):
     """
@@ -32,4 +35,6 @@ class ApiKeyAdmin(admin.ModelAdmin):
             obj.key = generate_key()
             messages.add_message(request, messages.WARNING, ('The API Key for %s is %s.' % (obj.name, obj.key)))
         obj.save()
+
+
 admin.site.register(APIKey, ApiKeyAdmin)

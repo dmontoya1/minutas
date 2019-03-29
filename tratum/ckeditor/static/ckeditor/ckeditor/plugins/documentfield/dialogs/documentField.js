@@ -1,4 +1,4 @@
-axios.defaults.headers.common['Api-Key'] = 'd492009ed1b5395f64230e13fb71ce33cc855156'
+axios.defaults.headers.common['Api-Key'] = 'b7b15cc877c0c0c2d8e6aeee4e68296df24656a2'
 
 CKEDITOR.dialog.add( 'fieldDialog', function(editor){
     return {

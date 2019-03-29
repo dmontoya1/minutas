@@ -1,6 +1,10 @@
 from django.contrib import admin
+from django.utils.html import format_html
+
 from mptt.admin import MPTTModelAdmin
-from utils.admin import SoftDeletionModelAdminMixin
+
+from tratum.utils.admin import SoftDeletionModelAdminMixin
+
 from .models import (
     Document,
     Category,
@@ -11,13 +15,18 @@ from .models import (
 
 
 @admin.register(Document)
-class DocumentAdmin(SoftDeletionModelAdminMixin):
-    extra_list_display = (
+class DocumentAdmin(admin.ModelAdmin):
+    list_display = (
         'name',
         'category',
         'price',
-        'order'
-    ) 
+        'order',
+        'is_active'
+    )
+    list_filter = (
+        'name',
+        'category',
+    )
     list_select_related = (
         'category',
     )
@@ -27,7 +36,7 @@ class DocumentAdmin(SoftDeletionModelAdminMixin):
         js = (
             '//cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js',
             '//unpkg.com/axios/dist/axios.min.js',
-            '/static/js/admin/maskComponent.js'
+            # '/static/js/admin/maskComponent.js'
         )
 
 
@@ -43,11 +52,11 @@ class CategoryAdmin(SoftDeletionModelAdminMixin, MPTTModelAdmin):
 @admin.register(DocumentField)
 class DocumentFieldAdmin(admin.ModelAdmin):
     list_display = (
-        'name',
         'document',
-        'section',
+        'name',
+        'display_name',
         'field_type',
-        'slug'
+        'orden'
     )
     list_filter = (
         'document',
@@ -55,11 +64,10 @@ class DocumentFieldAdmin(admin.ModelAdmin):
         'field_type'
     )
     readonly_fields = ('slug',)
-    
-    def get_form(self, request, obj=None, **kwargs):        
+
+    def get_form(self, request, obj=None, **kwargs):
         request.current_object = obj
         form = super(DocumentFieldAdmin, self).get_form(request, obj, **kwargs)
-        print(request.GET)
         if request.GET.get('document_id', None):
             form.base_fields['document'].queryset = Document.objects.filter(pk=request.GET['document_id'])
         if request.GET.get('section_id', None):
@@ -78,10 +86,22 @@ class DocumentFieldAdmin(admin.ModelAdmin):
                 kwargs["queryset"] = DocumentField.objects.filter(**filters)
         return super(DocumentFieldAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
+    def orden(self, obj):
+        return format_html(
+            "<form method='POST' action='/update_order/'> \
+                <input type='number' value='{}' name='order' class='order_number'> \
+                <input type='hidden' value='{}' name='field_pk'> \
+                <input type='button' value='Cambiar' class='changer_submit'> \
+            </form>".format(obj.order, obj.pk)
+        )
+
     class Media:
         js = (
             '/static/js/admin/documentfields.js',
         )
+        css = {
+            'all': ('/static/css/documentfields.css',)
+        }
 
 
 @admin.register(DocumentSection)
@@ -103,5 +123,28 @@ class DocumentSectionAdmin(admin.ModelAdmin):
 class DocumentFieldOptionAdmin(admin.ModelAdmin):
     list_display = (
         'name',
-        'field'
+        'field',
+        'orden',
     )
+
+    list_filter = (
+        'document',
+        'field',
+    )
+
+    def orden(self, obj):
+        return format_html(
+            "<form method='POST' action='/update-option-order/'> \
+                <input type='number' value='{}' name='order' class='order_number'> \
+                <input type='hidden' value='{}' name='field_pk'> \
+                <input type='button' value='Cambiar' class='changer_option_submit'> \
+            </form>".format(obj.order, obj.pk)
+        )
+
+    class Media:
+        js = (
+            '/static/js/admin/documentfields.js',
+        )
+        css = {
+            'all': ('/static/css/documentfields.css',)
+        }

@@ -1,13 +1,8 @@
 import json
 import os
-import platform 
-import subprocess
-import uuid
-
-
-import pdfkit
 import pypandoc
-
+import pdfkit
+import logging
 
 from io import BytesIO
 
@@ -16,26 +11,25 @@ from django.conf import settings
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.core.mail import EmailMultiAlternatives
 from django.core.files.base import ContentFile
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.http import HttpResponse, FileResponse, JsonResponse
+from django.core.paginator import Paginator
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.template import Template, Context, loader
-from django.template.loader import render_to_string, get_template
+from django.utils.decorators import method_decorator
 from django.views import View
+from django.views.decorators.csrf import csrf_exempt
 
-from docx import Document as DocX
 from rest_framework import generics
-from selenium import webdriver
-from xhtml2pdf import pisa as pisa
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
-from store.models import DocumentBundle
+from tratum.store.models import UserDocument, DocumentBundle
 
 from .models import (
     Document,
     DocumentField,
     DocumentSection,
     DocumentFieldOption,
-    Document,
     Category
 )
 from .serializers import (
@@ -44,12 +38,16 @@ from .serializers import (
     DocumentSerializer,
     CategorySerializer
 )
-from store.models import UserDocument
 from .utils import get_static_path
 
 
+logger = logging.getLogger(__name__)
+
+
 class DocumentFieldList(generics.ListAPIView):
+    authentication_classes = (SessionAuthentication, TokenAuthentication)
     serializer_class = DocumentFieldSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         q = DocumentField.objects.all()
@@ -66,7 +64,7 @@ class DocumentFieldDetail(generics.RetrieveAPIView):
         ins = DocumentField()
         slug = ins.formated_to_raw_slug(self.kwargs['slug'])
         return DocumentField.objects.get(slug=slug)
-        
+
 
 class DocumentSectionList(generics.ListAPIView):
     serializer_class = DocumentSectionSerializer
@@ -80,9 +78,9 @@ class DocumentSectionList(generics.ListAPIView):
 
 class DocumentSectionFieldsList(DocumentFieldList):
 
-    def get_queryset(self): 
+    def get_queryset(self):
         return DocumentField.objects.filter(section__slug=self.kwargs['slug'])
-        
+
 
 class DocumentSectionDetail(generics.RetrieveAPIView):
     serializer_class = DocumentSectionSerializer
@@ -104,9 +102,13 @@ class ProcessDocumentView(View):
 class SaveAnswersView(View):
 
     def post(self, request, *args, **kwargs):
-        content = request.POST
-        user_document = UserDocument.objects.get(identifier=request.POST['identifier'])
-        user_document.answers = request.POST
+        user_document = UserDocument.objects.get(
+            identifier=request.POST['identifier'].strip(),
+            user=request.user
+        )
+        answers = request.POST.copy()
+        answers.pop('identifier')
+        user_document.answers = answers
         user_document.save()
         return HttpResponse(status=200)
 
@@ -118,10 +120,11 @@ class UserDocumentContentView(View):
         body = json.loads(body_unicode)
         content = {}
         obj = UserDocument.objects.get(identifier=body['identifier'])
-        document_content = Template(obj.document.content)
+        doc_content = "{% load fieldformatter %}{% autoescape off %}" + obj.document.content + "{% endautoescape %}"
+        document_content = Template(doc_content)
         document_content = document_content.render(Context(obj.answers))
         content['document_content'] = document_content
-        return JsonResponse(content) 
+        return JsonResponse(content)
 
 
 class LinkedFieldView(View):
@@ -132,13 +135,16 @@ class LinkedFieldView(View):
     serializer_class = DocumentFieldSerializer
 
     def get(self, request, *args, **kwargs):
+        number = request.GET.get('number', None)
         q = DocumentFieldOption.objects.get(pk=kwargs['pk'])
-        fields = q.linked_fields.all()
+        fields = q.linked_fields.all().order_by('-order')
         output = []
+        counter = len(fields)
         for f in fields:
             template = loader.get_template('document_form/fields.html')
-            render = template.render({'field': f})
+            render = template.render({'field': f, 'counter': counter, 'number': number})
             output.append(render)
+            counter -= 1
         content = {}
         content['fields'] = output
         return JsonResponse(content)
@@ -149,101 +155,76 @@ class FinishDocumentView(View):
     def post(self, request, *args, **kwargs):
         body = json.loads(request.body.decode('utf-8'))
         user_document = UserDocument.objects.get(identifier=body['identifier'])
-        self.generate_html(request, user_document, body['content'])
-        self.generate_pdf(request, user_document)
-        self.generate_doc(request, user_document)
-        self.update_status(user_document)
-        self.send_email(request, user_document) 
-        return HttpResponse(status=200)
-    
+        try:
+            self.generate_html(request, user_document, body['content'])
+            self.generate_doc(request, user_document)
+            self.generate_pdf(request, user_document)
+            self.update_status(user_document)
+            self.send_email(request, user_document)
+            return HttpResponse(status=200)
+        except Exception as e:
+            logger.exception(str(e))
+            return HttpResponse(status=500)
+
     def update_status(self, user_document):
         user_document.status = UserDocument.FINISHED
         user_document.save()
-    
-    def generate_pdf(self, request, user_document):
-        options = {
-            'page-size': 'Letter',
-            'margin-top': '1.20in',
-            'margin-right': '1.20in',
-            'margin-bottom': '1.20in',
-            'margin-left': '1.00in',
-            'encoding': "UTF-8",
-            'footer-center': '[page]',
-            'footer-spacing': '14',
-            'footer-font-size': '9',
-            'header-right': f'{user_document.document.name}',
-            'header-spacing': '15',
-            'header-font-size': '7',
-            'javascript-delay': 300,
-            'no-outline': None
-        } 
-        output_filename = '{}.pdf'.format(user_document.identifier)
-        html_file = user_document.html_file.read().decode('utf-8')
-        file = pdfkit.PDFKit(html_file, "string", options=options).to_pdf()
-        file = BytesIO(file)
-        user_document.pdf_file.save(output_filename, file)
-        file.close()
-    
-    def generate_doc(self, request, user_document):
-        html_file = user_document.html_file.path
-        name = os.path.basename(user_document.html_file.name.split('.')[0])
-        output_filename = f'{name}.odt'
-        media_root = settings.MEDIA_ROOT
-        
-        if platform.system() == 'Linux':
-            subprocess.call(
-                f'soffice --headless --convert-to odt {html_file} --outdir {media_root}/docxs/',
-                shell=True
-            )
-        elif platform.system() == 'Darwin':
-            subprocess.call(
-                f'cd /Applications/LibreOffice.app/Contents/MacOS && \
-                ./soffice --headless --convert-to odt {html_file} --outdir {media_root}/docxs/',
-                shell=True
-            )
 
-        user_document.word_file = f'docxs/{output_filename}'
-        user_document.save()
+    def generate_pdf(self, request, user_document):
+        try:
+            options = {
+                'page-size': 'Letter',
+                'margin-top': '1.20in',
+                'margin-right': '1.20in',
+                'margin-bottom': '1.20in',
+                'margin-left': '1.00in',
+                'encoding': "UTF-8",
+                'footer-center': '[page]',
+                'footer-spacing': '14',
+                'footer-font-size': '9',
+                'header-right': "{}".format(user_document.document.name),
+                'header-spacing': '15',
+                'header-font-size': '7',
+                'javascript-delay': 300,
+                'no-outline': None
+            }
+            output_filename = "{}.pdf".format(user_document.identifier)
+            html_file = user_document.html_file.read().decode('utf-8')
+            file = pdfkit.PDFKit(html_file, "string", options=options).to_pdf()
+            file = BytesIO(file)
+            user_document.pdf_file.save(output_filename, file)
+            file.close()
+        except Exception as e:
+            raise e
+
+    def generate_doc(self, request, user_document):
+        try:
+            html_file = user_document.html_file.path
+            name = os.path.basename(user_document.html_file.name.split('.')[0])
+            output_filename = "{}.docx".format(name)
+            media_root = settings.MEDIA_ROOT
+            outdir = '{0}/docxs/{1}'.format(media_root, output_filename)
+            pypandoc.convert(
+                source=html_file,
+                format='html',
+                to='docx',
+                outputfile=outdir,
+                extra_args=["-M2GB", "+RTS", "-K64m", "-RTS"]
+            )
+            user_document.word_file = "docxs/{0}".format(output_filename)
+            user_document.save()
+        except Exception as e:
+            raise e
 
     def generate_html(self, request, user_document, TEMPORARY_HTML_FILE):
+        try:
+            file = ContentFile(TEMPORARY_HTML_FILE.encode('ascii', 'xmlcharrefreplace'))
+            user_document.html_file.save('{}.html'.format(user_document.identifier), file)
+        except Exception as e:
+            raise e
 
-        def get_scripted_html(request, html_string):
-            css_tag = lambda path: f'<link rel="stylesheet" type="text/css" href="{path}" />'
-            script_tag = lambda path: f'<script src="{path}"></script>'
-            django_temptag_tag = lambda path: '{{% load {path} %}}'.format(path=path)
-            iterator = lambda tag, paths: [tag(path) for path in paths]
-            css_paths = (
-                get_static_path(
-                    request.scheme,
-                    request.get_host(),
-                    static("css/pdf_formatter.css")
-                ),
-            )
-            script_paths = (
-                get_static_path(
-                    request.scheme,
-                    request.get_host(),
-                    static("js/pdfRender.js")
-                ),
-            )
-            django_temptag_paths = (
-                'fieldformatter',
-            )
-            scripts = '\n'.join(iterator(script_tag, script_paths))
-            css = '\n'.join(iterator(css_tag, css_paths))
-            django_temptags = '\n'.join(iterator(django_temptag_tag, django_temptag_paths))
-            escape = '\n'
-            return f'{django_temptags} {escape} {css} {html_string} {escape} {scripts}'
-
-        """ content = get_scripted_html(request, user_document.document.content)
-        template = Template(content)
-        template = template.render(Context(user_document.answers)).encode('ascii', 'xmlcharrefreplace') """
-
-        file = ContentFile(TEMPORARY_HTML_FILE.encode('ascii', 'xmlcharrefreplace'))
-        user_document.html_file.save(f'{user_document.identifier}.html', file)       
-    
     def send_email(self, request, user_document):
-        subject = f'Tu {user_document.document.name} de Tratum'
+        subject = 'Tu {} de Tratum'.format(user_document.document.name)
         context = {
             'title': subject,
             'username': user_document.user.get_full_name(),
@@ -260,8 +241,9 @@ class FinishDocumentView(View):
         message = EmailMultiAlternatives(**kwargs)
         message.content_subtype = 'html'
         message.attach_file(user_document.pdf_file.path)
+        message.attach_file(user_document.word_file.path)
         message.send()
-        
+
 
 class DocumentList(generics.ListAPIView):
     """Api para obtener la lista de documentos de una categoría
@@ -285,7 +267,7 @@ class MainDocumentList(generics.ListAPIView):
         q = self.request.GET.get('term', None)
         if q:
             return Document.objects.filter(name__contains=q)
-        return Document.objects.all()
+        return Document.objects.filter(is_active=True)
 
 
 class CategoryRootList(generics.ListAPIView):
@@ -317,34 +299,38 @@ def category(request, path, instance):
     package_list = None
     q = request.GET.get('q', None)
 
-    if request.GET.get('free') is not None or request.GET.get('pay') is not None or request.GET.get('package') is not None:
+    if request.GET.get('free') is not None or \
+       request.GET.get('pay') is not None or \
+       request.GET.get('package') is not None:
         if request.GET.get('free'):
             if instance:
                 categories = instance.get_descendants(include_self=True)
-                document_list = Document.objects.filter(Q(price=0) | Q(price=None), category__in=categories,).order_by('order')
+                document_list = Document.objects.filter(Q(price=0) | Q(price=None, is_active=True),
+                                                        category__in=categories,).order_by('order')
             else:
-                document_list = Document.objects.filter(Q(price=0) | Q(price=None)).order_by('order')
+                document_list = Document.objects.filter(Q(price=0) | Q(price=None), is_active=True).order_by('order')
         elif request.GET.get('pay'):
             if instance:
                 categories = instance.get_descendants(include_self=True)
-                document_list = Document.objects.filter(category__in=categories, price__gt=0).order_by('order')
+                document_list = Document.objects.filter(category__in=categories,
+                                                        price__gt=0, is_active=True).order_by('order')
             else:
-                document_list = Document.objects.filter(price__gt=0).order_by('order')
+                document_list = Document.objects.filter(price__gt=0, is_active=True).order_by('order')
         else:
             package_list = DocumentBundle.objects.all().order_by('order')
 
     else:
         if instance:
             categories = instance.get_descendants(include_self=True)
-            document_list = Document.objects.filter(category__in=categories).order_by('order')
+            document_list = Document.objects.filter(category__in=categories, is_active=True).order_by('order')
         else:
             if q:
                 document_list = Document.objects.filter(
-                    Q(name__icontains=q) | Q(category__name__icontains=q)
+                    Q(name__icontains=q) | Q(category__name__icontains=q),
+                    is_active=True
                 ).order_by('order')
             else:
-                document_list = Document.objects.all().order_by('order')
-
+                document_list = Document.objects.filter(is_active=True).order_by('order')
 
     if document_list:
         paginator = Paginator(document_list, 8)
@@ -354,7 +340,7 @@ def category(request, path, instance):
         paginator = Paginator(package_list, 8)
         page = request.GET.get('page')
         packages = paginator.get_page(page)
-    
+
     return render(
         request,
         'webclient/documents.html',
@@ -365,3 +351,31 @@ def category(request, path, instance):
             'packages': packages
         }
     )
+
+
+class ChangeAdminOrder(View):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ChangeAdminOrder, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        field = request.POST['pk']
+        order = request.POST['order']
+        field = DocumentField.objects.get(pk=field)
+        field.order = order
+        field.save()
+        return HttpResponse(status=200)
+
+
+class ChangeAdminOptionOrder(View):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(ChangeAdminOptionOrder, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        field = request.POST['pk']
+        order = request.POST['order']
+        field = DocumentFieldOption.objects.get(pk=field)
+        field.order = order
+        field.save()
+        return HttpResponse(status=200)

@@ -1,0 +1,77 @@
+{% load static %}
+{% load socialaccount %}
+<!-- Modal login -->
+<div class="modal fade" id="modal-login" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row justify-content-around">
+                        <div class="col-10">
+                            <h4 class="modal-title" id="modal-label">Iniciar sesión</h4>
+                        </div>
+                        <div class="col-1">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-bottom: 30px;">
+                        <div class="col-md-6 clear-fix">
+                            <a href="{% provider_login_url 'facebook' method='oauth2' next='/' %}" class="btn-fb float-left">
+                                <i class="fab fa-facebook-square"></i>
+                                Continuar con Facebook
+                            </a>
+                        </div>
+                        <div class="col-md-6 clear-fix">
+                            <a href="{% provider_login_url 'google' method='oauth2' next='/' %}" class="btn-gl float-right">
+                                <i class="fab fa-google"></i>
+                                Continuar con Google
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col">
+                            <form method="POST" id="login" class="form-horizontal login" >
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <label for="id_login" class="control-label">Correo electrónico*</label>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <input class="form-control" type="email" name="email" data-validation="email" id="id_login"
+                                        data-validation-error-msg="Debes ingresar un email válido" />
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <label for="id_password" class="control-label">Contraseña*</label>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <input type="password" class="form-control" name="password" required id="id_password"/>
+                                    </div>
+                                </div>
+
+                                <input type="hidden" id="email_login_next" name="email_login_next" value="/">
+
+                                <p class="text-right">
+                                    <a href="#modal-forget" class="forgot-pass" data-toggle="modal" data-dismiss="modal">¿Olvidaste tu contraseña?'</a>
+                                </p>
+
+                                <div class="text-center">
+                                    <input type="submit" id="reg_submit" value="Iniciar sesión"/>
+                                </div>
+
+                                <p class="mt-20 text-center" style="margin-top: 30px;">
+                                    <a href="#modal-signup" class="forgot-pass" data-toggle="modal" data-dismiss="modal">Si no tienes cuenta Regístrate</a>
+                                </p>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

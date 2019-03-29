@@ -1,8 +1,5 @@
-from django.contrib.auth.models import User
-from django.db import models
-
-from document_manager.models import Document, Category
-from store.models import DocumentBundle, Invoice
+from tratum.document_manager.models import Document, Category
+from tratum.store.models import DocumentBundle, Invoice
 
 
 class DocumentSaleSummary(Document):

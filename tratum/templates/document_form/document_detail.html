@@ -1,0 +1,137 @@
+{% load static %}
+{% load embed_video_tags %}
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="{% static 'img/logo/favicon.png' %}">
+    <title>Tratum</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+    crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+    integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+    crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/themes/default.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/themes/default.date.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400" rel="stylesheet">
+    <link href="{% static 'css/form.css' %}" rel="stylesheet">
+  </head>
+
+  <body>
+    <div
+      id="doc-info"
+      data-uuid="{{identifier}}"
+      data-apikey="{{Api_Key}}"
+      data-csrftoken="{{csrf_token}}"></div>
+
+    <div class="row main">
+      <div class="col-lg-5 form-col" style="z-index: 9999999;">
+          <div class="upform">
+            <a href="{% url 'webclient:user-documents' %}" class="col">
+              <img class="logo" src="{% static 'img/logo/tratum.png' %}" href="/">
+            </a>
+            <form method="POST" action="{% url 'document_manager:process' %}" id="document-form">
+              <input type="hidden" name="identifier" value="{{identifier}}" />
+              <div class="upform-header"></div>
+              <div class="upform-main">
+                {% for field in object.get_fields %}
+                  {% include 'document_form/fields.html' %}
+                  {% if field.field_type == field.LIST %}
+                    <div class="list-fields">
+                      {% for field in field.field_group.all %}
+                        {% include 'document_form/fields.html' %}
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                {% endfor %}
+
+                <div class="sections col mt-5">
+                  <h3 class="mb-3">Secciones opcionales disponibles: </h3>
+                  {% for s in object.get_sections %}
+                    <div class="col">
+                      <input type="checkbox" name="{{s.formated_slug}}" class="section-item mb-3"> {{s.display_name}}</input>
+                      {% if s.help_text %}
+                        <i class="fas fa-question-circle float-right" data-toggle="tooltip" data-placement="right" title="{{s.help_text}}"></i>
+                      {% endif %}
+                    </div>
+                    <div class="section-fields" data-section="{{s.formated_slug}}">
+                      {% for field in s.get_fields %}
+                        {% include 'document_form/fields.html' %}
+                      {% endfor %}
+                    </div>
+
+                  {% empty %}
+                    <p>Este documento no contiene secciones opcionales</p>
+                  {% endfor %}
+                </div>
+              </div>
+
+            </form>
+          </div>
+          <div class="upform-footer" id="mobile-generate-doc">
+             <a href="{% url 'webclient:user-document-process' identifier %}" class="btn btn-primary btn-lg preview">Generar documento</a>
+          </div>
+      </div>
+      <div class="col-lg-7 p-0">
+        <div class="info-col doc-preview-col">
+              <div class="document-preview" id="content-preview" data-name="{{object.document.name}}">
+              </div>
+              <div class="upform-footer">
+                <a href="{% url 'webclient:user-document-process' identifier %}" class="btn btn-primary btn-lg preview">Generar documento</a>
+              </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Video explicativo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModal" aria-hidden="true">
+        <div class="modal-dialog h-100 d-flex flex-column justify-content-center my-0" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                  <img src="{% static 'img/loadingCard.gif' %}" width="40px" class="text-center"/>
+                  <span class="float-right loading">Procesando formulario...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/legacy.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/picker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/picker.date.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/picker.time.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.6/compressed/translations/es_ES.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-price-format/2.2.0/jquery.priceformat.min.js"></script>
+    <script type="application/javascript" src="{% static 'js/jquery.textAdjust.min.js' %}"></script>
+    <script src="{% static 'js/form.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/pdfRender.js' %}"></script>
+  </body>
+</html>

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.db.models import Count
+
 from .models import (
     DocumentSaleSummary,
     UserDocumentsSummary,
@@ -27,7 +27,7 @@ class DocumentSaleSummaryAdmin(admin.ModelAdmin):
             return response
 
         response.context_data['summary'] = qs
-        
+
         return response
 
 
@@ -50,7 +50,7 @@ class CategorySaleSummaryAdmin(admin.ModelAdmin):
             return response
 
         response.context_data['summary'] = qs
-        
+
         return response
 
 
@@ -73,7 +73,7 @@ class UserDocumentsSummaryAdmin(admin.ModelAdmin):
             return response
 
         response.context_data['summary'] = qs
-        
+
         return response
 
 
@@ -96,8 +96,5 @@ class BundleSaleSummaryAdmin(admin.ModelAdmin):
             return response
 
         response.context_data['summary'] = qs
-        
+
         return response
-    
-
-
