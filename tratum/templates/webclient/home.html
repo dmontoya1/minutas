@@ -191,8 +191,7 @@
                   </div>
 
                   {% if user.is_authenticated %}
-                    <form method="POST" action="{% url 'store:checkout' %}">
-                      {% csrf_token %}
+                    <form method="GET" action="{% url 'store:checkout' %}">
                       <input type="hidden" name="pack_id" value="{{i.id}}">
                       <button type="submit" class="btn btn-primary">Comprar</button>
                     </form>
@@ -206,7 +205,7 @@
       </div>
     </div>
   </div>
-  
+
   <div class="row contact-form">
     <div class="col text-center">
       <h5 class="text-white">Contáctanos</h5>

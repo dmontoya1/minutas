@@ -140,7 +140,6 @@ class UserDocument(models.Model):
 
     def is_expired(self):
         diff = abs((timezone.now() - self.created_at).days)
-        print(diff)
         if diff > 10:
             return True
         return False

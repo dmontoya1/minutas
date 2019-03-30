@@ -199,7 +199,7 @@
                                                     {%if pack.price is None or pack.price == 0%}
                                                         <div class="col-6">
                                                             {% if user.is_authenticated %}
-                                                                <a href="{% url 'store:create-user-document' %}?document_id={{doc.pk}}" class="btn btn-buy float-left">Comprar</a>
+                                                                <a href="{% url 'store:create_user_bundle' %}?pack_id={{pack.pk}}" class="btn btn-buy float-left">Comprar</a>
                                                             {% else %}
                                                                 <a data-toggle="modal" data-target="#modal-login" class="btn btn-buy float-left">Comprar</a>
                                                             {% endif %}
@@ -211,8 +211,7 @@
                                                     {%else%}
                                                         <div class="col-6">
                                                             {% if user.is_authenticated %}
-                                                                <form method="POST" action="{% url 'store:checkout' %}">
-                                                                    {% csrf_token %}
+                                                                <form method="GET" action="{% url 'store:checkout' %}">
                                                                     <input type="hidden" name="pack_id" value="{{pack.id}}">
                                                                     <button type="submit" class="btn btn-buy float-left">Comprar</button>
                                                                 </form>

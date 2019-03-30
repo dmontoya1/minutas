@@ -16,6 +16,11 @@ urlpatterns = [
         name='create-user-document'
     ),
     path(
+        'create-user-bundle/',
+        views.CreateUserBundle.as_view(),
+        name='create_user_bundle'
+    ),
+    path(
         'user-document/<slug:identifier>/',
         views.UserDocumentDetailView.as_view(),
         name='user-document'

@@ -49,6 +49,25 @@ class CreateUserDocument(View):
         return HttpResponseRedirect(reverse('webclient:user-document', kwargs={'identifier': document.identifier}))
 
 
+class CreateUserBundle(View):
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('webclient:home'))
+
+        package = DocumentBundle.objects.get(pk=request.GET['pack_id'])
+        documents = package.documents.all()
+        for doc in documents:
+            d = UserDocument(
+                user=request.user,
+                document=doc,
+                status=UserDocument.CREATED,
+            )
+            d.save()
+
+        return HttpResponseRedirect(reverse('webclient:user-documents'))
+
+
 class UserDocumentDetailView(generics.RetrieveAPIView):
     lookup_field = 'identifier'
     queryset = UserDocument.objects.all()
