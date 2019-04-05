@@ -1,4 +1,4 @@
-from tratum.business_info.models import SiteConfig, SliderItem
+from tratum.business_info.models import SiteConfig, SliderItem, MainCategory
 from tratum.store.models import (
     DocumentBundle
 )
@@ -13,4 +13,5 @@ def bussiness_info_processor(request):
     context['context_bundles'] = DocumentBundle.objects.alive().filter(show_on_landing=True)
     context['context_slides'] = SliderItem.objects.all()
     context['context_bundle_count'] = DocumentBundle.objects.alive().count()
+    context['main_categories'] = MainCategory.objects.all()
     return context

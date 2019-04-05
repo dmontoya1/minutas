@@ -8,7 +8,8 @@ from .models import (
     SiteConfig,
     SliderItem,
     GlossaryCategory,
-    GlossaryItem
+    GlossaryItem,
+    MainCategory
 )
 
 
@@ -64,3 +65,8 @@ class SliderItemAdmin(admin.ModelAdmin):
             return False
         else:
             return True
+
+
+@admin.register(MainCategory)
+class MainCategoryAdmin(admin.ModelAdmin):
+    list_display = ('title',)

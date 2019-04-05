@@ -277,3 +277,33 @@ class SliderItem(models.Model):
     def __str__(self):
         return 'Slide '
 
+
+class MainCategory(models.Model):
+    title = models.CharField(
+        'Título de categoría',
+        max_length=100,
+    )
+    image = models.ImageField(
+        'Imagen',
+        upload_to='main_categories',
+        help_text='La resolución es 1920 x 1080p'
+    )
+    description = models.TextField(
+        'Descripción',
+        null=True,
+        blank=True
+    )
+    button_title = models.CharField(
+        'Título de botón (para home)',
+        max_length=100
+    )
+    button_url = models.URLField(
+        'URL para botón de categoría'
+    )
+
+    class Meta:
+        verbose_name = 'Categoría principal'
+        verbose_name_plural = 'Categorías principales'
+
+    def __str__(self):
+        return 'Slide '

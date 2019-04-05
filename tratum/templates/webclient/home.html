@@ -62,55 +62,35 @@
     </div>
   </div>
 
-  <div class="row categories">
-    <div class="col-md-6 order-1 category-parallax" style="background-image: url('/static/img/creacion_de_empresa_1.jpeg');">
-    </div>
-    <div class="col-md-6 order-2 category-description">
-      <div class="container">
-          <h2>Creación de empresa</h2>
-          <p>¡Es hora de crear tus sueños! En Tratum te ayudamos con la creación de los estatutos a la medida para la formalización de tu empresa. En esta sección encontrarás todos los documentos necesarios para el registro de la sociedad ante la Cámara de Comercio de tu ciudad.</p>
-          <a class="action-button__primary" href="/documents/creacion-de-empresa-23/">Ver Documentos</a>
+  {% for category in main_categories %}
+    {% if forloop.counter|divisibleby:2 %}
+    <div class="row categories">
+      <div class="col-md-6 order-2 order-md-1 category-description left">
+          <div class="container">
+
+              <h2>{{ category.title }}</h2>
+              <p>{{ category.description }}</p>
+              <a class="action-button__primary" href="{{ category.button_url }}">{{ category.button_title }}</a>
+          </div>
+        </div>
+      <div class="col-md-6 order-1 order-md-2 category-parallax" style="background-image: url('{{ category.image.url }}');">
       </div>
     </div>
-  </div>
-
-  <div class="row categories">
-    <div class="col-md-6 order-2 order-md-1 category-description left">
+    {% else %}
+    <div class="row categories">
+      <div class="col-md-6 order-1 category-parallax" style="background-image: url('{{ category.image.url }}');">
+      </div>
+      <div class="col-md-6 order-2 category-description">
         <div class="container">
-
-            <h2>Gestión contractual</h2>
-            <p> ¡Es hora de buscar relaciones a largo plazo! En Tratum te ayudamos con la creación de contratos a la medida para brindarte seguridad en tus relaciones con proveedores, clientes y empleados. En esta sección encontrarás contratos laborales, de prestación de servicios y comerciales que te ayudarán a disminuir el riesgo de operación de tu empresa.</p>
-            <a class="action-button__primary" href="/documents/gestion-contractual-22/">Ver Documentos</a>
+            <h2>{{ category.title }}</h2>
+            <p>{{ category.description }}</p>
+            <a class="action-button__primary" href="{{ category.button_url }}">{{ category.button_title }}</a>
         </div>
       </div>
-    <div class="col-md-6 order-1 order-md-2 category-parallax" style="background-image: url('/static/img/gestion_contractual.jpeg');">
     </div>
-  </div>
+    {% endif %}
 
-  <div class="row categories">
-    <div class="col-md-6 order-1 category-parallax" style="background-image: url('/static/img/gestion_empresarial.jpeg');">
-    </div>
-    <div class="col-md-6 order-2 category-description">
-      <div class="container">
-          <h2>Gestión empresarial</h2>
-          <p>¡Es hora de organizar la casa! En Tratum te ayudamos con la creación de diferentes documentos legales exigidos por la ley colombiana para que una empresa opere de manera correcta. En esta sección encontrarás todos los documentos relacionados con libros oficiales, actas de Asamblea General y Junta Directiva, política de protección de datos personales, entre otros.</p>
-          <a class="action-button__primary" href="/documents/gestion-empresarial/">Ver Documentos</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="row categories">
-    <div class="col-md-6 order-2 order-md-1 category-description left">
-        <div class="container">
-            <h2>Negocios y asuntos personales</h2>
-            <p>¡Es hora de cuidar tus asuntos personales! En Tratum te ayudamos con la creación de documentos legales importantes para tu vida diaria y personal.
-              En esta sección encontrarás contratos de arrendamiento de vivienda, derechos de petición, cartas, entre otros.</p>
-            <a class="action-button__primary" href="/documents/negocios-y-asuntos-personales/">Ver Documentos</a>
-        </div>
-      </div>
-    <div class="col-md-6 order-1 order-md-2 category-parallax" style="background-image: url('/static/img/negocios_y_asuntos_personales.jpeg');">
-    </div>
-  </div>
+  {% endfor %}
 
   <div class="row categories how-to">
     <div class="col-md-8 category-description left">
