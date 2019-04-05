@@ -191,10 +191,18 @@
                   </div>
 
                   {% if user.is_authenticated %}
-                    <form method="GET" action="{% url 'store:checkout' %}">
-                      <input type="hidden" name="pack_id" value="{{i.id}}">
-                      <button type="submit" class="btn btn-primary">Comprar</button>
-                    </form>
+                     {%if i.price is None or i.price == 0%}
+                        <form method="GET" action="{% url 'store:create_user_bundle' %}">
+                        <input type="hidden" name="pack_id" value="{{i.id}}">
+                        <button type="submit" class="btn btn-primary">Comprar</button>
+                      </form>
+                     {% else %}
+                       <form method="GET" action="{% url 'store:checkout' %}">
+                        <input type="hidden" name="pack_id" value="{{i.id}}">
+                        <button type="submit" class="btn btn-primary">Comprar</button>
+                      </form>
+                     {% endif %}
+
                   {% else %}
                     <button data-toggle="modal" data-target="#modal-login" class="btn btn-primary">Comprar</button>
                   {% endif %}
