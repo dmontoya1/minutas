@@ -142,6 +142,7 @@
   </div>
 
 
+  {% if context_bundles %}
   <div class="row bundles">
     <div class="container">
       <div class="col text-center">
@@ -190,9 +191,14 @@
             </div>
           {% endfor %}
         </div>
+        <div class="row">
+          <a class="action-button__primary" href="/documents/?package=true">Ver todos</a>
+        </div>
       </div>
     </div>
   </div>
+  {% endif %}
+
 
   <div class="row contact-form">
     <div class="col text-center">
