@@ -266,7 +266,7 @@ class MainDocumentList(generics.ListAPIView):
     def get_queryset(self):
         q = self.request.GET.get('term', None)
         if q:
-            return Document.objects.filter(name__contains=q)
+            return Document.objects.filter(name__icontains=q)
         return Document.objects.filter(is_active=True)
 
 
