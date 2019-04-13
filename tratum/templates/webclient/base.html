@@ -138,7 +138,23 @@
                                 </div>
 
                                 <a href="{% url 'webclient:about-us' %}">¿Quiénes somos?</a>
-                                <a href="{% url 'webclient:category_documents' path='' %}">Tienda</a>
+
+                                <div class="dropleft noleftbar">
+                                  <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tienda <span class="toright"></span></a>
+                                  <div class="dropdown-menu">
+                                      <a class="dropdown-item" href="#">
+                                          <div class="droprigth subdrop">
+                                              <a href="{% url 'webclient:category_documents' path='' %}">Documentos</span></a>
+                                          </div>
+                                      </a>
+                                     <a class="dropdown-item" href="#">
+                                          <div class="droprigth subdrop">
+                                              <a href="{% url 'webclient:category_documents' path='' %}?package=true">Paquetes</span></a>
+                                          </div>
+                                      </a>
+                                  </div>
+                                </div>
+
                                 <a href="{% url 'webclient:faq' %}">Preguntas frecuentes </a>
                             {% if request.user.is_anonymous %}
                                 <a data-toggle="modal" data-target="#modal-signup">Regístrate</a>
