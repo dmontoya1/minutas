@@ -184,6 +184,11 @@ class SiteConfig(models.Model):
         null=True,
         blank=True
     )
+    landing_bundles_info = models.TextField(
+		'Paquetes(landing)',
+        null=True,
+        blank=True
+    )
     facebook_url = models.URLField(
 		'URL Facebook (landing)',
         null=True,

@@ -149,7 +149,7 @@
         <div class="container">
             <h2>Paquetes</h2>
             <span class="counter">{{context_bundle_count}} disponibles</span>
-            <p>{% lorem 1 p %}</p>
+            <p>{{ landing_bundles_info|linebreaksbr }}</p>
         </div>
         <div class="row">
           {% for i in context_bundles %}
