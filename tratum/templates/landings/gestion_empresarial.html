@@ -1,0 +1,58 @@
+{% extends 'landings/base.html' %}
+
+{% load static %}
+
+{% block title %}
+  <title>Gestión Empresarial | tratum</title>
+{% endblock %}
+
+{% block rel-links %}
+  <link rel="canonical" href="/gestion-empresarial/" />
+  <link rel='shortlink' href='/?p=222' />
+{% endblock %}
+
+{% block nav %}
+
+  <nav id="top-menu-nav">
+    <ul id="top-menu" class="nav">
+      <li id="menu-item-52" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-52">
+        <a href="{% url 'webclient:creacion_empresa' %}">Creación de empresa</a>
+      </li>
+      <li id="menu-item-272" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-272">
+        <a href="{% url 'webclient:gestion_contractual' %}" >Gestión contractual</a>
+      </li>
+      <li id="menu-item-273" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-255 current_page_item menu-item-273">
+        <a href="{% url 'webclient:gestion_empresarial' %}" aria-current="page">Gestión empresarial</a>
+      </li>
+      <li id="menu-item-287" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-287">
+        <a href="{% url 'webclient:negocios_asuntos_personales' %}">Negocios y asuntos personales</a>
+      </li>
+    </ul>
+  </nav>
+{% endblock %}
+
+{% block content-id %}id="post-255" class="post-255 page type-page status-publish hentry" {% endblock %}>
+
+{% block promo-description %}
+  <h1 class="et_pb_module_header">¿Quieres gestionar correctamente los procesos internos de tu empresa correctamente?</h1>
+  <p>Con <strong>tratum </strong>hazlo legalmente rápido y fácil.</p>
+{% endblock %}
+
+{% block tratum-facil %}
+  <p>Te ayudamos a estructurar tus proceso de la mejor manera posible con nosotros tienes el orden que necesitas.</p>
+{% endblock %}
+
+{% block text-inner %}
+  <p>ORDENATE AHORA MISMO <h style="color: #F0CD21;">Y LIDERA</h> TRANQUILO!!</p>
+{% endblock %}
+
+{% block paralax-bg %}
+  <span
+    class="et_parallax_bg"
+    style="background-image: url({% static 'wp-content/uploads/2019/07/reuniones-laborales.jpg' %});"
+  ></span>
+{% endblock %}
+
+{% block documents-title %}
+  <h2> Procesos en los que te ayudaremos </h2>
+{% endblock %}

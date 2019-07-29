@@ -96,4 +96,29 @@ urlpatterns = [
         mptt_urls.view(model=Category, view=category, slug_field='slug'),
         name='category_documents'
     ),
+    path(
+        'creacion-empresa/',
+        views.CreacionEmpresa.as_view(),
+        name="creacion_empresa"
+    ),
+    path(
+        'gestion-contractual/',
+        views.GestionContractual.as_view(),
+        name="gestion_contractual"
+    ),
+    path(
+        'gestion-empresarial/',
+        views.GestionEmpresarial.as_view(),
+        name="gestion_empresarial"
+    ),
+    path(
+        'negocios-asuntos-personales/',
+        views.NegociosAsuntosPersonales.as_view(),
+        name="negocios_asuntos_personales"
+    ),
+    path(
+        'contact-form-landing/',
+        views.send_contact_email,
+        name="contact_form_email"
+    ),
 ]

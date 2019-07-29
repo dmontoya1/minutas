@@ -176,3 +176,5 @@ RAVEN_CONFIG = {
 }
 # Your stuff...
 # ------------------------------------------------------------------------------
+
+ADMIN_EMAIL = 'dmontoya.lab@gmail.com'

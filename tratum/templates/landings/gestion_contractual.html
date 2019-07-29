@@ -1,0 +1,105 @@
+{% extends 'landings/base.html' %}
+
+{% load static %}
+
+{% block title %}
+  <title>Gestión contractual | tratum</title>
+{% endblock %}
+
+{% block rel-links %}
+  <link rel="canonical" href="/gestion-contractual/" />
+  <link rel='shortlink' href='/?p=222' />
+{% endblock %}
+
+{% block nav %}
+
+  <nav id="top-menu-nav">
+    <ul id="top-menu" class="nav">
+      <li id="menu-item-52" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-52">
+        <a href="{% url 'webclient:creacion_empresa' %}">Creación de empresa</a>
+      </li>
+      <li id="menu-item-272" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-222 current_page_item menu-item-272">
+        <a href="{% url 'webclient:gestion_contractual' %}" aria-current="page">Gestión contractual</a>
+      </li>
+      <li id="menu-item-273" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-273">
+        <a href="{% url 'webclient:gestion_empresarial' %}">Gestión empresarial</a>
+      </li>
+      <li id="menu-item-287" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-287">
+        <a href="{% url 'webclient:negocios_asuntos_personales' %}">Negocios y asuntos personales</a>
+      </li>
+    </ul>
+  </nav>
+{% endblock %}
+
+{% block content-id %}id="post-222" class="post-222 page type-page status-publish hentry" {% endblock %}>
+
+{% block promo-description %}
+  <h1 class="et_pb_module_header">¿Necesitas un contrato correctamente elaborado? </h1>
+  <p>Con <strong>tratum </strong>hazlo legalmente fácil y rápido </p>
+{% endblock %}
+
+{% block tratum-facil %}
+  <p>Te ayudamos para que crees tus contratos laborales, renovaciones y demás contratos legales que mantendrán tu empresa en regla.</p>
+{% endblock %}
+
+{% block text-inner %}
+  <p>CREA CORRECTAMENTE <h style="color: #F0CD21;">TUS CONTRATOS </h> AHORA MISMO!!</p>
+{% endblock %}
+
+{% block paralax-bg %}
+  <span
+    class="et_parallax_bg"
+    style="background-image: url({% static 'wp-content/uploads/2019/07/contratos-legales-1.jpg' %});"
+  ></span>
+{% endblock %}
+
+{% block documents-title %}
+  <h2> Tipos de contratos </h2>
+{% endblock %}
+
+
+{% block document-list %}
+  <div class="et_pb_column et_pb_column_1_3 et_pb_column_5  et_pb_css_mix_blend_mode_passthrough">
+    <div class="et_pb_with_border et_pb_module et_pb_text et_pb_text_3 et_animated et_pb_bg_layout_dark  et_pb_text_align_left">
+      <div class="et_pb_text_inner">
+        <div style="padding:20px">
+          <h4>Creacion de empresa</h4>
+          <h2>Acto constitutivo</h2>
+          <p>Sencillo, para el crecimiento de las empresas/emprendimientos es clave tener todo claro y por escrito.</p>
+        </div>
+        <div style="background:#DDDDDD;5px; padding:10px">
+          <h style="color:#002C55;"><center><b>Valor: $300.000</b></center></h></div>
+      </div>
+    </div> <!-- .et_pb_text -->
+  </div> <!-- .et_pb_column -->
+  <div class="et_pb_column et_pb_column_1_3 et_pb_column_6  et_pb_css_mix_blend_mode_passthrough">
+    <div class="et_pb_with_border et_pb_module et_pb_text et_pb_text_4 et_animated et_pb_bg_layout_dark  et_pb_text_align_left">
+
+
+      <div class="et_pb_text_inner">
+        <div style="padding:20px">
+          <h4>Creacion de empresa</h4>
+          <h2>Acto constitutivo</h2>
+          <p>Sencillo, para el crecimiento de las empresas/emprendimientos es clave tener todo claro y por escrito.</p>
+        </div>
+        <div style="background:#DDDDDD;5px; padding:10px">
+          <h style="color:#002C55;"><center><b>Valor: $300.000</b></center></h></div>
+      </div>
+    </div> <!-- .et_pb_text -->
+  </div> <!-- .et_pb_column -->
+  <div class="et_pb_column et_pb_column_1_3 et_pb_column_7  et_pb_css_mix_blend_mode_passthrough">
+    <div class="et_pb_with_border et_pb_module et_pb_text et_pb_text_5 et_animated et_pb_bg_layout_dark  et_pb_text_align_left">
+      <div class="et_pb_text_inner">
+        <div style="padding:20px">
+          <h4>Creacion de empresa</h4>
+          <h2>Acto constitutivo</h2>
+          <p>Sencillo, para el crecimiento de las empresas/emprendimientos es clave tener todo claro y por escrito.</p>
+        </div>
+        <div style="background:#DDDDDD;5px; padding:10px">
+          <h style="color:#002C55;"><center><b>Valor: $300.000</b></center></h></div>
+      </div>
+    </div> <!-- .et_pb_text -->
+  </div> <!-- .et_pb_column -->
+{% endblock %}
+
+

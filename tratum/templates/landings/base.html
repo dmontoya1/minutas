@@ -1,0 +1,446 @@
+{% load static humanize %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="pingback" href="/xmlrpc.php" />
+
+  <script type="text/javascript">
+    document.documentElement.className = 'js';
+  </script>
+
+  <script>var et_site_url='http://localhost/landings2';var et_post_id='8';function et_core_page_resource_fallback(a,b){"undefined"===typeof b&&(b=a.sheet.cssRules&&0===a.sheet.cssRules.length);b&&(a.onerror=null,a.onload=null,a.href?a.href=et_site_url+"/?et_core_page_resource="+a.id+et_post_id:a.src&&(a.src=et_site_url+"/?et_core_page_resource="+a.id+et_post_id))}
+  </script>
+  {% block title %}<title>Creación de empresa | tratum</title>{% endblock %}
+  <link rel='dns-prefetch' href='//fonts.googleapis.com' />
+  <link rel='dns-prefetch' href='//s.w.org' />
+  <link rel="alternate" type="application/rss+xml" title="tratum &raquo; Feed" href="/feed/" />
+  <link rel="alternate" type="application/rss+xml" title="tratum &raquo; RSS de los comentarios" href="/comments/feed/" />
+  <script type="text/javascript">
+    window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/svg\/","svgExt":".svg","source":{"concatemoji":"/static\/wp-includes\/js\/wp-emoji-release.min.js"}};
+    !function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+  </script>
+  <meta content="Divi v.3.25.1" name="generator"/>
+  <style type="text/css">
+    img.wp-smiley,
+    img.emoji {
+      display: inline !important;
+      border: none !important;
+      box-shadow: none !important;
+      height: 1em !important;
+      width: 1em !important;
+      margin: 0 .07em !important;
+      vertical-align: -0.1em !important;
+      background: none !important;
+      padding: 0 !important;
+    }
+  </style>
+  <link rel='stylesheet' id='wp-block-library-css'  href='{% static "wp-includes/css/dist/block-library/style.min.css" %}' type='text/css' media='all' />
+  <link rel='stylesheet' id='divi-style-css'  href='{% static "wp-content/themes/Divi/style.css" %}' type='text/css' media='all' />
+  <link rel='stylesheet' id='et-builder-googlefonts-cached-css'  href='http://fonts.googleapis.com/css?family=Titillium+Web%3A200%2C200italic%2C300%2C300italic%2Cregular%2Citalic%2C600%2C600italic%2C700%2C700italic%2C900%7CPoppins%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2Cregular%2Citalic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CComfortaa%3A300%2Cregular%2C700&#038;ver=5.2.2#038;subset=latin,latin-ext' type='text/css' media='all' />
+  <link rel='stylesheet' id='dashicons-css'  href='{% static "wp-includes/css/dashicons.min.css" %}' type='text/css' media='all' />
+  <script type='text/javascript' src='{% static "wp-includes/js/jquery/jquery.js" %}'></script>
+  <script type='text/javascript' src='{% static "wp-includes/js/jquery/jquery-migrate.min.js" %}'></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <link rel='https://api.w.org/' href='{% static "wp-json" %}' />
+  <link rel="EditURI" type="application/rsd+xml" title="RSD" href="/xmlrpc.php?rsd" />
+  <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="{% static 'wp-includes/wlwmanifest.xml' %}" />
+  <meta name="generator" content="WordPress 5.2.2" />
+  {% block rel-links %}
+    <link rel="canonical" href="{% url 'webclient:creacion_empresa' %}" />
+    <link rel='shortlink' href='/?p=8' />
+  {% endblock %}
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <a style="color:white" href="https://wa.me/573108239286?text=Hola%20te%20estoy%20escribiendo%20desde%20https://tratum.co%20" class="float" target="_blank">
+    <i class="fab fa-whatsapp" style="padding-top: 10px;font-size: 1.3em;"></i>
+  </a><link rel="apple-touch-icon" sizes="180x180" href="{% static 'wp-content/uploads/fbrfg/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'wp-content/uploads/fbrfg/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'wp-content/uploads/fbrfg/favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'wp-content/uploads/fbrfg/site.webmanifest' %}">
+  <link rel="mask-icon" href="{% static 'wp-content/uploads/fbrfg/safari-pinned-tab.svg" color="#5bbad5' %}">
+  <link rel="shortcut icon" href="{% static 'wp-content/uploads/fbrfg/favicon.ico' %}">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+  <link rel="shortcut icon" href="" />
+  <link rel="stylesheet" id="et-core-unified-cached-inline-styles" href="{% static 'wp-content/cache/et/8/et-core-unified-15638227518163.min.css' %}" onerror="et_core_page_resource_fallback(this, true)" onload="et_core_page_resource_fallback(this)" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" type="text/css">
+</head>
+<body class="page-template-default page page-id-8 et_pb_button_helper_class et_fixed_nav et_show_nav et_cover_background et_pb_gutter et_pb_gutters3 et_primary_nav_dropdown_animation_fade et_secondary_nav_dropdown_animation_fade et_pb_footer_columns4 et_header_style_left et_pb_pagebuilder_layout et_right_sidebar et_divi_theme et-db et_minified_js et_minified_css">
+
+<div id="page-container">
+
+  <header id="main-header" data-height-onload="66">
+    <div class="container clearfix et_menu_container">
+      <div class="logo_container">
+        <span class="logo_helper"></span>
+        <a href="/">
+          <img src="{% static 'wp-content/uploads/2019/07/tratum.f282766824b0.png' %}" alt="tratum" id="logo" data-height-percentage="100" />
+        </a>
+      </div>
+      <div id="et-top-navigation" data-height="66" data-fixed-height="52">
+        {% block nav %}
+          <nav id="top-menu-nav">
+            <ul id="top-menu" class="nav">
+              <li id="menu-item-52" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-8 current_page_item menu-item-52">
+                <a href="{% url 'webclient:creacion_empresa' %}" aria-current="page">Creación de empresa</a>
+              </li>
+              <li id="menu-item-272" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-272">
+                <a href="{% url 'webclient:gestion_contractual' %}">Gestión contractual</a>
+              </li>
+              <li id="menu-item-273" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-273">
+                <a href="{% url 'webclient:gestion_empresarial' %}">Gestión empresarial</a>
+              </li>
+              <li id="menu-item-287" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-287">
+                <a href="{% url 'webclient:negocios_asuntos_personales' %}">Negocios y asuntos personales</a>
+              </li>
+            </ul>
+          </nav>
+        {% endblock %}
+        <div id="et_mobile_nav_menu">
+          <div class="mobile_nav closed">
+            <span class="select_page">Seleccionar página</span>
+            <span class="mobile_menu_bar mobile_menu_bar_toggle"></span>
+          </div>
+        </div>
+      </div> <!-- #et-top-navigation -->
+    </div> <!-- .container -->
+    <div class="et_search_outer">
+      <div class="container et_search_form_container">
+        <form role="search" method="get" class="et-search-form" action="/">
+          <input type="search" class="et-search-field" placeholder="Búsqueda &hellip;" value="" name="s" title="Buscar:" />					</form>
+        <span class="et_close_search_field"></span>
+      </div>
+    </div>
+  </header> <!-- #main-header -->
+  <div id="et-main-area">
+    {% block content %}
+      {% if messages  %}
+        {% for message in messages %}
+          <script>
+            toastr.options = {
+              "closeButton": false,
+              "debug": false,
+              "newestOnTop": false,
+              "progressBar": false,
+              "positionClass": "toast-top-full-width",
+              "preventDuplicates": true,
+              "onclick": null,
+              "showDuration": "1000",
+              "hideDuration": "1000",
+              "timeOut": "5000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
+            }
+            toastr.info('{{message}}')
+          </script>
+        {% endfor %}
+      {% endif %}
+      <div id="main-content">
+        <article {% block content-id %} id="post-8" class="post-8 page type-page status-publish hentry" {% endblock %}>
+          <div class="entry-content">
+            <div id="et-boc" class="et-boc">
+              <div class="et_builder_inner_content et_pb_gutters3">
+                <div class="et_pb_section et_pb_section_0 et_pb_with_background et_section_regular">
+                  <div class="et_pb_row et_pb_row_0">
+                    <div class="et_pb_column et_pb_column_1_2 et_pb_column_0  et_pb_css_mix_blend_mode_passthrough">
+                      <div class="et_pb_module et_pb_cta_0 et_animated et_pb_promo et_pb_bg_layout_dark  et_pb_text_align_left et_pb_no_bg">
+                        <div class="et_pb_promo_description">
+                          {% block promo-description %}
+                            <h1 class="et_pb_module_header">¿Necesitas los estatutos para tu empresa?</h1>
+                            <p>Con <strong>tratum </strong>hazlo legalmente rápido y fácil.</p>
+                          {% endblock %}
+                        </div>
+                        <div class="et_pb_button_wrapper"><a class="et_pb_button et_pb_custom_button_icon et_pb_promo_button" href="https://wa.me/573108239286?text=Hola%20te%20estoy%20escribiendo%20desde%20https://tratum.co%20" target="_blank" data-icon="&#x24;">Hablemos</a></div>
+                      </div>
+                    </div> <!-- .et_pb_column --><div class="et_pb_column et_pb_column_1_2 et_pb_column_1  et_pb_css_mix_blend_mode_passthrough">
+                    <div id="et_pb_contact_form_0" class="et_pb_with_border et_pb_module et_pb_contact_form_0 et_animated et_pb_contact_form_container clearfix" data-form_unique_num="0">
+                      <h2 class="et_pb_contact_main_title">Déjanos tus datos y nos pondremos en contacto!</h2>
+                      <div class="et-pb-contact-message"></div>
+                      <div class="et_pb_contact">
+                        <form class="et_pb_contact_form clearfix" method="post" action="{% url 'webclient:contact_form_email' %}">
+                          {% csrf_token %}
+                          <p class="et_pb_contact_field et_pb_contact_field_0 et_pb_contact_field_last" data-id="name" data-type="input">
+                            <label for="et_pb_contact_name_0" class="et_pb_contact_form_label">Tu nombre </label>
+                            <input type="text" id="et_pb_contact_name_0" class="input" value="" name="name" data-required_mark="required" data-field_type="input" data-original_id="name" placeholder="Tu nombre " pattern="[A-Z|a-z|\s-]*" title="Sólo se permiten letras.">
+                          </p>
+                          <p class="et_pb_contact_field et_pb_contact_field_1 et_pb_contact_field_last" data-id="email" data-type="email">
+                            <label for="et_pb_contact_email_0" class="et_pb_contact_form_label">Tu email</label>
+                            <input type="text" id="et_pb_contact_email_0" class="input" value="" name="email" data-required_mark="required" data-field_type="email" data-original_id="email" placeholder="Tu email">
+                          </p>
+                          <p class="et_pb_contact_field et_pb_contact_field_2 et_pb_contact_field_last" data-id="teléfono" data-type="input">
+                            <label for="et_pb_contact_teléfono_0" class="et_pb_contact_form_label">Tu teléfono</label>
+                            <input type="text" id="et_pb_contact_teléfono_0" class="input" value="" name="phone" data-required_mark="required" data-field_type="input" data-original_id="teléfono" placeholder="Tu teléfono">
+                          </p>
+                          <input type="hidden" value="et_contact_proccess" name="et_pb_contactform_submit_0">
+                          <input type="text" value="" name="et_pb_contactform_validate_0" class="et_pb_contactform_validate_field" />
+                          <div class="et_contact_bottom_container">
+                            <button type="submit" class="et_pb_contact_submit et_pb_button et_pb_custom_button_icon" data-icon="&#x24;">Enviar</button>
+                          </div>
+                        </form>
+                      </div> <!-- .et_pb_contact -->
+                    </div> <!-- .et_pb_contact_form_container -->
+                  </div> <!-- .et_pb_column -->
+                  </div> <!-- .et_pb_row -->
+                </div> <!-- .et_pb_section -->
+                <div class="et_pb_section et_pb_section_1 et_pb_with_background et_section_regular section_has_divider et_pb_bottom_divider">
+                  <div class="et_pb_row et_pb_row_1">
+                    <div class="et_pb_column et_pb_column_4_4 et_pb_column_2  et_pb_css_mix_blend_mode_passthrough et-last-child">
+                      <div class="et_pb_module et_pb_text et_pb_text_0 et_animated et_pb_bg_layout_light  et_pb_text_align_center">
+                        <div class="et_pb_text_inner">
+                          <h2> Con <b> tratum</b> es fácil</h2>
+                          {% block tratum-facil %}
+                            <p>Por medio de preguntas de ayudamos para que personalices los estatutos , actas de accionistas y demás documentos legales que conforman tu empresa. </p>
+                          {% endblock %}
+                        </div>
+                      </div> <!-- .et_pb_text -->
+                    </div> <!-- .et_pb_column -->
+                  </div> <!-- .et_pb_row -->
+                  <div class="et_pb_bottom_inside_divider et-no-transition"></div>
+                </div> <!-- .et_pb_section -->
+                <div class="et_pb_section et_pb_section_2 et_pb_with_background et_section_regular">
+                  <div class="et_pb_row et_pb_row_2 et_pb_section_parallax">
+                    <div class="et_pb_column et_pb_column_4_4 et_pb_column_3  et_pb_css_mix_blend_mode_passthrough et-last-child">
+                      <div class="et_pb_module et_pb_text et_pb_text_1 et_pb_bg_layout_light  et_pb_text_align_left">
+
+                        <div class="et_pb_text_inner">
+                          {% block text-inner %}
+                            <p>CREA LOS ESTATUTOS  DE TU <h style="color: #F0CD21;">S.A.S </h> AHORA MISMO!!</p>
+                          {% endblock %}
+                        </div>
+                      </div> <!-- .et_pb_text -->
+                    </div> <!-- .et_pb_column -->
+                    {% block paralax-bg %}
+                      <span
+                        class="et_parallax_bg"
+                        style="background-image: url({% static 'wp-content/uploads/2019/07/tratum-tu-empresa.jpg' %});"
+                      >
+                  </span>
+                    {% endblock %}
+                  </div> <!-- .et_pb_row -->
+                </div> <!-- .et_pb_section --><div class="et_pb_section et_pb_section_3 et_pb_with_background et_section_regular">
+
+                <div class="et_pb_row et_pb_row_3">
+                  <div class="et_pb_column et_pb_column_4_4 et_pb_column_4  et_pb_css_mix_blend_mode_passthrough et-last-child">
+                    <div class="et_pb_module et_pb_text et_pb_text_2 et_animated et_pb_bg_layout_dark  et_pb_text_align_center">
+                      <div class="et_pb_text_inner">
+                        {% block documents-title %}
+                          <h2> Documentos legales disponibles </h2>
+                        {% endblock %}
+                      </div>
+                    </div> <!-- .et_pb_text -->
+                  </div> <!-- .et_pb_column -->
+                </div> <!-- .et_pb_row -->
+                <div class="et_pb_row et_pb_row_4">
+                  {% block document-list %}
+                    {% for doc in documents %}
+                      <div class="et_pb_column et_pb_column_1_3 et_pb_column_5  et_pb_css_mix_blend_mode_passthrough">
+                        <div class="et_pb_with_border et_pb_module et_pb_text et_pb_text_3 et_animated et_pb_bg_layout_dark  et_pb_text_align_left">
+                          <div class="et_pb_text_inner">
+                            <div style="padding:20px">
+                              <h4>{{ doc.category }}</h4>
+                              <h2>{{ doc.name }}</h2>
+                              <p>{{ doc.short_description }}</p>
+                            </div>
+                            <div style="background:#DDDDDD;5px; padding:10px">
+                              <h style="color:#002C55;"><center><b>Valor: ${{doc.price|intcomma}}</b></center></h></div>
+                          </div>
+                        </div> <!-- .et_pb_text -->
+                      </div> <!-- .et_pb_column -->
+                    {% endfor %}
+                  {% endblock %}
+                </div> <!-- .et_pb_row -->
+                <div class="et_pb_row et_pb_row_5">
+                  <div class="et_pb_column et_pb_column_4_4 et_pb_column_8  et_pb_css_mix_blend_mode_passthrough et-last-child">
+                    <div class="et_pb_button_module_wrapper et_pb_button_1_wrapper et_pb_button_alignment_center et_pb_module">
+                      <a class="et_pb_button et_pb_custom_button_icon et_pb_button_1 et_pb_bg_layout_light"
+                         href="{% url 'webclient:category_documents' category.slug %}"
+                         target="_blank" data-icon="&#x24;">Comprar</a>
+                    </div>
+                  </div> <!-- .et_pb_column -->
+                </div> <!-- .et_pb_row -->
+              </div> <!-- .et_pb_section --><div class="et_pb_section et_pb_section_4 et_pb_with_background et_section_regular">
+                <div class="et_pb_row et_pb_row_6">
+                  <div class="et_pb_column et_pb_column_4_4 et_pb_column_9  et_pb_css_mix_blend_mode_passthrough et-last-child">
+                    <div class="et_pb_module et_pb_cta_1 et_animated et_pb_promo et_pb_bg_layout_dark  et_pb_text_align_center et_pb_no_bg">
+                      <div class="et_pb_promo_description">
+                        <h1 class="et_pb_module_header"> ¡Vamos a trabajar juntos!</h1>
+                        hazlo legalmente rápido con tratum!
+                      </div>
+                      <div class="et_pb_button_wrapper">
+                        <a class="et_pb_button et_pb_custom_button_icon et_pb_promo_button"
+                           href="https://wa.me/573108239286?text=Hola%20te%20estoy%20escribiendo%20desde%20https://tratum.co%20"
+                           target="_blank" data-icon="&#x24;">Hablemos</a></div>
+                    </div>
+                  </div> <!-- .et_pb_column -->
+                </div> <!-- .et_pb_row -->
+              </div> <!-- .et_pb_section -->
+                <div class="et_pb_section et_pb_section_5 et_pb_with_background et_section_regular">
+                  <div class="et_pb_row et_pb_row_7">
+                    <div class="et_pb_column et_pb_column_1_4 et_pb_column_10  et_pb_css_mix_blend_mode_passthrough">
+                      <div class="et_pb_module et_pb_text et_pb_text_6 et_pb_bg_layout_light  et_pb_text_align_left">
+                        <div class="et_pb_text_inner">
+                          <p><span>Con el respaldo jurídico de</span></p>
+                          <p><span>
+                        <a href="https://gonzalezaldana.com/" target="_blank" class="mt-2" rel="noopener noreferrer">
+                          <img src="{% static 'wp-content/uploads/2019/07/holding-300x97.png' %}"
+                               width="174" height="56" alt="" class="wp-image-62 alignnone size-medium"
+                               srcset="{% static 'wp-content/uploads/2019/07/holding-300x97.png' %} 300w, {% static 'wp-content/uploads/2019/07/holding-768x248.png' %} 768w, {% static 'wp-content/uploads/2019/07/holding-1024x331.png' %} 1024w, {% static 'wp-content/uploads/2019/07/holding-1080x349.png' %} 1080w"
+                               sizes="(max-width: 174px) 100vw, 174px" /></a></span></p>
+                        </div>
+                      </div> <!-- .et_pb_text -->
+                    </div> <!-- .et_pb_column -->
+                    <div class="et_pb_column et_pb_column_1_4 et_pb_column_11  et_pb_css_mix_blend_mode_passthrough">
+                      <div class="et_pb_module et_pb_text et_pb_text_7 et_pb_bg_layout_light  et_pb_text_align_left">
+                        <div class="et_pb_text_inner">
+                          <a target="_blank" href="https://tratum.co/about-us/" rel="noopener noreferrer">¿Quiénes somos?</a><a
+                          target="_blank" href="https://tratum.co/" rel="noopener noreferrer"><br />¿Qué documentos necesitas? </a><br />
+                          <a target="_blank" href="https://tratum.co/faq/" rel="noopener noreferrer">Preguntas Frecuentes </a><br />
+                          <a target="_blank" href="https://tratum.co/glosario/" rel="noopener noreferrer"> Glosario</a>
+                        </div>
+                      </div> <!-- .et_pb_text -->
+                    </div> <!-- .et_pb_column --><div class="et_pb_column et_pb_column_1_4 et_pb_column_12  et_pb_css_mix_blend_mode_passthrough">
+                    <div class="et_pb_module et_pb_text et_pb_text_8 et_pb_bg_layout_light  et_pb_text_align_left">
+                      <div class="et_pb_text_inner">
+                        <a target="_blank" href="https://tratum.co/policies/privacy/" rel="noopener noreferrer">Políticas de tratamiento de datos personales</a><br />
+                        <a target="_blank" href="https://tratum.co/policies/terms/" rel="noopener noreferrer">Términos y condiciones</a><br />
+                        <a target="_blank" href="https://tratum.co/policies/cookies/" rel="noopener noreferrer">Política de cookies<br />
+                        </a>
+                      </div>
+                    </div> <!-- .et_pb_text -->
+                  </div> <!-- .et_pb_column --><div class="et_pb_column et_pb_column_1_4 et_pb_column_13  et_pb_css_mix_blend_mode_passthrough">
+
+
+                    <ul class="et_pb_module et_pb_social_media_follow et_pb_social_media_follow_0 clearfix et_pb_bg_layout_light  et_pb_text_align_left">
+
+
+                      <li
+                        class='et_pb_social_media_follow_network_0 et_pb_social_icon et_pb_social_network_link  et-social-facebook et_pb_social_media_follow_network_0'><a
+                        href='https://www.facebook.com/Tratum-336330883561418/'
+                        class='icon et_pb_with_border'
+                        title='Seguir en Facebook'
+                        target="_blank"><span
+                        class='et_pb_social_media_follow_network_name'
+                        aria-hidden='true'
+                      >Seguir</span></a></li><li
+                      class='et_pb_social_media_follow_network_1 et_pb_social_icon et_pb_social_network_link  et-social-twitter et_pb_social_media_follow_network_1'><a
+                      href='https://twitter.com/'
+                      class='icon et_pb_with_border'
+                      title='Seguir en Twitter'
+                      target="_blank"><span
+                      class='et_pb_social_media_follow_network_name'
+                      aria-hidden='true'
+                    >Seguir</span></a></li><li
+                      class='et_pb_social_media_follow_network_2 et_pb_social_icon et_pb_social_network_link  et-social-instagram et_pb_social_media_follow_network_2'><a
+                      href='https://www.instagram.com/tratumlegal/'
+                      class='icon et_pb_with_border'
+                      title='Seguir en Instagram'
+                      target="_blank"><span
+                      class='et_pb_social_media_follow_network_name'
+                      aria-hidden='true'
+                    >Seguir</span></a></li><li
+                      class='et_pb_social_media_follow_network_3 et_pb_social_icon et_pb_social_network_link  et-social-youtube et_pb_social_media_follow_network_3'><a
+                      href='https://www.youtube.com/channel/UCIQXXKHtdBjHyZVBOBwU4Ug/featured?disable_polymer=1'
+                      class='icon et_pb_with_border'
+                      title='Seguir en Youtube'
+                      target="_blank"><span
+                      class='et_pb_social_media_follow_network_name'
+                      aria-hidden='true'
+                    >Seguir</span></a></li>
+                    </ul> <!-- .et_pb_counters --><div class="et_pb_module et_pb_text et_pb_text_9 et_clickable et_pb_bg_layout_light  et_pb_text_align_left">
+
+
+                    <div class="et_pb_text_inner">
+                      <p><img src="{% static 'wp-content/uploads/2019/07/logo-superinterdencia-300x65.png' %}" width="212" height="46" alt="" class="wp-image-90 alignnone size-medium" srcset="{% static 'wp-content/uploads/2019/07/logo-superinterdencia-300x65.png' %} 300w, {% static 'wp-content/uploads/2019/07/logo-superinterdencia-768x167.png' %} 768w, {% static 'wp-content/uploads/2019/07/logo-superinterdencia.png' %} 844w" sizes="(max-width: 212px) 100vw, 212px" /></p>
+                    </div>
+                  </div> <!-- .et_pb_text -->
+                  </div> <!-- .et_pb_column -->
+
+
+                  </div> <!-- .et_pb_row --><div class="et_pb_row et_pb_row_8">
+                  <div class="et_pb_column et_pb_column_4_4 et_pb_column_14  et_pb_css_mix_blend_mode_passthrough et-last-child">
+
+
+                    <div class="et_pb_module et_pb_text et_pb_text_10 et_pb_bg_layout_light  et_pb_text_align_left">
+
+
+                      <div class="et_pb_text_inner">
+                        <a target="_blank" href="http://ilanalab.com/" style="color:rgba(0,0,0,0.52);" rel="noopener noreferrer"><span>Copyright Power by ilanalab S.A.S 2019</span></a>
+                      </div>
+                    </div> <!-- .et_pb_text -->
+                  </div> <!-- .et_pb_column -->
+
+
+                </div> <!-- .et_pb_row -->
+
+
+                </div> <!-- .et_pb_section -->
+              </div>
+            </div>
+          </div> <!-- .entry-content -->
+        </article> <!-- .et_pb_post -->
+      </div> <!-- #main-content -->
+    {% endblock %}
+    {% block footer %}
+      <footer id="main-footer">
+
+        <div id="footer-bottom">
+          <div class="container clearfix">
+            <ul class="et-social-icons">
+
+              <li class="et-social-icon et-social-facebook">
+                <a href="#" class="icon">
+                  <span>Facebook</span>
+                </a>
+              </li>
+              <li class="et-social-icon et-social-twitter">
+                <a href="#" class="icon">
+                  <span>Twitter</span>
+                </a>
+              </li>
+              <li class="et-social-icon et-social-google-plus">
+                <a href="#" class="icon">
+                  <span>Google</span>
+                </a>
+              </li>
+              <li class="et-social-icon et-social-instagram">
+                <a href="#" class="icon">
+                  <span>Instagram</span>
+                </a>
+              </li>
+              <li class="et-social-icon et-social-rss">
+                <a href="/feed/" class="icon">
+                  <span>RSS</span>
+                </a>
+              </li>
+
+            </ul><p id="footer-info">Diseñado por <a href="http://www.elegantthemes.com/" title="Premium WordPress Themes">Elegant Themes</a> | Desarrollado por <a href="http://www.wordpress.org/">WordPress</a></p>					</div>	<!-- .container -->
+        </div>
+      </footer> <!-- #main-footer -->
+    {% endblock %}
+  </div> <!-- #et-main-area -->
+
+</div> <!-- #page-container -->
+<script type="text/javascript">
+  var et_animation_data = [{"class":"et_pb_cta_0","style":"fade","repeat":"once","duration":"1000ms","delay":"0ms","intensity":"50%","starting_opacity":"0%","speed_curve":"ease-in-out"},{"class":"et_pb_contact_form_0","style":"slideRight","repeat":"once","duration":"1000ms","delay":"0ms","intensity":"3%","starting_opacity":"100%","speed_curve":"ease-in-out"},{"class":"et_pb_text_0","style":"slideTop","repeat":"once","duration":"1000ms","delay":"0ms","intensity":"10%","starting_opacity":"100%","speed_curve":"ease-in-out"},{"class":"et_pb_text_2","style":"slideTop","repeat":"once","duration":"1000ms","delay":"0ms","intensity":"10%","starting_opacity":"100%","speed_curve":"ease-in-out"},{"class":"et_pb_text_3","style":"fade","repeat":"once","duration":"1000ms","delay":"0ms","intensity":"50%","starting_opacity":"0%","speed_curve":"ease-in-out"},{"class":"et_pb_text_4","style":"fade","repeat":"once","duration":"1000ms","delay":"0ms","intensity":"50%","starting_opacity":"0%","speed_curve":"ease-in-out"},{"class":"et_pb_text_5","style":"fade","repeat":"once","duration":"1000ms","delay":"0ms","intensity":"50%","starting_opacity":"0%","speed_curve":"ease-in-out"},{"class":"et_pb_cta_1","style":"fade","repeat":"once","duration":"1000ms","delay":"0ms","intensity":"50%","starting_opacity":"0%","speed_curve":"ease-in-out"}];
+  var et_link_options_data = [{"class":"et_pb_text_9","url":"http:\/\/www.sic.gov.co\/","target":"_blank"}];
+</script>
+<script type='text/javascript'>
+  /* <![CDATA[ */
+  var DIVI = {"item_count":"%d Item","items_count":"%d Items"};
+  var et_shortcodes_strings = {"previous":"Anterior","next":"Siguiente"};
+  var et_pb_custom = {"ajaxurl":"http:\/\/localhost\/landings2\/wp-admin\/admin-ajax.php","images_uri":"http:\/\/localhost\/landings2\/wp-content\/themes\/Divi\/images","builder_images_uri":"http:\/\/localhost\/landings2\/wp-content\/themes\/Divi\/includes\/builder\/images","et_frontend_nonce":"8a9bb08447","subscription_failed":"Por favor, revise los campos a continuaci\u00f3n para asegurarse de que la informaci\u00f3n introducida es correcta.","et_ab_log_nonce":"4159140ffe","fill_message":"Por favor, rellene los siguientes campos:","contact_error_message":"Por favor, arregle los siguientes errores:","invalid":"De correo electr\u00f3nico no v\u00e1lida","captcha":"Captcha","prev":"Anterior","previous":"Anterior","next":"Siguiente","wrong_captcha":"Ha introducido un n\u00famero equivocado de captcha.","ignore_waypoints":"no","is_divi_theme_used":"1","widget_search_selector":".widget_search","is_ab_testing_active":"","page_id":"8","unique_test_id":"","ab_bounce_rate":"5","is_cache_plugin_active":"no","is_shortcode_tracking":"","tinymce_uri":""};
+  var et_pb_box_shadow_elements = [];
+  /* ]]> */
+</script>
+<script type='text/javascript' src="{% static 'wp-content/themes/Divi/js/custom.min.js'%}"></script>
+<script type='text/javascript' src="{% static 'wp-content/themes/Divi/core/admin/js/common.js'%}"></script>
+<script type='text/javascript' src="{% static 'wp-includes/js/wp-embed.min.js'%}"></script>
+
+</body>
+</html>

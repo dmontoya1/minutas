@@ -440,3 +440,76 @@ def activate(request, token, pk):
             "No hemos podido activar tu cuenta, "
         )
         return redirect('webclient:home')
+
+
+class CreacionEmpresa(TemplateView):
+    template_name = 'landings/creacion_empresa.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = Category.objects.get(name='Creación de Empresa')
+        documents = Document.objects.filter(category=category, is_active=True)[:6]
+        context['documents'] = documents
+        context['category'] = category
+        return context
+
+
+class GestionContractual(TemplateView):
+    template_name = 'landings/gestion_contractual.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = Category.objects.get(name='Gestión contractual')
+        documents = Document.objects.filter(category=category, is_active=True)[:6]
+        context['documents'] = documents
+        context['category'] = category
+        return context
+
+
+class GestionEmpresarial(TemplateView):
+    template_name = 'landings/gestion_empresarial.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = Category.objects.get(name='Gestión empresarial')
+        documents = Document.objects.filter(category=category, is_active=True)[:6]
+        context['documents'] = documents
+        context['category'] = category
+        return context
+
+
+class NegociosAsuntosPersonales(TemplateView):
+    template_name = 'landings/negocios_asuntos_personales.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = Category.objects.get(name='Negocios y asuntos personales')
+        documents = Document.objects.filter(category=category, is_active=True)[:6]
+        context['documents'] = documents
+        context['category'] = category
+        return context
+
+
+def send_contact_email(request):
+    data = request.POST
+    ctx = {
+        'email': data['email'],
+        'name': data['name'],
+        'phone': data['phone']
+    }
+    body = loader.get_template('webclient/email/contact_email.html').render(ctx)
+    message = EmailMessage(
+        "Mensaje de contacto",
+        body,
+        'no-reply@tratum.co',
+        [settings.ADMIN_EMAIL]
+    )
+    message.content_subtype = 'html'
+    message.send()
+
+    messages.add_message(
+        request,
+        messages.SUCCESS,
+        "Tu mensaje ha sido enviado correctamente"
+    )
+    return HttpResponseRedirect(reverse('webclient:home'))
