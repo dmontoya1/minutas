@@ -18,7 +18,7 @@ services:
       - ./.envs/.production/.django
       - ./.envs/.production/.postgres
     volumes:
-      - /home/django/app/static/:/home/django/app/static/
+      - /home/django/app/static/:/app/static/
       - /home/django/app/media/:/app/media/
     command: /start
 
