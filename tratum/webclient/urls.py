@@ -122,7 +122,7 @@ urlpatterns = [
         name="contact_form_email"
     ),
     path(
-        'contact-form-landing/',
+        'register-form-landing/',
         views.send_register_email,
         name="register_email"
     ),

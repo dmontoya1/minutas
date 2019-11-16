@@ -532,11 +532,11 @@ def send_register_email(request):
     }
     body = loader.get_template('webclient/email/contact_email.html').render(ctx)
     message = EmailMessage(
-        "Mensaje de contacto",
+        "Mensaje de Registro Evento",
         body,
         'no-reply@tratum.co',
-        # ['czuniga.lab@gmail.com', 'pgutierrez.lab@gmail.com']
-        ['dmontoya.lab@gmail.com']
+        ['czuniga.lab@gmail.com', 'pgutierrez.lab@gmail.com']
+        # ['dmontoya.lab@gmail.com']
     )
     message.content_subtype = 'html'
     message.send()
