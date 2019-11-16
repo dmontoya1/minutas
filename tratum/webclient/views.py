@@ -493,6 +493,10 @@ class NegociosAsuntosPersonales(TemplateView):
 class LandingForm(TemplateView):
     template_name = 'landings/landing_form.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
 
 def send_contact_email(request):
     data = request.POST
@@ -515,5 +519,31 @@ def send_contact_email(request):
         request,
         messages.SUCCESS,
         "Tu mensaje ha sido enviado correctamente"
+    )
+    return HttpResponseRedirect(reverse('webclient:home'))
+
+
+def send_register_email(request):
+    data = request.POST
+    ctx = {
+        'email': data['email'],
+        'name': data['name'],
+        'phone': data['phone']
+    }
+    body = loader.get_template('webclient/email/contact_email.html').render(ctx)
+    message = EmailMessage(
+        "Mensaje de contacto",
+        body,
+        'no-reply@tratum.co',
+        # ['czuniga.lab@gmail.com', 'pgutierrez.lab@gmail.com']
+        ['dmontoya.lab@gmail.com']
+    )
+    message.content_subtype = 'html'
+    message.send()
+
+    messages.add_message(
+        request,
+        messages.SUCCESS,
+        "Te has registrado con exito"
     )
     return HttpResponseRedirect(reverse('webclient:home'))

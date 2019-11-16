@@ -121,4 +121,14 @@ urlpatterns = [
         views.send_contact_email,
         name="contact_form_email"
     ),
+    path(
+        'contact-form-landing/',
+        views.send_register_email,
+        name="register_email"
+    ),
+    path(
+        'registro-evento/',
+        views.LandingForm.as_view(),
+        name="landing_form"
+    ),
 ]
