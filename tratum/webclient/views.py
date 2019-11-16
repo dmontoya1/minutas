@@ -490,6 +490,10 @@ class NegociosAsuntosPersonales(TemplateView):
         return context
 
 
+class LandingForm(TemplateView):
+    template_name = 'landings/landing_form.html'
+
+
 def send_contact_email(request):
     data = request.POST
     ctx = {
