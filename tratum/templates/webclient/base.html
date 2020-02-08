@@ -87,6 +87,9 @@
                             <a href="{% url 'webclient:faq' %}">Preguntas frecuentes </a>
                         </h4>
                         <h4 class="text-white">
+                            <a href="https://blog.tratum.co/">Blog</a>
+                        </h4>
+                        <h4 class="text-white">
                             <a href="{% url 'webclient:category_documents' path='' %}">Tienda de documentos</a>
                         </h4>
                         {% if request.user.is_authenticated %}
@@ -156,6 +159,7 @@
                                 </div>
 
                                 <a href="{% url 'webclient:faq' %}">Preguntas frecuentes </a>
+                                <a href="https://blog.tratum.co/">Blog</a>
                             {% if request.user.is_anonymous %}
                                 <a data-toggle="modal" data-target="#modal-signup">Regístrate</a>
                                 <a data-toggle="modal" data-target="#modal-login">Inicia sesión</a>
