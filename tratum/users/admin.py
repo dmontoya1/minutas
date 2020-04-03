@@ -2,8 +2,12 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
+from django.contrib.auth import admin as auth_admin
+from django.contrib.auth import get_user_model
 
 from .models import Company, LogTerms, Sector
+
+User = get_user_model()
 
 
 @admin.register(Sector)
@@ -32,3 +36,9 @@ class LogTermsAdmin(admin.ModelAdmin):
     search_fields = (
         'date', 'ip', 'user_email',
     )
+
+
+@admin.register(User)
+class UserAdmin(auth_admin.UserAdmin):
+
+    list_display = ('email', 'first_name', 'last_name', 'date_joined')
