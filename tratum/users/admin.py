@@ -38,6 +38,9 @@ class LogTermsAdmin(admin.ModelAdmin):
     )
 
 
+admin.site.unregister(User)
+
+
 @admin.register(User)
 class UserAdmin(auth_admin.UserAdmin):
 
