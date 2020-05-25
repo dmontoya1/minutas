@@ -380,7 +380,7 @@ class ContactFormView(View):
                     message=message
                 ),
                 'no-reply@tratum.co',
-                ['nrodriguez@apptitud.com.co']
+                ['czuniga@ilanalab.com']
             )
             email.send()
             messages.add_message(request, messages.SUCCESS, "Mensaje envíado correctamente")
