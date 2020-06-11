@@ -6,7 +6,7 @@ set -o nounset
 
 
 if [[ "${DOCKER_DEV_ENV}" == "vscode" ]]; then
-	sleep infinity
+	while sleep 3600; do :; done
 else
 	python manage.py migrate
     python manage.py runserver_plus 0.0.0.0:8000

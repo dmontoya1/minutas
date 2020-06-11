@@ -4,13 +4,13 @@
 // You can also update the VARIANT arg in docker-compose.yml to pick a Python version: 3, 3.8, 3.7, 3.6 
 {
 	"name": "Python 3 & PostgreSQL",
-	"dockerComposeFile": "local.yml",
+	"dockerComposeFile": "../local.yml",
 	"service": "djangovscode",
 	"workspaceFolder": "/app",
 
 	// Set *default* container specific settings.json values on container create.
 	"settings": { 
-		"terminal.integrated.shell.linux": "/bin/bash",
+		"terminal.integrated.shell.linux": "/bin/sh",
 		"python.pythonPath": "/usr/local/bin/python",
 		"python.linting.enabled": true,
 		"python.linting.pylintEnabled": true,
