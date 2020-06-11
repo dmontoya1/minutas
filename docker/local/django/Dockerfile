@@ -1,4 +1,4 @@
-FROM surnet/alpine-python-wkhtmltopdf:3.6.5-0.12.5-full
+FROM surnet/alpine-python-wkhtmltopdf:3.7.3-0.12.5-full
 
 ENV PYTHONUNBUFFERED 1
 
@@ -25,7 +25,6 @@ RUN apk add --no-cache \
       gmp \
       libffi \
     && apk add --no-cache --virtual build-dependencies \
-      --repository "http://nl.alpinelinux.org/alpine/edge/community" \
       ghc \
       cabal \
       linux-headers \

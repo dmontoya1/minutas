@@ -5,7 +5,7 @@ volumes:
   local_postgres_data_backups: {}
 
 services:
-  django:
+  django: &django
     build:
       context: .
       dockerfile: ./docker/local/django/Dockerfile
@@ -20,6 +20,13 @@ services:
     ports:
       - "8000:8000"
     command: /start
+
+  djangovscode:
+    <<: *django
+    environment:
+      - DOCKER_DEV_ENV=vscode
+    ports:
+      - "8000:8000"
 
   postgres:
     build:
