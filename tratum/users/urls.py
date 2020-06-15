@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 from django.urls import path
+
 from .views import (
+    CompanyUpdate,
     FacebookAuth,
     GoogleAuth,
-    UserDetail,
-    UserNameUpdate,
+    SectorList,
     UserChangeEmail,
     UserChangePassword,
-    SectorList,
-    CompanyUpdate,
+    UserDetail,
+    UserNameUpdate,
     UserProfessionUpdate
 )
 
