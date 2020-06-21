@@ -1,35 +1,39 @@
-FROM surnet/alpine-python-wkhtmltopdf:3.7.3-0.12.5-full
+FROM leoossais/python-wkhtmltopdf:latest
 
 ENV PYTHONUNBUFFERED 1
 
-RUN apk update \
+# RUN apt-get update && \
+# 	apt-get install make gettext swig git postgresql git\
+#   # Pillow dependencies
+#   zlib1g-dev libjpeg-dev freetype2-demos openjpeg-dev libtiff5-dev tk-dev tcl-dev git \
+
+RUN apt-get update \
+  # dependencies for building Python packages
+  && apt-get install -y build-essential git \
   # psycopg2 dependencies
-  && apk add --virtual build-deps gcc python3-dev musl-dev \
-  && apk add postgresql-dev \
-  # Pillow dependencies
-  && apk add jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev git \
-  # CFFI dependencies
-  && apk add libffi-dev py-cffi libxml2-dev libxslt-dev \
+  && apt-get install -y libpq-dev \
   # Translations dependencies
-  && apk add gettext \
-  # https://docs.djangoproject.com/en/dev/ref/django-admin/#dbshell
-  && apk add postgresql-client tar \
-  # https://pkgs.alpinelinux.org/package/edge/community/x86/libreoffice
-  && apk add libreoffice
+  && apt-get install -y gettext \
+  # CFFI dependencies
+  && apt-get install libffi-dev python-cffi libxml2-dev libxslt-dev -y \
+  && mkdir /usr/share/man/man1/ \
+  # Libreoffice
+  && apt-get install libreoffice -y \
+  # cleaning up unused files
+  && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+  && rm -rf /var/lib/apt/lists/*
 
 ENV PANDOC_VERSION 2.4
 ENV PANDOC_DOWNLOAD_URL https://github.com/jgm/pandoc/archive/$PANDOC_VERSION.tar.gz
 ENV PANDOC_ROOT /usr/local/pandoc
 
-RUN apk add --no-cache \
-      gmp \
-      libffi \
-    && apk add --no-cache --virtual build-dependencies \
-      ghc \
-      cabal \
-      linux-headers \
+RUN apt-get update && apt-get install -y  \
+      libgmp3-dev \
+      libffi-dev \
+      ghc ghc-prof ghc-doc \
+      cabal-install \
       musl-dev \
-      zlib-dev \
+      zlib1g-dev \
       curl \
     && mkdir -p /pandoc-build && cd /pandoc-build \
     && curl -fsSL "$PANDOC_DOWNLOAD_URL" -o pandoc.tar.gz \
@@ -40,7 +44,6 @@ RUN apk add --no-cache \
       && cabal copy \
       && cd .. ) \
     && rm -Rf pandoc-$PANDOC_VERSION/ \
-    && apk del --purge build-dependencies \
     && rm -Rf /root/.cabal/ /root/.ghc/ \
     && cd / && rm -Rf /pandoc-build
 

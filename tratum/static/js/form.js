@@ -3,7 +3,7 @@ axios.defaults.headers.common['X-CSRFToken'] = document.getElementById('doc-info
 
 
 function savePreview() {
-    function getGroupFields(form){
+    function getGroupFields(form, formIsCompleted){
         groups = {};
         quantity = {};
         name = "";
@@ -24,6 +24,9 @@ function savePreview() {
                         regexed_text = regexed_text.replace($(this).data('name'), $(this).val());
                     }
                     //new_object[$(this).data('name')] = $(this).val();
+                    if($(this).val() == ""){
+                        formIsCompleted = false;
+                    }
                     new_object += $(this).data('name') + ":" + $(this).val() + "|";
                 });
                 group_objects.push(new_object);
@@ -48,14 +51,37 @@ function savePreview() {
         var data = $.param(groups);
         return form + '&' + data
     }
+
+    function getFormObj(formId) {
+        var formObj = {};
+        var inputs = $('#'+formId).serializeArray();
+        $.each(inputs, function (i, input) {
+            formObj[input.name] = input.value;
+        });
+        return formObj;
+    }
+
+    var formIsCompleted = true;
+    
     form = $('#document-form').serialize();
-    form = getGroupFields(form);
+
+    var formObject = getFormObj('document-form');
+    console.log(formObject);
+    Object.keys(formObject).forEach(function(key){
+        console.log(`key=${key} value=${formObject[key]}`);
+        if(formObject[key] == ""){
+            formIsCompleted = false;
+        }
+    });
+    form = getGroupFields(form, formIsCompleted);
     form = applyRegexInTextAreas(form);
 
     axios.post('/api/document-manager/save-preview/', form)
         .then(function(){
             realTimeUpdate();
         })
+    
+    return formIsCompleted;
 }
 
 function formatDocument(){
@@ -323,8 +349,30 @@ $('.modal-trigger').on('click', function() {
 
 $('.preview').on('click', function(e){
     e.preventDefault();
-    savePreview();
-    window.location.href = $(this).attr('href');
+    var formIsCompleted = savePreview();
+    console.log(formIsCompleted);
+    if(formIsCompleted){
+        window.location.href = $(this).attr('href');
+    }else{
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-left",
+            "preventDuplicates": true,
+            "onclick": null,
+            "showDuration": "1000",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        toastr.info('Debes completar todos los campos del formulario');
+    }
 });
 
 
