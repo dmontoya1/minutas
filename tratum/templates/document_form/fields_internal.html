@@ -1,0 +1,92 @@
+
+{% if ifield.is_text_input %}
+    <div class="input-block {{ifield.get_linked_state}}" data-parent="{{ifield.get_linked_parent}}" data-question="{{ifield.get_linked_question}}">
+        <div class="label col clearfix">
+            <span class="float-left">{{forloop.counter}}. {{ifield.display_name}}</span>
+            {% if ifield.help_text %}
+                <i class="fas fa-question-circle float-right" data-toggle="tooltip" data-placement="left" title="{{ifield.help_text}}"></i>
+            {% endif %}
+        </div>
+        <div class="input-control col">
+         {% if ifield.is_open_text %}
+          <textarea name="{{ifield.formated_slug}}" id="{{ifield.formated_slug}}" required rows="1" data-min-rows="1"
+     data-max-rows="5" data-regex="/\r\n|\r|\n/g,'<br />'" data-name="{{ifield.formated_slug}}" data-parentgroup="{{gf.formated_slug}}"></textarea>
+        {% else %}
+            <input required
+            data-name="{{ifield.formated_slug}}"
+            data-parentgroup="{{gf.formated_slug}}"
+            name="{{ifield.formated_slug}}"
+            type="{% if gf.get_html_input_type == 'number' %}text{% else %}{{gf.get_html_input_type}}{% endif %}"
+            id="{{ifield.formated_slug}}"
+            class="{% spaceless %}
+                {% if ifield.is_date_input %}
+                    date
+                    {% if ifield.ifield_type == ifield.NATURAL_DATE %}
+                        natural
+                    {% else %}
+                        pickadate
+                    {% endif %}
+                {% else %}
+                    {% if ifield.ifield_type == ifield.PRICE %}
+                        pricetag
+                    {% elif ifield.field_type == field.NUMBER %}
+                        number
+                    {% endif %}
+                {% endif %}
+            required{% endspaceless %}" autocomplete="off">
+         {% endif %}
+        </div>
+        {% if ifield.youtube_help_video_link %}
+            <div class="col">
+                <a href="#" data-toggle="modal" data-target="#videoModal" data-url="{{ifield.youtube_help_video_link}}">Ver video</a>
+            </div>
+        {% endif %}
+    </div>
+{% elif ifield.ifield_type == ifield.SELECT or ifield.ifield_type == ifield.DYNAMIC_SELECT %}
+    <div class="input-block {{ifield.get_linked_state}}" data-parent="{{ifield.get_linked_parent}}" data-question="{{ifield.get_linked_question}}">
+        <div class="label col clearfix">
+            <span class="float-left">{{forloop.counter}}. {{ifield.display_name}} </span>
+            {% if ifield.help_text %}
+                <i class="fas fa-question-circle float-right" data-toggle="tooltip" data-placement="left" title="{{ifield.help_text}}"></i>
+            {% endif %}
+        </div>
+        <div class="input-control col">
+            <select
+            data-name="{{ifield.formated_slug}}"
+            data-parentgroup="{{gf.formated_slug}}"
+            name="{{ifield.formated_slug}}"
+            class="{% if ifield.ifield_type == ifield.DYNAMIC_SELECT %}dynamic{% endif %}">
+                <option selected disabled>Selecciona un elemento de la lista</option>
+                {% for f in ifield.documentifieldoption_set.all %}
+                    <option value="{{f.name}}" data-id="{{f.pk}}">{{f.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+{% elif ifield.ifield_type == ifield.SELECT_MULTIPLE %}
+    <div class="input-block {{ifield.get_linked_state}}" data-parent="{{ifield.get_linked_parent}}" data-question="{{ifield.get_linked_question}}">
+        <div class="label col clearfix mb-2">
+            <span class="float-left">{{forloop.counter}}. {{ifield.display_name}} </span>
+            {% if ifield.help_text %}
+                <i class="fas fa-question-circle float-right " data-toggle="tooltip" data-placement="left" title="{{ifield.help_text}}"></i>
+            {% endif %}
+        </div>
+        <input type="hidden" name="{{ifield.formated_slug}}">
+        {% for f in ifield.documentfieldoption_set.all %}
+            <div class="col mb-2">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <input type="checkbox" id="{{ifield.name}}__{{f.pk}}" data-name="{{ifield.formated_slug}}__{{f.pk}}" data-parent="{{ifield.formated_slug}}" name="{{f.formated_slug}}__{{f.pk}}" value="{{f.name}}" class="multiple-checkbox-fields">
+                    </div>
+                    <div class="col-sm-11 pl-0">
+                        <label for="{{ifield.name}}__{{f.pk}}">{{f.name}}</label>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+
+
+

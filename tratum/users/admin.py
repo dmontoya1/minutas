@@ -2,18 +2,18 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from django.contrib import messages
-from django.contrib.auth.admin import UserAdmin as django_user_admin
-from django.contrib.auth.forms import UserChangeForm as django_change_form
-from django.utils.translation import ugettext, ugettext_lazy as _
+from django.contrib.auth import admin as auth_admin
+from django.contrib.auth import get_user_model
+
 from .models import Company, LogTerms, Sector
+
+User = get_user_model()
 
 
 @admin.register(Sector)
-class CompanyAdmin(admin.ModelAdmin):
+class SectorAdmin(admin.ModelAdmin):
     """Administrador para las compañías
     """
-    
     model = Sector
 
 
@@ -21,7 +21,6 @@ class CompanyAdmin(admin.ModelAdmin):
 class CompanyAdmin(admin.ModelAdmin):
     """Administrador para las compañías
     """
-    
     model = Company
 
 
@@ -29,7 +28,6 @@ class CompanyAdmin(admin.ModelAdmin):
 class LogTermsAdmin(admin.ModelAdmin):
     """Administrador para el Log de la aceptación de Terminos
     """
-
     model = LogTerms
     icon = '<i class="material-icons">gavel</i>'
     list_display = (
@@ -38,3 +36,12 @@ class LogTermsAdmin(admin.ModelAdmin):
     search_fields = (
         'date', 'ip', 'user_email',
     )
+
+
+admin.site.unregister(User)
+
+
+@admin.register(User)
+class UserAdmin(auth_admin.UserAdmin):
+
+    list_display = ('email', 'first_name', 'last_name', 'date_joined')

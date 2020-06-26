@@ -1,0 +1,909 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="pingback" href="/xmlrpc.php"/>
+
+  <script type="text/javascript">
+      document.documentElement.className = 'js';
+  </script>
+
+  <title>Inicio - Tratum Registro</title>
+
+  <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
+  <link rel="canonical" href="/"/>
+  <meta property="og:locale" content="es_ES"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Inicio - Tratum Registro"/>
+  <meta property="og:site_name" content="Tratum Registro"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Inicio - Tratum Registro"/>
+
+  <link rel='dns-prefetch' href='//fonts.googleapis.com'/>
+  <link rel='dns-prefetch' href='//s.w.org'/>
+  <style type="text/css">
+    img.wp-smiley,
+    img.emoji {
+      display: inline !important;
+      border: none !important;
+      box-shadow: none !important;
+      height: 1em !important;
+      width: 1em !important;
+      margin: 0 .07em !important;
+      vertical-align: -0.1em !important;
+      background: none !important;
+      padding: 0 !important;
+    }
+  </style>
+  <link rel='stylesheet' id='wp-block-library-css'
+        href='{% static 'landing_form/wp-includes/css/style.min.css' %}' type='text/css'
+        media='all'/>
+  <link rel='stylesheet' id='contact-form-7-css'
+        href='{% static 'landing_form/wp-content/plugins/contact-form-7/includes/css/styles.css' %}' type='text/css'
+        media='all'/>
+  <link rel='stylesheet' id='css-divi-popup-css'
+        href='{% static 'landing_form/wp-content/plugins/popups-for-divi/css/front.css' %}' type='text/css'
+        media='all'/>
+  <style id='css-divi-popup-inline-css' type='text/css'>
+    .et_pb_section.popup {
+      display: none
+    }
+  </style>
+  <link rel='stylesheet' id='parent-style-css' href='{% static 'landing_form/wp-content/themes/Divi/style.css' %}'
+        type='text/css' media='all'/>
+  <link rel='stylesheet' id='divi-fonts-css'
+        href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&#038;subset=latin,latin-ext'
+        type='text/css' media='all'/>
+  <link rel='stylesheet' id='divi-style-css' href='{% static 'landing_form/wp-content/themes/ov-child/style.css' %} '
+        type='text/css' media='all'/>
+  <link rel='stylesheet' id='supreme-modules-for-divi-styles-css'
+        href='{% static 'landing_form/wp-content/plugins/supreme-modules-for-divi/styles/style.min.css' %} '
+        type='text/css' media='all'/>
+  <link rel='stylesheet' id='et-builder-googlefonts-cached-css'
+        href='https://fonts.googleapis.com/css?family=Comfortaa%3A300%2Cregular%2C700%7CLato%3A100%2C100italic%2C300%2C300italic%2Cregular%2Citalic%2C700%2C700italic%2C900%2C900italic&#038;ver=5.2.4#038;subset=latin,latin-ext'
+        type='text/css' media='all'/>
+  <link rel='stylesheet' id='dashicons-css' href='{% static 'landing_form/wp-includes/css/dashicons.min.css' %} '
+        type='text/css' media='all'/>
+  <script type='text/javascript'
+          src='{% static 'landing_form/wp-content/plugins/ParticleJs-WP-Plugin-master/includes/particles.js' %} '></script>
+  <script type='text/javascript' src='{% static 'landing_form/wp-includes/js/jquery/jquery.js' %} '></script>
+  <script type='text/javascript'
+          src='{% static 'landing_form/wp-includes/js/jquery/jquery-migrate.min.js' %} '></script>
+  <link rel='shortlink' href='/'/>
+  <link rel="apple-touch-icon" sizes="180x180"
+        href="{% static 'landing_form/wp-content/uploads/fbrfg/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32"
+        href="{% static 'landing_form/wp-content/uploads/fbrfg/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16"
+        href="{% static 'landing_form/wp-content/uploads/fbrfg/favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'landing_form/wp-content/uploads/fbrfg/site.webmanifest' %}">
+  <link rel="mask-icon" href="{% static 'landing_form/wp-content/uploads/fbrfg/safari-pinned-tab.svg' %}"
+        color="#5bbad5">
+  <link rel="shortcut icon" href="{% static 'landing_form/wp-content/uploads/fbrfg/favicon.ico' %}">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+  <link rel="shortcut icon" href=""/>
+  <script>
+
+      //Highlight Active Links on Scroll and Click for One Page Divi Websites - By Divi Soup
+      jQuery(function ($) {
+          //Set first menu item as active
+          $('#main-header #top-menu li:first-child a, .et_slide_in_menu_container .et_mobile_menu li:first-child a').addClass('ds-menu-active')
+          $(window).scroll(function () {
+              //Create variable to get the current vertical position
+              var scrollPos = $(window).scrollTop();
+              //For each section with the class ds-section
+              $('.ds-section').each(function (i) {
+                  //Create variable to calculate when to add active class
+                  var topPos = $(this).offset().top;
+                  //If the section is equal to or less than 80px from the top of the page
+                  if ((topPos - scrollPos) <= 80) {
+                      //Remove the active class from the previous menu item
+                      $('.ds-menu-active').removeClass('ds-menu-active')
+                      //Add the class to the current menu item
+                      $('#main-header #top-menu a:not(li.centered-inline-logo-wrap a), .et_slide_in_menu_container .et_mobile_menu li a').eq(i).addClass('ds-menu-active')
+                  }
+              })
+          });
+      });
+  </script>
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '213230306721780');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=213230306721780&ev=PageView&noscript=1"
+  /></noscript>
+  <style id="et-core-unified-565-cached-inline-styles">.nav li ul {
+    border-color: #492b9a
+  }
+
+  #top-menu li.current-menu-ancestor > a, #top-menu li.current-menu-item > a, .et_color_scheme_red #top-menu li.current-menu-ancestor > a, .et_color_scheme_red #top-menu li.current-menu-item > a, .et_color_scheme_pink #top-menu li.current-menu-ancestor > a, .et_color_scheme_pink #top-menu li.current-menu-item > a, .et_color_scheme_orange #top-menu li.current-menu-ancestor > a, .et_color_scheme_orange #top-menu li.current-menu-item > a, .et_color_scheme_green #top-menu li.current-menu-ancestor > a, .et_color_scheme_green #top-menu li.current-menu-item > a {
+    color: #492b9a
+  }
+
+  #footer-widgets .footer-widget a, #footer-widgets .footer-widget li a, #footer-widgets .footer-widget li a:hover {
+    color: #ffffff
+  }
+
+  .footer-widget {
+    color: #ffffff
+  }
+
+  @media only screen and (min-width: 981px) {
+    #logo {
+      max-height: 84%
+    }
+
+    .et_pb_svg_logo #logo {
+      height: 84%
+    }
+
+    .et_header_style_centered.et_hide_primary_logo #main-header:not(.et-fixed-header) .logo_container, .et_header_style_centered.et_hide_fixed_logo #main-header.et-fixed-header .logo_container {
+      height: 11.88px
+    }
+
+    .et-fixed-header #top-menu li.current-menu-ancestor > a, .et-fixed-header #top-menu li.current-menu-item > a {
+      color: #492b9a !important
+    }
+
+  }
+
+  @media only screen and (min-width: 1350px) {
+    .et_pb_row {
+      padding: 27px 0
+    }
+
+    .et_pb_section {
+      padding: 54px 0
+    }
+
+    .single.et_pb_pagebuilder_layout.et_full_width_page .et_post_meta_wrapper {
+      padding-top: 81px
+    }
+
+    .et_pb_fullwidth_section {
+      padding: 0
+    }
+  }
+
+  #main-footer {
+    display: none
+  }
+
+  #logo {
+    -webkit-transition: initial;
+    -moz-transition: initial;
+    transition: initial;
+    -webkit-transform: initial
+  }
+
+  .mobile_menu_bar:before, .mobile_menu_bar:after, .et_toggle_slide_menu:after, .et-social-icon a:hover, .et_pb_sum, .et_pb_pricing li a, .et_pb_pricing_table_button, .et_overlay:before, .entry-summary p.price ins, .woocommerce div.product span.price, .woocommerce-page div.product span.price, .woocommerce #content div.product span.price, .woocommerce-page #content div.product span.price, .woocommerce div.product p.price, .woocommerce-page div.product p.price, .woocommerce #content div.product p.price, .woocommerce-page #content div.product p.price, .et_pb_member_social_links a:hover, .woocommerce .star-rating span:before, .woocommerce-page .star-rating span:before, .et_pb_widget li a:hover, .et_pb_filterable_portfolio .et_pb_portfolio_filters li a.active, .et_pb_filterable_portfolio .et_pb_portofolio_pagination ul li a.active, .et_pb_gallery .et_pb_gallery_pagination ul li a.active, .wp-pagenavi span.current, .wp-pagenavi a:hover, .nav-single a, .posted_in a {
+    color: #492B9A
+  }
+
+  .et_mobile_menu {
+    display: none;
+    visibility: visible;
+    position: absolute;
+    z-index: 9999;
+    left: 0;
+    width: 100%;
+    padding: 5%;
+    border-top: 3px solid #FFF;
+    opacity: 1;
+    background: #fff;
+    -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+    -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .1)
+  }
+
+  .float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 23px;
+    right: 23px;
+    background-color: #25d366;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    z-index: 100
+  }
+
+  @media (min-height: 765px) {
+    .float {
+      top: 700px
+    }
+  }
+
+  @media (min-width: 360px) and (max-width: 640px) {
+    .float {
+      right: 31px
+    }
+
+    .et_pb_contact_form_0.et_pb_contact_form_container.et_pb_module .et_pb_button {
+      padding-right: 22px !important;
+      padding-left: 22px !important
+    }
+  }
+
+  #logo {
+    -webkit-transition: initial;
+    -moz-transition: initial;
+    transition: initial;
+    -webkit-transform: initial
+  }
+
+  #main-header.et-fixed-header {
+    -webkit-box-shadow: 0 0 7px rgba(0, 0, 0, 0.1) !important;
+    -moz-box-shadow: 0 0 7px rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 0 7px rgba(0, 0, 0, 0.1) !important
+  }
+
+  #main-header {
+    -webkit-box-shadow: 0 0 7px rgba(0, 0, 0, 0.1) !important;
+    -moz-box-shadow: 0 0 7px rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 0 70px rgba(0, 0, 0, 0.1) !important
+  }
+
+  @media (max-width: 980px) {
+    .et_non_fixed_nav.et_transparent_nav #main-header, .et_non_fixed_nav.et_transparent_nav #top-header, .et_fixed_nav #main-header, .et_fixed_nav #top-header {
+      position: fixed !important
+    }
+  }
+
+  .et_mobile_menu {
+    overflow: scroll !important;
+    max-height: 83vh
+  }
+
+  #sidebar {
+    display: none
+  }
+
+  #sound-bar {
+    background: white !important
+  }
+
+  .et_contact_bottom_container {
+    float: none !important;
+    text-align: center !important;
+    display: inherit !important
+  }
+
+  #main-header #top-menu a.ds-menu-active, .et_slide_in_menu_container .et_mobile_menu a.ds-menu-active {
+    color: #492B9A !important
+  }
+
+  @media (max-width: 980px) {
+    .et_header_style_centered #main-header .mobile_nav {
+      display: block;
+      padding: 5px 10px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      background-color: rgba(0, 0, 0, 0);
+      text-align: left;
+      margin-bottom: 20px
+    }
+
+    .select_page {
+      display: none !important
+    }
+  }
+
+  #main-header #top-menu li.current-menu-item > a {
+    color: #492B9A !important
+  }
+
+  #page-container {
+    padding-top: 0px !important;
+    margin-top: 0px !important
+  }
+
+  #boton-form {
+    color: #ffffff !important;
+    border-width: 0px !important;
+    border-radius: 30px;
+    font-family: 'Nunito', Helvetica, Arial, Lucida, sans-serif !important;
+    font-weight: 700 !important;
+    background-color: #00A0D5;
+    margin-top: 50px;
+    padding-left: 47px;
+    padding-right: 47px;
+    font-size: 18px !important
+  }
+
+  #main-header {
+    display: none
+  }</style>
+</head>
+<body class="home page-template-default page page-id-565 et_pb_button_helper_class et_fullwidth_nav et_fixed_nav et_show_nav et_primary_nav_dropdown_animation_fade et_secondary_nav_dropdown_animation_fade et_header_style_left et_pb_footer_columns4 et_cover_background et_pb_gutter et_pb_gutters3 et_pb_pagebuilder_layout et_no_sidebar et_divi_theme et-db et_minified_js et_minified_css">
+<div id="page-container">
+  <header id="main-header" data-height-onload="66">
+    <div class="container clearfix et_menu_container">
+      <div class="logo_container">
+        <span class="logo_helper"></span>
+        <a href="/">
+          <img src="{% static 'landing_form/wp-content/themes/Divi/images/logo.png' %}" alt="Tratum Registro" id="logo"
+               data-height-percentage="84"/>
+        </a>
+      </div>
+      <div id="et-top-navigation" data-height="66" data-fixed-height="40">
+        <nav id="top-menu-nav">
+          <ul id="top-menu" class="nav">
+            <li><a href="/">Inicio</a></li>
+
+            <li class="page_item page-item-565 current_page_item"><a href="/" aria-current="page">Inicio</a></li>
+          </ul>
+        </nav>
+
+
+        <div id="et_mobile_nav_menu">
+          <div class="mobile_nav closed">
+            <span class="select_page">Seleccionar página</span>
+            <span class="mobile_menu_bar mobile_menu_bar_toggle"></span>
+          </div>
+        </div>
+      </div> <!-- #et-top-navigation -->
+    </div> <!-- .container -->
+    <div class="et_search_outer">
+      <div class="container et_search_form_container">
+        <form role="search" method="get" class="et-search-form" action="/">
+          <input type="search" class="et-search-field" placeholder="Búsqueda &hellip;" value="" name="s"
+                 title="Buscar:"/></form>
+        <span class="et_close_search_field"></span>
+      </div>
+    </div>
+  </header> <!-- #main-header -->
+  <div id="et-main-area">
+    <div id="main-content">
+      <article id="post-565" class="post-565 page type-page status-publish hentry">
+        <div class="entry-content">
+          <div id="et-boc" class="et-boc">
+            <div class="et-l et-l--post">
+              <div class="et_builder_inner_content et_pb_gutters3">
+                <div class="et_pb_section et_pb_section_0 et_pb_with_background et_section_regular">
+                  <div class="et_pb_row et_pb_row_0 et_pb_gutters1">
+                    <div class="et_pb_column et_pb_column_1_2 et_pb_column_0  et_pb_css_mix_blend_mode_passthrough">
+                      <div class="et_pb_module et_pb_image et_pb_image_0">
+				<span class="et_pb_image_wrap">
+          <img src="{% static 'landing_form/wp-content/uploads/2019/11/tratum.f282766824b0.png' %}" alt="" title=""
+               srcset="{% static 'landing_form/wp-content/uploads/2019/11/tratum.f282766824b0.png' %} 5335w, {% static 'landing_form/wp-content/uploads/2019/11/tratum.f282766824b0-1280x720.png' %} 1280w, {% static 'landing_form/wp-content/uploads/2019/11/tratum.f282766824b0-980x551.png' %} 980w, {% static 'landing_form/wp-content/uploads/2019/11/tratum.f282766824b0-480x270.png' %} 480w"
+               sizes="(min-width: 0px) and (max-width: 480px) 480px, (min-width: 481px) and (max-width: 980px) 980px, (min-width: 981px) and (max-width: 1280px) 1280px, (min-width: 1281px) 5335px, 100vw"/></span>
+                      </div>
+                      <div class="et_pb_module et_pb_text et_pb_text_0 et_pb_bg_layout_light  et_pb_text_align_left">
+                      </div> <!-- .et_pb_text -->
+                    </div> <!-- .et_pb_column -->
+                    <div class="et_pb_column et_pb_column_1_2 et_pb_column_1  et_pb_css_mix_blend_mode_passthrough et-last-child">
+                      <div class="et_pb_module et_pb_cta_0 et_animated et_pb_promo et_pb_bg_layout_light  et_pb_text_align_left">
+                        <div class="et_pb_promo_description">
+                          <h5 class="et_pb_module_header">Inscripción evento "Apoyo jurídico y legal al
+                            emprendedor"</h5>
+                          <div>Fecha: 20 de Noviembre<br/>
+                            Hora: 8:00 Am<br/>
+                            Lugar: Centro de negocios Alturia
+                          </div>
+                        </div>
+                      </div>
+                      <div id="et_pb_contact_form_0"
+                           class="et_pb_module et_pb_contact_form_0 et_pb_contact_form_container clearfix"
+                           data-form_unique_num="0">
+                        <div class="et-pb-contact-message"></div>
+                        <div class="et_pb_contact">
+                          <form class="et_pb_contact_form clearfix" method="post" action="{% url 'webclient:register_email' %}">
+                              {% csrf_token %}
+                            <p class="et_pb_contact_field et_pb_contact_field_0 et_pb_contact_field_last" data-id="name"
+                               data-type="input">
+                              <label for="name" class="et_pb_contact_form_label">Nombre</label>
+                              <input type="text" id="name" class="input" value=""
+                                     name="name" data-required_mark="required" data-field_type="input"
+                                     data-original_id="name" placeholder="Nombre">
+                            </p>
+                            <p class="et_pb_contact_field et_pb_contact_field_1 et_pb_contact_field_last"
+                               data-id="email" data-type="email">
+                              <label for="email" class="et_pb_contact_form_label">Dirección de correo
+                                electrónico</label>
+                              <input type="text" id="email" class="input" value=""
+                                     name="email" data-required_mark="required" data-field_type="email"
+                                     data-original_id="email" placeholder="Dirección de correo electrónico">
+                            </p>
+                            <p class="et_pb_contact_field et_pb_contact_field_2 et_pb_contact_field_last"
+                               data-id="telefono" data-type="input">
+                              <label for="phone" class="et_pb_contact_form_label">Teléfono</label>
+                              <input type="text" id="phone" class="input" value=""
+                                     name="phone" data-required_mark="required"
+                                     data-field_type="input" data-original_id="telefono" placeholder="Teléfono">
+                            </p>
+                            <p class="et_pb_contact_field et_pb_contact_field_3  et_pb_text_align_center et_pb_contact_field_last"
+                               data-id="field_4" data-type="checkbox">
+                              <label for="et_pb_contact_field_4_0" class="et_pb_contact_form_label"> </label>
+                              <input class="et_pb_checkbox_handle" type="hidden" name="et_pb_contact_field_4_0"
+                                     data-required_mark="required" data-field_type="checkbox"
+                                     data-original_id="field_4">
+                              <span class="et_pb_contact_field_options_wrapper">
+                                <span class="et_pb_contact_field_options_title"> </span>
+                                <span class="et_pb_contact_field_options_list"><span class="et_pb_contact_field_checkbox">
+                                  <input type="checkbox" id="et_pb_contact_field_4_3_0" class="input"
+                                         value="Política de privacidad y tratamiento de datos" data-id="-1">
+                                  <label for="et_pb_contact_field_4_3_0" style="color: #fff"><i></i>Política de privacidad y tratamiento de datos <a
+                                          href="https://tratum.co/policies/privacy/" target="_blank"></a></label>
+                                </span></span>
+                              </span>
+                            </p>
+                            <p class="et_pb_contact_field et_pb_contact_field_4 et_pb_contact_field_half"
+                               data-id="et_number" data-type="input">
+                              <label for="et_pb_contact_et_number_0" class="et_pb_contact_form_label">Number</label>
+                              <input type="text" id="et_pb_contact_et_number_0" class="input" value=""
+                                     name="et_pb_contact_et_number_0" data-required_mark="required"
+                                     data-field_type="input" data-original_id="et_number" placeholder="Number"
+                                     tabindex="-1" autocomplete="disabled">
+                            </p>
+                            <input type="hidden" value="et_contact_proccess" name="et_pb_contactform_submit_0"/>
+                            <div class="et_contact_bottom_container">
+
+                              <button type="submit" name="et_builder_submit_button"
+                                      class="et_pb_contact_submit et_pb_button">Enviar
+                              </button>
+                            </div>
+                          </form>
+                        </div> <!-- .et_pb_contact -->
+                      </div> <!-- .et_pb_contact_form_container -->
+
+                    </div> <!-- .et_pb_column -->
+
+
+                  </div> <!-- .et_pb_row -->
+
+
+                </div> <!-- .et_pb_section -->    </div><!-- .et_builder_inner_content -->
+            </div><!-- .et-l -->
+
+
+          </div><!-- #et-boc -->
+        </div> <!-- .entry-content -->
+
+
+      </article> <!-- .et_pb_post -->
+
+
+    </div> <!-- #main-content -->
+
+
+    <footer id="main-footer">
+      <div id="footer-bottom">
+        <div class="container clearfix">
+          <ul class="et-social-icons">
+
+            <li class="et-social-icon et-social-facebook">
+              <a href="#" class="icon">
+                <span>Facebook</span>
+              </a>
+            </li>
+            <li class="et-social-icon et-social-twitter">
+              <a href="#" class="icon">
+                <span>Twitter</span>
+              </a>
+            </li>
+            <li class="et-social-icon et-social-google-plus">
+              <a href="#" class="icon">
+                <span>Google</span>
+              </a>
+            </li>
+            <li class="et-social-icon et-social-rss">
+              <a href="/feed/" class="icon">
+                <span>RSS</span>
+              </a>
+            </li>
+
+
+            <!-- Agrega tus propios iconos -->
+
+
+          </ul>
+          <p id="footer-info">Diseñado por <a href="https://www.elegantthemes.com/" title="Premium WordPress Themes">Elegant
+            Themes</a> | Desarrollado por <a href="https://www.wordpress.org/">WordPress</a></p></div><!-- .container -->
+      </div>
+    </footer> <!-- #main-footer -->
+  </div> <!-- #et-main-area -->
+
+
+</div> <!-- #page-container -->
+
+<script type="text/javascript">
+</script>
+
+<style type="text/css">
+  canvas.particles-js-canvas-el {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+</style>
+<script type="text/javascript">
+    var et_animation_data = [{
+        "class": "et_pb_cta_0",
+        "style": "slideBottom",
+        "repeat": "once",
+        "duration": "1000ms",
+        "delay": "0ms",
+        "intensity": "5%",
+        "starting_opacity": "0%",
+        "speed_curve": "ease-in-out"
+    }];
+</script>
+<script type='text/javascript'>
+    /* <![CDATA[ */
+    var wpcf7 = {
+        "apiSettings": {
+            "root": "https:\/\/ilanalab.com\/sac\/wp-json\/contact-form-7\/v1",
+            "namespace": "contact-form-7\/v1"
+        }
+    };
+    /* ]]> */
+</script>
+<script type='text/javascript'
+        src='{% static 'landing_form/wp-content/plugins/contact-form-7/includes/js/scripts.js' %} '></script>
+<script type='text/javascript'>
+    /* <![CDATA[ */
+    var DiviPopupData = {
+        "zIndex": "100000",
+        "animateSpeed": "400",
+        "triggerClassPrefix": "show-popup-",
+        "idAttrib": "data-popup",
+        "modalIndicatorClass": "is-modal",
+        "defaultShowCloseButton": "1",
+        "withCloseClass": "with-close",
+        "noCloseClass": "no-close",
+        "triggerCloseClass": "close",
+        "singletonClass": "single",
+        "darkModeClass": "dark",
+        "noShadowClass": "no-shadow",
+        "altCloseClass": "close-alt",
+        "popupSelector": ".et_pb_section.popup",
+        "initializeOnEvent": "et_pb_after_init_modules",
+        "popupWrapperClass": "popup_outer_wrap",
+        "fullWidthClass": "popup_full_width",
+        "fullHeightClass": "popup_full_height",
+        "openPopupClass": "evr_popup_open",
+        "overlayClass": "evr_fb_popup_modal",
+        "exitIndicatorClass": "on-exit",
+        "onExitDelay": "2000",
+        "notMobileClass": "not-mobile",
+        "notTabletClass": "not-tablet",
+        "notDesktopClass": "not-desktop",
+        "baseContext": "body",
+        "activePopupClass": "is-open",
+        "closeButtonClass": "evr-close",
+        "debug": ""
+    };
+    /* ]]> */
+</script>
+<script type='text/javascript'
+        src='{% static 'landing_form/wp-content/plugins/popups-for-divi/js/front.js' %} '></script>
+<script type='text/javascript'>
+    /* <![CDATA[ */
+    var DIVI = {"item_count": "%d Item", "items_count": "%d Items"};
+    var et_shortcodes_strings = {"previous": "Anterior", "next": "Siguiente"};
+    var et_pb_custom = {
+        "ajaxurl": "https:\/\/ilanalab.com\/sac\/wp-admin\/admin-ajax.php",
+        "images_uri": "https:\/\/ilanalab.com\/sac\/wp-content\/themes\/Divi\/images",
+        "builder_images_uri": "https:\/\/ilanalab.com\/sac\/wp-content\/themes\/Divi\/includes\/builder\/images",
+        "et_frontend_nonce": "a895d2a399",
+        "subscription_failed": "Por favor, revise los campos a continuaci\u00f3n para asegurarse de que la informaci\u00f3n introducida es correcta.",
+        "et_ab_log_nonce": "0122a2db7a",
+        "fill_message": "Por favor, rellene los siguientes campos:",
+        "contact_error_message": "Por favor, arregle los siguientes errores:",
+        "invalid": "De correo electr\u00f3nico no v\u00e1lida",
+        "captcha": "Captcha",
+        "prev": "Anterior",
+        "previous": "Anterior",
+        "next": "Siguiente",
+        "wrong_captcha": "Ha introducido un n\u00famero equivocado de captcha.",
+        "ignore_waypoints": "no",
+        "is_divi_theme_used": "1",
+        "widget_search_selector": ".widget_search",
+        "ab_tests": [],
+        "is_ab_testing_active": "",
+        "page_id": "565",
+        "unique_test_id": "",
+        "ab_bounce_rate": "5",
+        "is_cache_plugin_active": "no",
+        "is_shortcode_tracking": "",
+        "tinymce_uri": ""
+    };
+    var et_frontend_scripts = {"builderCssContainerPrefix": "#et-boc", "builderCssLayoutPrefix": "#et-boc .et-l"};
+    var et_pb_box_shadow_elements = [];
+    /* ]]> */
+</script>
+<script type='text/javascript' src='{% static 'landing_form/wp-content/themes/Divi/js/custom.min.js' %} '></script>
+<script type='text/javascript'
+        src='{% static 'landing_form/wp-content/plugins/supreme-modules-for-divi/scripts/frontend-bundle.min.js' %} '></script>
+<script type='text/javascript'
+        src='{% static 'landing_form/wp-content/themes/Divi/core/admin/js/common.js' %} '></script>
+<script type='text/javascript' src='{% static 'landing_form/wp-includes/js/wp-embed.min.js'%} '></script>
+<style id="et-core-unified-565-cached-inline-styles-2">.et_pb_section_0.et_pb_section {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  background-color: rgba(245, 245, 245, 0) !important
+}
+
+.et_pb_cta_0.et_pb_promo p {
+  line-height: 1.8em
+}
+
+.et_pb_contact_form_0.et_pb_contact_form_container {
+  background-color: #012756;
+  padding-top: 26px;
+  padding-right: 36px;
+  padding-bottom: 26px;
+  padding-left: 36px
+}
+
+body #page-container .et_pb_section .et_pb_cta_0.et_pb_promo .et_pb_promo_button.et_pb_button:after {
+  line-height: inherit;
+  font-size: inherit !important;
+  margin-left: -1em;
+  left: auto
+}
+
+body #page-container .et_pb_section .et_pb_cta_0.et_pb_promo .et_pb_promo_button.et_pb_button:hover:after {
+  margin-left: .3em;
+  left: auto;
+  margin-left: .3em;
+  opacity: 1
+}
+
+body #page-container .et_pb_section .et_pb_cta_0.et_pb_promo .et_pb_promo_button.et_pb_button {
+  color: #ffffff !important;
+  border-width: 12px !important;
+  border-color: #ffb356;
+  border-radius: 50px;
+  letter-spacing: 2px;
+  font-size: 14px;
+  font-family: 'Lato', Helvetica, Arial, Lucida, sans-serif !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  background-color: #ffb356
+}
+
+.et_pb_row_0 {
+  background-color: #012756
+}
+
+.et_pb_cta_0.et_pb_promo {
+  font-family: 'Lato', Helvetica, Arial, Lucida, sans-serif;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.69) !important;
+  line-height: 1.8em;
+  background-color: #012756;
+  padding-top: 75px !important;
+  padding-right: 10% !important;
+  padding-bottom: 0px !important;
+  padding-left: 10% !important
+}
+
+.et_pb_cta_0.et_pb_promo h2, .et_pb_cta_0.et_pb_promo h1.et_pb_module_header, .et_pb_cta_0.et_pb_promo h3.et_pb_module_header, .et_pb_cta_0.et_pb_promo h4.et_pb_module_header, .et_pb_cta_0.et_pb_promo h5.et_pb_module_header, .et_pb_cta_0.et_pb_promo h6.et_pb_module_header {
+  font-family: 'Comfortaa', display !important;
+  font-weight: 700 !important;
+  font-size: 23px !important;
+  color: #ffffff !important;
+  letter-spacing: 1px !important;
+  line-height: 1.5em !important;
+  text-align: left !important
+}
+
+.et_pb_text_0 {
+  background-size: contain;
+  background-image: url({% static 'landing_form/wp-content/uploads/2019/11/Tratum-02-1.jpg'%});
+  padding-top: 26vw !important;
+  margin-top: -29px !important
+}
+
+.et_pb_image_0 .et_pb_image_wrap {
+  border-radius: 8px 8px 8px 8px;
+  overflow: hidden
+}
+
+.et_pb_image_0 {
+  background-color: #ffffff;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-top: 39px !important;
+  width: 29%;
+  text-align: left;
+  margin-left: 0
+}
+
+.et_pb_row_0, body #page-container .et-db #et-boc .et-l .et_pb_row_0.et_pb_row, body.et_pb_pagebuilder_layout.single #page-container #et-boc .et-l .et_pb_row_0.et_pb_row, body.et_pb_pagebuilder_layout.single.et_full_width_page #page-container #et-boc .et-l .et_pb_row_0.et_pb_row {
+  max-width: 100%
+}
+
+.et_pb_row_0.et_pb_row {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  margin-top: 0px !important;
+  padding-top: 0px;
+  padding-bottom: 0px
+}
+
+body #page-container .et_pb_section .et_pb_contact_form_0.et_pb_contact_form_container.et_pb_module .et_pb_button {
+  color: #ffffff !important;
+  border-width: 0px !important;
+  font-weight: 700 !important;
+  background-color: #04c7da
+}
+
+.et_pb_contact_field_3.et_pb_contact_field .et_pb_contact_field_options_title, .et_pb_contact_form_container .et_pb_contact_field_3.et_pb_contact_field .input, .et_pb_contact_form_container .et_pb_contact_field_3.et_pb_contact_field .input::placeholder, .et_pb_contact_form_container .et_pb_contact_field_3.et_pb_contact_field .input[type=checkbox] + label, .et_pb_contact_form_container .et_pb_contact_field_3.et_pb_contact_field .input[type=radio] + label {
+  text-align: center
+}
+
+.et_pb_contact_form_container .et_pb_contact_field_3.et_pb_contact_field .input::-webkit-input-placeholder {
+  text-align: center
+}
+
+.et_pb_contact_form_container .et_pb_contact_field_3.et_pb_contact_field .input::-moz-placeholder {
+  text-align: center
+}
+
+.et_pb_contact_form_container .et_pb_contact_field_3.et_pb_contact_field .input:-ms-input-placeholder {
+  text-align: center
+}
+
+.et_pb_contact_field_3 input, .et_pb_contact_field_3 textarea, .et_pb_contact_field_3 label {
+  text-align: center
+}
+
+.et_pb_image_0.et_pb_module {
+  margin-left: auto !important;
+  margin-right: auto !important
+}
+
+@media only screen and (min-width: 981px) {
+  .et_pb_row_0, body #page-container .et-db #et-boc .et-l .et_pb_row_0.et_pb_row, body.et_pb_pagebuilder_layout.single #page-container #et-boc .et-l .et_pb_row_0.et_pb_row, body.et_pb_pagebuilder_layout.single.et_full_width_page #page-container #et-boc .et-l .et_pb_row_0.et_pb_row {
+    width: 100%
+  }
+}
+
+@media only screen and (max-width: 980px) {
+  .et_pb_row_0.et_pb_row {
+    margin-top: -91px !important
+  }
+
+  .et_pb_row_0, body #page-container .et-db #et-boc .et-l .et_pb_row_0.et_pb_row, body.et_pb_pagebuilder_layout.single #page-container #et-boc .et-l .et_pb_row_0.et_pb_row, body.et_pb_pagebuilder_layout.single.et_full_width_page #page-container #et-boc .et-l .et_pb_row_0.et_pb_row {
+    width: 100%
+  }
+
+  .et_pb_image_0 {
+    margin-left: auto;
+    margin-right: auto
+  }
+
+  body #page-container .et_pb_section .et_pb_cta_0.et_pb_promo .et_pb_promo_button.et_pb_button {
+    padding-left: 1em;
+    padding-right: 1em
+  }
+
+  body #page-container .et_pb_section .et_pb_cta_0.et_pb_promo .et_pb_promo_button.et_pb_button:hover {
+    padding-left: 0.7em;
+    padding-right: 2em
+  }
+
+  body #page-container .et_pb_section .et_pb_cta_0.et_pb_promo .et_pb_promo_button.et_pb_button:after {
+    line-height: inherit;
+    font-size: inherit !important;
+    margin-left: -1em;
+    left: auto;
+    display: inline-block;
+    opacity: 0;
+    content: attr(data-icon);
+    font-family: "ETmodules" !important
+  }
+
+  body #page-container .et_pb_section .et_pb_cta_0.et_pb_promo .et_pb_promo_button.et_pb_button:before {
+    display: none
+  }
+
+  body #page-container .et_pb_section .et_pb_cta_0.et_pb_promo .et_pb_promo_button.et_pb_button:hover:after {
+    margin-left: .3em;
+    left: auto;
+    margin-left: .3em;
+    opacity: 1
+  }
+
+  body #page-container .et_pb_section .et_pb_contact_form_0.et_pb_contact_form_container.et_pb_module .et_pb_button {
+    padding-left: 1em;
+    padding-right: 1em
+  }
+
+  body #page-container .et_pb_section .et_pb_contact_form_0.et_pb_contact_form_container.et_pb_module .et_pb_button:hover {
+    padding-left: 0.7em;
+    padding-right: 2em
+  }
+
+  body #page-container .et_pb_section .et_pb_contact_form_0.et_pb_contact_form_container.et_pb_module .et_pb_button:after {
+    display: inline-block;
+    opacity: 0
+  }
+
+  body #page-container .et_pb_section .et_pb_contact_form_0.et_pb_contact_form_container.et_pb_module .et_pb_button:hover:after {
+    opacity: 1
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .et_pb_row_0.et_pb_row {
+    margin-top: 0px !important
+  }
+
+  .et_pb_image_0 {
+    margin-left: auto;
+    margin-right: auto
+  }
+
+  body #page-container .et_pb_section .et_pb_cta_0.et_pb_promo .et_pb_promo_button.et_pb_button {
+    padding-left: 1em;
+    padding-right: 1em
+  }
+
+  body #page-container .et_pb_section .et_pb_cta_0.et_pb_promo .et_pb_promo_button.et_pb_button:hover {
+    padding-left: 0.7em;
+    padding-right: 2em
+  }
+
+  body #page-container .et_pb_section .et_pb_cta_0.et_pb_promo .et_pb_promo_button.et_pb_button:after {
+    line-height: inherit;
+    font-size: inherit !important;
+    margin-left: -1em;
+    left: auto;
+    display: inline-block;
+    opacity: 0;
+    content: attr(data-icon);
+    font-family: "ETmodules" !important
+  }
+
+  body #page-container .et_pb_section .et_pb_cta_0.et_pb_promo .et_pb_promo_button.et_pb_button:before {
+    display: none
+  }
+
+  body #page-container .et_pb_section .et_pb_cta_0.et_pb_promo .et_pb_promo_button.et_pb_button:hover:after {
+    margin-left: .3em;
+    left: auto;
+    margin-left: .3em;
+    opacity: 1
+  }
+
+  body #page-container .et_pb_section .et_pb_contact_form_0.et_pb_contact_form_container.et_pb_module .et_pb_button {
+    padding-left: 1em;
+    padding-right: 1em
+  }
+
+  body #page-container .et_pb_section .et_pb_contact_form_0.et_pb_contact_form_container.et_pb_module .et_pb_button:hover {
+    padding-left: 0.7em;
+    padding-right: 2em
+  }
+
+  body #page-container .et_pb_section .et_pb_contact_form_0.et_pb_contact_form_container.et_pb_module .et_pb_button:after {
+    display: inline-block;
+    opacity: 0
+  }
+
+  body #page-container .et_pb_section .et_pb_contact_form_0.et_pb_contact_form_container.et_pb_module .et_pb_button:hover:after {
+    opacity: 1
+  }
+}</style>
+</body>
+</html>

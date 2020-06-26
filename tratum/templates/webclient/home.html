@@ -1,0 +1,312 @@
+{% extends 'webclient/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/easy-autocomplete.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/css/swiper.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+{% endblock %}
+
+{% block nav_class %}
+    class="navbar scrolled fixed-top"
+{% endblock %}
+
+{% block menu_custom_class %}hidden{% endblock menu_custom_class %}
+
+{% block content %}
+  <div class="modal fade" id="homeVideoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog large" role="document">
+      <i class="fas fa-times-circle" data-dismiss="modal"></i>
+      <div class="modal-content">
+        <div class="modal-body">
+          <iframe width="100%" height="500px" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="loadingAnimation">
+    <img src="{% static 'img/loadingSite.gif' %}" />
+    <p>Cargando...</p>
+  </div>
+
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      {% for s in context_slides %}
+        <div class="swiper-slide">
+          <div class="swiper-mask-left"></div>
+          <div class="swiper-mask-right"></div>
+          <div class="description text-center">
+            <h1>{{s.text|default_if_none:""}}</h1>
+            <p>{{s.description|default_if_none:""}}</p>
+            {% if s.youtube_video_link %}
+              <a class="video-trigger" data-toggle="modal" data-target="#homeVideoModal" data-embed="{{s.youtube_video_link}}">
+                <i class="fas fa-play-circle"></i>
+              </a>
+            {% endif %}
+          </div>
+          <img src="{{s.image.url}}">
+        </div>
+      {% endfor %}
+    </div>
+    <div class="swiper-pagination"></div>
+    <div class="search-landing">
+      <input type="search" placeholder="Busca tus documentos..." id="search_documents">
+      <div id="result-list">
+
+      </div>
+    </div>
+  </div>
+
+  {% for category in main_categories %}
+    {% if forloop.counter|divisibleby:2 %}
+    <div class="row categories">
+      <div class="col-md-6 order-2 order-md-1 category-description left">
+          <div class="container">
+
+              <h2>{{ category.title }}</h2>
+              <p>{{ category.description }}</p>
+              <a class="action-button__primary" href="{{ category.button_url }}">{{ category.button_title }}</a>
+          </div>
+        </div>
+      <div class="col-md-6 order-1 order-md-2 category-parallax" style="background-image: url('{{ category.image.url }}');">
+      </div>
+    </div>
+    {% else %}
+    <div class="row categories">
+      <div class="col-md-6 order-1 category-parallax" style="background-image: url('{{ category.image.url }}');">
+      </div>
+      <div class="col-md-6 order-2 category-description">
+        <div class="container">
+            <h2>{{ category.title }}</h2>
+            <p>{{ category.description }}</p>
+            <a class="action-button__primary" href="{{ category.button_url }}">{{ category.button_title }}</a>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+  {% endfor %}
+
+  <div class="row categories how-to">
+    <div class="col-md-8 category-description left">
+        <div class="container">
+            <h2>¿CÓMO CREAR UN DOCUMENTO?</h2>
+            <ul>
+              <li>
+                <span class="indicator">1</span>
+                <span>Inicia sesión o regístrate en la plataforma.</span>
+              </li>
+              <li>
+                <span class="indicator">2</span>
+                <span>Ingresa a nuestra tienda y selecciona el documento que necesitas.</span>
+              </li>
+              <li>
+                <span class="indicator">3</span>
+                <span>Realiza el pago por cualquiera de los canales que tenemos dispuestos para ti.</span>
+              </li>
+              <li>
+                <span class="indicator">4</span>
+                <span>Diligencia el formulario del documento de acuerdo a tus necesidades.</span>
+              </li>
+              <li>
+                <span class="indicator">5</span>
+                <span>Finaliza el documento cuando hayas terminado y lo enviaremos a tu correo electrónico en formato pdf o .docx.</span>
+              </li>
+            </ul>
+        </div>
+      </div>
+    <div class="col-md-4">
+        <div class="container-flex flex-column justify-content-center" style="padding-right: 25%; padding-top: 15%;">
+            <img src="{% static 'img/steps.png' %}" width="100%" />
+        </div>
+
+    </div>
+  </div>
+
+  <div class="row contract-info p-3">
+    <div class="col-md-6">
+      <img src="{% static 'img/Web2-40.png' %}" width="100%" />
+    </div>
+    <div class="col-md-6">
+      <div class="container-flex flex-column justify-content-center" style="margin-top: 25px;">
+        <h2>¿Por qué construir un contrato responsablemente?</h2>
+        <p style="text-align:justify;">{{landing_contract_info|linebreaksbr}}</p>
+        <a class="action-button__primary" href="/documents/">Ir a Tienda de documentos</a>
+      </div>
+    </div>
+  </div>
+
+
+  {% if context_bundles %}
+  <div class="row bundles">
+    <div class="container">
+      <div class="col text-center">
+        <div class="container">
+            <h2>Paquetes</h2>
+            <span class="counter">{{context_bundle_count}} disponibles</span>
+            <p>{{ landing_bundles_info|linebreaksbr }}</p>
+        </div>
+        <div class="row">
+          {% for i in context_bundles %}
+            <div class="col-lg-4 h-50">
+                <div class="bundle
+                  {% if forloop.counter == 2 %}
+                    dark-blue
+                  {% else %}
+                    {% if forloop.counter == 3 %}
+                      light-yellow
+                    {% endif %}
+                  {% endif %}">
+                  <span class="name">{{i.name}}</span>
+                  <span class="pricetag">${{i.price|intcomma}}</span>
+                  <div class="documents">
+                    <span class="title">Documentos del paquete</span>
+                    {% for d in i.documents.all %}
+                      <span class="document">{{d.name}}</span>
+                    {% endfor %}
+                  </div>
+
+                  {% if user.is_authenticated %}
+                     {%if i.price is None or i.price == 0%}
+                        <form method="GET" action="{% url 'store:create_user_bundle' %}">
+                        <input type="hidden" name="pack_id" value="{{i.id}}">
+                        <button type="submit" class="btn btn-primary">Comprar</button>
+                      </form>
+                     {% else %}
+                       <form method="GET" action="{% url 'store:checkout' %}">
+                        <input type="hidden" name="pack_id" value="{{i.id}}">
+                        <button type="submit" class="btn btn-primary">Comprar</button>
+                      </form>
+                     {% endif %}
+
+                  {% else %}
+                    <button data-toggle="modal" data-target="#modal-login" class="btn btn-primary">Comprar</button>
+                  {% endif %}
+                </div>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="row">
+          <a class="action-button__primary" href="/documents/?package=true">Ver todos</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+
+  <div class="row contact-form">
+    <div class="col text-center">
+      <h5 class="text-white">Contáctanos</h5>
+      <form id="contact_form" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+          <input required name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nombre" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <input required name="email" type="email" class="form-control" id="exampleInputEmail2" placeholder="Correo electrónico" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <textarea required name="message" class="form-control" placeholder="Mensaje" autocomplete="off"></textarea>
+        </div>
+        <div class="g-recaptcha" data-sitekey="6LdqLn0UAAAAAKildIXZzJZicplDzL7RJLOomOSr"></div>
+        <div class="form-group">
+          <button type="submit" id="contact_form_submit" class="action-button__primary">Enviar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/jquery.disableAutoFill.min.js' %}"></script>
+    <script>
+      window.onload = function(){ document.getElementById("loadingAnimation").style.display = "none" }
+      $("#contact_form").disableAutoFill();
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
+    <script
+    src="https://code.jquery.com/color/jquery.color-2.1.2.min.js"
+    integrity="sha256-H28SdxWrZ387Ldn0qogCzFiUDDxfPiNIyJX7BECQkDE="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.3/js/swiper.min.js"></script>
+    <script>
+      window.scrollTo(0, 0);
+
+
+
+
+      var mySwiper = new Swiper ('.swiper-container', {
+          direction: 'horizontal',
+          loop: true,
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+          pagination: {
+            el: '.swiper-pagination',
+          },
+          autoplay: {
+            delay: 5000,
+          }
+      })
+
+      $('.swiper-mask-left').on('click', function(){
+        mySwiper.slidePrev();
+      })
+
+      $('.swiper-mask-right').on('click', function(){
+        mySwiper.slideNext();
+      })
+
+      $('.video-trigger').on('click', function(event) {
+        var embedUrl = $(this).data('embed');
+        var modal = $('#homeVideoModal');
+        modal.find('iframe').attr('src', embedUrl);
+      })
+
+      $('.cookiepolicy-close').on('click', function(){
+        $('.cookiepolicy-info').hide();
+      })
+
+      var list = {
+        url: "{% url 'document_manager:main-document-list' %}",
+        getValue: "name",
+        list: {
+          match: {
+            enabled: true
+          },
+          onSelectItemEvent: function() {
+            var value = $("#search_documents").getSelectedItemData().name;
+            window.location.href = `/documents?q=${value}`
+          }
+        }
+      }
+
+      $("#search_documents").easyAutocomplete(list);
+
+      $('#search_documents').on('keyup', function(e){
+        if (e.keyCode === 13) {
+          window.location.href = `/documents?q=${$(this).val()}`
+        }
+      })
+
+      function cookieChecker() {
+        if (document.cookie.replace(/(?:(?:^|.*;\s*)cookiePolicyAccepted\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
+          $('.cookiepolicy-info').show();
+          document.cookie = "cookiePolicyAccepted=true; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+        }
+      }
+
+
+
+      cookieChecker();
+    </script>
+{% endblock %}

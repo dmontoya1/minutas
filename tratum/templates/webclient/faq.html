@@ -1,0 +1,55 @@
+{% extends 'webclient/base.html' %}
+{% load static %}
+
+{% block nav_class %}
+    class="navbar scrolled fixed-top"
+{% endblock %}
+
+{% block title %}
+  <title>Tratum, {{name}}</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container pt-20"
+        <div class="row">
+            <input style="margin: 10px auto;" type="text" class="form-control" name="" id="searcher" aria-describedby="helpId" placeholder="Buscar">
+        </div>
+    </div>
+  <div class="container" id="faq">
+    {% for f in faq_categories %}
+        <div class="row qc-title">
+            <div class="col-sm-12 text-center qc mt-2">
+                {{f.name}}
+            </div>
+        </div>
+        <div class="faq-content">
+        {% for i in f.faqitem_set.all %}
+            <div class="row content {% if forloop.last %}last{% endif %}">
+                <div class="col-sm-12 q-title" data-id="{{i.pk}}">
+                    {{i.question}}
+                    <i class="fas fa-caret-down float-right"></i>
+                </div>
+                <div class="col-sm-12 q-answer" data-question="{{i.pk}}">
+                    {{i.answer|linebreaksbr}}
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    {% endfor %}
+  </div>
+{% endblock content %}
+
+{% block extra_js %}
+    <script>
+        $(document).ready(function(){
+            $("#searcher").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $(".faq-content .row.content").filter(function() {
+                    var title = $(this).find('.q-title').text().toLowerCase();
+                    var content = $(this).find('.q-answer').text().toLowerCase();
+                    $(this).toggle(title.indexOf(value) > -1 || content.indexOf(value) > -1);
+                });
+            });
+        });
+    </script>
+{% endblock extra_js %}

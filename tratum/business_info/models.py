@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 
-from ckeditor.fields import RichTextField
+from tratum.ckeditor.fields import RichTextField
 
 
 class Policy(models.Model):
@@ -91,6 +91,55 @@ class FAQItem(models.Model):
         return self.question
 
 
+class GlossaryCategory(models.Model):
+    """Guarda las categorías del Glosario
+
+    Campos del modelo:
+        name: Nombre de la categoría
+
+    """
+
+    name = models.CharField(
+        'Nombre',
+        max_length=30,
+        unique=True
+    )
+
+    class Meta:
+        verbose_name = 'Glosario'
+
+    def __str__(self):
+        return self.name
+
+
+class GlossaryItem(models.Model):
+    """Guardas las entradas del glosario, por categoria
+
+    Campos del modelo:
+        category: Llave foránea nula a categoría
+        word: Palabra
+        meaning: Texto del significado
+
+    """
+
+    category = models.ForeignKey(
+        GlossaryCategory,
+        models.SET_NULL,
+        null=True,
+        blank=True
+    )
+    word = models.CharField('Palabra', max_length=100, unique=True)
+    meaning = models.TextField('Significado')
+
+    class Meta:
+        verbose_name = 'Item de glosario'
+        verbose_name_plural = 'Items de glosario'
+        ordering = ['word',]
+
+    def __str__(self):
+        return self.word
+
+
 class SiteConfig(models.Model):
     """Guarda la información del sitio estático (Landing page y quienes sómos)
 
@@ -135,6 +184,11 @@ class SiteConfig(models.Model):
         null=True,
         blank=True
     )
+    landing_bundles_info = models.TextField(
+		'Paquetes(landing)',
+        null=True,
+        blank=True
+    )
     facebook_url = models.URLField(
 		'URL Facebook (landing)',
         null=True,
@@ -150,10 +204,37 @@ class SiteConfig(models.Model):
         null=True,
         blank=True
     )
+
+    youtube_url = models.URLField(
+        'URL Youtube (landing)',
+        null=True,
+        blank=True
+    )
+
     meta_tags = models.TextField(
 		'Tags de SEO y SEM',
         null=True,
         blank=True
+    )
+
+    terms_file = models.FileField(
+        upload_to='legal',
+        blank=True,
+        null=True
+    )
+
+    terms_file = models.FileField(
+        'Documento de términos y condiciones',
+        upload_to='legal',
+        blank=True,
+        null=True
+    )
+
+    data_policy_file = models.FileField(
+        'Documento de política de tratamiento de datos',
+        upload_to='legal',
+        blank=True,
+        null=True
     )
 
     class Meta:
@@ -162,7 +243,7 @@ class SiteConfig(models.Model):
 
     def __str__(self):
         return 'Registro de configuración de sitio'
-    
+
     def clean(self):
         """Retorna ValidationError si se intenta crear más de una instancia
         """
@@ -201,3 +282,33 @@ class SliderItem(models.Model):
     def __str__(self):
         return 'Slide '
 
+
+class MainCategory(models.Model):
+    title = models.CharField(
+        'Título de categoría',
+        max_length=100,
+    )
+    image = models.ImageField(
+        'Imagen',
+        upload_to='main_categories',
+        help_text='La resolución es 1920 x 1080p'
+    )
+    description = models.TextField(
+        'Descripción',
+        null=True,
+        blank=True
+    )
+    button_title = models.CharField(
+        'Título de botón (para home)',
+        max_length=100
+    )
+    button_url = models.URLField(
+        'URL para botón de categoría'
+    )
+
+    class Meta:
+        verbose_name = 'Categoría principal'
+        verbose_name_plural = 'Categorías principales'
+
+    def __str__(self):
+        return 'Slide '

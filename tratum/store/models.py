@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import uuid
 import datetime
 import time
 
@@ -10,10 +9,11 @@ from django.contrib.auth.models import User
 from django.contrib.postgres.fields import JSONField
 from django.core.exceptions import ValidationError
 from django.urls import reverse
+from django_extensions.db.fields import AutoSlugField
+from django.utils import timezone
 
-from utils.models import SoftDeletionModelMixin
-
-from document_manager.models import Document
+from tratum.utils.models import SoftDeletionModelMixin
+from tratum.document_manager.models import Document
 
 
 class DocumentBundle(SoftDeletionModelMixin):
@@ -47,7 +47,7 @@ class DocumentBundle(SoftDeletionModelMixin):
         return self.name
 
     class Meta:
-        verbose_name = 'Paquete de documento'   
+        verbose_name = 'Paquete de documento'
         verbose_name_plural = 'Paquetes de documentos'
 
     def clean(self):
@@ -55,14 +55,14 @@ class DocumentBundle(SoftDeletionModelMixin):
         """
 
         model = self.__class__
-        if (model.objects.filter(show_on_landing=True).exclude(pk=self.pk).count() >= 3 and 
+        if (model.objects.filter(show_on_landing=True).exclude(pk=self.pk).count() >= 3 and
                 self.show_on_landing is True):
             raise ValidationError(
                 "Sólo se puede agregar 3 paquetes a la landing.")
 
     def get_docs_count(self):
         return self.documents.count()
-    
+
 
 class UserDocument(models.Model):
     CREATED = 'CR'
@@ -77,7 +77,7 @@ class UserDocument(models.Model):
         (EXPIRED, 'Caducado'),
     )
 
-    user = models.ForeignKey(   
+    user = models.ForeignKey(
         User,
         verbose_name='Usuario',
         null=True,
@@ -99,8 +99,10 @@ class UserDocument(models.Model):
         choices=STATUS_CHOICES,
         default=PURCHASED
     )
-    identifier = models.UUIDField(
-        default=uuid.uuid4, 
+    identifier = AutoSlugField(
+        populate_from=['document__name'],
+        overwrite=False,
+        unique=True,
         editable=False
     )
     created_at = models.DateTimeField(auto_now_add=True)
@@ -132,34 +134,32 @@ class UserDocument(models.Model):
 
     def __str__(self):
         return str(self.pk)
-    
+
     def get_absolute_url(self):
         return reverse('webclient:user-document', kwargs={'identifier': self.identifier})
-    
+
     def is_expired(self):
-        return False
-        created_at = datetime.datetime.strptime(self.created_at, "%Y-%m-%d") 
-        diff = abs((datetime.datetime.now() - created_at).days)
-        print(diff)
+        diff = abs((timezone.now() - self.created_at).days)
         if diff > 10:
-            return False
-        return True
+            return True
+        return False
 
 
 class Invoice(models.Model):
     """Guarda las facturas a cada usuario.
     """
-
     APPROVED = 'AP'
-    PENDING  = 'PE'
-    CANCEL  = 'CA'
-    REJECTED  = 'RE'
+    PENDING = 'PE'
+    CANCEL = 'CA'
+    REJECTED = 'RE'
+    ERROR = 'ER'
 
     STATUS = (
         (APPROVED, 'Aprobada'),
-        (PENDING,  'Pendiente'),
-        (CANCEL,  'Cancelada'),
-        (REJECTED,  'Rechazada'),
+        (PENDING, 'Pendiente'),
+        (CANCEL, 'Cancelada'),
+        (REJECTED, 'Rechazada'),
+        (ERROR, 'Error')
     )
 
     user = models.ForeignKey(
@@ -206,20 +206,19 @@ class Invoice(models.Model):
 
     def __unicode__(self):
         return self.get_identifier()
-    
+
     def get_identifier(self):
         return '{}{}'.format(
             self.pk,
             int(time.mktime(self.payment_date.timetuple()))
         )
-    
+
     def get_purchased_element(self):
         if self.document:
             return self.document.name
         if self.package:
             return self.package.name
         return None
-    
 
     def save(self, *args, **kwargs):
         if self.payu_reference_code:

@@ -1,0 +1,96 @@
+{% extends 'webclient/base.html' %}
+{% load static %}
+
+{% block nav_class %}
+    class="navbar scrolled fixed-top"
+{% endblock %}
+
+{% block title %}
+  <title>Tratum, {{name}}</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-3 mb-5 pt-20">
+        <div class="row">
+            <div class="row">
+                <div class="col s12">
+                    <div class="terms-conditions">
+                        Para continuar usted debe aceptar los Términos y condiciones y la Politica de tratamientode datos de <strong>Tratum</strong>
+                    </div>
+                    <br>
+                    <button class="btn btn-accept accept_terms">Aceptar y continuar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <h2 class="flow-text">{{ terms_name }}</h2>
+        <p id="police">
+            {{ terms_content|safe }}
+        </p>
+    </div>
+    <div class="container">
+        <h2 class="flow-text">{{ police_name }}</h2>
+        <p id="police">
+            {{ police_content|safe }}
+        </p>
+    </div>
+    <br>
+    <div class="container mt-3 mb-5">
+        <div class="row">
+            <div class="col s12">
+                <div class="terms-conditions">
+                    Para continuar usted debe aceptar los Términos y condiciones y la Politica de tratamientode datos de <strong>Tratum</strong>
+                </div>
+                <br>
+                <a class="btn" href="{% url 'webclient:logout' %}">Cerrar Sesión</a>
+                <button class="btn btn-accept accept_terms">Aceptar y continuar</button>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block extra_js %}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.26.10/dist/sweetalert2.all.min.js"></script>
+
+    <script type="text/javascript">
+
+        (function($) {
+            swal({
+                title: "¡Atención!",
+                html: '<div class="container mt-3 mb-5">' +
+                    '<div class="row">' +
+                        '<div class="col s12">' +
+                            '<div class="terms-conditions">' +
+                                '<label for="terms" style="color:#000;">' +
+                                'Para continuar usted debe aceptar los Términos y condiciones y la Politica de tratamiento de datos de <strong>Tratum</strong>' +
+                            '</div>' +
+                            '<br>' +
+                            '<button class="btn btn-accept accept_terms">Aceptar y continuar</button>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>',
+                confirmButtonText: 'Leer',
+            });
+            $(".accept_terms").on("click", function(){
+                $.ajax({
+                    url: "{% url 'api:users:user-detail' %}",
+                    headers: {'Api-Key': '{{Api_Key}}',
+                                'Authorization': 'Token {{user_token}}' },
+                    type: 'PATCH',
+                    data: {
+                        'terms_and_conditions':true,
+                    },
+                    success: function(data) {
+                        window.location.href = "{% url 'webclient:category_documents' path='' %}"
+                    },
+                    error: function(data){
+                        json = JSON.parse(data.responseText);
+                        swal("Atención", json[0].detail, "error");
+                    }
+                });
+
+            });
+        })(jQuery);
+    </script>
+{% endblock %}

@@ -18,7 +18,7 @@ class FAQItemSerializer(serializers.ModelSerializer):
 
 class FAQCategorySerializer(serializers.ModelSerializer):
     faqitem_set = FAQItemSerializer(
-        many=True, 
+        many=True,
         read_only=True
     )
 

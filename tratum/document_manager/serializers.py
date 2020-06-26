@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import (
     DocumentField,
     DocumentSection,
-    Document, 
+    Document,
     Category
 )
 
@@ -35,13 +35,13 @@ class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ('id','name', 'slug', 'url')
+        fields = ('id', 'name', 'slug', 'url')
 
 
 class DocumentSerializer(serializers.ModelSerializer):
 
     category = CategorySerializer(many=False, read_only=True)
-    
+
     class Meta:
         model = Document
-        fields = ('id', 'name', 'short_description', 'long_description', 'category', 'price', 'video_url' )
+        fields = ('id', 'name', 'short_description', 'long_description', 'category', 'price', 'video_url')

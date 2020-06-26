@@ -1,0 +1,22 @@
+www.{$DOMAIN_NAME} {
+    redir https://{$DOMAIN_NAME}
+}
+
+tratum.com.co {
+    redir https://{$DOMAIN_NAME}
+}
+
+{$DOMAIN_NAME} {
+    proxy / django:5000 {
+        header_upstream Host {host}
+        header_upstream X-Real-IP {remote}
+        header_upstream X-Forwarded-Proto {scheme}
+        transparent
+        except /static /media
+    }
+
+    root /var/www/
+    log stdout
+    errors stdout
+    gzip
+}

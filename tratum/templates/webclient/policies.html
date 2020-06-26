@@ -1,0 +1,39 @@
+{% extends 'webclient/base.html' %}
+{% load static %}
+
+{% block nav_class %}
+    class="navbar scrolled fixed-top"
+{% endblock %}
+
+{% block title %}
+  <title>Tratum, {{name}}</title>
+{% endblock %}
+
+{% block content %}
+
+      <div class="container pt-20">
+        <div class="row my-5">
+          <div class="col-12">
+            <h1 class="text-center">{{name}}</h1>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+              {{content|safe}}
+            </div>
+        </div>
+      </div>
+  
+      {% if pdf_url %}
+        <div class="row">
+          <div class="col-12" style="text-align: center">
+            <a class="action-button__primary" style="display:inline-block" href="{{ pdf_url }}" download>Descargar PDF</a>
+          </div>
+        </div>
+      {% endif %}
+
+{% endblock content %}
+
+{% block scripts %}
+{% endblock scripts %}

@@ -2,22 +2,18 @@
 from __future__ import unicode_literals
 
 import re
-import os 
-import uuid
-import pprint
 
-from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
 from django.urls import reverse
 
 from mptt.models import MPTTModel, TreeForeignKey
-from ckeditor.fields import RichTextField
+from tratum.ckeditor.fields import RichTextField
 from embed_video.fields import EmbedVideoField
 from smart_selects.db_fields import ChainedForeignKey, ChainedManyToManyField
 
-from utils.models import SoftDeletionModelMixin, SlugIdentifierMixin
+from tratum.utils.models import SoftDeletionModelMixin, SlugIdentifierMixin
 
 
 class Category(MPTTModel, SoftDeletionModelMixin, SlugIdentifierMixin):
@@ -25,7 +21,7 @@ class Category(MPTTModel, SoftDeletionModelMixin, SlugIdentifierMixin):
 
     Campos del modelo:
         name: Nombre de la categoría
-        parent: Para la estructura por árboles de la librería MPTT, indica el nodo 
+        parent: Para la estructura por árboles de la librería MPTT, indica el nodo
         padre de la categoría si ésta lo requiere, de lo contrario (si el campo es nulo),
         indicará que la categoría es una categoría principal.
 
@@ -38,7 +34,7 @@ class Category(MPTTModel, SoftDeletionModelMixin, SlugIdentifierMixin):
     )
     parent = TreeForeignKey(
         'self',
-        on_delete=models.CASCADE, 
+        on_delete=models.CASCADE,
         null=True,
         blank=True,
         related_name='children',
@@ -54,12 +50,12 @@ class Category(MPTTModel, SoftDeletionModelMixin, SlugIdentifierMixin):
 
     class MPTTMeta:
         order_insertion_by = ['name']
-    
+
     def clean(self):
         if self.parent:
             if self.parent.get_children().count() == 3:
                 raise ValidationError('Las categorías sólo pueden tener hasta 4 niveles de profundidad')
-        
+
     def get_absolute_url(self):
         # return reverse('webclient:category-documents', kwargs={'slug': self.slug})
         return reverse('webclient:category_documents', kwargs={'path': self.get_path()})
@@ -72,9 +68,9 @@ class Category(MPTTModel, SoftDeletionModelMixin, SlugIdentifierMixin):
         return i
 
 
-class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
+class Document(SlugIdentifierMixin, models.Model):
     """Guarda las documentos.
-    
+
     Campos del modelo:
         name: Nombre del documento
         category: Categoría a la que pertenece el documento
@@ -104,7 +100,7 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        verbose_name='Categoría',      
+        verbose_name='Categoría',
     )
     template_path = models.TextField(
         null=True,
@@ -123,7 +119,7 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
     )
     content = RichTextField(
         'Contenido',
-        null=True, 
+        null=True,
         blank=True
     )
     video_url = EmbedVideoField(
@@ -133,23 +129,26 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
     )
     file = models.FileField(
         'Documento de archivo',
-        help_text='Si subes una archivo aquí, indicas que el documento no será un formulario, si no un archivo descargable. Ej: Liquidador de excel',
+        help_text='''Si subes una archivo aquí, indicas que el documento no será un formulario,
+                     si no un archivo descargable. Ej: Liquidador de excel''',
         upload_to='filedocuments',
         null=True,
         blank=True
     )
- 
+
+    is_active = models.BooleanField(default=False)
+
     class Meta:
         verbose_name = 'Documento'
         unique_together = ('category', 'order')
 
     def __str__(self):
-        return self.name     
+        return self.name
 
     def get_absolute_url(self):
         return reverse('webclient:document', kwargs={'slug': self.slug})
 
-    def query_component(self, slug: str):
+    def query_component(self, slug):
         slug = self.formated_to_raw_slug(slug)
         try:
             component = self.documentfield_set.get(slug=slug)
@@ -163,8 +162,8 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
                 component = None
         return component
 
-    def get_components(self, type_: str):
-        c = str(self.content)        
+    def get_components(self, type_):
+        c = str(self.content)
         fields = []
         sections = []
         result = []
@@ -199,12 +198,12 @@ class Document(SoftDeletionModelMixin, SlugIdentifierMixin):
             if f in on_document_fields:
                 result.append(f)
         return result
-    
+
     def get_sections(self):
-        return self.get_components('sections') 
-    
+        return self.get_components('sections')
+
     def is_file_document(self):
-        if self.file: 
+        if self.file:
             return True
         return False
 
@@ -214,7 +213,7 @@ class DocumentSection(SlugIdentifierMixin):
 
     Campos del modelo:
         name: Nombre del campo
-        content: Contenido enriquecido 
+        content: Contenido enriquecido
         document: Lláve foránea al documento
 
     """
@@ -241,20 +240,18 @@ class DocumentSection(SlugIdentifierMixin):
         blank=True,
         null=True
     )
-    
+
     class Meta:
         verbose_name = 'Sección'
         verbose_name_plural = 'Secciones'
         unique_together = ('name', 'document')
 
     def __str__(self):
-        return self.name 
-    
+        return self.name
+
     def get_fields(self):
         return self.documentfield_set.all().exclude(
-            Q(field_group__isnull=False)
-            & ~Q(field_type=DocumentField.GROUP) 
-            | Q(linkedfields_set__isnull=False)
+            Q(field_group__isnull=False) & ~Q(field_type=DocumentField.GROUP) | Q(linkedfields_set__isnull=False)
         )
 
 
@@ -264,11 +261,11 @@ class DocumentField(SlugIdentifierMixin):
     Campos del modelo:
         name: Nombre del campo
         help_text: Texto de ayuda para el usuario final
-        youtube_help_video_link: URL del video de Youtube para el video de ayuda 
+        youtube_help_video_link: URL del video de Youtube para el video de ayuda
         del usuario final
         document: Lláve foránea al documento
-        
-    """ 
+
+    """
 
     NUMBER = 'NU'
     PRICE = 'PR'
@@ -319,7 +316,7 @@ class DocumentField(SlugIdentifierMixin):
         max_length=2,
         default=TEXT,
         choices=FIELD_TYPE
-    ) 
+    )
     document = models.ForeignKey(
         Document,
         on_delete=models.CASCADE,
@@ -341,8 +338,10 @@ class DocumentField(SlugIdentifierMixin):
         help_text='Indica el orden de aparición del campo en el formulario',
         default=0
     )
-    field_group = models.ManyToManyField(
+    field_group = ChainedManyToManyField(
         'self',
+        chained_field="document",
+        chained_model_field="document",
         blank=True,
         verbose_name='Campos del grupo',
         help_text='Para campos agrupados, indica que campos hacen parte del grupo'
@@ -372,10 +371,10 @@ class DocumentField(SlugIdentifierMixin):
         help_text='Si desactivas esta opción, la pregunta aparecerá en el formulario, pero no en el documento',
         default=True
     )
-    
+
     class Meta:
         verbose_name = 'Campo'
-        unique_together = ('name', 'document') 
+        unique_together = ('name', 'document')
         ordering = ['order', 'document']
 
     def __str__(self):
@@ -388,10 +387,13 @@ class DocumentField(SlugIdentifierMixin):
             raise ValidationError('Tu campo no puede pertenecer a un documento y a una sección simultáneamente')
         if not self.document and not self.section:
             raise ValidationError('Selecciona un documento o una sección para éste campo')
-    
+
     def is_text_input(self):
         return self.field_type in (self.TEXT, self.DATE, self.NUMBER, self.NATURAL_DATE, self.PRICE)
-    
+
+    def is_open_text(self):
+        return self.field_type == self.TEXT
+
     def is_date_input(self):
         return self.field_type in (self.DATE, self.NATURAL_DATE)
 
@@ -402,7 +404,7 @@ class DocumentField(SlugIdentifierMixin):
             return 'date'
         elif self.field_type == self.NUMBER:
             return 'number'
-    
+
     def get_ordered_group_fields(self):
         return self.field_group.all().order_by('group_order')
 
@@ -411,13 +413,13 @@ class DocumentField(SlugIdentifierMixin):
         if option.count() > 0:
             return 'linked'
         return ''
-    
+
     def get_linked_parent(self):
         option = DocumentFieldOption.objects.filter(linked_fields__pk=self.pk)
         if option.count() > 0:
             return option.last().pk
         return ''
-    
+
     def get_linked_question(self):
         option = DocumentFieldOption.objects.filter(linked_fields__pk=self.pk)
         if option.count() > 0:
@@ -447,24 +449,34 @@ class DocumentFieldOption(models.Model):
         sort=True,
         verbose_name='Campo al que pertenece la opción'
     )
-    linked_fields = models.ManyToManyField(
+    linked_fields = ChainedManyToManyField(
         DocumentField,
+        chained_field="document",
+        chained_model_field="document",
+        auto_choose=False,
+        horizontal=False,
         blank=True,
         related_name='linkedfields_set',
         verbose_name='Campos de la opción (si aplica)'
     )
 
+    order = models.PositiveIntegerField(
+        'Orden de campo en el formulario',
+        help_text='Indica el orden de aparición del campo en el formulario',
+        default=0
+    )
+
     class Meta:
         verbose_name = 'Opción'
         verbose_name_plural = 'Opciones'
+        ordering = ['order']
 
     def __str__(self):
-        return self.name 
-    
+        return self.name
+
     def clean(self):
-        if self.field.is_text_input():
-            raise ValidationError('El campo debe ser tipo "Opciones de única respuesta" para agregarle opciones')
-
-
-
-
+        try:
+            if self.field.is_text_input():
+                raise ValidationError('El campo debe ser tipo "Opciones de única respuesta" para agregarle opciones')
+        except:  # noqa
+            pass

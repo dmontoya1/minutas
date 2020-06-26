@@ -1,0 +1,53 @@
+{% extends 'webclient/base.html' %}
+{% load humanize %}
+{% load static %}
+
+{% block nav_class %}
+    class="navbar scrolled fixed-top"
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid mt-5">
+        <h1>Mis documentos</h1>
+            <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th scope="col">Documento</th>
+                    <th scope="col">Fecha de compra</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Acción disponible</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for object in object_list %}
+                    <tr>
+                        <td scope="row">{{object.document}}</td>
+                        <td>{{object.created_at}}</td>
+                        <td>{{object.get_status_display}}</td>
+                        <th scope="row">
+
+                            {% if object.status == object.FINISHED %}
+                                {% if object.is_expired %}
+                                    <span>El documento ya ha expirado</span>
+                                {% else %}
+                                    <a href="{% url 'webclient:user-document-preview' object.identifier %}">
+                                        Descargar
+                                    </a>
+                                {% endif %}
+                            {% else %}
+                                <a href="{% url 'webclient:user-document' object.identifier %}">
+                                {% if object.document.is_file_document %}
+                                    Descargar
+                                {% else %}
+                                    Editar
+                                {% endif %}
+                                </a>
+                            {% endif %}
+                        </th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+

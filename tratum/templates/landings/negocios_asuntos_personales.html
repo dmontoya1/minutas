@@ -1,0 +1,61 @@
+{% extends 'landings/base.html' %}
+
+{% load static %}
+
+{% block title %}
+  <title>Negocios y asuntos personales | tratum</title>
+{% endblock %}
+
+{% block rel-links %}
+  <link rel="canonical" href="/negocios-asuntos-personales/" />
+  <link rel='shortlink' href='/?p=274' />
+{% endblock %}
+
+{% block nav %}
+
+  <nav id="top-menu-nav">
+    <ul id="top-menu" class="nav">
+      <li id="menu-item-52" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-52">
+        <a href="{% url 'webclient:creacion_empresa' %}">Creación de empresa</a>
+      </li>
+      <li id="menu-item-272" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-272">
+      <a href="{% url 'webclient:gestion_contractual' %}" >Gestión contractual</a>
+    </li>
+      <li id="menu-item-273" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-273">
+        <a href="{% url 'webclient:gestion_empresarial' %}">Gestión empresarial</a>
+      </li>
+      <li id="menu-item-287" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-274 current_page_item menu-item-287">
+        <a href="{% url 'webclient:negocios_asuntos_personales' %}" aria-current="page">Negocios y asuntos personales</a>
+      </li>
+    </ul>
+  </nav>
+{% endblock %}
+
+{% block content-id %}id="post-274" class="post-274 page type-page status-publish hentry" {% endblock %}>
+
+{% block promo-description %}
+  <h1 class="et_pb_module_header">¿Te haz preguntado como gestionar tus asuntos personales?</h1>
+  <p>Con <strong>tratum </strong>hazlo legalmente fácil y rápido </p>
+{% endblock %}
+
+{% block tratum-facil %}
+  <p>te ayudaremos a ordenar siempre y estructurar de la mejor manera todos contratos y procesos que necesitas para tener tu día a día tranquilo. </p>
+{% endblock %}
+
+{% block text-inner %}
+  <p>GESTIONA LO QUE HACES <h style="color: #F0CD21;">CON NOSOTROS</h> AHORA MISMO!!</p>
+{% endblock %}
+
+{% block paralax-bg %}
+  <span
+    class="et_parallax_bg"
+    style="background-image: url({% static 'wp-content/uploads/2019/07/asuntos-y-negocios.jpg' %});"
+  ></span>
+{% endblock %}
+
+{% block documents-title %}
+  <h2> Procesos en los que te ayudaremos </h2>
+{% endblock %}
+
+
+

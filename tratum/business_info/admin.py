@@ -6,7 +6,10 @@ from .models import (
     FAQCategory,
     FAQItem,
     SiteConfig,
-    SliderItem
+    SliderItem,
+    GlossaryCategory,
+    GlossaryItem,
+    MainCategory
 )
 
 
@@ -30,10 +33,22 @@ class FAQCategoryAdmin(admin.ModelAdmin):
     ]
 
 
+class GlossaryItemInline(admin.StackedInline):
+    model = GlossaryItem
+    extra = 0
+
+
+@admin.register(GlossaryCategory)
+class GlossaryCategoryAdmin(admin.ModelAdmin):
+    inlines = [
+        GlossaryItemInline
+    ]
+
+
 @admin.register(SiteConfig)
 class SiteConfigAdmin(admin.ModelAdmin):
     form = SiteConfigForm
-    
+
     def has_add_permission(self, request):
         if self.model.objects.count() > 0:
             return False
@@ -51,3 +66,7 @@ class SliderItemAdmin(admin.ModelAdmin):
         else:
             return True
 
+
+@admin.register(MainCategory)
+class MainCategoryAdmin(admin.ModelAdmin):
+    list_display = ('title',)
