@@ -1,0 +1,17 @@
+{% extends 'webclient/base.html' %}
+{% load humanize %}
+{% load static %}
+{% load socialaccount %}
+{% providers_media_js %}
+
+{% block nav_class %}
+  class="navbar scrolled fixed-top"
+{% endblock %}
+
+{% block content %}
+  <ul>
+    {% for plan in subscriptions %}
+      <li>{{ plan }}</li>
+    {% endfor %}
+  </ul>
+{%  endblock %}

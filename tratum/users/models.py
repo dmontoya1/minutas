@@ -83,4 +83,4 @@ class LogTerms(models.Model):
         verbose_name_plural = "Logs de Términos"
 
     def __str__(self):
-        return "%s" % (self.user)
+        return "%s" % self.user

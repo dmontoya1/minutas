@@ -232,7 +232,7 @@ class UserSubscription(models.Model):
         verbose_name_plural = 'Suscripciones de usuarios'
 
     def __str__(self):
-        return str(self.pk)
+        return "Suscripción {} de {}".format(self.subscription.name, self.user.get_full_name())
 
 
 class UserDocumentsSubscription(models.Model):

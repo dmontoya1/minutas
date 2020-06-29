@@ -46,7 +46,7 @@ class UserDocumentsSubscriptionInline(admin.StackedInline):
 
     model = UserDocumentsSubscription
     extra = 0
-    readonly_fields = ('user_document', 'date_added')
+    # readonly_fields = ('user_document', 'date_added')
 
 
 @admin.register(UserSubscription)

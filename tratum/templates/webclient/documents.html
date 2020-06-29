@@ -115,28 +115,27 @@
                           </div>
                           <div class="row doc-price-content">
 
-                            {%if doc.price is None or doc.price == 0%}
-                              <div class="col-6">
-                                {% if user.is_authenticated %}
-                                  <a class="btn btn-buy float-left" href="{% url 'store:create-user-document'  %}?document_id={{doc.pk}}" class="btn btn-buy float-left">Comprar</a>
+                            {% if user.is_authenticated %}
+                              <div class="col-12">
+                                {% if user_subscription %}
+                                  {% if can_add_document %}
+                                    <div class="text-center">
+                                      <a class="btn btn-buy" href="{% url 'store:create-user-document' %}?document_id={{doc.pk}}">Agregar a mi suscripción</a>
+                                    </div>
+                                  {% else %}
+                                    <div class="text-center">
+                                      <a class="btn btn-buy" id="suscription-full" href="#" >Suscripción Full</a>
+                                    </div>
+                                    {% endif %}
                                 {% else %}
-                                  <a data-success="{% url 'store:create-user-document'  %}?document_id={{doc.pk}}" data-toggle="modal" data-target="#modal-login" class="btn btn-buy anon float-left">Comprar</a>
+                                  <div class="text-center">
+                                    <a class="btn btn-buy" href="{% url 'webclient:plans' %}?document_id={{doc.pk}}">Ver planes</a>
+                                  </div>
                                 {% endif %}
-                              </div>
-
-                              <div class="col-6">
-                                <span class="float-right price-free">GRATIS</span>
                               </div>
                             {%else%}
-                              <div class="col-6">
-                                {% if user.is_authenticated %}
-                                  <a class="btn btn-buy float-left" href="{% url 'store:checkout' %}?doc_id={{doc.id}}">Comprar</a>
-                                {% else %}
-                                  <a  data-success="{% url 'store:checkout' %}?doc_id={{doc.id}}" data-toggle="modal" data-target="#modal-login" class="btn btn-buy anon float-left">Comprar</a>
-                                {% endif %}
-                              </div>
-                              <div class="col-6">
-                                <span class="float-right price">$ {{doc.price|intcomma}}</span>
+                              <div class="col-12">
+                                <a data-success="{% url 'webclient:plans' %}" data-toggle="modal" data-target="#modal-login" class="btn btn-buy anon float-left">Agregar a mi suscripción</a>
                               </div>
                             {%endif%}
                           </div>
@@ -336,6 +335,7 @@
 {% endblock %}
 
 {% block extra_js %}
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
   <script>
     window.onload = function(){ document.getElementById("loadingAnimation").style.display = "none" }
   </script>
@@ -551,7 +551,7 @@
     }
     */
 
-    function get_root_categories(category, slug, child1, child2, child3){
+    function get_root_categories(category, slug){
       axios.get("{% url 'api:document_manager:categories-root-list' %}")
         .then(function(response){
           //$('#root-categories').empty()
@@ -609,7 +609,6 @@
           toastr.error(error)
         });
     }
-
 
     $('.category-check').on('change', function(e){
       e.preventDefault()
@@ -711,6 +710,19 @@
 
     $('#modal-info').on('hidden.bs.modal', function (e) {
       $('.video-container').empty()
+    })
+
+    $('#suscription-full').on('click', function(){
+      Swal.fire({
+        title: 'Opsss!',
+        text: "Has llegado al límite de documentos para tu suscripción.",
+        icon: 'error',
+        showCloseButton: true,
+        html:
+        '<p>Has llegado al límite de documentos para tu suscripción.</p>' +
+        '<a class="btn btn-documents" href="{% url 'webclient:user-documents' %}">Ir a mis documentos</a>',
+        confirmButtonText: "Aceptar"
+      })
     })
 
     $('.btn-buy.anon').on('click', function (e) {

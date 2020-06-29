@@ -210,8 +210,9 @@ TEMPLATES = [
                 'tratum.webclient.context_processors.categories.context_categories',
                 'tratum.webclient.context_processors.api-key.api_key_processor',
                 'tratum.webclient.context_processors.faq.faq_processor',
-                'tratum.webclient.context_processors.bussiness_info.bussiness_info_processor',
+                'tratum.webclient.context_processors.business_info.business_info_processor',
                 'tratum.webclient.context_processors.glossary.glossary_processor',
+                'tratum.webclient.context_processors.user_subscription.context_subscription',
             ],
         },
     },
@@ -323,7 +324,7 @@ REST_FRAMEWORK = {
 }
 
 
-API_KEY = 'b7b15cc877c0c0c2d8e6aeee4e68296df24656a2'
+API_KEY = 'c97a04aa6b1afbfe4ecdee99c216c6e072650fa4'
 
 # CKEditor config
 

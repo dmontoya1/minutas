@@ -4,7 +4,7 @@ from tratum.store.models import (
 )
 
 
-def bussiness_info_processor(request):
+def business_info_processor(request):
     context = {}
     site_config = SiteConfig.objects.last()
     if site_config:

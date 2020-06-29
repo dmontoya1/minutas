@@ -131,4 +131,5 @@ urlpatterns = [
         views.LandingForm.as_view(),
         name="landing_form"
     ),
+    path('plans', views.SubscriptionList.as_view(), name='plans')
 ]

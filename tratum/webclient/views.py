@@ -33,7 +33,7 @@ from tratum.document_manager.models import (
     Document,
     Category
 )
-from tratum.store.models import UserDocument
+from tratum.store.models import UserDocument, Subscription
 
 from tratum.users.models import LogTerms
 
@@ -242,6 +242,19 @@ class CategoryDocumentsView(TemplateView):
         categories = category.get_descendants(include_self=True).alive()
         context['category'] = category
         context['documents'] = Document.objects.alive().filter(category__in=categories).order_by('order')
+        return context
+
+
+class SubscriptionList(TemplateView):
+    """
+    """
+
+    template_name = "webclient/plans.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        subscriptions = Subscription.objects.all()
+        context['subscriptions'] = subscriptions
         return context
 
 
