@@ -91,7 +91,6 @@ class Checkout(TemplateView):
         tax = 0
         taxReturnBase = 0
         description = "Compra realizada desde Tratum"
-
         if settings.PAYMENTS_DEBUG:
             test = 1
             accountId = 512321
@@ -108,7 +107,6 @@ class Checkout(TemplateView):
             host = 'https://tratum.co'
 
         currency = 'COP'
-
         try:
             documents = Document.objects.filter(pk=request.GET['doc_id'])
             doc_type = 'doc'
@@ -294,8 +292,11 @@ class Checkout(TemplateView):
             if ref == 'DO':
                 try:
                     document = Document.objects.get(pk=ref_id)
+                    print(document)
                     user = get_user_model().objects.get(pk=user_id)
+                    print(user)
                     user_doc = UserDocument.objects.filter(user=user, document=document).last()
+                    print(user_doc)
                     identifier = user_doc.identifier
                 except Exception as e:
                     logger.exception(str(e))
