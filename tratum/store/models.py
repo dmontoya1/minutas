@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import datetime
 import time
 
 from django.db import models
@@ -133,7 +132,7 @@ class UserDocument(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return str(self.pk)
+        return str(self.document.name)
 
     def get_absolute_url(self):
         return reverse('webclient:user-document', kwargs={'identifier': self.identifier})
@@ -143,6 +142,128 @@ class UserDocument(models.Model):
         if diff > 10:
             return True
         return False
+
+
+class Subscription(SoftDeletionModelMixin):
+    """Guarda las suscripciones para el módulo ecommerce.
+
+    """
+
+    name = models.CharField(
+        'Nombre',
+        max_length=50,
+        unique=True
+    )
+    document_number = models.IntegerField(
+        "Número de documentos de la suscripción",
+        help_text="Para ilimitado dejarlo en 0"
+    )
+    has_general_talks = models.BooleanField("Tiene charlas en temas de interés general?", default=True)
+    has_update_talks = models.BooleanField("Tiene charlas de actualidad normativa?", default=False)
+    virtual_consultant = models.IntegerField("Número de consultas jurídicas virtuales", default=0)
+    price = models.PositiveIntegerField('Precio')
+    show_on_landing = models.BooleanField("Ver en la landing?", default=False)
+    order = models.PositiveSmallIntegerField(
+        'Orden',
+        null=True,
+        blank=True,
+        unique=True
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Suscripción'
+        verbose_name_plural = 'Suscripciones'
+
+    def clean(self):
+        """Retorna ValidationError si se intenta crear más tres instancias para la landing
+        """
+
+        model = self.__class__
+        if (model.objects.filter(show_on_landing=True).exclude(pk=self.pk).count() >= 3 and
+                self.show_on_landing is True):
+            raise ValidationError(
+                "Sólo se puede agregar 3 paquetes a la landing.")
+
+
+class UserSubscription(models.Model):
+    """
+    Modelo para guadar la suscripción de un usuario
+    """
+
+    CREATED = 'CR'
+    PURCHASED = 'PU'
+    FINISHED = 'FI'
+    EXPIRED = 'EX'
+
+    STATUS_CHOICES = (
+        (CREATED, 'Creado'),
+        (PURCHASED, 'Comprado'),
+        (FINISHED, 'Finalizado'),
+        (EXPIRED, 'Caducado'),
+    )
+
+    user = models.ForeignKey(
+        User,
+        verbose_name='Usuario',
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    subscription = models.ForeignKey(
+        Subscription,
+        verbose_name="Suscripción",
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    status = models.CharField(
+        max_length=2,
+        choices=STATUS_CHOICES,
+        default=CREATED
+    )
+    date_purchase = models.DateTimeField(
+        "Fecha de compra de suscripción",
+        auto_now_add=False
+    )
+
+    class Meta:
+        verbose_name = 'Suscripción de usuario'
+        verbose_name_plural = 'Suscripciones de usuarios'
+
+    def __str__(self):
+        return str(self.pk)
+
+
+class UserDocumentsSubscription(models.Model):
+    """
+    Guarda los documentos de un usuario por cada suscripción
+    """
+
+    user_document = models.ForeignKey(
+        UserDocument,
+        verbose_name="Documento del usuario",
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    user_subscription = models.ForeignKey(
+        UserSubscription,
+        verbose_name="Suscripción del usuario",
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+    date_added = models.DateTimeField(
+        "Fecha de comprado",
+        auto_now_add=True,
+        null=True
+    )
+
+    class Meta:
+        verbose_name = 'Documento de la suscripción de usuario'
+        verbose_name_plural = 'Documentos de la suscripción de usuarios'
+
+    def __str__(self):
+        return str(self.pk)
 
 
 class Invoice(models.Model):
@@ -178,6 +299,13 @@ class Invoice(models.Model):
     package = models.ForeignKey(
         DocumentBundle,
         verbose_name='Paquete',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
+    )
+    subscription = models.ForeignKey(
+        Subscription,
+        verbose_name="Suscripción",
         null=True,
         blank=True,
         on_delete=models.SET_NULL
