@@ -6,3 +6,4 @@ IPYTHONDIR=/app/.ipython
 # Redis
 # ------------------------------------------------------------------------------
 REDIS_URL=redis://redis:6379/0
+PAYMENTS_DEBUG=True
