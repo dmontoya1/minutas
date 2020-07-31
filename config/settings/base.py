@@ -243,7 +243,7 @@ EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.s
 
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_USER = 'Tratum <no-reply@tratum.co>'
-EMAIL_HOST_USER = 'apptitud'
+EMAIL_HOST_USER = 'ilanalab'
 EMAIL_HOST_PASSWORD = 'jkdsjk4534.sd!"'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
