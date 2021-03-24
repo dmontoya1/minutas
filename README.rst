@@ -15,6 +15,36 @@ Moved to settings_.
 
 .. _settings: http://cookiecutter-django.readthedocs.io/en/latest/settings.html
 
+
+
+Deployment
+----------
+
+The following details how to deploy this application. All environment is dockerized and you could follow the Django Cookiecutter documentation for setting up all containers described for each environemnts (local, staging and production)
+
+
+## Prerequisites
+Download and install Docker
+- [For Mac](https://download.docker.com/mac/stable/Docker.dmg)
+- [For Windows](https://download.docker.com/win/stable/InstallDocker.msi)
+- [For Linux](https://docs.docker.com/engine/getstarted/step_one/#docker-for-linux)
+
+
+Docker
+^^^^^^
+
+For local set up, you must build and run all docker containers running the next two commands in your terminal on root project path
+
+    $ docker-compose.yml -f local.yml build
+
+    $ docker-compose.yml -f local.yml up
+
+See detailed `cookiecutter-django Docker documentation`_.
+
+.. _`cookiecutter-django Docker documentation`: http://cookiecutter-django.readthedocs.io/en/latest/deployment-with-docker.html
+
+
+
 Basic Commands
 --------------
 
@@ -72,21 +102,5 @@ Sentry is an error logging aggregator service. You can sign up for a free accoun
 The system is setup with reasonable defaults, including 404 logging and integration with the WSGI application.
 
 You must set the DSN url in production.
-
-
-Deployment
-----------
-
-The following details how to deploy this application.
-
-
-
-Docker
-^^^^^^
-
-See detailed `cookiecutter-django Docker documentation`_.
-
-.. _`cookiecutter-django Docker documentation`: http://cookiecutter-django.readthedocs.io/en/latest/deployment-with-docker.html
-
 
 

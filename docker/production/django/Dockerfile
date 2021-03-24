@@ -52,7 +52,7 @@ ENV PATH $PATH:$PANDOC_ROOT/bin
 
 # Requirements are installed here to ensure they will be cached.
 COPY ./requirements /requirements
-RUN pip install --upgrade pip==18.1
+RUN pip install --upgrade pip==21.0.1
 RUN pip install --no-cache-dir -r /requirements/production.txt \
     && rm -rf /requirements
 
