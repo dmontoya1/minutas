@@ -1,37 +1,25 @@
 Tratum
 ======
 
-Behold My Awesome Project!
+Tratum. Monilito web application made in Python / Django. Structured by Django Cookiecutter Project.
 
 .. image:: https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg
      :target: https://github.com/pydanny/cookiecutter-django/
      :alt: Built with Cookiecutter Django
 
 
-Settings
---------
-
-Moved to settings_.
-
-.. _settings: http://cookiecutter-django.readthedocs.io/en/latest/settings.html
-
-
-
-Deployment
-----------
-
-The following details how to deploy this application. All environment is dockerized and you could follow the Django Cookiecutter documentation for setting up all containers described for each environemnts (local, staging and production)
+Start Project from scrath
+---------
 
 
 ## Prerequisites
+
 Download and install Docker
+
 - [For Mac](https://download.docker.com/mac/stable/Docker.dmg)
 - [For Windows](https://download.docker.com/win/stable/InstallDocker.msi)
 - [For Linux](https://docs.docker.com/engine/getstarted/step_one/#docker-for-linux)
 
-
-Docker
-^^^^^^
 
 For local set up, you must build and run all docker containers running the next two commands in your terminal on root project path
 
@@ -44,8 +32,16 @@ See detailed `cookiecutter-django Docker documentation`_.
 .. _`cookiecutter-django Docker documentation`: http://cookiecutter-django.readthedocs.io/en/latest/deployment-with-docker.html
 
 
+Learn about Django Settings
+--------
 
-Basic Commands
+Visit the django cookiecutter documentation to get more detailed info about how to manage django settings in the project.
+
+.. _settings: http://cookiecutter-django.readthedocs.io/en/latest/settings.html
+
+
+
+Basic Commands (Run into Django docker container)
 --------------
 
 Setting Up Your Users
@@ -90,9 +86,6 @@ Live reloading and Sass CSS compilation
 Moved to `Live reloading and SASS compilation`_.
 
 .. _`Live reloading and SASS compilation`: http://cookiecutter-django.readthedocs.io/en/latest/live-reloading-and-sass-compilation.html
-
-
-
 
 
 Sentry

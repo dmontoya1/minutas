@@ -1,15 +1,15 @@
-FROM surnet/alpine-python-wkhtmltopdf:3.6.5-0.12.5-full
+FROM surnet/alpine-python-wkhtmltopdf:3.9.2-0.12.6-full
 
 ENV PYTHONUNBUFFERED 1
 
 RUN apk update \
   # psycopg2 dependencies
-  && apk add --virtual build-deps gcc python3-dev musl-dev \
+  && apk add --virtual build-deps clang g++ gcc python-dev python3-dev musl-dev \
   && apk add postgresql-dev \
   # Pillow dependencies
   && apk add jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev git \
   # CFFI dependencies
-  && apk add libffi-dev py-cffi libxml2-dev libxslt-dev \
+  && apk add libffi-dev py-cffi libxml2 libxml2-dev libxslt-dev openssl-dev \
   # Translations dependencies
   && apk add gettext \
   # https://docs.djangoproject.com/en/dev/ref/django-admin/#dbshell
@@ -20,7 +20,7 @@ RUN apk update \
 RUN addgroup -S django \
     && adduser -S -G django django
 
-ENV PANDOC_VERSION 2.4
+ENV PANDOC_VERSION 2.13
 ENV PANDOC_DOWNLOAD_URL https://github.com/jgm/pandoc/archive/$PANDOC_VERSION.tar.gz
 ENV PANDOC_ROOT /usr/local/pandoc
 
@@ -41,7 +41,6 @@ RUN apk add --no-cache \
     && ( cd pandoc-$PANDOC_VERSION && cabal update && cabal install --only-dependencies \
       && cabal configure --prefix=$PANDOC_ROOT \
       && cabal build \
-      && cabal copy \
       && cd .. ) \
     && rm -Rf pandoc-$PANDOC_VERSION/ \
     && apk del --purge build-dependencies \
