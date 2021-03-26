@@ -12,7 +12,8 @@ Start Project from scrath
 ---------
 
 
-## Prerequisites
+Prerequisites
+^^^^^^^^^^^^^
 
 Download and install Docker
 
@@ -23,6 +24,7 @@ Download and install Docker
 
 For local set up, you must build and run all docker containers running the next two commands in your terminal on root project path
 
+::
     $ docker-compose.yml -f local.yml build
 
     $ docker-compose.yml -f local.yml up
