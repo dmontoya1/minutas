@@ -22,6 +22,8 @@ Download and install Docker
 - [For Linux](https://docs.docker.com/engine/getstarted/step_one/#docker-for-linux)
 
 
+Local Setup
+^^^^^^^^^^^^^
 For local set up, you must build and run all docker containers running the next two commands in your terminal on root project path::
     
     $ docker-compose.yml -f local.yml build
@@ -31,6 +33,27 @@ See detailed `cookiecutter-django Docker documentation`_.
 
 .. _`cookiecutter-django Docker documentation`: http://cookiecutter-django.readthedocs.io/en/latest/deployment-with-docker.html
 
+After building and uploading the containers, access the django container and run the following basic commands.
+
+For access to django container, execute the following command (the container id could be change in your machine, make sure the name typing `docker ps` and see the right container name)::
+
+    $ docker exec -it minutas_django_1 sh
+
+Then you have to export the environment variable from the database once inside the container::
+
+    $ export DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}"
+
+
+* To create an **superuser account**, use this command::
+
+    $ python manage.py createsuperuser 
+
+
+Access the Django administrator via http://0.0.0.0:8000/ and use the credentials created in the previous step.
+
+Go to Social Accounts -> Social Applications and create the same Facebook and Google account that you can find in the live env. https://tratum.co/admin. Use the credentials provided for your partner.
+
+This step is necessary for the correct operation of the project locally.
 
 Learn about Django Settings
 --------
@@ -39,21 +62,6 @@ Visit the django cookiecutter documentation to get more detailed info about how 
 
 .. _settings: http://cookiecutter-django.readthedocs.io/en/latest/settings.html
 
-
-
-Basic Commands (Run into Django docker container)
---------------
-
-Setting Up Your Users
-^^^^^^^^^^^^^^^^^^^^^
-
-* To create a **normal user account**, just go to Sign Up and fill out the form. Once you submit it, you'll see a "Verify Your E-mail Address" page. Go to your console to see a simulated email verification message. Copy the link into your browser. Now the user's email should be verified and ready to go.
-
-* To create an **superuser account**, use this command::
-
-    $ python manage.py createsuperuser 
-
-For convenience, you can keep your normal user logged in on Chrome and your superuser logged in on Firefox (or similar), so that you can see how the site behaves for both kinds of users.
 
 Type checks
 ^^^^^^^^^^^
